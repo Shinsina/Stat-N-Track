@@ -1,4 +1,19 @@
 ---
+import { Image } from '@astrojs/image/components';
+const response = await fetch('http://localhost:3000/api/subsession/61549910.json');
+const subsession = await response.json();
+const { track, allowed_licenses } = subsession || {};
+const parsedAverageLap = () => {
+	const ingestedAverageLap = String(subsession.event_average_lap);
+	const decimal = String(ingestedAverageLap.match(/[0-9]{4}$/));
+	const withDecimal = ingestedAverageLap.replace(decimal, `.${decimal}`);
+	const [priorToDecimal, _] = withDecimal.split('.');
+	if (priorToDecimal.length > 2) {
+		const seconds = String(priorToDecimal.match(/[0-9]{2}$/));
+		withDecimal.replace(seconds, `.${seconds}`);
+	}
+	return withDecimal.replace(/0$/, '').trim();
+}
 ---
 
 <html lang="en">
@@ -9,7 +24,47 @@
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
-	<body>
-		<h1>Astro</h1>
+	<body class="bg-gray-900 text-white font-sans py-40">
+		<div class="flex justify-center">
+			<Image src={`https://images-static.iracing.com/img/logos/series/${subsession.series_logo}`} alt="Series Logo" width={300} height={100} format='avif' />
+		</div>
+		<div class="text-center">
+			<p>{subsession.season_name}</p>
+			<p>Week {subsession.race_week_num + 1} of {subsession.max_weeks}</p>
+		</div>
+		<div class="text-center">
+			Track Facts:
+			<p>Name: {track.track_name}</p>
+			<p>Configuration: {track.config_name}</p>
+			<p>Category: {track.category}</p>
+			<p>Corners: {subsession.corners_per_lap}</p>
+		</div>
+		<p class="text-center">License Category: {subsession.license_category}</p>
+		<div class="text-center">
+			Allowed Licenses:
+			{
+				allowed_licenses
+					.filter((license) => (Math.ceil(license.min_license_level / license.license_group) === license.min_license_level / license.license_group))
+					.map((license, index: Number) => (<p>{license.group_name} {!index ? `${license.min_license_level / license.license_group}.00` : 'and above'}</p>))
+			}
+		</div>
+		<div class="text-center">
+			Race Summary:
+			<p>Average Lap Time: {parsedAverageLap()}</p>
+			<p>Laps Complete: {subsession.event_laps_complete}</p>
+			<p>Number of Cautions: {subsession.num_cautions} for {subsession.num_caution_laps} laps</p>
+			<p>Lead Changes: {subsession.num_lead_changes}</p>
+			<p>Strength of Field: {subsession.event_strength_of_field}</p>
+			<p>Started: {new Date(subsession.start_time)}</p>
+			<p>Ended: {new Date(subsession.end_time)}</p>
+		</div>
+		<div class="text-center">
+			Relevant IDs
+			{
+				Object.keys(subsession)
+					.filter((key) => key.match(/_id$/) && Number(JSON.stringify(subsession[key])) > 0)
+					.map((key) => (<li>{key} - {JSON.stringify(subsession[key])}</li>))
+			}
+		</div>
 	</body>
 </html>
