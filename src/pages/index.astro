@@ -1,19 +1,19 @@
 ---
-import { Image } from '@astrojs/image/components';
+import Header from '$lib/components/subsession/header.astro';
+import TrackInfo from '$lib/components/track/info.astro';
+import LicenseInfo from '$lib/components/subsession/licenseInfo.astro';
+import RaceSummary from '$lib/components/subsession/raceSummary.astro';
+import RelevantIds from '$lib/components/subsession/relevantIds.astro';
+import SessionResultsTables from '$lib/components/session-results/tables.astro';
 const response = await fetch('http://localhost:3000/api/subsession/61549910.json');
 const subsession = await response.json();
-const { track, allowed_licenses } = subsession || {};
-const parsedAverageLap = () => {
-	const ingestedAverageLap = String(subsession.event_average_lap);
-	const decimal = String(ingestedAverageLap.match(/[0-9]{4}$/));
-	const withDecimal = ingestedAverageLap.replace(decimal, `.${decimal}`);
-	const [priorToDecimal, _] = withDecimal.split('.');
-	if (priorToDecimal.length > 2) {
-		const seconds = String(priorToDecimal.match(/[0-9]{2}$/));
-		withDecimal.replace(seconds, `.${seconds}`);
-	}
-	return withDecimal.replace(/0$/, '').trim();
-}
+const {
+		track,
+		session_results,
+		corners_per_lap: cornersPerLap,
+		allowed_licenses: licenses,
+		license_category: licenseCategory
+	} = subsession || {};
 ---
 
 <html lang="en">
@@ -24,47 +24,76 @@ const parsedAverageLap = () => {
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
-	<body class="bg-gray-900 text-white font-sans py-40">
-		<div class="flex justify-center">
-			<Image src={`https://images-static.iracing.com/img/logos/series/${subsession.series_logo}`} alt="Series Logo" width={300} height={100} format='avif' />
+	<body class="bg-gray-900 text-white font-sans pt-2">
+		<div class="grid grid-cols-12">
+			<div class="col-span-4 border-2 grid grid-rows-12">
+				<div class="row-span-1"></div>
+				<TrackInfo {cornersPerLap} {track} />
+				<LicenseInfo {licenses} {licenseCategory} />
+			</div>
+			<div class="col-span-4 border-2">
+				<Header {subsession} />
+				<RaceSummary {subsession} />
+			</div>
+			<div class="col-span-4 border-2 grid grid-rows-12">
+				<div class="row-span-1"></div>
+				<RelevantIds {subsession} sessions={session_results}  />
+			</div>
 		</div>
-		<div class="text-center">
-			<p>{subsession.season_name}</p>
-			<p>Week {subsession.race_week_num + 1} of {subsession.max_weeks}</p>
-		</div>
-		<div class="text-center">
-			Track Facts:
-			<p>Name: {track.track_name}</p>
-			<p>Configuration: {track.config_name}</p>
-			<p>Category: {track.category}</p>
-			<p>Corners: {subsession.corners_per_lap}</p>
-		</div>
-		<p class="text-center">License Category: {subsession.license_category}</p>
-		<div class="text-center">
-			Allowed Licenses:
-			{
-				allowed_licenses
-					.filter((license) => (Math.ceil(license.min_license_level / license.license_group) === license.min_license_level / license.license_group))
-					.map((license, index: Number) => (<p>{license.group_name} {!index ? `${license.min_license_level / license.license_group}.00` : 'and above'}</p>))
-			}
-		</div>
-		<div class="text-center">
-			Race Summary:
-			<p>Average Lap Time: {parsedAverageLap()}</p>
-			<p>Laps Complete: {subsession.event_laps_complete}</p>
-			<p>Number of Cautions: {subsession.num_cautions} for {subsession.num_caution_laps} laps</p>
-			<p>Lead Changes: {subsession.num_lead_changes}</p>
-			<p>Strength of Field: {subsession.event_strength_of_field}</p>
-			<p>Started: {new Date(subsession.start_time)}</p>
-			<p>Ended: {new Date(subsession.end_time)}</p>
-		</div>
-		<div class="text-center">
-			Relevant IDs
-			{
-				Object.keys(subsession)
-					.filter((key) => key.match(/_id$/) && Number(JSON.stringify(subsession[key])) > 0)
-					.map((key) => (<li>{key} - {JSON.stringify(subsession[key])}</li>))
-			}
-		</div>
+		<SessionResultsTables sessions={session_results} />
+		<script>
+			import Alpine from 'alpinejs';
+			Alpine.data('tables', () => ({
+				PRACTICE: false,
+				QUALIFY: false,
+				RACE: false,
+				toggle() {
+					this.$el.id.split(' ').forEach((id, index) => {
+						if (index) {
+							this[id] = false
+						} else {
+							this[id] = !this[id];
+						}
+					});
+				},
+				sort() {
+					const [tableName, columnName, rowCount, direction] = this.$el.id.split(' ');
+					const rows = new Map();
+					const keys = new Set();
+					for (let rowNumber = 0; rowNumber < rowCount; rowNumber += 1) {
+						const initialValue = this.$refs[`${tableName} ${columnName} ${rowNumber}`].innerText;
+						const value = Number.isNaN(Number(initialValue)) ? initialValue : Number(initialValue);
+						if (rows.get(value)) {
+							rows.set(value, [...rows.get(value), rowNumber]);
+						} else {
+							rows.set(value, [rowNumber]);
+							keys.add(value);
+						}
+					}
+					const keysArray = Array.from(keys);
+					const isNumbers = keysArray.filter((key) => typeof key === 'number').length;
+					const internalSort = () => {
+						if (isNumbers && (direction === 'ascending')) {
+							return keysArray.sort((a, b) => {
+								return b - a;
+							});
+						} else if (isNumbers && !direction) {
+							return keysArray.sort((a, b) => {
+								return a - b;
+							});
+						} else if (!isNumbers && direction === 'ascending') {
+							return keysArray.sort();
+						} else if (!isNumbers && !direction) {
+							return keysArray.sort().reverse();
+						}
+					}
+					this.$el.id = direction === 'ascending' ? `${tableName} ${columnName} ${rowCount}` : `${tableName} ${columnName} ${rowCount} ascending`;
+					const rowElements = direction === 'ascending' ? internalSort().map((key) => key).map((key) => rows.get(key)).flat().map((value) => this.$refs[`${tableName} ${value}`].outerHTML) : internalSort().map((key) => key).map((key) => rows.get(key)).flat().map((value) => this.$refs[`${tableName} ${value}`].outerHTML);
+					const tableHeadings = this.$refs[`${tableName} Table Headings`].outerHTML;
+					this.$refs[tableName].innerHTML = `${tableHeadings}${rowElements.join('')}`;
+				}
+			}))
+			Alpine.start();
+		</script>
 	</body>
 </html>
