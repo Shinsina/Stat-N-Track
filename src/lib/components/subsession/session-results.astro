@@ -1,0 +1,43 @@
+---
+import handleSessionResults from '$lib/utils/handle-session-results';
+import fieldIdToLabelMap from '$lib/utils/field-id-to-label-map';
+import type { Session } from '$lib/types/index';
+interface Props {
+  session: Session,
+  keysToDisplay: Set<string>
+}
+const { session, keysToDisplay } = Astro.props;
+const {
+  simsession_name,
+  simsession_type_name,
+  simsession_type,
+  simsession_number,
+  results
+} = session;
+const handledSessionResults = handleSessionResults({ keysToDisplay, results });
+const keysArray = Array.from(keysToDisplay);
+---
+<div class="grid grid-cols-1">
+  <table class="text-center col-span-1">
+    <tr class="bg-gray-500">
+      <th class="border-2">Name</th>
+      <th class="border-2">Type</th>
+      <th class="border-2">Type ID</th>
+      <th class="border-2">Session ID</th>
+    </tr>
+    <tr>
+      <td class="border-2">{simsession_name}</td>
+      <td class="border-2">{simsession_type_name}</td>
+      <td class="border-2">{simsession_type}</td>
+      <td class="border-2">{simsession_number}</td>
+    </tr>
+  </table>
+</div>
+<div class="grid grid-cols-1 pt-6">
+  <table x-ref={simsession_name} class="text-center col-span-1">
+    <tr x-ref={`${simsession_name} Table Headings`}>{keysArray.map((key) => (<th id={`${simsession_name} ${key} ${handledSessionResults.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
+    {handledSessionResults.map(
+      (result, rowNumber) => (<tr x-ref={`${simsession_name} ${rowNumber}`}>{result.map((value: string|number, index: number) => (<td x-ref={`${simsession_name} ${keysArray[index]} ${rowNumber}`} class="border-2">{value}</td>))}</tr>),
+    )}
+  </table>
+</div>
