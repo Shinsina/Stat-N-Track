@@ -2,8 +2,14 @@
 import handleSessionResults from '$lib/utils/handle-session-results';
 import fieldIdToLabelMap from '$lib/utils/field-id-to-label-map';
 import parseLapTime from '$lib/utils/parse-lap-time';
+export function getStaticPaths() {
+	return [
+		{ params: { id: 300752 } },
+		{ params: { id: 815162 } }
+	];
+};
 const { id } = Astro.params;
-const response = await fetch(`http://localhost:3000/api/user/subsessions/${id}.json`);
+const response = await fetch(`http://localhost:3000/Stat-N-Track/api/user/subsessions/${id}.json`);
 const subsessions = await response.json();
 const tableData = subsessions.map((subsession) => {
 	const {
@@ -73,7 +79,7 @@ const keysArray = Array.from(keysToDisplay);
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
@@ -83,7 +89,7 @@ const keysArray = Array.from(keysToDisplay);
 			<table x-ref="Table" x-data="table" class="text-center col-span-1">
 				<tr x-ref="Headings">{Object.keys(tableData[0]).map((key) => (<th id={`Table ${key} ${tableData.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
 				{finalData.map(
-					(result, rowNumber) => (<tr x-ref={`Table ${rowNumber}`}>{Object.keys(result).map((key: string, index: number) => (<td x-ref={`Table ${keysArray[key]} ${rowNumber}`} class="border-2">{key === '0' ? (<a rel="prefetch" href={`/subsession/${result[key]}`}>{result[key]}</a>): result[key]}</td>))}</tr>),
+					(result, rowNumber) => (<tr x-ref={`Table ${rowNumber}`}>{Object.keys(result).map((key: string, index: number) => (<td x-ref={`Table ${keysArray[key]} ${rowNumber}`} class="border-2">{key === '0' ? (<a rel="prefetch" href={`/Stat-N-Track/subsession/${result[key]}`}>{result[key]}</a>): result[key]}</td>))}</tr>),
 				)}
 			</table>
 		</div>

@@ -2,11 +2,10 @@ import { defineConfig } from 'astro/config';
 import image from '@astrojs/image';
 import tailwind from "@astrojs/tailwind";
 import prefetch from "@astrojs/prefetch";
-import netlify from "@astrojs/netlify/functions";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
-  adapter: netlify(),
+  site: "https://shinsina.github.io",
+  base: "/Stat-N-Track",
   integrations: [tailwind(), prefetch(), image({ serviceEntryPoint: '@astrojs/image/sharp' })]
 });
