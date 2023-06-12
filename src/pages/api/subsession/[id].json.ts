@@ -1,20 +1,22 @@
 import type { APIRoute } from "astro";
-import example from "../../../data/example";
+import { connectToDatabase } from '$lib/mongodb';
 
-export const get: APIRoute = ({ params }) => {
-  const id = params.id;
-
-  if (example.subsession_id !== Number(id)) {
-    return new Response(null, {
-      status: 404,
-      statusText: 'Not found'
+export const get: APIRoute = async ({ params }) => {
+  const id = Number(params.id);
+  const dbConnection = await connectToDatabase();
+  const db = dbConnection.db;
+  const collection = db.collection('subsessions');
+  const data = await collection.findOne({ _id: id });
+  if (data) {
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
   }
-
-  return new Response(JSON.stringify(example), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json"
-    }
+  return new Response(JSON.stringify({}), {
+    status: 404,
+    statusText: 'Not found'
   });
 }
