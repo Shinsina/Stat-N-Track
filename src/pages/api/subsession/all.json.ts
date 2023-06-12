@@ -7,7 +7,7 @@ export const get: APIRoute = async () => {
     const dbConnection = await connectToDatabase();
     const db = dbConnection.db;
     const collection = db.collection('subsessions');
-    const data = await collection.find();
+    const data = await collection.find().toArray();
     new Response(JSON.stringify(data), {
       status: 200,
       headers: {

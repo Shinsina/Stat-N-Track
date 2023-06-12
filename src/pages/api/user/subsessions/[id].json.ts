@@ -1,6 +1,13 @@
 import type { APIRoute } from "astro";
 import { connectToDatabase } from '$lib/mongodb';
 
+export function getStaticPaths() {
+	return [
+		{ params: { id: 300752 } },
+		{ params: { id: 815162 } }
+	];
+};
+
 export const get: APIRoute = async ({ params }) => {
   const id = Number(params.id);
   const dbConnection = await connectToDatabase();
