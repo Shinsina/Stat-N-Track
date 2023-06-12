@@ -16,7 +16,7 @@ const {
 } = session || {};
 const handledSessionResults = handleSessionResults({ keysToDisplay: keysToDisplay || new Set([]), results: results || [] });
 const keysArray = Array.from(keysToDisplay);
-const typeNameJoined = simsession_type_name.split(' ').join('');
+const typeNameJoined = simsession_type_name ? simsession_type_name.split(' ').join('') simsession_name;
 ---
 <div class="grid grid-cols-1">
   <table class="text-center col-span-1">
