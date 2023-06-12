@@ -28,5 +28,6 @@ export default new Map<string,string>(
     ["incidents", "Incidents"],
     ["car_name", "Car"],
     ["aggregate_champ_points", "Best Points For Week"],
+    ["license_category", "License Category"],
   ]
 )
