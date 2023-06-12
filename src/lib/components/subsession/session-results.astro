@@ -34,10 +34,10 @@ const keysArray = Array.from(keysToDisplay);
   </table>
 </div>
 <div class="grid grid-cols-1 pt-6">
-  <table x-ref={simsession_name} class="text-center col-span-1">
-    <tr x-ref={`${simsession_name} Table Headings`}>{keysArray.map((key) => (<th id={`${simsession_name} ${key} ${handledSessionResults.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
+  <table x-ref={simsession_type_name} class="text-center col-span-1">
+    <tr x-ref={`${simsession_type_name} Table Headings`}>{keysArray.map((key) => (<th id={`${simsession_type_name} ${key} ${handledSessionResults.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
     {handledSessionResults.map(
-      (result, rowNumber) => (<tr x-ref={`${simsession_name} ${rowNumber}`}>{result.map((value: string|number, index: number) => (<td x-ref={`${simsession_name} ${keysArray[index]} ${rowNumber}`} class="border-2">{value}</td>))}</tr>),
+      (result, rowNumber) => (<tr x-ref={`${simsession_type_name} ${rowNumber}`}>{result.map((value: string|number, index: number) => (<td x-ref={`${simsession_type_name} ${keysArray[index]} ${rowNumber}`} class="border-2">{value}</td>))}</tr>),
     )}
   </table>
 </div>
