@@ -13,8 +13,8 @@ const {
   simsession_type,
   simsession_number,
   results
-} = session;
-const handledSessionResults = handleSessionResults({ keysToDisplay, results });
+} = session || {};
+const handledSessionResults = handleSessionResults({ keysToDisplay: keysToDisplay || new Set([]), results: results || [] });
 const keysArray = Array.from(keysToDisplay);
 ---
 <div class="grid grid-cols-1">

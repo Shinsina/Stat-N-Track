@@ -3,6 +3,9 @@ import PracticeResults from '$lib/components/session-results/practice.astro';
 import QualifyingResults from '$lib/components/session-results/qualifying.astro';
 import RaceResults from '$lib/components/session-results/race.astro';
 const { sessions } = Astro.props;
+const practice = sessions.find((session: Record<string, unknown>) => session.simsession_type_name.match(/PRACTICE/i));
+const qualifying = sessions.find((session: Record<string, unknown>) => session.simsession_type_name.match(/QUALIFY/i));
+const race = sessions.find((session: Record<string, unknown>) => session.simsession_type_name.match(/RACE/i));
 ---
 
 <div x-data="tables">
@@ -19,13 +22,13 @@ const { sessions } = Astro.props;
   </div>
   <div x-if="true">
     <div x-cloak x-show="PRACTICE" x-transition:enter.duration.500ms x-transition:leave.duration.0ms>
-      <PracticeResults  session={sessions.find((session: Record<string, unknown>) => session.simsession_name === 'PRACTICE')} />
+      <PracticeResults session={practice} />
     </div>
     <div x-cloak x-show="QUALIFY" x-transition:enter.duration.500ms x-transition:leave.duration.0mss>
-      <QualifyingResults session={sessions.find((session: Record<string, unknown>) => session.simsession_name === 'QUALIFY')} />
+      <QualifyingResults session={qualifying} />
     </div>
     <div x-cloak x-show="RACE" x-transition:enter.duration.500ms x-transition:leave.duration.0ms>
-      <RaceResults session={sessions.find((session: Record<string, unknown>) => session.simsession_name === 'RACE')} />
+      <RaceResults session={race} />
     </div>
   </div>
 </div>
