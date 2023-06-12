@@ -1,0 +1,31 @@
+---
+const { title, description } = Astro.props;
+const seoTitle = title || "Stat 'n' Track";
+const seoDescription = description || "An iRacing planner and statistics analyzer";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={seoDescription} />
+    <title>{seoTitle}</title>
+  </head>
+  <body>
+    <div class="bg-gray-900 text-white font-sans">
+      <div class="text-center border-white border-2">
+        <p class="block lg:text-7xl md:text-4xl sm-text-3xl break-words text-center">Stat 'N' Track</p>
+        <p class="block lg:text-4xl md:text-xl sm:text-lg break-words text-center pt-2">
+          An iRacing planner and statistics analyzer
+        </p>
+        <div class="block lg:text-3xl md:text-lg sm:text-md break-words text-center py-2">
+          <a href="/Stat-N-Track/" rel="prefetch">Home</a>
+        </div>
+      </div>
+      <slot />
+    </div>
+  </body>
+</html>
