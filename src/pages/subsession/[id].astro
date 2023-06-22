@@ -1,4 +1,5 @@
 ---
+import { connectToDatabase } from '$lib/mongodb';
 import Header from '$lib/components/subsession/header.astro';
 import TrackInfo from '$lib/components/track/info.astro';
 import LicenseInfo from '$lib/components/subsession/licenseInfo.astro';
@@ -657,8 +658,10 @@ export async function getStaticPaths() {
 	]
 }
 const { id } = Astro.params;
-const response = await fetch(`http://localhost:3000/Stat-N-Track/api/subsession/${id}.json`);
-const subsession = await response.json();
+const dbConnection = await connectToDatabase();
+const db = dbConnection.db;
+const collection = db.collection('subsessions');
+const subsession = await collection.findOne({ _id: Number(id) });
 const {
 		track,
 		session_results,
