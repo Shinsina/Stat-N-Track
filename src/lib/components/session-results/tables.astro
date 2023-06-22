@@ -3,9 +3,9 @@ import PracticeResults from '$lib/components/session-results/practice.astro';
 import QualifyingResults from '$lib/components/session-results/qualifying.astro';
 import RaceResults from '$lib/components/session-results/race.astro';
 const { sessions } = Astro.props;
-const practice = sessions.find((session: Record<string, unknown>) => session.simsession_type_name.match(/PRACTICE/i));
-const qualifying = sessions.find((session: Record<string, unknown>) => session.simsession_type_name.match(/QUALIFY/i));
-const race = sessions.find((session: Record<string, unknown>) => session.simsession_type_name.match(/RACE/i));
+const practice = sessions.find((session: Record<string, any>) => session.simsession_type_name.match(/PRACTICE/i));
+const qualifying = sessions.find((session: Record<string, any>) => session.simsession_type_name.match(/QUALIFY/i));
+const race = sessions.find((session: Record<string, any>) => session.simsession_type_name.match(/RACE/i));
 ---
 
 <div x-data="tables">
