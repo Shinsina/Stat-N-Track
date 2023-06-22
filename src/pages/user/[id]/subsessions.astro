@@ -13,7 +13,7 @@ const dbConnection = await connectToDatabase();
 const { db } = dbConnection;
 const collection = db.collection('subsessions');
 const subsessions = await collection.find({ 'session_results.2.results': { $elemMatch: { cust_id: Number(id) }}}).sort({_id: -1}).toArray();
-const tableData = subsessions.map((subsession) => {
+const tableData = subsessions.map((subsession: any) => {
 	const {
 		subsession_id,
 		track,
@@ -41,7 +41,7 @@ const tableData = subsessions.map((subsession) => {
 		incidents,
 		car_name,
 		aggregate_champ_points,
-	} = subsession.session_results[2].results.filter((v) => v.cust_id === Number(id))[0];
+	} = subsession.session_results[2].results.filter((v: any) => v.cust_id === Number(id))[0];
 	const { group_name: License } = allowed_licenses.slice(0, 2).pop();
 
 	return {
