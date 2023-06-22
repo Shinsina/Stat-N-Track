@@ -21,6 +21,9 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v3
       - name: Install, build, and upload your site
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          MONGODB_DB: ${{ secrets.MONGODB_DB }}
         uses: withastro/action@v0
         with:
             # path: . # The root location of your Astro project inside the repository. (optional)
