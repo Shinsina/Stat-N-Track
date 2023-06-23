@@ -1,0 +1,95 @@
+---
+import fieldIdToLabelMap from '$lib/utils/field-id-to-label-map';
+import { connectToDatabase } from '$lib/mongodb';
+import TableSort from '$lib/components/table/sort.astro';
+export function getStaticPaths() {
+	return [
+		{ params: { id: 300752 } },
+		{ params: { id: 815162 } }
+	];
+};
+const { id } = Astro.params;
+const dbConnection = await connectToDatabase();
+const { db } = dbConnection;
+const collection = db.collection('standings');
+const standingsResults = await collection.find({ 'season_driver_data.cust_id': Number(id) }).sort({ season_id: -1}).toArray();
+const finalData: Record<string,any> = standingsResults.map((result: any) => {
+  const {
+    car_class_id,
+    division,
+    division_rank,
+    overall_rank,
+    season_driver_data,
+    season_id,
+    season_name,
+  } = result;
+  const {
+    license,
+    weeks_counted,
+    starts,
+    wins,
+    top5,
+    top25_percent,
+    poles,
+    avg_start_position,
+    avg_finish_position,
+    avg_field_size,
+    laps,
+    laps_led,
+    incidents,
+    points
+  } = season_driver_data
+  const {
+    category,
+    safety_rating,
+    irating,
+    group_name
+  } = license
+  return {
+    season_id,
+    car_class_id,
+    division,
+    division_rank,
+    overall_rank,
+    points,
+    season_name,
+    weeks_counted,
+    starts,
+    wins,
+    top5,
+    top25_percent,
+    poles,
+    avg_start_position,
+    avg_finish_position,
+    avg_field_size,
+    laps,
+    laps_led,
+    incidents,
+    safety_rating,
+    irating,
+    category,
+    group_name
+  }
+});
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<body class="bg-gray-900 text-white font-sans pt-2">
+    <div class="grid grid-cols-1 pt-6">
+			<table x-ref="Table" x-data="table" class="text-center col-span-1">
+				<tr x-ref="Headings">{Object.keys(finalData[0]).map((key) => (<th id={`Table ${key} ${finalData.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
+        {finalData.map(
+					(result: any, rowNumber: any) => (<tr x-ref={`Table ${rowNumber}`}>{Object.keys(result).map((key: string) => (<td x-ref={`Table ${key} ${rowNumber}`} class="border-2">{key === 'season_id' ? (<a rel="prefetch" href={`/Stat-N-Track/user/${id}/season/${result[key]}`}>{result[key]}</a>): result[key]}</td>))}</td>)
+        )}
+			</table>
+		</div>
+    <TableSort />
+	</body>
+</html>
