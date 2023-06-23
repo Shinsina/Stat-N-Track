@@ -1,0 +1,42 @@
+<script>
+  import Alpine from 'alpinejs';
+  Alpine.data('table', () => ({
+    sort() {
+      const [tableName, columnName, rowCount, direction] = this.$el.id.split(' ');
+      const rows = new Map();
+      const keys = new Set();
+      for (let rowNumber = 0; rowNumber < rowCount; rowNumber += 1) {
+        const initialValue = this.$refs[`${tableName} ${columnName} ${rowNumber}`].innerText;
+        const value = Number.isNaN(Number(initialValue)) ? initialValue : Number(initialValue);
+        if (rows.get(value)) {
+          rows.set(value, [...rows.get(value), rowNumber]);
+        } else {
+          rows.set(value, [rowNumber]);
+          keys.add(value);
+        }
+      }
+      const keysArray = Array.from(keys);
+      const isNumbers = keysArray.filter((key) => typeof key === 'number').length;
+      const internalSort = () => {
+        if (isNumbers && (direction === 'ascending')) {
+          return keysArray.sort((a, b) => {
+            return b - a;
+          });
+        } else if (isNumbers && !direction) {
+          return keysArray.sort((a, b) => {
+            return a - b;
+          });
+        } else if (!isNumbers && direction === 'ascending') {
+          return keysArray.sort();
+        } else if (!isNumbers && !direction) {
+          return keysArray.sort().reverse();
+        }
+      }
+      this.$el.id = direction === 'ascending' ? `${tableName} ${columnName} ${rowCount}` : `${tableName} ${columnName} ${rowCount} ascending`;
+      const rowElements = direction === 'ascending' ? internalSort().map((key) => key).map((key) => rows.get(key)).flat().map((value) => this.$refs[`${tableName} ${value}`].outerHTML) : internalSort().map((key) => key).map((key) => rows.get(key)).flat().map((value) => this.$refs[`${tableName} ${value}`].outerHTML);
+      const tableHeadings = this.$refs.Headings.outerHTML;
+      this.$refs.Table.innerHTML = `${tableHeadings}${rowElements.join('')}`;
+    }
+  }))
+  Alpine.start();
+</script>
