@@ -1,7 +1,6 @@
 ---
 import fieldIdToLabelMap from '$lib/utils/field-id-to-label-map';
 import { connectToDatabase } from '$lib/mongodb';
-import TableSort from '$lib/components/table/sort.astro';
 export function getStaticPaths() {
 	return [
 		{ params: { id: 300752 } },
@@ -90,6 +89,11 @@ const finalData: Record<string,any> = standingsResults.map((result: any) => {
         )}
 			</table>
 		</div>
-    <TableSort />
+    <script>
+			import Alpine from 'alpinejs';
+			import Table from '../../../lib/components/table/index.ts';
+			Alpine.data('table', Table);
+			Alpine.start();
+		</script>
 	</body>
 </html>

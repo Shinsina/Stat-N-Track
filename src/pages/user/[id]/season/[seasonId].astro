@@ -1,7 +1,6 @@
 ---
 import handleSessionResults from '$lib/utils/handle-session-results';
 import fieldIdToLabelMap from '$lib/utils/field-id-to-label-map';
-import TableSort from '$lib/components/table/sort.astro';
 import { connectToDatabase } from '$lib/mongodb';
 export async function getStaticPaths() {
 	const userIds = [300752, 815162];
@@ -100,6 +99,11 @@ const keysArray = Array.from(keysToDisplay);
 				)}
 			</table>
 		</div>
-		<TableSort />
+    <script>
+			import Alpine from 'alpinejs';
+			import Table from '../../../../lib/components/table/index.ts';
+			Alpine.data('table', Table);
+			Alpine.start();
+		</script>
 	</body>
 </html>
