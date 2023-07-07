@@ -16,7 +16,6 @@ const {
 } = session || {};
 const handledSessionResults = handleSessionResults({ keysToDisplay: keysToDisplay || new Set([]), results: results || [] });
 const keysArray = Array.from(keysToDisplay);
-const typeNameJoined = simsession_type_name ? simsession_type_name.split(' ').join('') : simsession_name;
 ---
 <div class="grid grid-cols-1">
   <table class="text-center col-span-1">
@@ -35,10 +34,10 @@ const typeNameJoined = simsession_type_name ? simsession_type_name.split(' ').jo
   </table>
 </div>
 <div class="grid grid-cols-1 pt-6">
-  <table x-ref={typeNameJoined} class="text-center col-span-1">
-    <tr x-ref={`${typeNameJoined} Table Headings`}>{keysArray.map((key) => (<th id={`${typeNameJoined} ${key} ${handledSessionResults.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
+  <table x-ref="Table" x-data={simsession_name} class="text-center col-span-1">
+    <tr x-ref="Headings">{keysArray.map((key) => (<th id={`Table ${key} ${handledSessionResults.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
     {handledSessionResults.map(
-      (result, rowNumber) => (<tr x-ref={`${typeNameJoined} ${rowNumber}`}>{result.map((value: string|number, index: number) => (<td x-ref={`${typeNameJoined} ${keysArray[index]} ${rowNumber}`} class="border-2">{value}</td>))}</tr>),
+      (result, rowNumber) => (<tr x-ref={`Table ${rowNumber}`}>{result.map((value: string|number, index: number) => (<td x-ref={`Table ${keysArray[index]} ${rowNumber}`} class="border-2">{value}</td>))}</tr>),
     )}
   </table>
 </div>
