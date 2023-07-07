@@ -20,7 +20,7 @@ const subsessions = await collection.find({
 	season_id: Number(seasonId),
 	'session_results.2.results': { $elemMatch: { cust_id: Number(id) }},
 }).sort({_id: 1}).toArray();
-const tableData = subsessions.map((subsession: any) => {
+const tableData = subsessions.map((subsession) => {
 	const {
 		subsession_id,
 		track,
