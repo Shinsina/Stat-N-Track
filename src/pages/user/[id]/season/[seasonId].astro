@@ -8,7 +8,7 @@ export async function getStaticPaths() {
 	const db = dbConnection.db;
 	const collection = db.collection('standings');
 	const seasons = await collection.find({ 'season_driver_data.cust_id': { $in: userIds }}).toArray();
-	return seasons.map((season: any) => ({
+	return seasons.map((season) => ({
 		params: { id: Number(season.season_driver_data.cust_id), seasonId: Number(season.season_id) },
 	}));
 }
