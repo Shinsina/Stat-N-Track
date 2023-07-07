@@ -11,13 +11,14 @@ export async function getStaticPaths() {
 	const db = dbConnection.db;
 	const collection = db.collection('subsessions');
 	const subsessionIds = await collection.distinct('_id', {});
-	return subsessionIds.map((id: string) => ({ params: { id: Number(id) } }));
+	return subsessionIds.map((id) => ({ params: { id: Number(id) } }));
 }
 const { id } = Astro.params;
 const dbConnection = await connectToDatabase();
 const db = dbConnection.db;
 const collection = db.collection('subsessions');
-const subsession = await collection.findOne({ _id: Number(id) });
+//@ts-ignore
+const subsession: Record<string,unknown>|null = await collection.findOne({ _id: Number(id) });
 const {
 		track,
 		session_results,
@@ -54,6 +55,7 @@ const {
 		<SessionResultsTables sessions={session_results} />
 		<script>
 			import Alpine from 'alpinejs';
+			import Table from '../../lib/components/table/index.ts';
 			Alpine.data('tables', () => ({
 				PRACTICE: false,
 				QUALIFY: false,
@@ -66,44 +68,11 @@ const {
 							this[id] = !this[id];
 						}
 					});
-				},
-				sort() {
-					const [tableName, columnName, rowCount, direction] = this.$el.id.split(' ');
-					const rows = new Map();
-					const keys = new Set();
-					for (let rowNumber = 0; rowNumber < rowCount; rowNumber += 1) {
-						const initialValue = this.$refs[`${tableName} ${columnName} ${rowNumber}`].innerText;
-						const value = Number.isNaN(Number(initialValue)) ? initialValue : Number(initialValue);
-						if (rows.get(value)) {
-							rows.set(value, [...rows.get(value), rowNumber]);
-						} else {
-							rows.set(value, [rowNumber]);
-							keys.add(value);
-						}
-					}
-					const keysArray = Array.from(keys);
-					const isNumbers = keysArray.filter((key) => typeof key === 'number').length;
-					const internalSort = () => {
-						if (isNumbers && (direction === 'ascending')) {
-							return keysArray.sort((a, b) => {
-								return b - a;
-							});
-						} else if (isNumbers && !direction) {
-							return keysArray.sort((a, b) => {
-								return a - b;
-							});
-						} else if (!isNumbers && direction === 'ascending') {
-							return keysArray.sort();
-						} else if (!isNumbers && !direction) {
-							return keysArray.sort().reverse();
-						}
-					}
-					this.$el.id = direction === 'ascending' ? `${tableName} ${columnName} ${rowCount}` : `${tableName} ${columnName} ${rowCount} ascending`;
-					const rowElements = direction === 'ascending' ? internalSort().map((key) => key).map((key) => rows.get(key)).flat().map((value) => this.$refs[`${tableName} ${value}`].outerHTML) : internalSort().map((key) => key).map((key) => rows.get(key)).flat().map((value) => this.$refs[`${tableName} ${value}`].outerHTML);
-					const tableHeadings = this.$refs[`${tableName} Table Headings`].outerHTML;
-					this.$refs[tableName].innerHTML = `${tableHeadings}${rowElements.join('')}`;
 				}
-			}))
+			}));
+			Alpine.data('PRACTICE', Table);
+			Alpine.data('QUALIFY', Table);
+			Alpine.data('RACE', Table);
 			Alpine.start();
 		</script>
 	</body>

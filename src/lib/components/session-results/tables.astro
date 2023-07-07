@@ -2,10 +2,11 @@
 import PracticeResults from '$lib/components/session-results/practice.astro';
 import QualifyingResults from '$lib/components/session-results/qualifying.astro';
 import RaceResults from '$lib/components/session-results/race.astro';
+import type { Session } from '$lib/types';
 const { sessions } = Astro.props;
-const practice = sessions.find((session: Record<string, any>) => session.simsession_type_name.match(/PRACTICE/i));
-const qualifying = sessions.find((session: Record<string, any>) => session.simsession_type_name.match(/QUALIFY/i));
-const race = sessions.find((session: Record<string, any>) => session.simsession_type_name.match(/RACE/i));
+const practice: Session = sessions.find((session: Session) => session.simsession_type_name.match(/PRACTICE/i));
+const qualifying: Session = sessions.find((session: Session) => session.simsession_type_name.match(/QUALIFY/i));
+const race: Session = sessions.find((session: Session) => session.simsession_type_name.match(/RACE/i));
 ---
 
 <div x-data="tables">

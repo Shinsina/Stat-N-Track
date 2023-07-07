@@ -10,4 +10,4 @@ export type Session = {
   simsession_type: number,
   simsession_number: number,
   results: Array<Record<string,unknown>>
-}
+};
