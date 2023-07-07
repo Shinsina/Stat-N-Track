@@ -12,7 +12,7 @@ const dbConnection = await connectToDatabase();
 const { db } = dbConnection;
 const collection = db.collection('standings');
 const standingsResults = await collection.find({ 'season_driver_data.cust_id': Number(id) }).sort({ season_id: -1}).toArray();
-const finalData: Record<string,any> = standingsResults.map((result: any) => {
+const finalData: Array<Record<string,any>> = standingsResults.map((result: any) => {
   const {
     car_class_id,
     division,
@@ -85,7 +85,7 @@ const finalData: Record<string,any> = standingsResults.map((result: any) => {
 			<table x-ref="Table" x-data="table" class="text-center col-span-1">
 				<tr x-ref="Headings">{Object.keys(finalData[0]).map((key) => (<th id={`Table ${key} ${finalData.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
         {finalData.map(
-					(result: any, rowNumber: any) => (<tr x-ref={`Table ${rowNumber}`}>{Object.keys(result).map((key: string) => (<td x-ref={`Table ${key} ${rowNumber}`} class="border-2">{key === 'season_id' ? (<a rel="prefetch" href={`/Stat-N-Track/user/${id}/season/${result[key]}`}>{result[key]}</a>): result[key]}</td>))}</td>)
+					(result, rowNumber) => (<tr x-ref={`Table ${rowNumber}`}>{Object.keys(result).map((key: string) => (<td x-ref={`Table ${key} ${rowNumber}`} class="border-2">{key === 'season_id' ? (<a rel="prefetch" href={`/Stat-N-Track/user/${id}/season/${result[key]}`}>{result[key]}</a>): result[key]}</td>))}</td>)
         )}
 			</table>
 		</div>
