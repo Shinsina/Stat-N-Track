@@ -1,16 +1,11 @@
 ---
-import { Image } from '@astrojs/image/components';
-import type { Subsession } from '$lib/types';
+import { Image } from "@astrojs/image/components";
+import type { Subsession } from "$lib/types";
 interface Props {
-  subsession: Subsession
+  subsession: Subsession;
 }
 const { subsession } = Astro.props;
-const {
-  series_logo,
-  season_name,
-  race_week_num,
-  max_weeks,
-} = subsession
+const { series_logo, season_name, race_week_num, max_weeks } = subsession;
 ---
 
 <div class="grid grid-cols-3">
@@ -18,7 +13,10 @@ const {
     <div class="flex justify-center">
       <Image
         src={`https://images-static.iracing.com/img/logos/series/${series_logo}`}
-        alt="Series Logo" width={300} height={100} format='avif'
+        alt="Series Logo"
+        width={300}
+        height={100}
+        format="avif"
       />
     </div>
     <div class="text-center py-4">

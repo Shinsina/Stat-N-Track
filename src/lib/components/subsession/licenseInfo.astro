@@ -1,8 +1,8 @@
 ---
-import type { License } from '$lib/types';
+import type { License } from "$lib/types";
 interface Props {
-  licenses: Array<License>
-  licenseCategory: string
+  licenses: Array<License>;
+  licenseCategory: string;
 }
 const { licenses, licenseCategory } = Astro.props;
 ---
@@ -13,8 +13,19 @@ const { licenses, licenseCategory } = Astro.props;
     Allowed Licenses:
     {
       licenses
-        .filter((license: License) => (Math.ceil(license.min_license_level / license.license_group) === license.min_license_level / license.license_group))
-        .map((license: License, index: number) => (<p>{license.group_name} {!index ? `${license.min_license_level / license.license_group}.00` : 'and above'}</p>))
+        .filter(
+          (license: License) =>
+            Math.ceil(license.min_license_level / license.license_group) ===
+            license.min_license_level / license.license_group
+        )
+        .map((license: License, index: number) => (
+          <p>
+            {license.group_name}{" "}
+            {!index
+              ? `${license.min_license_level / license.license_group}.00`
+              : "and above"}
+          </p>
+        ))
     }
   </div>
 </div>
