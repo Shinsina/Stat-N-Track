@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 const { id } = Astro.params;
 const dbConnection = await connectToDatabase();
 const db = dbConnection.db;
-const collection = db.collection('subsessions');
+const collection = db.collection<Subsession>('subsessions');
 //@ts-ignore
 const subsession: Subsession = await collection.findOne({ _id: Number(id) });
 const {

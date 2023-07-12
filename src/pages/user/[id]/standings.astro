@@ -85,7 +85,7 @@ const finalData: Array<Record<string,any>> = standingsResults.map((result) => {
 			<table x-ref="Table" x-data="table" class="text-center col-span-1">
 				<tr x-ref="Headings">{Object.keys(finalData[0]).map((key) => (<th id={`Table ${key} ${finalData.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
         {finalData.map(
-					(result, rowNumber) => (<tr x-ref={`Table ${rowNumber}`}>{Object.keys(result).map((key: string) => (<td x-ref={`Table ${key} ${rowNumber}`} class="border-2">{key === 'season_id' ? (<a rel="prefetch" href={`/Stat-N-Track/user/${id}/season/${result[key]}`}>{result[key]}</a>): result[key]}</td>))}</td>)
+					(result, rowNumber) => (<tr x-ref={`Table ${rowNumber}`}>{Object.keys(result).map((key: string) => (<td x-ref={`Table ${key} ${rowNumber} ${result[key]}`} class="border-2">{key === 'season_id' ? (<a rel="prefetch" href={`/Stat-N-Track/user/${id}/season/${result[key]}`}>{result[key]}</a>): result[key]}</td>))}</td>)
         )}
 			</table>
 		</div>
