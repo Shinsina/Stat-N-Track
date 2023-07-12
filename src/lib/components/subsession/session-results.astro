@@ -1,10 +1,12 @@
 ---
-import handleResults from '$lib/utils/handle-session-results';
-import fieldIdToLabelMap from '$lib/utils/field-id-to-label-map';
-import type { Session } from '$lib/types';
+import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
+import handleResults from "$lib/utils/handle-session-results";
+import lapTimeFields from "$lib/utils/lap-time-fields";
+import parseLapTime from "$lib/utils/parse-lap-time";
+import type { Session } from "$lib/types";
 interface Props {
-  session: Session,
-  keysToDisplay: Set<string>
+  session: Session;
+  keysToDisplay: Set<string>;
 }
 const { session, keysToDisplay } = Astro.props;
 const {
@@ -12,10 +14,14 @@ const {
   simsession_type_name,
   simsession_type,
   simsession_number,
-  results
+  results,
 } = session || {};
-const { keysArray, handledResults } = handleResults({ keysToDisplay: keysToDisplay || new Set([]), results: results || [] });
+const { keysArray, handledResults } = handleResults({
+  keysToDisplay: keysToDisplay || new Set([]),
+  results: results || [],
+});
 ---
+
 <div class="grid grid-cols-1">
   <table class="text-center col-span-1">
     <tr class="bg-gray-500">
@@ -34,9 +40,35 @@ const { keysArray, handledResults } = handleResults({ keysToDisplay: keysToDispl
 </div>
 <div class="grid grid-cols-1 pt-6">
   <table x-ref="Table" x-data={simsession_name} class="text-center col-span-1">
-    <tr x-ref="Headings">{keysArray.map((key) => (<th id={`Table ${key} ${handledResults.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
-    {handledResults.map(
-      (result, rowNumber) => (<tr x-ref={`Table ${rowNumber}`}>{result.map((value: string|number, index: number) => (<td x-ref={`Table ${keysArray[index]} ${rowNumber}`} class="border-2">{value}</td>))}</tr>),
-    )}
+    <tr x-ref="Headings"
+      >{
+        keysArray.map((key) => (
+          <th
+            id={`Table ${key} ${handledResults.length}`}
+            class="border-2"
+            x-on:click="sort"
+          >
+            {fieldIdToLabelMap.get(key) || key}
+          </th>
+        ))
+      }</tr
+    >
+    {
+      handledResults.map((result, rowNumber) => (
+        <tr x-ref={`Table ${rowNumber}`}>
+          {result.map((value: string | number, index: number) => (
+            <td
+              x-ref={`Table ${keysArray[index]} ${rowNumber}`}
+              id={`${simsession_name}~${keysArray[index]}~${rowNumber}~${value}`}
+              class="border-2"
+            >
+              {lapTimeFields.has(keysArray[index])
+                ? parseLapTime(Number(value))
+                : value}
+            </td>
+          ))}
+        </tr>
+      ))
+    }
   </table>
 </div>

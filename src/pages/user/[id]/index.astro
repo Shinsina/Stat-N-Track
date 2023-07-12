@@ -1,11 +1,8 @@
 ---
-import DefaultLayout from '../../../layouts/default.astro';
+import DefaultLayout from "../../../layouts/default.astro";
 export function getStaticPaths() {
-	return [
-		{ params: { id: 300752 } },
-		{ params: { id: 815162 } }
-	];
-};
+	return [{ params: { id: 300752 } }, { params: { id: 815162 } }];
+}
 const { id } = Astro.params;
 ---
 
@@ -15,7 +12,9 @@ const { id } = Astro.params;
 			<a rel="prefetch" href=`/Stat-N-Track/user/${id}/subsessions`>Sessions</a>
 		</div>
 		<div>
-			<a rel="prefetch" href=`/Stat-N-Track/user/${id}/standings`>Season Standings</a>
+			<a rel="prefetch" href=`/Stat-N-Track/user/${id}/standings`
+				>Season Standings</a
+			>
 		</div>
 	</div>
 </DefaultLayout
