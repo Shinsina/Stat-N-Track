@@ -1,18 +1,18 @@
 ---
-import fieldIdToLabelMap from '$lib/utils/field-id-to-label-map';
-import { connectToDatabase } from '$lib/mongodb';
+import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
+import { connectToDatabase } from "$lib/mongodb";
 export function getStaticPaths() {
-	return [
-		{ params: { id: 300752 } },
-		{ params: { id: 815162 } }
-	];
-};
+  return [{ params: { id: 300752 } }, { params: { id: 815162 } }];
+}
 const { id } = Astro.params;
 const dbConnection = await connectToDatabase();
 const { db } = dbConnection;
-const collection = db.collection('standings');
-const standingsResults = await collection.find({ 'season_driver_data.cust_id': Number(id) }).sort({ season_id: -1}).toArray();
-const finalData: Array<Record<string,any>> = standingsResults.map((result) => {
+const collection = db.collection("standings");
+const standingsResults = await collection
+  .find({ "season_driver_data.cust_id": Number(id) })
+  .sort({ season_id: -1 })
+  .toArray();
+const finalData: Array<Record<string, any>> = standingsResults.map((result) => {
   const {
     car_class_id,
     division,
@@ -36,14 +36,9 @@ const finalData: Array<Record<string,any>> = standingsResults.map((result) => {
     laps,
     laps_led,
     incidents,
-    points
-  } = season_driver_data
-  const {
-    category,
-    safety_rating,
-    irating,
-    group_name
-  } = license
+    points,
+  } = season_driver_data;
+  const { category, safety_rating, irating, group_name } = license;
   return {
     season_id,
     car_class_id,
@@ -67,33 +62,66 @@ const finalData: Array<Record<string,any>> = standingsResults.map((result) => {
     safety_rating,
     irating,
     category,
-    group_name
-  }
+    group_name,
+  };
 });
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body class="bg-gray-900 text-white font-sans pt-2">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body class="bg-gray-900 text-white font-sans pt-2">
     <div class="grid grid-cols-1 pt-6">
-			<table x-ref="Table" x-data="table" class="text-center col-span-1">
-				<tr x-ref="Headings">{Object.keys(finalData[0]).map((key) => (<th id={`Table ${key} ${finalData.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
-        {finalData.map(
-					(result, rowNumber) => (<tr x-ref={`Table ${rowNumber}`}>{Object.keys(result).map((key: string) => (<td x-ref={`Table ${key} ${rowNumber} ${result[key]}`} class="border-2">{key === 'season_id' ? (<a rel="prefetch" href={`/Stat-N-Track/user/${id}/season/${result[key]}`}>{result[key]}</a>): result[key]}</td>))}</td>)
-        )}
-			</table>
-		</div>
+      <table x-ref="Table" x-data="table" class="text-center col-span-1">
+        <tr x-ref="Headings"
+          >{
+            Object.keys(finalData[0]).map((key) => (
+              <th
+                id={`Table ${key} ${finalData.length}`}
+                class="border-2"
+                x-on:click="sort"
+              >
+                {fieldIdToLabelMap.get(key) || key}
+              </th>
+            ))
+          }</tr
+        >
+        {
+          finalData.map((result, rowNumber) => (
+            <tr x-ref={`Table ${rowNumber}`}>
+              {Object.keys(result).map((key: string) => (
+                <td
+                  x-ref={`Table ${key} ${rowNumber}`}
+                  id={`${key}~${rowNumber}~${result[key]}`}
+                  class="border-2"
+                >
+                  {key === "season_id" ? (
+                    <a
+                      rel="prefetch"
+                      href={`/Stat-N-Track/user/${id}/season/${result[key]}`}
+                    >
+                      {result[key]}
+                    </a>
+                  ) : (
+                    result[key]
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+      </table>
+    </div>
     <script>
-			import Alpine from 'alpinejs';
-			import Table from '../../../lib/components/table/index.ts';
-			Alpine.data('table', Table);
-			Alpine.start();
-		</script>
-	</body>
+      import Alpine from "alpinejs";
+      import Table from "../../../lib/components/table/index.ts";
+      Alpine.data("table", Table);
+      Alpine.start();
+    </script>
+  </body>
 </html>
