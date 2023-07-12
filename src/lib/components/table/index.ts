@@ -20,7 +20,7 @@ export default (): AlpineComponent => ({
     const rows = new Map();
     const keys = new Set();
     for (let rowNumber = 0; rowNumber < Number(rowCount); rowNumber += 1) {
-      const initialValue = this.$refs[`${tableName} ${columnName} ${rowNumber}`].innerText;
+      const initialValue = this.$refs[`${tableName} ${columnName} ${rowNumber}`].id.split('~').pop();
       const value = Number.isNaN(Number(initialValue)) ? initialValue : Number(initialValue);
       if (rows.get(value)) {
         rows.set(value, [...rows.get(value), rowNumber]);
