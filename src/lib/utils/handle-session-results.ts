@@ -19,16 +19,16 @@ const lapTimeField = new Set([
 
 
 export default ({ keysToDisplay, results }: HandleResultsInput): HandleResultsOuput => {
-  const uniqueKeysArray: Set<string> = new Set([]);
+  const uniqueKeys: Set<string> = new Set([]);
   const handledResults = results
     .map((result) => Object.keys(result)
       .filter((key) => keysToDisplay.has(key))
         .map((key) => {
-          uniqueKeysArray.add(key);
+          uniqueKeys.add(key);
           if (zeroIndexedKey.has(key)) return result[key] + 1;
           if (lapTimeField.has(key)) return parseLapTime(result[key]);
           return result[key]
     }));
-  const keysArray = Array.from(uniqueKeysArray)
+  const keysArray = Array.from(uniqueKeys)
   return { keysArray, handledResults };
 }
