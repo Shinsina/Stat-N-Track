@@ -1,7 +1,7 @@
 ---
-import handleSessionResults from '$lib/utils/handle-session-results';
+import handleResults from '$lib/utils/handle-session-results';
 import fieldIdToLabelMap from '$lib/utils/field-id-to-label-map';
-import type { Session } from '$lib/types/index';
+import type { Session } from '$lib/types';
 interface Props {
   session: Session,
   keysToDisplay: Set<string>
@@ -14,8 +14,7 @@ const {
   simsession_number,
   results
 } = session || {};
-const handledSessionResults = handleSessionResults({ keysToDisplay: keysToDisplay || new Set([]), results: results || [] });
-const keysArray = Array.from(keysToDisplay);
+const { keysArray, handledResults } = handleResults({ keysToDisplay: keysToDisplay || new Set([]), results: results || [] });
 ---
 <div class="grid grid-cols-1">
   <table class="text-center col-span-1">
@@ -35,8 +34,8 @@ const keysArray = Array.from(keysToDisplay);
 </div>
 <div class="grid grid-cols-1 pt-6">
   <table x-ref="Table" x-data={simsession_name} class="text-center col-span-1">
-    <tr x-ref="Headings">{keysArray.map((key) => (<th id={`Table ${key} ${handledSessionResults.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
-    {handledSessionResults.map(
+    <tr x-ref="Headings">{keysArray.map((key) => (<th id={`Table ${key} ${handledResults.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
+    {handledResults.map(
       (result, rowNumber) => (<tr x-ref={`Table ${rowNumber}`}>{result.map((value: string|number, index: number) => (<td x-ref={`Table ${keysArray[index]} ${rowNumber}`} class="border-2">{value}</td>))}</tr>),
     )}
   </table>

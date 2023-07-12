@@ -1,5 +1,5 @@
 ---
-import handleSessionResults from '$lib/utils/handle-session-results';
+import handleResults from '$lib/utils/handle-session-results';
 import fieldIdToLabelMap from '$lib/utils/field-id-to-label-map';
 import { connectToDatabase } from '$lib/mongodb';
 export async function getStaticPaths() {
@@ -78,8 +78,7 @@ const tableData = subsessions.map((subsession) => {
 	}
 });
 const keysToDisplay = new Set(Object.keys(tableData[0]));
-const finalData = handleSessionResults({ keysToDisplay: new Set(Object.keys(tableData[0])), results: tableData });
-const keysArray = Array.from(keysToDisplay);
+const { keysArray, handledResults } = handleResults({ keysToDisplay, results: tableData });
 ---
 
 <html lang="en">
@@ -94,7 +93,7 @@ const keysArray = Array.from(keysToDisplay);
 		<div class="grid grid-cols-1 pt-6">
 			<table x-ref="Table" x-data="table" class="text-center col-span-1">
 				<tr x-ref="Headings">{Object.keys(tableData[0]).map((key) => (<th id={`Table ${key} ${tableData.length}`} class="border-2" x-on:click="sort">{fieldIdToLabelMap.get(key) || key}</th>))}</tr>
-				{finalData.map(
+				{handledResults.map(
 					(result, rowNumber) => (<tr x-ref={`Table ${rowNumber}`}>{Object.keys(result).map((key: string) => (<td x-ref={`Table ${keysArray[Number(key)]} ${rowNumber}`} class="border-2">{key === '0' ? (<a rel="prefetch" href={`/Stat-N-Track/subsession/${result[key]}`}>{result[key]}</a>): result[key]}</td>))}</tr>),
 				)}
 			</table>

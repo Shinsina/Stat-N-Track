@@ -6,6 +6,7 @@ import LicenseInfo from '$lib/components/subsession/licenseInfo.astro';
 import RaceSummary from '$lib/components/subsession/raceSummary.astro';
 import RelevantIds from '$lib/components/subsession/relevantIds.astro';
 import SessionResultsTables from '$lib/components/session-results/tables.astro';
+import type { Subsession } from '$lib/types';
 export async function getStaticPaths() {
 	const dbConnection = await connectToDatabase();
 	const db = dbConnection.db;
@@ -18,7 +19,7 @@ const dbConnection = await connectToDatabase();
 const db = dbConnection.db;
 const collection = db.collection('subsessions');
 //@ts-ignore
-const subsession: Record<string,unknown>|null = await collection.findOne({ _id: Number(id) });
+const subsession: Subsession = await collection.findOne({ _id: Number(id) });
 const {
 		track,
 		session_results,

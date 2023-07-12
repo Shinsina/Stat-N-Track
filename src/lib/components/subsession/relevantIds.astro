@@ -1,10 +1,14 @@
 ---
-import type { Session } from '$lib/types/index';
+import type { Session, SessionResult, Subsession } from '$lib/types';
+interface Props {
+  subsession: Subsession
+  sessions: Array<Session>
+}
 const { subsession, sessions } = Astro.props;
 const relevantIds = Object.keys(subsession)
       .sort()
-      .filter((key) => key.match(/_id$/) && Number(JSON.stringify(subsession[key])) > 0)
-      .map((key) => (`${key}: ${JSON.stringify(subsession[key])}`));
+      .filter((key) => key.match(/_id$/) && Number(JSON.stringify(subsession[key as keyof Subsession])) > 0)
+      .map((key) => (`${key}: ${JSON.stringify(subsession[key as keyof Subsession])}`));
 const relevantIdMap: Record<string, Set<number>> = {};
 const excludeKeys = new Set(['cust_id', 'reason_out_id']);
 sessions.forEach((session: Session) => {
@@ -13,9 +17,9 @@ sessions.forEach((session: Session) => {
     Object.keys(result).forEach((key) => {
       if (key.match(/_id$/) && !excludeKeys.has(key)) {
         if (relevantIdMap[key]) {
-          relevantIdMap[key].add(Number(result[key]))
+          relevantIdMap[key].add(Number(result[key as keyof SessionResult]))
         } else {
-          relevantIdMap[key] = new Set([Number(result[key])]);
+          relevantIdMap[key] = new Set([Number(result[key as keyof SessionResult])]);
         }
       }
     });
