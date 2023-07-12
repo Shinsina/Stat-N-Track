@@ -1,6 +1,8 @@
 ---
 import handleResults from "$lib/utils/handle-session-results";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
+import lapTimeFields from "$lib/utils/lap-time-fields";
+import parseLapTime from "$lib/utils/parse-lap-time";
 import { connectToDatabase } from "$lib/mongodb";
 import type { Subsession } from "$lib/types";
 export function getStaticPaths() {
@@ -110,9 +112,7 @@ const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
 						<tr x-ref={`Table ${rowNumber}`}>
 							{Object.keys(result).map((key: string) => (
 								<td
-									x-ref={`Table ${keysArray[Number(key)]} ${rowNumber} ${
-										result[key]
-									}`}
+									x-ref={`Table ${keysArray[Number(key)]} ${rowNumber}`}
 									id={`${key}~${rowNumber}~${result[key]}`}
 									class="border-2"
 								>
@@ -123,6 +123,8 @@ const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
 										>
 											{result[key]}
 										</a>
+									) : lapTimeFields.has(keysArray[Number(key)]) ? (
+										parseLapTime(Number(result[key]))
 									) : (
 										result[key]
 									)}
