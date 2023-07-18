@@ -56,9 +56,10 @@
 	const carClassNames: Set<string> = new Set();
 	allUserSubsessionCarClasses.forEach((carClassMapping) => {
 		const { car_class_id, car_class_short_name } = carClassMapping;
+		const carClassNameTrimmed = car_class_short_name.trim();
 		if (!carClassMap.get(car_class_short_name)) {
-			carClassMap.set(car_class_short_name, car_class_id);
-			carClassNames.add(car_class_short_name.trim());
+			carClassMap.set(carClassNameTrimmed, car_class_id);
+			carClassNames.add(carClassNameTrimmed);
 		}
 	});
 ---
