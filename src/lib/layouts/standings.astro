@@ -57,6 +57,16 @@ const finalData: Array<Record<string, any>> = standingsResults.map(
     };
   }
 );
+const generateLinkForKey = (key: string, resultAtKey: unknown) => {
+  if (key === "season_id") {
+    return `/Stat-N-Track/user/${id}/season/${resultAtKey}`;
+  } else if (key === "year") {
+    return `/Stat-N-Track/user/${id}/standings/by-year/${resultAtKey}`;
+  } else if (key === "car_class_id") {
+    return `/Stat-N-Track/user/${id}/standings/by-car-class/${resultAtKey}`;
+  }
+  return null;
+};
 ---
 
 <DefaultLayout {seoTitle} {seoDescription}>
@@ -84,11 +94,8 @@ const finalData: Array<Record<string, any>> = standingsResults.map(
                 id={`${key}~${rowNumber}~${result[key]}`}
                 class="border-2"
               >
-                {key === "season_id" ? (
-                  <a
-                    rel="prefetch"
-                    href={`/Stat-N-Track/user/${id}/season/${result[key]}`}
-                  >
+                {generateLinkForKey(key, result[key]) ? (
+                  <a rel="prefetch" href={generateLinkForKey(key, result[key])}>
                     {result[key]}
                   </a>
                 ) : (
