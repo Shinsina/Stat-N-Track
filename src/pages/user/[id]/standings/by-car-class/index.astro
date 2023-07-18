@@ -1,0 +1,72 @@
+---
+  import { connectToDatabase } from "$lib/mongodb";
+  import DefaultLayout from "$lib/layouts/default.astro";
+  export function getStaticPaths() {
+	  return [{ params: { id: 300752 } }, { params: { id: 815162 } }];
+  }
+  const { id } = Astro.params;
+	const dbConnection = await connectToDatabase();
+	const db = dbConnection.db;
+  const collection = db.collection("subsessions");
+	const allUserSubsessionCarClasses = await collection.aggregate([
+		{
+			"$match": {
+				"session_results.2.results": { $elemMatch: { cust_id: Number(id) } },
+			}
+		},
+		{
+			"$unwind": "$session_results"
+		},
+		{
+			"$match": {
+				"session_results.results": { $elemMatch: { cust_id: Number(id) } },
+				"session_results.simsession_number": 0,
+			}
+		},
+		{
+			"$project": {
+				_id: 0,
+				results: {
+					"$filter": {
+						input: "$session_results.results",
+						cond: { $eq: ["$$result.cust_id", Number(id)]},
+						as: "result",
+					},
+				}
+			}
+		},
+		{
+			"$unwind": "$results",
+		},
+		{
+			"$replaceRoot": {
+				"newRoot": {
+					"$mergeObjects": ["$results", "$$ROOT"],
+				}
+			}
+		},
+		{
+			"$project": {
+				car_class_id: 1,
+				car_class_short_name: 1,
+			},
+		},
+	]).toArray();
+	const carClassMap = new Map();
+	const carClassNames: Set<string> = new Set();
+	allUserSubsessionCarClasses.forEach((carClassMapping) => {
+		const { car_class_id, car_class_short_name } = carClassMapping;
+		const carClassNameTrimmed = car_class_short_name.trim();
+		if (!carClassMap.get(car_class_short_name)) {
+			carClassMap.set(carClassNameTrimmed, car_class_id);
+			carClassNames.add(carClassNameTrimmed);
+		}
+	});
+---
+
+
+<DefaultLayout>
+	<div class="text-center text-3xl">
+	 {Array.from(carClassNames).sort().map((carClassName) => (<div><a href=`/Stat-N-Track/user/${id}/standings/by-car-class/${carClassMap.get(carClassName)}` rel="prefetch">{carClassName}</a></div>))}
+	</div>
+</DefaultLayout>

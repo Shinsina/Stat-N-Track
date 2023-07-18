@@ -1,20 +1,38 @@
 ---
-import DefaultLayout from "../../../layouts/default.astro";
+import DefaultLayout from "$lib/layouts/default.astro";
 export function getStaticPaths() {
-	return [{ params: { id: 300752 } }, { params: { id: 815162 } }];
+  return [{ params: { id: 300752 } }, { params: { id: 815162 } }];
 }
 const { id } = Astro.params;
 ---
 
 <DefaultLayout>
-	<div class="h-screen text-center text-3xl">
-		<div>
-			<a rel="prefetch" href=`/Stat-N-Track/user/${id}/subsessions`>Sessions</a>
-		</div>
-		<div>
-			<a rel="prefetch" href=`/Stat-N-Track/user/${id}/standings`
-				>Season Standings</a
-			>
-		</div>
-	</div>
-</DefaultLayout
+  <div class="h-screen text-center text-3xl">
+    <div>
+      <a rel="prefetch" href=`/Stat-N-Track/user/${id}/subsessions`>Sessions</a>
+    </div>
+    <div>
+      <a rel="prefetch" href=`/Stat-N-Track/user/${id}/standings`
+        >All Season Standings</a
+      >
+    </div>
+    <div>
+      <a
+        rel="prefetch"
+        href=`/Stat-N-Track/user/${id}/standings/full-participation`
+        >Fully Participated Season Standings</a
+      >
+    </div>
+    <div>
+      <a rel="prefetch" href=`/Stat-N-Track/user/${id}/standings/by-year`
+        >Season Standings By Year</a
+      >
+    </div>
+    <div>
+      <a rel="prefetch" href=`/Stat-N-Track/user/${id}/standings/by-car-class`
+        >Season Standings By Car</a
+      >
+    </div>
+  </div>
+  </DefaultLayout
+</DefaultLayout>
