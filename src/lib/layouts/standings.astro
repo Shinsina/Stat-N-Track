@@ -1,0 +1,108 @@
+---
+import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
+import DefaultLayout from "$lib/layouts/default.astro";
+const { id, seoTitle, seoDescription, standingsResults } = Astro.props;
+const finalData: Array<Record<string, any>> = standingsResults.map((result: Record<string,any>) => {
+  const {
+    car_class_id,
+    division,
+    division_rank,
+    overall_rank,
+    season_driver_data,
+    season_id,
+    season_name,
+  } = result;
+  const {
+    weeks_counted,
+    starts,
+    wins,
+    top5,
+    top25_percent,
+    poles,
+    avg_start_position,
+    avg_finish_position,
+    avg_field_size,
+    laps,
+    laps_led,
+    incidents,
+    points,
+  } = season_driver_data;
+  const [, year] = season_name.match(/([0-9]{4}) Season/) || [0, 0];
+  const [, season_number_of_year] = season_name.match(/Season ([0-9]{1})/) || [
+    0, 0,
+  ];
+  return {
+    season_id,
+    year,
+    season_number_of_year,
+    car_class_id,
+    division,
+    division_rank,
+    overall_rank,
+    points,
+    season_name,
+    weeks_counted,
+    starts,
+    wins,
+    top5,
+    top25_percent,
+    poles,
+    avg_start_position,
+    avg_finish_position,
+    avg_field_size,
+    laps,
+    laps_led,
+    incidents,
+  };
+});
+---
+
+<DefaultLayout {seoTitle} {seoDescription}>
+  <div class="grid grid-cols-1 pt-6">
+    <table x-ref="Table" x-data="table" class="text-center col-span-1">
+      <tr x-ref="Headings"
+        >{
+          Object.keys(finalData[0]).map((key) => (
+            <th
+              id={`Table ${key} ${finalData.length}`}
+              class="border-2"
+              x-on:click="sort"
+            >
+              {fieldIdToLabelMap.get(key) || key}
+            </th>
+          ))
+        }</tr
+      >
+      {
+        finalData.map((result, rowNumber) => (
+          <tr x-ref={`Table ${rowNumber}`}>
+            {Object.keys(result).map((key: string) => (
+              <td
+                x-ref={`Table ${key} ${rowNumber}`}
+                id={`${key}~${rowNumber}~${result[key]}`}
+                class="border-2"
+              >
+                {key === "season_id" ? (
+                  <a
+                    rel="prefetch"
+                    href={`/Stat-N-Track/user/${id}/season/${result[key]}`}
+                  >
+                    {result[key]}
+                  </a>
+                ) : (
+                  result[key]
+                )}
+              </td>
+            ))}
+          </tr>
+        ))
+      }
+    </table>
+  </div>
+  <script>
+    import Alpine from "alpinejs";
+    import Table from "../components/table/index.ts";
+    Alpine.data("table", Table);
+    Alpine.start();
+  </script>
+</DefaultLayout>
