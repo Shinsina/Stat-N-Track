@@ -23,7 +23,6 @@ const finalData: Array<Record<string, any>> = standingsResults.map((result) => {
     season_name,
   } = result;
   const {
-    license,
     weeks_counted,
     starts,
     wins,
@@ -38,9 +37,14 @@ const finalData: Array<Record<string, any>> = standingsResults.map((result) => {
     incidents,
     points,
   } = season_driver_data;
-  const { category, safety_rating, irating, group_name } = license;
+  const [, year] = season_name.match(/([0-9]{4}) Season/) || [0, 0];
+  const [, season_number_of_year] = season_name.match(/Season ([0-9]{1})/) || [
+    0, 0,
+  ];
   return {
     season_id,
+    year,
+    season_number_of_year,
     car_class_id,
     division,
     division_rank,
@@ -59,10 +63,6 @@ const finalData: Array<Record<string, any>> = standingsResults.map((result) => {
     laps,
     laps_led,
     incidents,
-    safety_rating,
-    irating,
-    category,
-    group_name,
   };
 });
 ---
@@ -119,7 +119,7 @@ const finalData: Array<Record<string, any>> = standingsResults.map((result) => {
     </div>
     <script>
       import Alpine from "alpinejs";
-      import Table from "../../../lib/components/table/index.ts";
+      import Table from "../../../../lib/components/table/index.ts";
       Alpine.data("table", Table);
       Alpine.start();
     </script>
