@@ -28,6 +28,8 @@ export default new Map<string, string>([
   ["car_name", "Car"],
   ["aggregate_champ_points", "Best Points For Week"],
   ["license_category", "License Category"],
+  ["year", "Year"],
+  ["season_number_of_year", "Season Number"],
   ["car_class_id", "Car Class ID"],
   ["division", "Division"],
   ["division_rank", "Rank (Division)"],
