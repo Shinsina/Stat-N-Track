@@ -8,7 +8,7 @@
   const dbConnection = await connectToDatabase();
   const db = dbConnection.db;
   const collection = db.collection("subsessions");
-  const years = await collection.distinct("season_year", { "session_results.2.results": { $elemMatch: { cust_id: id } } });
+  const years = await collection.distinct("season_year", { "session_results.2.results": { $elemMatch: { cust_id: Number(id) } } });
 ---
 
 
