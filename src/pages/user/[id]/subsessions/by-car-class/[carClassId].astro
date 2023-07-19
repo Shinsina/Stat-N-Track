@@ -35,7 +35,7 @@ const subsessions = await collection
       $elemMatch: { cust_id: Number(id), car_class_id: Number(carClassId) },
     },
   })
-  .sort({ season_id: -1 })
+  .sort({ _id: -1 })
   .toArray();
 ---
 
