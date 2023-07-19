@@ -9,7 +9,19 @@ const { id } = Astro.params;
 <DefaultLayout>
   <div class="h-screen text-center text-3xl">
     <div>
-      <a rel="prefetch" href=`/Stat-N-Track/user/${id}/subsessions`>Sessions</a>
+      <a rel="prefetch" href=`/Stat-N-Track/user/${id}/subsessions`
+        >All Sessions</a
+      >
+    </div>
+    <div>
+      <a rel="prefetch" href=`/Stat-N-Track/user/${id}/subsessions/by-year`
+        >Sessions By Year</a
+      >
+    </div>
+    <div>
+      <a rel="prefetch" href=`/Stat-N-Track/user/${id}/subsessions/by-car-class`
+        >Sessions By Car Class</a
+      >
     </div>
     <div>
       <a rel="prefetch" href=`/Stat-N-Track/user/${id}/standings`
@@ -30,9 +42,8 @@ const { id } = Astro.params;
     </div>
     <div>
       <a rel="prefetch" href=`/Stat-N-Track/user/${id}/standings/by-car-class`
-        >Season Standings By Car</a
+        >Season Standings By Car Class</a
       >
     </div>
   </div>
-  </DefaultLayout
 </DefaultLayout>
