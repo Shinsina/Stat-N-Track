@@ -123,17 +123,17 @@ const keysToOmitInTable = new Set(["tracks", "ownedTrackWeeks"]);
             .map((key: string) => (
               <div class="border-2 col-span-1">{result[key]}</div>
             ))}
-          <div class="col-span-4 grid grid-cols-4" x-show="opened" x-collapse>
+          <div class="col-span-4 grid grid-cols-4" x-cloak x-show="opened" x-collapse>
           {result.tracks.map((track) =>
             result.ownedTrackWeeks.includes(Number(track.week)) ? (
                 <div class="col-span-1 border-x-2" />
-                <div class="bg-green-900 col-span-2 border-x-2">
+                <div class="bg-green-950 col-span-2 border-x-2">
                   {track.week}. {track.track_name} {track.config_name}
                 </div>
                 <div class="col-span-1 border-x-2" />
             ) : (
                 <div class="col-span-1 border-x-2" />
-                <div class="bg-red-900 col-span-2 border-x-2">
+                <div class="bg-red-950 col-span-2 border-x-2">
                   {track.week}. {track.track_name} {track.config_name}
                 </div>
                 <div class="col-span-1 border-x-2" />
