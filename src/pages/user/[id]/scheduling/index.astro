@@ -1,0 +1,159 @@
+---
+import { connectToDatabase } from "$lib/mongodb";
+import DefaultLayout from "$lib/layouts/default.astro";
+export async function getStaticPaths() {
+  const dbConnection = await connectToDatabase();
+  const db = dbConnection.db;
+  const userCollection = db.collection("users");
+  const userIds = await userCollection.distinct("_id", {});
+  return userIds.map((id) => ({ params: { id } }));
+}
+const { id } = Astro.params;
+const dbConnection = await connectToDatabase();
+const db = dbConnection.db;
+const userCollection = db.collection("users");
+const carPackages = await userCollection
+  .aggregate([
+    {
+      $match: {
+        _id: Number(id),
+      },
+    },
+    {
+      $unwind: "$car_packages",
+    },
+    {
+      $replaceRoot: {
+        newRoot: {
+          $mergeObjects: ["$car_packages", "$$ROOT"],
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        content_ids: 1,
+      },
+    },
+  ])
+  .toArray();
+const carIds = carPackages.map((carPackage) => carPackage.content_ids).flat();
+const trackPackages = await userCollection
+  .aggregate([
+    {
+      $match: {
+        _id: Number(id),
+      },
+    },
+    {
+      $unwind: "$track_packages",
+    },
+    {
+      $replaceRoot: {
+        newRoot: {
+          $mergeObjects: ["$track_packages", "$$ROOT"],
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        content_ids: 1,
+      },
+    },
+  ])
+  .toArray();
+const trackIds = trackPackages
+  .map((trackPackage) => trackPackage.content_ids)
+  .flat();
+const carClassCollection = db.collection("carclasses");
+const carClassIdsForCarIds = await carClassCollection.distinct("car_class_id", {
+  "cars_in_class.car_id": { $in: carIds },
+});
+const seasonsCollection = db.collection("seasons");
+const seasons = await seasonsCollection
+  .find({}, {  })
+  .toArray();
+const carClassIdSet = new Set(carClassIdsForCarIds);
+const trackIdSet = new Set(trackIds);
+const results = seasons
+  .map((season) => {
+    const { _id, schedules, season_name, car_class_ids } = season;
+    const tracks: Array<Record<string,unknown>> = schedules.map((schedule: any, index: number) => ({
+      week: index + 1,
+      ...schedule.track,
+    }));
+    const ownedTrackWeeks: Array<number> = tracks
+      .filter((track: Record<string,unknown>) => trackIdSet.has(track.track_id))
+      .map((track: Record<string,unknown>) => Number(track.week));
+    const trackPercentageOwned = Math.round(
+      (ownedTrackWeeks.length / tracks.length) * 100
+    );
+    const ownedCarClasses = car_class_ids.filter((carClassId: number) =>
+      carClassIdSet.has(carClassId)
+    );
+    return {
+      "Season ID": _id,
+      "Season Name": String(season_name),
+      tracks,
+      ownedTrackWeeks,
+      "Own Car": ownedCarClasses.length ? "Yes" : "No",
+      "Overall Track Percentage Owned": trackPercentageOwned,
+    };
+  })
+  .sort(
+    (a, b) =>
+      b["Overall Track Percentage Owned"] - a["Overall Track Percentage Owned"]
+  );
+const keysToOmitInTable = new Set(["tracks", "ownedTrackWeeks"]);
+---
+
+<DefaultLayout>
+  <div class="grid grid-cols-4 text-center pt-6">
+    {
+      Object.keys(results[0])
+        .filter((key) => !keysToOmitInTable.has(key))
+        .map((key) => <div class="border-2 col-span-1">{key}</div>)
+    }
+    {
+      results.map((result) => (
+        <div class="col-span-4 grid grid-cols-4" x-data="dropdown" x-on:click="toggle">
+          {Object.keys(result)
+            .filter((key) => !keysToOmitInTable.has(key))
+            .map((key: string) => (
+              <div class="border-2 col-span-1">{result[key]}</div>
+            ))}
+          <div class="col-span-4 grid grid-cols-4" x-show="opened" x-collapse>
+          {result.tracks.map((track) =>
+            result.ownedTrackWeeks.includes(Number(track.week)) ? (
+                <div class="col-span-1 border-x-2" />
+                <div class="bg-green-900 col-span-2 border-x-2">
+                  {track.week}. {track.track_name} {track.config_name}
+                </div>
+                <div class="col-span-1 border-x-2" />
+            ) : (
+                <div class="col-span-1 border-x-2" />
+                <div class="bg-red-900 col-span-2 border-x-2">
+                  {track.week}. {track.track_name} {track.config_name}
+                </div>
+                <div class="col-span-1 border-x-2" />
+              )
+          )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+  <script>
+    import Alpine from "alpinejs";
+    import collapse from "@alpinejs/collapse";
+    Alpine.plugin(collapse);
+    Alpine.data("dropdown", () => ({
+      opened: false,
+      toggle() {
+        this.opened = !this.opened
+      }
+    }));
+    Alpine.start();
+  </script>
+</DefaultLayout>
