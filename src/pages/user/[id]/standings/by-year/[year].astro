@@ -1,9 +1,8 @@
 ---
 import { connectToDatabase } from "$lib/mongodb";
 import StandingsLayout from "$lib/layouts/standings.astro";
+import userIds from "$lib/utils/user-ids";
 export async function getStaticPaths() {
-  // @todo Establish a root level list of valid userIds
-  const userIds = [300752, 815162];
 	const dbConnection = await connectToDatabase();
 	const db = dbConnection.db;
 	const collection = db.collection("subsessions");
