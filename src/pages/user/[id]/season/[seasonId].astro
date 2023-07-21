@@ -5,8 +5,8 @@ import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import { connectToDatabase } from "$lib/mongodb";
 import type { Subsession } from "$lib/types";
+import userIds from "$lib/utils/user-ids";
 export async function getStaticPaths() {
-	const userIds = [300752, 815162];
 	const dbConnection = await connectToDatabase();
 	const db = dbConnection.db;
 	const collection = db.collection("standings");

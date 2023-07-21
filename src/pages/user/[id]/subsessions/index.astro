@@ -2,8 +2,9 @@
 import { connectToDatabase } from "$lib/mongodb";
 import type { Subsession } from "$lib/types";
 import SubsessionsLayout from "$lib/layouts/subsessions.astro";
+import userIds from "$lib/utils/user-ids";
 export function getStaticPaths() {
-  return [{ params: { id: 300752 } }, { params: { id: 815162 } }];
+  return userIds.map((id) => ({ params: { id } }));
 }
 const { id } = Astro.params;
 const dbConnection = await connectToDatabase();
