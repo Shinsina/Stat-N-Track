@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import image from '@astrojs/image';
 import tailwind from "@astrojs/tailwind";
 import prefetch from "@astrojs/prefetch";
 
@@ -7,5 +6,5 @@ import prefetch from "@astrojs/prefetch";
 export default defineConfig({
   site: "https://shinsina.github.io",
   base: "/Stat-N-Track",
-  integrations: [tailwind(), prefetch(), image({ serviceEntryPoint: '@astrojs/image/sharp' })]
+  integrations: [tailwind(), prefetch()]
 });
