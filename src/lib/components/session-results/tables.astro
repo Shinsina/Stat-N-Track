@@ -10,29 +10,44 @@ const practice: Session = sessions.find((session: Session) =>
 const qualifying: Session = sessions.find((session: Session) =>
   session.simsession_type_name.match(/QUALIFY/i)
 );
-const race: Session = sessions.find((session: Session) =>
-  session.simsession_type_name.match(/RACE/i)
-);
+const heat: Session = sessions.length === 4 ? { ...sessions[2], simsession_name: "HEAT" }: null;
+const race: Session =
+  sessions.length === 4
+    ? { ...sessions[3], simsession_name: "RACE" }
+    : sessions.find((session: Session) =>
+        session.simsession_type_name.match(/RACE/i)
+      );
 ---
 
 <div x-data="tables">
-  <div class="grid grid-cols-3 text-center pb-6">
+  <div class=`grid grid-cols-${sessions.length} text-center pb-6`>
     <button
-      id="PRACTICE QUALIFY RACE"
+      id="PRACTICE QUALIFY HEAT RACE"
       x-on:click="toggle"
       class="border-2 bg-gray-700"
     >
       Practice Table
     </button>
     <button
-      id="QUALIFY PRACTICE RACE"
+      id="QUALIFY PRACTICE HEAT RACE"
       x-on:click="toggle"
       class="border-2 bg-gray-700"
     >
       Qualifying Table
     </button>
+    {
+      heat && (
+        <button
+          id="HEAT PRACTICE QUALIFY RACE"
+          x-on:click="toggle"
+          class="border-2 bg-gray-700"
+        >
+          Heat Table
+        </button>
+      )
+    }
     <button
-      id="RACE PRACTICE QUALIFY"
+      id="RACE PRACTICE QUALIFY HEAT"
       x-on:click="toggle"
       class="border-2 bg-gray-700"
     >
@@ -52,9 +67,17 @@ const race: Session = sessions.find((session: Session) =>
       x-cloak
       x-show="QUALIFY"
       x-transition:enter.duration.500ms
-      x-transition:leave.duration.0mss
+      x-transition:leave.duration.0ms
     >
       <QualifyingResults session={qualifying} />
+    </div>
+    <div
+      x-cloak
+      x-show="HEAT"
+      x-transition:enter.duration.500ms
+      x-transition:leave.duration.0ms
+    >
+      <RaceResults session={heat} />
     </div>
     <div
       x-cloak
