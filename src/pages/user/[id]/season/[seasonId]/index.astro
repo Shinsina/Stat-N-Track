@@ -102,10 +102,15 @@ const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
 		<link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Season: {seasonId}</title>
 	</head>
 	<body class="bg-gray-900 text-white font-sans pt-2">
-		<div class="grid grid-cols-1 pt-6">
+		<a rel="prefetch" href=`/Stat-N-Track/user/${id}/season/${seasonId}/season-summary`>
+			<div class="text-center py-4 border-2">
+				<p><b>View Season Summary</b></p>
+			</div>
+		</a>
+		<div class="grid grid-cols-1 pt-6 overflow-x-scroll">
 			<table x-ref="Table" x-data="table" class="text-center col-span-1">
 				<tr x-ref="Headings"
 					>{
@@ -150,7 +155,7 @@ const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
 		</div>
 		<script>
 			import Alpine from "alpinejs";
-			import Table from "../../../../lib/components/table/index.ts";
+			import Table from "../../../../../lib/components/table/index.ts";
 			Alpine.data("table", Table);
 			Alpine.start();
 		</script>

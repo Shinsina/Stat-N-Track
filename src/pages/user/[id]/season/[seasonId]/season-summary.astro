@@ -1,0 +1,245 @@
+---
+import handleResults from "$lib/utils/handle-session-results";
+import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
+import lapTimeFields from "$lib/utils/lap-time-fields";
+import parseLapTime from "$lib/utils/parse-lap-time";
+import { connectToDatabase } from "$lib/mongodb";
+import type { Subsession, Track } from "$lib/types";
+import userIds from "$lib/utils/user-ids";
+// @todo Properly assert types in this file
+export async function getStaticPaths() {
+  const dbConnection = await connectToDatabase();
+  const db = dbConnection.db;
+  const collection = db.collection("standings");
+  const seasons = await collection
+    .find({ "season_driver_data.cust_id": { $in: userIds } })
+    .toArray();
+  return seasons.map((season) => ({
+    params: {
+      id: Number(season.season_driver_data.cust_id),
+      seasonId: Number(season.season_id),
+    },
+  }));
+}
+const { id, seasonId } = Astro.params;
+const dbConnection = await connectToDatabase();
+const db = dbConnection.db;
+const subsessionCollection = db.collection<Subsession>("subsessions");
+const subsessions = await subsessionCollection
+  .find({
+    season_id: Number(seasonId),
+    "session_results.2.results": { $elemMatch: { cust_id: Number(id) } },
+  })
+  .sort({ _id: 1 })
+  .toArray();
+const standingsCollection = db.collection("standings");
+const season = await standingsCollection.findOne({
+  "season_driver_data.cust_id": Number(id),
+  season_id: String(seasonId),
+});
+const pastSeasonsCollection = db.collection("pastseasons");
+const pastSeasonInformation = await pastSeasonsCollection.findOne({
+  _id: Number(seasonId),
+});
+const trackSchedule: Array<Track> = pastSeasonInformation.race_weeks.map(
+  (raceWeek: Record<string, Track>) => ({
+    ...raceWeek.track,
+    race_week_num: raceWeek.race_week_num,
+  })
+);
+const trackScheduleMap: Map<number, Track> = new Map();
+trackSchedule.forEach((track) => {
+  trackScheduleMap.set(track.race_week_num, track);
+});
+
+const resultsPerWeek = [];
+trackScheduleMap.forEach((value, key) => {
+  const respectiveSubsessions = subsessions.filter(
+    (subsession) =>
+      Number(subsession.race_week_num) === Number(value.race_week_num)
+  );
+  const userResults = respectiveSubsessions.map((subsession) => ({
+    subsession,
+    userResult: subsession.session_results[2].results.filter(
+      (v: any) => v.cust_id === Number(id)
+    )[0],
+  }));
+  if (userResults.length > 1) {
+    const bestUserResult = userResults
+      .sort(
+        (a, b) =>
+          a.userResult.aggregate_champ_points >
+          b.userResult.aggregate_champ_points
+      )
+      .pop();
+    resultsPerWeek.push(bestUserResult);
+  } else if (userResults.length === 0) {
+    const bestUserResult = { subsession: { track: value }, userResult: {} };
+    resultsPerWeek.push(bestUserResult);
+  } else {
+    const [bestUserResult] = userResults;
+    resultsPerWeek.push(bestUserResult);
+  }
+});
+
+const results = resultsPerWeek.map((result) => {
+  const { subsession, userResult } = result;
+  const {
+    subsession_id,
+    track,
+    corners_per_lap,
+    allowed_licenses,
+    license_category,
+  } = subsession;
+  // Current user in Race session;
+  const {
+    finish_position,
+    finish_position_in_class,
+    laps_lead,
+    laps_complete,
+    average_lap,
+    best_lap_time,
+    reason_out,
+    champ_points,
+    starting_position,
+    starting_position_in_class,
+    car_class_short_name,
+    division_name,
+    new_license_level,
+    new_cpi,
+    newi_rating,
+    incidents,
+    car_name,
+    aggregate_champ_points,
+  } = userResult;
+  const { group_name: License } =
+    allowed_licenses && allowed_licenses.length
+      ? allowed_licenses.slice(0, 2).pop()
+      : {};
+  const sof = {
+    "Strength Of Field": subsession.race_summary
+      ? subsession.race_summary.field_strength
+      : null,
+  };
+  return {
+    subsession_id,
+    Track: `${track.track_name} ${
+      track.config_name && track.config_name !== "N/A" ? track.config_name : ""
+    }`,
+    Corners: corners_per_lap,
+    License,
+    license_category,
+    finish_position,
+    finish_position_in_class,
+    laps_lead,
+    laps_complete,
+    average_lap,
+    best_lap_time,
+    reason_out,
+    champ_points,
+    starting_position,
+    starting_position_in_class,
+    car_class_short_name,
+    division_name,
+    new_license_level,
+    new_cpi,
+    newi_rating,
+    incidents,
+    car_name,
+    aggregate_champ_points,
+    ...sof,
+  };
+});
+const keysToDisplay = new Set(Object.keys(results[0]));
+const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
+const wins = results.filter(
+  (result) => result.finish_position_in_class === 0
+).length;
+const averageStart = results
+  .filter((result) => typeof result.starting_position_in_class === "number")
+  .map((result) => result.starting_position_in_class + 1)
+  .reduce((a, b) => a + b, 0);
+const averageFinish = results
+  .filter((result) => typeof result.finish_position_in_class === "number")
+  .map((result) => result.finish_position_in_class + 1)
+  .reduce((a, b) => a + b, 0);
+const incidents = results
+  .filter((result) => result.incidents)
+  .map((result) => result.incidents)
+  .reduce((a, b) => a + b, 0);
+const { division, division_rank, overall_rank, season_name } = season;
+const title = `${season_name}: Season Summary for ${season.season_driver_data.display_name}`;
+const overviewItems = [
+  `Points: ${season.season_driver_data.points}`,
+  `Wins: ${wins}`,
+  `Average Start: ${
+    averageStart /
+    results.filter(
+      (result) => typeof result.starting_position_in_class === "number"
+    ).length
+  }`,
+  `Average Finish: ${
+    averageFinish /
+    results.filter(
+      (result) => typeof result.finish_position_in_class === "number"
+    ).length
+  }`,
+  `Division: ${division}`,
+  `Division Rank: ${division_rank}`,
+  `Overall Rank: ${overall_rank}`,
+  `Incidents: ${incidents}`,
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-gray-900 text-white font-sans pt-2">
+    <div class="text-center py-4 border-2">
+      <p><b>{title}</b></p>
+      <div class="text-center row-span-1">
+        Overview
+        {overviewItems.map((item) => <p>{item}</p>)}
+      </div>
+    </div>
+    <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+      <table class="text-center col-span-1">
+        <tr
+          >{
+            keysArray.map((key) => (
+              <th class="border-2">{fieldIdToLabelMap.get(key) || key}</th>
+            ))
+          }</tr
+        >
+        {
+          handledResults.map((result) => (
+            <tr>
+              {Object.keys(result).map((key: string) => (
+                <td class="border-2">
+                  {key === "0" && result[key] ? (
+                    <a
+                      rel="prefetch"
+                      href={`/Stat-N-Track/subsession/${result[key]}`}
+                    >
+                      {result[key]}
+                    </a>
+                  ) : lapTimeFields.has(keysArray[Number(key)]) &&
+                    result[key] ? (
+                    parseLapTime(Number(result[key]))
+                  ) : (
+                    result[key]
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+      </table>
+    </div>
+  </body>
+</html>
