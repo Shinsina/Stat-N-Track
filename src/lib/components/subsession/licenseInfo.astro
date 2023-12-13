@@ -5,6 +5,8 @@ interface Props {
   licenseCategory: string;
 }
 const { licenses, licenseCategory } = Astro.props;
+const [allowedLicenseOne, allowLicenseTwo] = licenses || [];
+const allowedLicenses = [allowedLicenseOne, allowLicenseTwo];
 ---
 
 <div class="row-span-1">
@@ -12,13 +14,7 @@ const { licenses, licenseCategory } = Astro.props;
   <div class="text-center">
     Allowed Licenses:
     {
-      licenses
-        .filter(
-          (license: License) =>
-            Math.ceil(license.min_license_level / license.license_group) ===
-            license.min_license_level / license.license_group
-        )
-        .map((license: License, index: number) => (
+      allowedLicenses.map((license: License, index: number) => (
           <p>
             {license.group_name}{" "}
             {!index
