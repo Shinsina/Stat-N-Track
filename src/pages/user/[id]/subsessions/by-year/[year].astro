@@ -2,11 +2,12 @@
 import { connectToDatabase } from "$lib/mongodb";
 import SubsessionsLayout from "$lib/layouts/subsessions.astro";
 import userIds from "$lib/utils/user-ids";
+import type { UserIdYearsMapping } from "$lib/types";
 export async function getStaticPaths() {
   const dbConnection = await connectToDatabase();
   const db = dbConnection.db;
   const collection = db.collection("subsessions");
-  const mappings = await Promise.all(
+  const mappings: Array<UserIdYearsMapping> = await Promise.all(
     userIds.map(async (userId) => ({
       userId,
       years: await collection.distinct("season_year", {
