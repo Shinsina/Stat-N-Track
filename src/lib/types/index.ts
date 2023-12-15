@@ -11,9 +11,9 @@ export type Car = {
   car_id: number;
   car_name: string;
   car_name_abbreviated: string;
-  car_types: Array<{ car_type: string }>
+  car_types: Array<{ car_type: string }>;
   car_weight: number;
-  categories: Array<string>,
+  categories: Array<string>;
   created: string;
   first_sale: string;
   forum_url: string;
@@ -32,11 +32,11 @@ export type Car = {
   retired: boolean;
   search_filters: string;
   sku: number;
-}
+};
 
 export type CarClass = {
   car_class_id: number;
-  cars_in_class: Array<{ car_id: number, car_name: string | undefined }>;
+  cars_in_class: Array<{ car_id: number; car_name: string | undefined }>;
   name: string;
   short_name: string;
 };
@@ -104,8 +104,8 @@ export type RaceWeek = {
   schedule_name: string;
   start_date: string;
   simulated_time_multiplier: number;
-  race_lap_limit: number|null;
-  race_time_limit: number|null;
+  race_lap_limit: number | null;
+  race_time_limit: number | null;
   start_type: string;
   restart_type: string;
   qual_attached: boolean;
@@ -119,8 +119,8 @@ export type RaceWeek = {
   track_state: TrackState;
   race_time_descriptors: Array<unknown>;
   car_restrictions: Array<unknown>;
-  race_week_cars: Array<unknown>
-}
+  race_week_cars: Array<unknown>;
+};
 
 export type SchedulingSeason = {
   _id: number;
@@ -202,7 +202,7 @@ export type Season = {
   season_driver_data: SeasonDriverData;
   season_id: string;
   season_name: string;
-  division_rank: number
+  division_rank: number;
 };
 
 export type SeasonDriverData = {
@@ -212,7 +212,7 @@ export type SeasonDriverData = {
   division: number;
   club_id: number;
   club_name: string;
-  license: SeasonDriverLicense
+  license: SeasonDriverLicense;
   helmet: Helmet;
   weeks_counted: number;
   starts: number;
