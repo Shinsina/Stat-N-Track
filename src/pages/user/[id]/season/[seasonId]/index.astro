@@ -4,13 +4,13 @@ import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import { connectToDatabase } from "$lib/mongodb";
-import type { Subsession } from "$lib/types";
+import type { Season, Subsession } from "$lib/types";
 import userIds from "$lib/utils/user-ids";
 export async function getStaticPaths() {
 	const dbConnection = await connectToDatabase();
 	const db = dbConnection.db;
 	const collection = db.collection("standings");
-	const seasons = await collection
+	const seasons: Array<Season> = await collection
 		.find({ "season_driver_data.cust_id": { $in: userIds } })
 		.toArray();
 	return seasons.map((season) => ({
@@ -24,7 +24,7 @@ const { id, seasonId } = Astro.params;
 const dbConnection = await connectToDatabase();
 const db = dbConnection.db;
 const collection = db.collection<Subsession>("subsessions");
-const subsessions = await collection
+const subsessions: Array<Subsession> = await collection
 	.find({
 		season_id: Number(seasonId),
 		"session_results.2.results": { $elemMatch: { cust_id: Number(id) } },

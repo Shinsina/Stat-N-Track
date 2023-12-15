@@ -11,14 +11,13 @@ export async function getStaticPaths() {
 	const dbConnection = await connectToDatabase();
 	const db = dbConnection.db;
 	const collection = db.collection("subsessions");
-	const subsessionIds = await collection.distinct("_id", {});
-	return subsessionIds.map((id) => ({ params: { id: Number(id) } }));
+	const subsessionIds: Array<number> = await collection.distinct("_id", {});
+	return subsessionIds.map((id) => ({ params: { id } }));
 }
 const { id } = Astro.params;
 const dbConnection = await connectToDatabase();
 const db = dbConnection.db;
 const collection = db.collection<Subsession>("subsessions");
-//@ts-ignore
 const subsession: Subsession = await collection.findOne({ _id: Number(id) });
 const {
 	track,
@@ -65,8 +64,10 @@ const {
 				toggle() {
 					this.$el.id.split(" ").forEach((id, index) => {
 						if (index) {
+							// @ts-expect-error
 							this[id] = false;
 						} else {
+							// @ts-expect-error
 							this[id] = !this[id];
 						}
 					});

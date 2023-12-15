@@ -1,19 +1,25 @@
 ---
 import { connectToDatabase } from "$lib/mongodb";
 import DefaultLayout from "$lib/layouts/default.astro";
-// @todo Properly assert types in this file
+import type {
+  Car,
+  CarClass,
+  SchedulingSeason,
+  SchedulingTableResult,
+  Track,
+} from "$lib/types";
 export async function getStaticPaths() {
   const dbConnection = await connectToDatabase();
   const db = dbConnection.db;
   const userCollection = db.collection("users");
-  const userIds = await userCollection.distinct("_id", {});
+  const userIds: Array<number> = await userCollection.distinct("_id", {});
   return userIds.map((id) => ({ params: { id } }));
 }
 const { id } = Astro.params;
 const dbConnection = await connectToDatabase();
 const db = dbConnection.db;
 const userCollection = db.collection("users");
-const carPackages = await userCollection
+const carPackages: Array<{ content_ids: Array<number> }> = await userCollection
   .aggregate([
     {
       $match: {
@@ -39,36 +45,37 @@ const carPackages = await userCollection
   ])
   .toArray();
 const carIds = carPackages.map((carPackage) => carPackage.content_ids).flat();
-const trackPackages = await userCollection
-  .aggregate([
-    {
-      $match: {
-        _id: Number(id),
-      },
-    },
-    {
-      $unwind: "$track_packages",
-    },
-    {
-      $replaceRoot: {
-        newRoot: {
-          $mergeObjects: ["$track_packages", "$$ROOT"],
+const trackPackages: Array<{ content_ids: Array<number> }> =
+  await userCollection
+    .aggregate([
+      {
+        $match: {
+          _id: Number(id),
         },
       },
-    },
-    {
-      $project: {
-        _id: 0,
-        content_ids: 1,
+      {
+        $unwind: "$track_packages",
       },
-    },
-  ])
-  .toArray();
+      {
+        $replaceRoot: {
+          newRoot: {
+            $mergeObjects: ["$track_packages", "$$ROOT"],
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          content_ids: 1,
+        },
+      },
+    ])
+    .toArray();
 const trackIds = trackPackages
   .map((trackPackage) => trackPackage.content_ids)
   .flat();
 const carsCollection = db.collection("cars");
-const cars = await carsCollection.find().toArray();
+const cars: Array<Car> = await carsCollection.find().toArray();
 const carsMap = new Map();
 cars.forEach((car) => {
   const { car_id } = car;
@@ -78,7 +85,7 @@ const carClassCollection = db.collection("carclasses");
 const carClassIdsForCarIds = await carClassCollection.distinct("car_class_id", {
   "cars_in_class.car_id": { $in: carIds },
 });
-const carClasses = await carClassCollection.find().toArray();
+const carClasses: Array<CarClass> = await carClassCollection.find().toArray();
 const carClassesMap = new Map();
 carClasses.forEach((carClass) => {
   const { car_class_id, cars_in_class } = carClass;
@@ -88,7 +95,9 @@ carClasses.forEach((carClass) => {
   carClassesMap.set(car_class_id, { ...carClass, cars_in_class: carsInClass });
 });
 const seasonsCollection = db.collection("seasons");
-const seasons = await seasonsCollection.find({}, {}).toArray();
+const seasons: Array<SchedulingSeason> = await seasonsCollection
+  .find({}, {})
+  .toArray();
 const carClassIdSet = new Set(carClassIdsForCarIds);
 const trackIdSet = new Set(trackIds);
 const licenseGroupToNameMap: Record<string, string> = {
@@ -98,23 +107,21 @@ const licenseGroupToNameMap: Record<string, string> = {
   "4": "Class B",
   "5": "Class A",
 };
-const results = seasons
+const results: Array<SchedulingTableResult> = seasons
   .map((season) => {
     const { schedules, season_name, car_class_ids } = season;
-    const carClassData = car_class_ids.map((car_class_id: number) =>
-      carClassesMap.get(car_class_id)
+    const carClassData: Array<CarClass> = car_class_ids.map(
+      (car_class_id: number) => carClassesMap.get(car_class_id)
     );
-    const tracks: Array<Record<string, unknown>> = schedules.map(
+    const tracks: Array<Track> = schedules.map(
       (schedule: any, index: number) => ({
-        week: index + 1,
+        race_week_num: index + 1,
         ...schedule.track,
       })
     );
     const ownedTrackWeeks: Array<number> = tracks
-      .filter((track: Record<string, unknown>) =>
-        trackIdSet.has(track.track_id)
-      )
-      .map((track: Record<string, unknown>) => Number(track.week));
+      .filter((track: Track) => trackIdSet.has(track.track_id))
+      .map((track) => Number(track.race_week_num));
     const trackPercentageOwned = Math.round(
       (ownedTrackWeeks.length / tracks.length) * 100
     );
@@ -157,8 +164,11 @@ const keysToOmitInTable = new Set([
           x-on:click="toggle"
         >
           {Object.keys(result)
-            .filter((key) => !keysToOmitInTable.has(key))
-            .map((key: string) => (
+            .filter(
+              (key): key is keyof SchedulingTableResult =>
+                !keysToOmitInTable.has(key)
+            )
+            .map((key) => (
               <div class="border-2 col-span-1">{result[key]}</div>
             ))}
           <div
@@ -188,13 +198,15 @@ const keysToOmitInTable = new Set([
             </div>
             <div class="col-span-2 border-x-2">
               {result.tracks.map((track) =>
-                result.ownedTrackWeeks.includes(Number(track.week)) ? (
+                result.ownedTrackWeeks.includes(Number(track.race_week_num)) ? (
                   <div class="bg-green-950">
-                    {track.week}. {track.track_name} {track.config_name}
+                    {track.race_week_num}. {track.track_name}{" "}
+                    {track.config_name}
                   </div>
                 ) : (
                   <div class="bg-red-950">
-                    {track.week}. {track.track_name} {track.config_name}
+                    {track.race_week_num}. {track.track_name}{" "}
+                    {track.config_name}
                   </div>
                 )
               )}
@@ -206,6 +218,7 @@ const keysToOmitInTable = new Set([
   </div>
   <script>
     import Alpine from "alpinejs";
+    // @ts-expect-error
     import collapse from "@alpinejs/collapse";
     Alpine.plugin(collapse);
     Alpine.data("dropdown", () => ({

@@ -4,14 +4,14 @@ import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import { connectToDatabase } from "$lib/mongodb";
-import type { Subsession, Track } from "$lib/types";
+import type { License, Season, SessionResult, Subsession, Track } from "$lib/types";
 import userIds from "$lib/utils/user-ids";
 // @todo Properly assert types in this file
 export async function getStaticPaths() {
   const dbConnection = await connectToDatabase();
   const db = dbConnection.db;
   const collection = db.collection("standings");
-  const seasons = await collection
+  const seasons: Array<Season> = await collection
     .find({ "season_driver_data.cust_id": { $in: userIds } })
     .toArray();
   return seasons.map((season) => ({
@@ -25,7 +25,7 @@ const { id, seasonId } = Astro.params;
 const dbConnection = await connectToDatabase();
 const db = dbConnection.db;
 const subsessionCollection = db.collection<Subsession>("subsessions");
-const subsessions = await subsessionCollection
+const subsessions: Array<Subsession> = await subsessionCollection
   .find({
     season_id: Number(seasonId),
     "session_results.2.results": { $elemMatch: { cust_id: Number(id) } },
@@ -49,11 +49,11 @@ const trackSchedule: Array<Track> = pastSeasonInformation.race_weeks.map(
 );
 const trackScheduleMap: Map<number, Track> = new Map();
 trackSchedule.forEach((track) => {
-  trackScheduleMap.set(track.race_week_num, track);
+  trackScheduleMap.set(Number(track.race_week_num), track);
 });
 
-const resultsPerWeek = [];
-trackScheduleMap.forEach((value, key) => {
+const resultsPerWeek: Array<{subsession: Subsession, userResult: SessionResult}> = [];
+trackScheduleMap.forEach((value) => {
   const respectiveSubsessions = subsessions.filter(
     (subsession) =>
       Number(subsession.race_week_num) === Number(value.race_week_num)
@@ -68,20 +68,22 @@ trackScheduleMap.forEach((value, key) => {
     const bestUserResult = userResults
       .sort(
         (a, b) =>
-          a.userResult.aggregate_champ_points >
+          a.userResult.aggregate_champ_points -
           b.userResult.aggregate_champ_points
       )
       .pop();
-    resultsPerWeek.push(bestUserResult);
+    if (bestUserResult) {
+      resultsPerWeek.push(bestUserResult);
+    }
   } else if (userResults.length === 0) {
     const bestUserResult = { subsession: { track: value }, userResult: {} };
+    // @ts-expect-error
     resultsPerWeek.push(bestUserResult);
   } else {
     const [bestUserResult] = userResults;
     resultsPerWeek.push(bestUserResult);
   }
 });
-
 const results = resultsPerWeek.map((result) => {
   const { subsession, userResult } = result;
   const {
@@ -112,6 +114,7 @@ const results = resultsPerWeek.map((result) => {
     car_name,
     aggregate_champ_points,
   } = userResult;
+  // @ts-expect-error
   const { group_name: License } =
     allowed_licenses && allowed_licenses.length
       ? allowed_licenses.slice(0, 2).pop()

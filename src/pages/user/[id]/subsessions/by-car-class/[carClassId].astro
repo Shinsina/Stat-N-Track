@@ -2,18 +2,20 @@
 import { connectToDatabase } from "$lib/mongodb";
 import SubsessionsLayout from "$lib/layouts/subsessions.astro";
 import userIds from "$lib/utils/user-ids";
+import type { UserIdCarClassIdsMapping } from "$lib/types";
 export async function getStaticPaths() {
   const dbConnection = await connectToDatabase();
   const db = dbConnection.db;
   const collection = db.collection("standings");
-  const mappings = await Promise.all(
-    userIds.map(async (userId) => ({
-      userId,
-      carClassIds: await collection.distinct("car_class_id", {
-        "season_driver_data.cust_id": Number(userId),
-      }),
-    }))
-  );
+  const mappings: Array<UserIdCarClassIdsMapping> =
+    await Promise.all(
+      userIds.map(async (userId) => ({
+        userId,
+        carClassIds: await collection.distinct("car_class_id", {
+          "season_driver_data.cust_id": Number(userId),
+        }),
+      }))
+    );
   return mappings
     .map((mapping) => {
       const { userId, carClassIds } = mapping;
