@@ -7,15 +7,14 @@ export async function getStaticPaths() {
   const dbConnection = await connectToDatabase();
   const db = dbConnection.db;
   const collection = db.collection("subsessions");
-  const mappings: Array<UserIdYearsMapping> =
-    await Promise.all(
-      userIds.map(async (userId) => ({
-        userId,
-        years: await collection.distinct("season_year", {
-          "session_results.2.results": { $elemMatch: { cust_id: userId } },
-        }),
-      }))
-    );
+  const mappings: Array<UserIdYearsMapping> = await Promise.all(
+    userIds.map(async (userId) => ({
+      userId,
+      years: await collection.distinct("season_year", {
+        "session_results.2.results": { $elemMatch: { cust_id: userId } },
+      }),
+    }))
+  );
   return mappings
     .map((mapping) => {
       const { userId, years } = mapping;

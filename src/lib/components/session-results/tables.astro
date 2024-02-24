@@ -10,7 +10,8 @@ const practice: Session = sessions.find((session: Session) =>
 const qualifying: Session = sessions.find((session: Session) =>
   session.simsession_type_name.match(/QUALIFY/i)
 );
-const heat: Session = sessions.length === 4 ? { ...sessions[2], simsession_name: "HEAT" }: null;
+const heat: Session =
+  sessions.length === 4 ? { ...sessions[2], simsession_name: "HEAT" } : null;
 const race: Session =
   sessions.length === 4
     ? { ...sessions[3], simsession_name: "RACE" }

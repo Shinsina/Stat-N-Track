@@ -4,7 +4,13 @@ import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import { connectToDatabase } from "$lib/mongodb";
-import type { License, Season, SessionResult, Subsession, Track } from "$lib/types";
+import type {
+  License,
+  Season,
+  SessionResult,
+  Subsession,
+  Track,
+} from "$lib/types";
 import userIds from "$lib/utils/user-ids";
 // @todo Properly assert types in this file
 export async function getStaticPaths() {
@@ -52,7 +58,10 @@ trackSchedule.forEach((track) => {
   trackScheduleMap.set(Number(track.race_week_num), track);
 });
 
-const resultsPerWeek: Array<{subsession: Subsession, userResult: SessionResult}> = [];
+const resultsPerWeek: Array<{
+  subsession: Subsession;
+  userResult: SessionResult;
+}> = [];
 trackScheduleMap.forEach((value) => {
   const respectiveSubsessions = subsessions.filter(
     (subsession) =>
@@ -226,6 +235,7 @@ const overviewItems = [
                 <td class="border-2">
                   {key === "0" && result[key] ? (
                     <a
+                      class="underline"
                       rel="prefetch"
                       href={`/Stat-N-Track/subsession/${result[key]}`}
                     >
