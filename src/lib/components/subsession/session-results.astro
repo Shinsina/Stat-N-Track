@@ -20,9 +20,14 @@ const { keysArray, handledResults } = handleResults({
   keysToDisplay: keysToDisplay || new Set([]),
   results: results || [],
 });
+const showHeader =
+  simsession_name &&
+  simsession_type_name &&
+  simsession_type &&
+  simsession_number;
 ---
 
-<div class="grid grid-cols-1">
+{showHeader ? <div class="grid grid-cols-1">
   <table class="text-center col-span-1">
     <tr class="bg-gray-500">
       <th class="border-2">Name</th>
@@ -37,7 +42,7 @@ const { keysArray, handledResults } = handleResults({
       <td class="border-2">{simsession_number}</td>
     </tr>
   </table>
-</div>
+</div> : <></>}
 <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
   <table x-ref="Table" x-data={simsession_name} class="text-center col-span-1">
     <tr x-ref="Headings"
