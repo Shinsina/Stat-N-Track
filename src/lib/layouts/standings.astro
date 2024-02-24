@@ -98,7 +98,11 @@ const generateLinkForKey = (key: string, resultAtKey: unknown) => {
                 class="border-2"
               >
                 {generateLinkForKey(key, result[key]) ? (
-                  <a rel="prefetch" href={generateLinkForKey(key, result[key])}>
+                  <a
+                    class="underline"
+                    rel="prefetch"
+                    href={generateLinkForKey(key, result[key])}
+                  >
                     {result[key]}
                   </a>
                 ) : (

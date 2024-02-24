@@ -7,157 +7,162 @@ import { connectToDatabase } from "$lib/mongodb";
 import type { Season, Subsession } from "$lib/types";
 import userIds from "$lib/utils/user-ids";
 export async function getStaticPaths() {
-	const dbConnection = await connectToDatabase();
-	const db = dbConnection.db;
-	const collection = db.collection("standings");
-	const seasons: Array<Season> = await collection
-		.find({ "season_driver_data.cust_id": { $in: userIds } })
-		.toArray();
-	return seasons.map((season) => ({
-		params: {
-			id: Number(season.season_driver_data.cust_id),
-			seasonId: Number(season.season_id),
-		},
-	}));
+  const dbConnection = await connectToDatabase();
+  const db = dbConnection.db;
+  const collection = db.collection("standings");
+  const seasons: Array<Season> = await collection
+    .find({ "season_driver_data.cust_id": { $in: userIds } })
+    .toArray();
+  return seasons.map((season) => ({
+    params: {
+      id: Number(season.season_driver_data.cust_id),
+      seasonId: Number(season.season_id),
+    },
+  }));
 }
 const { id, seasonId } = Astro.params;
 const dbConnection = await connectToDatabase();
 const db = dbConnection.db;
 const collection = db.collection<Subsession>("subsessions");
 const subsessions: Array<Subsession> = await collection
-	.find({
-		season_id: Number(seasonId),
-		"session_results.2.results": { $elemMatch: { cust_id: Number(id) } },
-	})
-	.sort({ _id: 1 })
-	.toArray();
+  .find({
+    season_id: Number(seasonId),
+    "session_results.2.results": { $elemMatch: { cust_id: Number(id) } },
+  })
+  .sort({ _id: 1 })
+  .toArray();
 const results = subsessions.map((subsession) => {
-	const {
-		subsession_id,
-		track,
-		corners_per_lap,
-		allowed_licenses,
-		license_category,
-	} = subsession;
-	// Current user in Race session;
-	const {
-		finish_position,
-		finish_position_in_class,
-		laps_lead,
-		laps_complete,
-		average_lap,
-		best_lap_time,
-		reason_out,
-		champ_points,
-		starting_position,
-		starting_position_in_class,
-		car_class_short_name,
-		division_name,
-		new_license_level,
-		new_cpi,
-		newi_rating,
-		incidents,
-		car_name,
-		aggregate_champ_points,
-	} = subsession.session_results[2].results.filter(
-		(v: any) => v.cust_id === Number(id)
-	)[0];
-	const { group_name: License } = allowed_licenses.slice(0, 2).pop() || {};
+  const {
+    subsession_id,
+    track,
+    corners_per_lap,
+    allowed_licenses,
+    license_category,
+  } = subsession;
+  // Current user in Race session;
+  const {
+    finish_position,
+    finish_position_in_class,
+    laps_lead,
+    laps_complete,
+    average_lap,
+    best_lap_time,
+    reason_out,
+    champ_points,
+    starting_position,
+    starting_position_in_class,
+    car_class_short_name,
+    division_name,
+    new_license_level,
+    new_cpi,
+    newi_rating,
+    incidents,
+    car_name,
+    aggregate_champ_points,
+  } = subsession.session_results[2].results.filter(
+    (v: any) => v.cust_id === Number(id)
+  )[0];
+  const { group_name: License } = allowed_licenses.slice(0, 2).pop() || {};
 
-	return {
-		subsession_id,
-		Track: `${track.track_name} ${
-			track.config_name !== "N/A" ? track.config_name : ""
-		}`,
-		Corners: corners_per_lap,
-		License,
-		license_category,
-		finish_position,
-		finish_position_in_class,
-		laps_lead,
-		laps_complete,
-		average_lap,
-		best_lap_time,
-		reason_out,
-		champ_points,
-		starting_position,
-		starting_position_in_class,
-		car_class_short_name,
-		division_name,
-		new_license_level,
-		new_cpi,
-		newi_rating,
-		incidents,
-		car_name,
-		aggregate_champ_points,
-	};
+  return {
+    subsession_id,
+    Track: `${track.track_name} ${
+      track.config_name !== "N/A" ? track.config_name : ""
+    }`,
+    Corners: corners_per_lap,
+    License,
+    license_category,
+    finish_position,
+    finish_position_in_class,
+    laps_lead,
+    laps_complete,
+    average_lap,
+    best_lap_time,
+    reason_out,
+    champ_points,
+    starting_position,
+    starting_position_in_class,
+    car_class_short_name,
+    division_name,
+    new_license_level,
+    new_cpi,
+    newi_rating,
+    incidents,
+    car_name,
+    aggregate_champ_points,
+  };
 });
 const keysToDisplay = new Set(Object.keys(results[0]));
 const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Season: {seasonId}</title>
-	</head>
-	<body class="bg-gray-900 text-white font-sans pt-2">
-		<a rel="prefetch" href=`/Stat-N-Track/user/${id}/season/${seasonId}/season-summary`>
-			<div class="text-center py-4 border-2">
-				<p><b>View Season Summary</b></p>
-			</div>
-		</a>
-		<div class="grid grid-cols-1 pt-6 overflow-x-scroll">
-			<table x-ref="Table" x-data="table" class="text-center col-span-1">
-				<tr x-ref="Headings"
-					>{
-						keysArray.map((key) => (
-							<th
-								id={`Table ${key} ${results.length}`}
-								class="border-2"
-								x-on:click="sort"
-							>
-								{fieldIdToLabelMap.get(key) || key}
-							</th>
-						))
-					}</tr
-				>
-				{
-					handledResults.map((result, rowNumber) => (
-						<tr x-ref={`Table ${rowNumber}`}>
-							{Object.keys(result).map((key: string) => (
-								<td
-									x-ref={`Table ${keysArray[Number(key)]} ${rowNumber}`}
-									id={`${keysArray[Number(key)]}~${rowNumber}~${result[key]}`}
-									class="border-2"
-								>
-									{key === "0" ? (
-										<a
-											rel="prefetch"
-											href={`/Stat-N-Track/subsession/${result[key]}`}
-										>
-											{result[key]}
-										</a>
-									) : lapTimeFields.has(keysArray[Number(key)]) ? (
-										parseLapTime(Number(result[key]))
-									) : (
-										result[key]
-									)}
-								</td>
-							))}
-						</tr>
-					))
-				}
-			</table>
-		</div>
-		<script>
-			import Alpine from "alpinejs";
-			import Table from "../../../../../lib/components/table/index.ts";
-			Alpine.data("table", Table);
-			Alpine.start();
-		</script>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Season: {seasonId}</title>
+  </head>
+  <body class="bg-gray-900 text-white font-sans pt-2">
+    <a
+      class="underline"
+      rel="prefetch"
+      href=`/Stat-N-Track/user/${id}/season/${seasonId}/season-summary`
+    >
+      <div class="text-center py-4 border-2">
+        <p><b>View Season Summary</b></p>
+      </div>
+    </a>
+    <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+      <table x-ref="Table" x-data="table" class="text-center col-span-1">
+        <tr x-ref="Headings"
+          >{
+            keysArray.map((key) => (
+              <th
+                id={`Table ${key} ${results.length}`}
+                class="border-2"
+                x-on:click="sort"
+              >
+                {fieldIdToLabelMap.get(key) || key}
+              </th>
+            ))
+          }</tr
+        >
+        {
+          handledResults.map((result, rowNumber) => (
+            <tr x-ref={`Table ${rowNumber}`}>
+              {Object.keys(result).map((key: string) => (
+                <td
+                  x-ref={`Table ${keysArray[Number(key)]} ${rowNumber}`}
+                  id={`${keysArray[Number(key)]}~${rowNumber}~${result[key]}`}
+                  class="border-2"
+                >
+                  {key === "0" ? (
+                    <a
+                      class="underline"
+                      rel="prefetch"
+                      href={`/Stat-N-Track/subsession/${result[key]}`}
+                    >
+                      {result[key]}
+                    </a>
+                  ) : lapTimeFields.has(keysArray[Number(key)]) ? (
+                    parseLapTime(Number(result[key]))
+                  ) : (
+                    result[key]
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+      </table>
+    </div>
+    <script>
+      import Alpine from "alpinejs";
+      import Table from "../../../../../lib/components/table/index.ts";
+      Alpine.data("table", Table);
+      Alpine.start();
+    </script>
+  </body>
 </html>

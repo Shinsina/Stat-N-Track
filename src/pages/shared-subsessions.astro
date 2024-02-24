@@ -88,7 +88,7 @@ export const handleKey = ({
   subsessionInfo: Record<string, unknown>;
 }) => {
   if (key === "subsession_id") {
-    return `<a x-on:click="toggle" id="toggle${subsessionInfo[key]}">${subsessionInfo[key]}</a>`;
+    return `<a class="underline" x-on:click="toggle" id="toggle${subsessionInfo[key]}">${subsessionInfo[key]}</a>`;
   }
   if (key === "event_average_lap") {
     return parseLapTime(Number(subsessionInfo[key]));
@@ -124,6 +124,7 @@ export const handleKey = ({
             x-transition:leave.duration.0ms
           >
             <a
+              class="underline"
               rel="prefetch"
               href={`/Stat-N-Track/subsession/${result.subsessionInfo.subsession_id}`}
             >
