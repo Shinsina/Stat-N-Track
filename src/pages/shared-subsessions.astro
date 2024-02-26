@@ -14,7 +14,10 @@ const $and = userIds.map((userId) => ({
   "session_results.2.results": { $elemMatch: { cust_id: userId } },
 }));
 const subsessions = await collection.find({ $and }).sort({ _id: -1 }).toArray();
-const results:Array<{ subsessionInfo: Record<string,unknown>, session: Session}> = subsessions.map((subsession: Subsession) => {
+const results: Array<{
+  subsessionInfo: Record<string, unknown>;
+  session: Session;
+}> = subsessions.map((subsession: Subsession) => {
   const {
     subsession_id,
     track,
@@ -53,9 +56,9 @@ const results:Array<{ subsessionInfo: Record<string,unknown>, session: Session}>
   const session = {
     simsession_number: 0,
     simsession_type: 0,
-    simsession_type_name: '',
+    simsession_type_name: "",
     simsession_subtype: 0,
-    simsession_name: '',
+    simsession_name: "",
     results,
   };
   return {
