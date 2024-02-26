@@ -58,15 +58,23 @@ const finalData: Array<Record<string, any>> = standingsResults.map(
     };
   }
 );
-const generateLinkForKey = (key: string, resultAtKey: unknown) => {
+const generateLinkForKey = ({
+  key,
+  resultAtKey,
+  carClassId,
+}: {
+  key: string;
+  resultAtKey: unknown;
+  carClassId: string;
+}) => {
   if (key === "season_id") {
-    return `/Stat-N-Track/user/${id}/season/${resultAtKey}`;
+    return `/Stat-N-Track/user/${id}/season/${resultAtKey}/car-class/${carClassId}`;
   } else if (key === "year") {
     return `/Stat-N-Track/user/${id}/standings/by-year/${resultAtKey}`;
   } else if (key === "car_class_id") {
     return `/Stat-N-Track/user/${id}/standings/by-car-class/${resultAtKey}`;
   } else if (key === "Season Summary") {
-    return `/Stat-N-Track/user/${id}/season/${resultAtKey}/season-summary`;
+    return `/Stat-N-Track/user/${id}/season/${resultAtKey}/car-class/${carClassId}/season-summary`;
   }
   return null;
 };
@@ -97,11 +105,19 @@ const generateLinkForKey = (key: string, resultAtKey: unknown) => {
                 id={`${key}~${rowNumber}~${result[key]}`}
                 class="border-2"
               >
-                {generateLinkForKey(key, result[key]) ? (
+                {generateLinkForKey({
+                  key,
+                  resultAtKey: result[key],
+                  carClassId: result.car_class_id,
+                }) ? (
                   <a
                     class="underline"
                     rel="prefetch"
-                    href={generateLinkForKey(key, result[key])}
+                    href={generateLinkForKey({
+                      key,
+                      resultAtKey: result[key],
+                      carClassId: result.car_class_id,
+                    })}
                   >
                     {result[key]}
                   </a>
