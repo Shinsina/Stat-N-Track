@@ -1,13 +1,12 @@
 ---
 import { connectToDatabase } from "$lib/mongodb";
-import type { Subsession } from "$lib/types";
+import type { Session, SessionResult, Subsession } from "$lib/types";
 import DefaultLayout from "$lib/layouts/default.astro";
 import RaceResults from "$lib/components/session-results/race.astro";
 import userIds from "$lib/utils/user-ids";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import keysToDisplay from "$lib/utils/race-session-keys-to-display";
-// @todo Fix all this nonsense you jankily slapped together at 2AM on a Saturday
 const dbConnection = await connectToDatabase();
 const { db } = dbConnection;
 const collection = db.collection<Subsession>("subsessions");
@@ -15,7 +14,11 @@ const $and = userIds.map((userId) => ({
   "session_results.2.results": { $elemMatch: { cust_id: userId } },
 }));
 const subsessions = await collection.find({ $and }).sort({ _id: -1 }).toArray();
-const results = subsessions.map((subsession: Subsession) => {
+const headToHeadWins: Record<string,Array<number>> = {};
+const results: Array<{
+  subsessionInfo: Record<string, unknown>;
+  session: Session;
+}> = subsessions.map((subsession: Subsession) => {
   const {
     subsession_id,
     track,
@@ -32,31 +35,38 @@ const results = subsessions.map((subsession: Subsession) => {
   } = subsession;
   // Current Users in race session
   const results = subsession.session_results[2].results
-    .filter((v: any) => userIds.includes(v.cust_id))
-    .map((w) => {
-      // @todo figure out how to fix the typing here
-      // @ts-ignore
+    .filter((v: SessionResult) => userIds.includes(v.cust_id))
+    .map((w: SessionResult) => {
       return Object.keys(w).reduce((object, key) => {
         if (keysToDisplay.has(key)) {
           // @ts-ignore
           object[key] = w[key];
         }
         return object;
-      }, {});
-      // @ts-ignore
+      }, {} as SessionResult);
     })
-    .sort((x, y) => {
-      // @ts-ignore
+    .sort((x: SessionResult, y: SessionResult) => {
       if (x.finish_position > y.finish_position) {
         return 1;
-        // @ts-ignore
       } else if (y.finish_position > x.finish_position) {
         return -1;
       }
       return 0;
     });
+  const [winner] = results;
+  const { display_name } = winner;
+  if(headToHeadWins[display_name]) {
+    headToHeadWins[display_name].push(subsession_id)
+  } else {
+    headToHeadWins[display_name] = [subsession_id];
+  }
   const { group_name: License } = allowed_licenses.slice(0, 2).pop() || {};
   const session = {
+    simsession_number: 0,
+    simsession_type: 0,
+    simsession_type_name: "",
+    simsession_subtype: 0,
+    simsession_name: "",
     results,
   };
   return {
@@ -79,7 +89,6 @@ const results = subsessions.map((subsession: Subsession) => {
     session,
   };
 });
-// @todo Don't cheat the types here
 export const handleKey = ({
   key,
   subsessionInfo,
@@ -98,14 +107,35 @@ export const handleKey = ({
   }
   return String(subsessionInfo[key]);
 };
+const correctlyKeyedH2HWins = Object.keys((headToHeadWins)).reduce((object, key) => {
+  const wins = headToHeadWins[key].length;
+  object[key] = { key, wins };
+  return object;
+}, {} as Record<string,{ key: string, wins: number }>);
+const h2hOutput = Object.keys(correctlyKeyedH2HWins).map((key) => correctlyKeyedH2HWins[key]).sort((a, b) => {
+  if (a.wins > b.wins) {
+    return -1;
+  } else if (b.wins > a.wins) {
+    return 1;
+  }
+   return 0;
+});
 ---
 
 <DefaultLayout>
+  <div class="text-center lg:text-2xl md:text-md sm:text-sm py-4">
+    <div class="font-bold">Head to Head Wins</div>
+    {h2hOutput.map((value) => (
+      <div>{value.key}: {value.wins}</div>
+    ))}
+  </div>
   <div
     id="top"
     x-data={JSON.stringify(
       results.reduce((object, result) => {
+        //@ts-expect-error
         object.previouslyToggled = "";
+        //@ts-expect-error
         object[`toggle${result.subsessionInfo.subsession_id}`] = false;
         return object;
       }, {})
@@ -117,7 +147,7 @@ export const handleKey = ({
       {
         results.map((result) => (
           <div
-            id={result.subsessionInfo.subsession_id}
+            id={String(result.subsessionInfo.subsession_id)}
             x-cloak
             x-show={`toggle${result.subsessionInfo.subsession_id}`}
             x-transition:enter.duration.500ms

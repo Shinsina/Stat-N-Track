@@ -12,7 +12,6 @@ import type {
   Track,
 } from "$lib/types";
 import userIds from "$lib/utils/user-ids";
-// @todo Properly assert types in this file
 export async function getStaticPaths() {
   const dbConnection = await connectToDatabase();
   const db = dbConnection.db;
@@ -24,24 +23,26 @@ export async function getStaticPaths() {
     params: {
       id: Number(season.season_driver_data.cust_id),
       seasonId: Number(season.season_id),
+      carClassId: Number(season.car_class_id),
     },
   }));
 }
-const { id, seasonId } = Astro.params;
+const { id, seasonId, carClassId } = Astro.params;
 const dbConnection = await connectToDatabase();
 const db = dbConnection.db;
 const subsessionCollection = db.collection<Subsession>("subsessions");
 const subsessions: Array<Subsession> = await subsessionCollection
   .find({
     season_id: Number(seasonId),
-    "session_results.2.results": { $elemMatch: { cust_id: Number(id) } },
+    "session_results.2.results": {
+      $elemMatch: { cust_id: Number(id), car_class_id: Number(carClassId) },
+    },
   })
   .sort({ _id: 1 })
   .toArray();
 const standingsCollection = db.collection("standings");
 const season = await standingsCollection.findOne({
-  "season_driver_data.cust_id": Number(id),
-  season_id: String(seasonId),
+  _id: `${seasonId}_${carClassId}_${id}`,
 });
 const pastSeasonsCollection = db.collection("pastseasons");
 const pastSeasonInformation = await pastSeasonsCollection.findOne({
@@ -85,8 +86,10 @@ trackScheduleMap.forEach((value) => {
       resultsPerWeek.push(bestUserResult);
     }
   } else if (userResults.length === 0) {
-    const bestUserResult = { subsession: { track: value }, userResult: {} };
-    // @ts-expect-error
+    const bestUserResult = {
+      subsession: { track: value } as Subsession,
+      userResult: {} as SessionResult,
+    };
     resultsPerWeek.push(bestUserResult);
   } else {
     const [bestUserResult] = userResults;
@@ -123,11 +126,10 @@ const results = resultsPerWeek.map((result) => {
     car_name,
     aggregate_champ_points,
   } = userResult;
-  // @ts-expect-error
   const { group_name: License } =
     allowed_licenses && allowed_licenses.length
-      ? allowed_licenses.slice(0, 2).pop()
-      : {};
+      ? (allowed_licenses.slice(0, 2).pop() as License)
+      : ({} as License);
   const sof = {
     "Strength Of Field": subsession.race_summary
       ? subsession.race_summary.field_strength
