@@ -1,6 +1,6 @@
 ---
 const { title, description } = Astro.props;
-const seoTitle = `Stat 'n' Track: ${title}` || "Stat 'n' Track";
+const seoTitle = title ? `Stat 'n' Track: ${title}` : "Stat 'n' Track";
 const seoDescription =
   description || "An iRacing planner and statistics analyzer";
 ---
