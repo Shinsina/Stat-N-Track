@@ -1,4 +1,5 @@
 ---
+import DefaultLayout from "$lib/layouts/default.astro";
 import handleResults from "$lib/utils/handle-session-results";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import lapTimeFields from "$lib/utils/lap-time-fields";
@@ -183,6 +184,7 @@ const incidents = results
   .reduce((a, b) => a + b, 0);
 const { division, division_rank, overall_rank, season_name } = season;
 const title = `${season_name}: Season Summary for ${season.season_driver_data.display_name}`;
+const description = title;
 const overviewItems = [
   `Points: ${season.season_driver_data.points}`,
   `Wins: ${wins}`,
@@ -205,56 +207,46 @@ const overviewItems = [
 ];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-  </head>
-  <body class="bg-gray-900 text-white font-sans pt-2">
-    <div class="text-center py-4 border-2">
-      <p><b>{title}</b></p>
-      <div class="text-center row-span-1">
-        Overview
-        {overviewItems.map((item) => <p>{item}</p>)}
-      </div>
+<DefaultLayout {title} {description}>
+  <div class="text-center py-4 border-2">
+    <p><b>{title}</b></p>
+    <div class="text-center row-span-1">
+      Overview
+      {overviewItems.map((item) => <p>{item}</p>)}
     </div>
-    <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
-      <table class="text-center col-span-1">
-        <tr
-          >{
-            keysArray.map((key) => (
-              <th class="border-2">{fieldIdToLabelMap.get(key) || key}</th>
-            ))
-          }</tr
-        >
-        {
-          handledResults.map((result) => (
-            <tr>
-              {Object.keys(result).map((key: string) => (
-                <td class="border-2">
-                  {key === "0" && result[key] ? (
-                    <a
-                      class="underline"
-                      rel="prefetch"
-                      href={`/Stat-N-Track/subsession/${result[key]}`}
-                    >
-                      {result[key]}
-                    </a>
-                  ) : lapTimeFields.has(keysArray[Number(key)]) &&
-                    result[key] ? (
-                    parseLapTime(Number(result[key]))
-                  ) : (
-                    result[key]
-                  )}
-                </td>
-              ))}
-            </tr>
+  </div>
+  <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+    <table class="text-center col-span-1">
+      <tr
+        >{
+          keysArray.map((key) => (
+            <th class="border-2">{fieldIdToLabelMap.get(key) || key}</th>
           ))
-        }
-      </table>
-    </div>
-  </body>
-</html>
+        }</tr
+      >
+      {
+        handledResults.map((result) => (
+          <tr>
+            {Object.keys(result).map((key: string) => (
+              <td class="border-2">
+                {key === "0" && result[key] ? (
+                  <a
+                    class="underline"
+                    rel="prefetch"
+                    href={`/Stat-N-Track/subsession/${result[key]}`}
+                  >
+                    {result[key]}
+                  </a>
+                ) : lapTimeFields.has(keysArray[Number(key)]) && result[key] ? (
+                  parseLapTime(Number(result[key]))
+                ) : (
+                  result[key]
+                )}
+              </td>
+            ))}
+          </tr>
+        ))
+      }
+    </table>
+  </div>
+</DefaultLayout>

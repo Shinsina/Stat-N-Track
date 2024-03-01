@@ -1,4 +1,5 @@
 ---
+import DefaultLayout from "$lib/layouts/default.astro";
 import handleResults from "$lib/utils/handle-session-results";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import lapTimeFields from "$lib/utils/lap-time-fields";
@@ -97,75 +98,68 @@ const results = subsessions.map((subsession) => {
 });
 const keysToDisplay = new Set(Object.keys(results[0]));
 const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
+const title = `Season information for season ID ${seasonId} - car class ID - ${carClassId} and user ID - ${id}`;
+const description = title;
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Season: {seasonId}</title>
-  </head>
-  <body class="bg-gray-900 text-white font-sans pt-2">
-    <a
-      class="underline"
-      rel="prefetch"
-      href=`/Stat-N-Track/user/${id}/season/${seasonId}/season-summary`
-    >
-      <div class="text-center py-4 border-2">
-        <p><b>View Season Summary</b></p>
-      </div>
-    </a>
-    <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
-      <table x-ref="Table" x-data="table" class="text-center col-span-1">
-        <tr x-ref="Headings"
-          >{
-            keysArray.map((key) => (
-              <th
-                id={`Table ${key} ${results.length}`}
-                class="border-2"
-                x-on:click="sort"
-              >
-                {fieldIdToLabelMap.get(key) || key}
-              </th>
-            ))
-          }</tr
-        >
-        {
-          handledResults.map((result, rowNumber) => (
-            <tr x-ref={`Table ${rowNumber}`}>
-              {Object.keys(result).map((key: string) => (
-                <td
-                  x-ref={`Table ${keysArray[Number(key)]} ${rowNumber}`}
-                  id={`${keysArray[Number(key)]}~${rowNumber}~${result[key]}`}
-                  class="border-2"
-                >
-                  {key === "0" ? (
-                    <a
-                      class="underline"
-                      rel="prefetch"
-                      href={`/Stat-N-Track/subsession/${result[key]}`}
-                    >
-                      {result[key]}
-                    </a>
-                  ) : lapTimeFields.has(keysArray[Number(key)]) ? (
-                    parseLapTime(Number(result[key]))
-                  ) : (
-                    result[key]
-                  )}
-                </td>
-              ))}
-            </tr>
-          ))
-        }
-      </table>
+<DefaultLayout {title} {description}>
+  <a
+    class="underline"
+    rel="prefetch"
+    href=`/Stat-N-Track/user/${id}/season/${seasonId}/car-class/${carClassId}/season-summary`
+  >
+    <div class="text-center py-4 border-2">
+      <p><b>View Season Summary</b></p>
     </div>
-    <script>
-      import Alpine from "alpinejs";
-      import Table from "$lib/components/table/index.ts";
-      Alpine.data("table", Table);
-      Alpine.start();
-    </script>
-  </body>
-</html>
+  </a>
+  <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+    <table x-ref="Table" x-data="table" class="text-center col-span-1">
+      <tr x-ref="Headings"
+        >{
+          keysArray.map((key) => (
+            <th
+              id={`Table ${key} ${results.length}`}
+              class="border-2"
+              x-on:click="sort"
+            >
+              {fieldIdToLabelMap.get(key) || key}
+            </th>
+          ))
+        }</tr
+      >
+      {
+        handledResults.map((result, rowNumber) => (
+          <tr x-ref={`Table ${rowNumber}`}>
+            {Object.keys(result).map((key: string) => (
+              <td
+                x-ref={`Table ${keysArray[Number(key)]} ${rowNumber}`}
+                id={`${keysArray[Number(key)]}~${rowNumber}~${result[key]}`}
+                class="border-2"
+              >
+                {key === "0" ? (
+                  <a
+                    class="underline"
+                    rel="prefetch"
+                    href={`/Stat-N-Track/subsession/${result[key]}`}
+                  >
+                    {result[key]}
+                  </a>
+                ) : lapTimeFields.has(keysArray[Number(key)]) ? (
+                  parseLapTime(Number(result[key]))
+                ) : (
+                  result[key]
+                )}
+              </td>
+            ))}
+          </tr>
+        ))
+      }
+    </table>
+  </div>
+  <script>
+    import Alpine from "alpinejs";
+    import Table from "$lib/components/table/index.ts";
+    Alpine.data("table", Table);
+    Alpine.start();
+  </script>
+</DefaultLayout>

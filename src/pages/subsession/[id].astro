@@ -1,5 +1,6 @@
 ---
 import { connectToDatabase } from "$lib/mongodb";
+import DefaultLayout from "$lib/layouts/default.astro";
 import Header from "$lib/components/subsession/header.astro";
 import TrackInfo from "$lib/components/track/info.astro";
 import LicenseInfo from "$lib/components/subsession/licenseInfo.astro";
@@ -26,58 +27,51 @@ const {
   allowed_licenses: licenses,
   license_category: licenseCategory,
 } = subsession || {};
+const title = `Subsession - ${id}`;
+const description = `Subsession information for subsession - ${id}`;
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/Stat-N-Track/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Subsession: {id}</title>
-  </head>
-  <body class="bg-gray-900 text-white font-sans pt-2">
-    <div class="grid grid-cols-12">
-      <div class="col-span-4 border-2 grid grid-rows-12">
-        <div class="row-span-1"></div>
-        <TrackInfo {cornersPerLap} {track} />
-        <LicenseInfo {licenses} {licenseCategory} />
-      </div>
-      <div class="col-span-4 border-2">
-        <Header {subsession} />
-        <RaceSummary {subsession} />
-      </div>
-      <div class="col-span-4 border-2 grid grid-rows-12">
-        <div class="row-span-1"></div>
-        <RelevantIds {subsession} sessions={session_results} />
-      </div>
+<DefaultLayout {title} {description}>
+  <div class="grid grid-cols-12">
+    <div class="col-span-4 border-2 grid grid-rows-12">
+      <div class="row-span-1"></div>
+      <TrackInfo {cornersPerLap} {track} />
+      <LicenseInfo {licenses} {licenseCategory} />
     </div>
-    <SessionResultsTables sessions={session_results} />
-    <script>
-      import Alpine from "alpinejs";
-      import Table from "../../lib/components/table/index.ts";
-      Alpine.data("tables", () => ({
-        PRACTICE: false,
-        QUALIFY: false,
-        HEAT: false,
-        RACE: false,
-        toggle() {
-          this.$el.id.split(" ").forEach((id, index) => {
-            if (index) {
-              // @ts-expect-error
-              this[id] = false;
-            } else {
-              // @ts-expect-error
-              this[id] = !this[id];
-            }
-          });
-        },
-      }));
-      Alpine.data("PRACTICE", Table);
-      Alpine.data("QUALIFY", Table);
-      Alpine.data("HEAT", Table);
-      Alpine.data("RACE", Table);
-      Alpine.start();
-    </script>
-  </body>
-</html>
+    <div class="col-span-4 border-2">
+      <Header {subsession} />
+      <RaceSummary {subsession} />
+    </div>
+    <div class="col-span-4 border-2 grid grid-rows-12">
+      <div class="row-span-1"></div>
+      <RelevantIds {subsession} sessions={session_results} />
+    </div>
+  </div>
+  <SessionResultsTables sessions={session_results} />
+  <script>
+    import Alpine from "alpinejs";
+    import Table from "../../lib/components/table/index.ts";
+    Alpine.data("tables", () => ({
+      PRACTICE: false,
+      QUALIFY: false,
+      HEAT: false,
+      RACE: false,
+      toggle() {
+        this.$el.id.split(" ").forEach((id, index) => {
+          if (index) {
+            // @ts-expect-error
+            this[id] = false;
+          } else {
+            // @ts-expect-error
+            this[id] = !this[id];
+          }
+        });
+      },
+    }));
+    Alpine.data("PRACTICE", Table);
+    Alpine.data("QUALIFY", Table);
+    Alpine.data("HEAT", Table);
+    Alpine.data("RACE", Table);
+    Alpine.start();
+  </script>
+</DefaultLayout>
