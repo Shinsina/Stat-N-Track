@@ -6,6 +6,8 @@ export function getStaticPaths() {
   return userIds.map((id) => ({ params: { id } }));
 }
 const { id } = Astro.params;
+const seoTitle = `Fully Participated Standings - ${id}`;
+const seoDescription = `Fully partipacipated standings page for user ID: ${id}`;
 const dbConnection = await connectToDatabase();
 const { db } = dbConnection;
 const collection = db.collection("standings");
@@ -18,4 +20,4 @@ const standingsResults = await collection
   .toArray();
 ---
 
-<StandingsLayout {id} {standingsResults} />
+<StandingsLayout {id} {seoTitle} {seoDescription} {standingsResults} />

@@ -7,6 +7,8 @@ export function getStaticPaths() {
   return userIds.map((id) => ({ params: { id } }));
 }
 const { id } = Astro.params;
+const seoTitle = `Subsessions - ${id}`;
+const seoDescription = `Subsessions page for user ID: ${id}`;
 const dbConnection = await connectToDatabase();
 const { db } = dbConnection;
 const collection = db.collection<Subsession>("subsessions");
@@ -18,4 +20,4 @@ const subsessions = await collection
   .toArray();
 ---
 
-<SubsessionsLayout {id} {subsessions} />
+<SubsessionsLayout {id} {seoTitle} {seoDescription} {subsessions} />

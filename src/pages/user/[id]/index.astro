@@ -5,9 +5,11 @@ export function getStaticPaths() {
   return userIds.map((id) => ({ params: { id } }));
 }
 const { id } = Astro.params;
+const title = `User  - ${id}`;
+const description = `User page for user ID: ${id}`;
 ---
 
-<DefaultLayout>
+<DefaultLayout {title} {description}>
   <div class="h-screen text-center text-3xl">
     <div>
       <a

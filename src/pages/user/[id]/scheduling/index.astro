@@ -147,9 +147,11 @@ const keysToOmitInTable = new Set([
   "tracks",
   "ownedTrackWeeks",
 ]);
+const title = `Scheduling - ${id}`;
+const description = `Scheduling page for user ID: ${id}`;
 ---
 
-<DefaultLayout>
+<DefaultLayout {title} {description}>
   <div class="grid grid-cols-4 text-center pt-6">
     {
       Object.keys(results[0])
