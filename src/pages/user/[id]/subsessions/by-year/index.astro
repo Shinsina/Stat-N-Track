@@ -10,10 +10,12 @@
   const db = dbConnection.db;
   const collection = db.collection("subsessions");
   const years: Array<number> = await collection.distinct("season_year", { "session_results.2.results": { $elemMatch: { cust_id: Number(id) } } });
+  const title = `Subsessions By Year - ${id}`;
+  const description = `Subsessions by year page for user ID: ${id}`;
 ---
 
 
-<DefaultLayout>
+<DefaultLayout {title} {description}>
 	<div class="text-center text-3xl">
     {years.map((year) => (<div><a class="underline" href=`/Stat-N-Track/user/${id}/subsessions/by-year/${year}` rel="prefetch">{year}</a></div>))}
 	</div>

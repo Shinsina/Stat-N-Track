@@ -23,6 +23,8 @@ export async function getStaticPaths() {
     .flat();
 }
 const { id, year } = Astro.params;
+const seoTitle = `Standings list for user ID - ${id} and year - ${year}`;
+const seoDescription = seoTitle;
 const dbConnection = await connectToDatabase();
 const { db } = dbConnection;
 const collection = db.collection("standings");
@@ -35,4 +37,4 @@ const standingsResults = await collection
   .toArray();
 ---
 
-<StandingsLayout {id} {standingsResults} />
+<StandingsLayout {id} {seoTitle} {seoDescription} {standingsResults} />

@@ -64,10 +64,12 @@
 			carClassNames.add(carClassNameTrimmed);
 		}
 	});
+	const title = `Subsessions By Car Class - ${id}`;
+	const description = `Subessions by car class page for user ID: ${id}`;
 ---
 
 
-<DefaultLayout>
+<DefaultLayout {title} {description}>
 	<div class="text-center text-3xl">
 	 {Array.from(carClassNames).sort().map((carClassName) => (<div><a class="underline" href=`/Stat-N-Track/user/${id}/subsessions/by-car-class/${carClassMap.get(carClassName)}` rel="prefetch">{carClassName}</a></div>))}
 	</div>
