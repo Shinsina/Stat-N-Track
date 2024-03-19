@@ -36,6 +36,7 @@ export default new Map<string, string>([
   ["overall_rank", "Rank (Overall)"],
   ["season_id", "Season ID"],
   ["season_name", "Season Name"],
+  ["season_summary", "Season Summary"],
   ["weeks_counted", "Participation Weeks"],
   ["starts", "Starts"],
   ["wins", "Wins"],
