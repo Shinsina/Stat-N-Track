@@ -37,7 +37,7 @@ const finalData: Array<Record<string, any>> = standingsResults.map(
       year,
       season_number_of_year,
       car_class_id,
-      "Season Summary": season_id,
+      season_summary: season_id,
       division,
       division_rank,
       overall_rank,
@@ -73,7 +73,7 @@ const generateLinkForKey = ({
     return `/Stat-N-Track/user/${id}/standings/by-year/${resultAtKey}`;
   } else if (key === "car_class_id") {
     return `/Stat-N-Track/user/${id}/standings/by-car-class/${resultAtKey}`;
-  } else if (key === "Season Summary") {
+  } else if (key === "season_summary") {
     return `/Stat-N-Track/user/${id}/season/${resultAtKey}/car-class/${carClassId}/season-summary`;
   }
   return null;
