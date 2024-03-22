@@ -1,9 +1,5 @@
 ---
 import type { Session, SessionResult, Subsession } from "$lib/types";
-interface Props {
-  subsession: Subsession;
-  sessions: Array<Session>;
-}
 const { subsession, sessions } = Astro.props;
 const relevantIds = Object.keys(subsession)
   .sort()
