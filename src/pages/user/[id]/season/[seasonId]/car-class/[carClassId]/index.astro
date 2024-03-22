@@ -1,101 +1,116 @@
 ---
+import {
+  db,
+  and,
+  eq,
+  sql,
+  Standing,
+  Subsession,
+  SubsessionRaceResults,
+} from "astro:db";
 import DefaultLayout from "$lib/layouts/default.astro";
 import handleResults from "$lib/utils/handle-session-results";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import { connectToDatabase } from "$lib/mongodb";
-import type { Season, Subsession } from "$lib/types";
 import userIds from "$lib/utils/user-ids";
 export async function getStaticPaths() {
-  const dbConnection = await connectToDatabase();
-  const db = dbConnection.db;
-  const collection = db.collection("standings");
-  const seasons: Array<Season> = await collection
-    .find({ "season_driver_data.cust_id": { $in: userIds } })
-    .toArray();
+  const seasons = await db
+    .select()
+    .from(Standing)
+    .where(sql`${Standing.cust_id} IN ${userIds}`);
   return seasons.map((season) => ({
     params: {
-      id: Number(season.season_driver_data.cust_id),
+      id: Number(season.cust_id),
       seasonId: Number(season.season_id),
       carClassId: Number(season.car_class_id),
     },
   }));
 }
 const { id, seasonId, carClassId } = Astro.params;
-const dbConnection = await connectToDatabase();
-const db = dbConnection.db;
-const collection = db.collection<Subsession>("subsessions");
-const subsessions: Array<Subsession> = await collection
-  .find({
-    season_id: Number(seasonId),
-    "session_results.2.results": {
-      $elemMatch: { cust_id: Number(id), car_class_id: Number(carClassId) },
-    },
-  })
-  .sort({ _id: 1 })
-  .toArray();
-const results = subsessions.map((subsession) => {
-  const {
-    subsession_id,
-    track,
-    corners_per_lap,
-    allowed_licenses,
-    license_category,
-  } = subsession;
-  // Current user in Race session;
-  const {
-    finish_position,
-    finish_position_in_class,
-    laps_lead,
-    laps_complete,
-    average_lap,
-    best_lap_time,
-    reason_out,
-    champ_points,
-    starting_position,
-    starting_position_in_class,
-    car_class_short_name,
-    division_name,
-    new_license_level,
-    new_cpi,
-    newi_rating,
-    incidents,
-    car_name,
-    aggregate_champ_points,
-  } = subsession.session_results[2].results.filter(
-    (v: any) => v.cust_id === Number(id)
-  )[0];
-  const { group_name: License } = allowed_licenses.slice(0, 2).pop() || {};
+const allSeasonSubsessions = await db
+  .select()
+  .from(Subsession)
+  .where(eq(Subsession.season_id, Number(seasonId)));
+const allSeasonRaceResultsForUser = await db
+  .select()
+  .from(SubsessionRaceResults)
+  .where(
+    and(
+      eq(SubsessionRaceResults.cust_id, Number(id)),
+      eq(SubsessionRaceResults.car_class_id, Number(carClassId))
+    )
+  );
+const results = allSeasonSubsessions
+  .filter((v) =>
+    allSeasonRaceResultsForUser
+      .map((w) => w.subsession_id)
+      .includes(v.subsession_id)
+  )
+  .map((subsession) => {
+    const {
+      subsession_id,
+      track,
+      corners_per_lap,
+      allowed_licenses,
+      license_category,
+    } = subsession;
+    // Current user in Race session;
+    const {
+      finish_position,
+      finish_position_in_class,
+      laps_lead,
+      laps_complete,
+      average_lap,
+      best_lap_time,
+      reason_out,
+      champ_points,
+      starting_position,
+      starting_position_in_class,
+      car_class_short_name,
+      division_name,
+      new_license_level,
+      new_cpi,
+      newi_rating,
+      incidents,
+      car_name,
+      aggregate_champ_points,
+    } = allSeasonRaceResultsForUser.find(
+      (v) => v.subsession_id === subsession_id
+    );
+    const { group_name: License } = Array.isArray(allowed_licenses)
+      ? allowed_licenses.slice(0, 2).pop()
+      : { group_name: "" };
 
-  return {
-    subsession_id,
-    Track: `${track.track_name} ${
-      track.config_name !== "N/A" ? track.config_name : ""
-    }`,
-    Corners: corners_per_lap,
-    License,
-    license_category,
-    finish_position,
-    finish_position_in_class,
-    laps_lead,
-    laps_complete,
-    average_lap,
-    best_lap_time,
-    reason_out,
-    champ_points,
-    starting_position,
-    starting_position_in_class,
-    car_class_short_name,
-    division_name,
-    new_license_level,
-    new_cpi,
-    newi_rating,
-    incidents,
-    car_name,
-    aggregate_champ_points,
-  };
-});
+    return {
+      subsession_id,
+      Track: `${track.track_name} ${
+        track.config_name !== "N/A" ? track.config_name : ""
+      }`,
+      Corners: corners_per_lap,
+      License,
+      license_category,
+      finish_position,
+      finish_position_in_class,
+      laps_lead,
+      laps_complete,
+      average_lap,
+      best_lap_time,
+      reason_out,
+      champ_points,
+      starting_position,
+      starting_position_in_class,
+      car_class_short_name,
+      division_name,
+      new_license_level,
+      new_cpi,
+      newi_rating,
+      incidents,
+      car_name,
+      aggregate_champ_points,
+    };
+  });
 const keysToDisplay = new Set(Object.keys(results[0]));
 const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
 const title = `Season information for season ID ${seasonId} - car class ID - ${carClassId} and user ID - ${id}`;
