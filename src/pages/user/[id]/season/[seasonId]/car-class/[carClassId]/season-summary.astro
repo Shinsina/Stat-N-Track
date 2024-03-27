@@ -1,15 +1,20 @@
 ---
-import { db, eq, and, sql, PastSeason, Standing, Subsession, SubsessionRaceResults } from "astro:db";
+import {
+  db,
+  eq,
+  and,
+  sql,
+  PastSeason,
+  Standing,
+  Subsession,
+  SubsessionRaceResults,
+} from "astro:db";
 import DefaultLayout from "$lib/layouts/default.astro";
 import handleResults from "$lib/utils/handle-session-results";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
-import type {
-  License,
-  SessionResult,
-  Track,
-} from "$lib/types";
+import type { License, SessionResult, Track } from "$lib/types";
 import userIds from "$lib/utils/user-ids";
 export async function getStaticPaths() {
   const seasons = await db
@@ -25,7 +30,7 @@ export async function getStaticPaths() {
   }));
 }
 const { id, seasonId, carClassId } = Astro.params;
-  const allSeasonSubsessions = await db
+const allSeasonSubsessions = await db
   .select()
   .from(Subsession)
   .where(eq(Subsession.season_id, Number(seasonId)));
@@ -38,12 +43,11 @@ const allSeasonRaceResultsForUser = await db
       eq(SubsessionRaceResults.car_class_id, Number(carClassId))
     )
   );
-const subsessions = allSeasonSubsessions
-  .filter((v) =>
-    allSeasonRaceResultsForUser
-      .map((w) => w.subsession_id)
-      .includes(v.subsession_id)
-  );
+const subsessions = allSeasonSubsessions.filter((v) =>
+  allSeasonRaceResultsForUser
+    .map((w) => w.subsession_id)
+    .includes(v.subsession_id)
+);
 const [season] = await db
   .select()
   .from(Standing)
@@ -52,19 +56,19 @@ const [pastSeasonInformation] = await db
   .select()
   .from(PastSeason)
   .where(eq(PastSeason.season_id, Number(seasonId)));
-const trackSchedule: Array<Track> = pastSeasonInformation.race_weeks.map(
-  (raceWeek: Record<string, Track>) => ({
-    ...raceWeek.track,
-    race_week_num: raceWeek.race_week_num,
-  })
-);
-const trackScheduleMap: Map<number, Track> = new Map();
+const trackSchedule = Array.isArray(pastSeasonInformation.race_weeks)
+  ? pastSeasonInformation.race_weeks.map((raceWeek: Record<string, Track>) => ({
+      ...raceWeek.track,
+      race_week_num: raceWeek.race_week_num,
+    }))
+  : [];
+const trackScheduleMap: Map<number, (typeof trackSchedule)[0]> = new Map();
 trackSchedule.forEach((track) => {
   trackScheduleMap.set(Number(track.race_week_num), track);
 });
 
 const resultsPerWeek: Array<{
-  subsession: Subsession;
+  subsession: typeof Subsession;
   userResult: SessionResult;
 }> = [];
 trackScheduleMap.forEach((value) => {
@@ -82,21 +86,26 @@ trackScheduleMap.forEach((value) => {
     const bestUserResult = userResults
       .sort(
         (a, b) =>
+          // @ts-expect-error
           a.userResult.aggregate_champ_points -
+          // @ts-expect-error
           b.userResult.aggregate_champ_points
       )
       .pop();
     if (bestUserResult) {
+      // @ts-expect-error
       resultsPerWeek.push(bestUserResult);
     }
   } else if (userResults.length === 0) {
     const bestUserResult = {
-      subsession: { track: value } as Subsession,
-      userResult: {} as SessionResult,
+      subsession: { track: value },
+      userResult: {},
     };
+    // @ts-expect-error
     resultsPerWeek.push(bestUserResult);
   } else {
     const [bestUserResult] = userResults;
+    // @ts-expect-error
     resultsPerWeek.push(bestUserResult);
   }
 });
@@ -131,19 +140,21 @@ const results = resultsPerWeek.map((result) => {
     aggregate_champ_points,
   } = userResult;
   const { group_name: License } =
-    allowed_licenses && allowed_licenses.length
+    allowed_licenses &&
+    Array.isArray(allowed_licenses) &&
+    allowed_licenses.length
       ? (allowed_licenses.slice(0, 2).pop() as License)
       : ({} as License);
   const sof = {
     "Strength Of Field": subsession.race_summary
-      ? subsession.race_summary.field_strength
+      ? // @ts-expect-error
+        subsession.race_summary.field_strength
       : null,
   };
   return {
     subsession_id,
-    Track: `${track.track_name} ${
-      track.config_name && track.config_name !== "N/A" ? track.config_name : ""
-    }`,
+    // @ts-expect-error
+    Track: `${track.track_name} ${track.config_name && track.config_name !== "N/A" ? track.config_name : ""}`,
     Corners: corners_per_lap,
     License,
     license_category,
