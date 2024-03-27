@@ -13,8 +13,8 @@ import RaceResults from "$lib/components/session-results/race.astro";
 import userIds from "$lib/utils/user-ids";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
-import keysToDisplay from "$lib/utils/race-session-keys-to-display";
 import { bgColorByUserDisplayName } from "$lib/utils/background-color-by-user";
+import type { Track } from "$lib/types";
 const sharedRaceSessions = await db
   .select({
     subsession_id: SubsessionRaceResults.subsession_id,
@@ -50,7 +50,6 @@ const subsessionIdToSharedRaceResultsMap = sharedSubsessionRaceResults.reduce(
   },
   new Map()
 );
-console.log(sharedSubsessions.length, "YO");
 const headToHeadWins: Record<string, Array<number>> = {};
 const results = sharedSubsessions.map((subsession) => {
   const {
@@ -96,11 +95,13 @@ const results = sharedSubsessions.map((subsession) => {
   const { group_name: License } = Array.isArray(allowed_licenses)
     ? allowed_licenses.slice(0, 2).pop()
     : { group_name: "" };
+  const assertTrackAsTrackType = () => track as Track;
+  const trackInfo = assertTrackAsTrackType();
   return {
     subsessionInfo: {
       subsession_id,
-      Track: `${track.track_name} ${
-        track.config_name !== "N/A" ? track.config_name : ""
+      Track: `${trackInfo.track_name} ${
+        trackInfo.config_name !== "N/A" ? trackInfo.config_name : ""
       }`,
       License,
       license_category,
@@ -234,7 +235,6 @@ const description = "Shared subsessions for all Stat 'n' Track users";
                 {Object.keys(result.subsessionInfo).map((key) => (
                   <td
                     x-ref={`Table ${key} ${rowNumber}`}
-                    @ts-expect-error
                     id={`${key}~${rowNumber}~${result.subsessionInfo[key]}`}
                     class="border-2"
                   >
