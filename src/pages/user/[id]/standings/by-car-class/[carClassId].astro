@@ -2,9 +2,8 @@
 import { db, desc, eq, and, Standing } from "astro:db";
 import StandingsLayout from "$lib/layouts/standings.astro";
 import userIds from "$lib/utils/user-ids";
-import type { UserIdCarClassIdsMapping } from "$lib/types";
 export async function getStaticPaths() {
-  const mappings: Array<UserIdCarClassIdsMapping> = await Promise.all(
+  const mappings = await Promise.all(
     userIds.map(async (userId) => {
       const values = await db
         .selectDistinct({ car_class_id: Standing.car_class_id })
