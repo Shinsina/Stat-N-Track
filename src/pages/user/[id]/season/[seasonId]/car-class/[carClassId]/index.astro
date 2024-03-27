@@ -13,8 +13,8 @@ import handleResults from "$lib/utils/handle-session-results";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
-import { connectToDatabase } from "$lib/mongodb";
 import userIds from "$lib/utils/user-ids";
+import type { Track } from "$lib/types";
 export async function getStaticPaths() {
   const seasons = await db
     .select()
@@ -78,15 +78,16 @@ const results = allSeasonSubsessions
       aggregate_champ_points,
     } = allSeasonRaceResultsForUser.find(
       (v) => v.subsession_id === subsession_id
-    );
+    ) || {};
     const { group_name: License } = Array.isArray(allowed_licenses)
       ? allowed_licenses.slice(0, 2).pop()
       : { group_name: "" };
-
+      const assertTrackAsTrackType = () => track as Track;
+      const trackInfo = assertTrackAsTrackType();
     return {
       subsession_id,
-      Track: `${track.track_name} ${
-        track.config_name !== "N/A" ? track.config_name : ""
+      Track: `${trackInfo.track_name} ${
+        trackInfo.config_name !== "N/A" ? trackInfo.config_name : ""
       }`,
       Corners: corners_per_lap,
       License,
