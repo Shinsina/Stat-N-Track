@@ -169,20 +169,26 @@ export default async function seed() {
     }
   );
   await db.insert(Subsession).values(allSubsessions);
+  console.log("Seeding Subsession Practice Results...");
   await Promise.all(
     allPracticeResults.map((result) =>
       db.insert(SubsessionPracticeResults).values(result)
     )
   );
+  console.log("Subsession Practice Results Seeded!");
+  console.log("Seeding Subsession Qualifying Results...");
   await Promise.all(
     allQualifyingResults.map((result) =>
       db.insert(SubsessionQualifyingResults).values(result)
     )
   );
+  console.log("Subsession Qualifying Results Seeded!");
+  console.log("Seeding Subsession Race Results...");
   await Promise.all(
     allRaceResults.map((result) =>
       db.insert(SubsessionRaceResults).values(result)
     )
   );
+  console.log("Subsession Race Results Seeded!");
   console.log("Subsessions Seeded!");
 }
