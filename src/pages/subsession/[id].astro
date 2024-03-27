@@ -41,8 +41,8 @@ const raceResults = await db
   .from(SubsessionRaceResults)
   .where(eq(SubsessionRaceResults.subsession_id, Number(id)))
   .orderBy(asc(SubsessionRaceResults.finish_position));
-const [practiceResultOne] = practiceResults || [];
-const [qualifyingResultOne] = qualifyingResults || [];
+const [practiceResultOne] = practiceResults || [{}];
+const [qualifyingResultOne] = qualifyingResults || [{}];
 const splitRaceResults = raceResults.find((result) =>
   result.simsession_name.match(/HEAT/i)
 )
@@ -96,7 +96,7 @@ if (heatResults.length && mainResults.length) {
     ]
   );
 } else {
-  const [raceResultOne] = raceResults || [];
+  const [raceResultOne] = raceResults || [{}];
   session_results.push({
     simsession_type_name: raceResultOne.simsession_type_name || 'Race',
     simsession_name: raceResultOne.simsession_name || 'RACE',
