@@ -1,19 +1,27 @@
 ---
-import { connectToDatabase } from "$lib/mongodb";
+import {
+  db,
+  desc,
+  eq,
+  and,
+  sql,
+  Standing,
+  Subsession,
+  SubsessionRaceResults,
+} from "astro:db";
 import SubsessionsLayout from "$lib/layouts/subsessions.astro";
 import userIds from "$lib/utils/user-ids";
 import type { UserIdCarClassIdsMapping } from "$lib/types";
 export async function getStaticPaths() {
-  const dbConnection = await connectToDatabase();
-  const db = dbConnection.db;
-  const collection = db.collection("standings");
   const mappings: Array<UserIdCarClassIdsMapping> = await Promise.all(
-    userIds.map(async (userId) => ({
-      userId,
-      carClassIds: await collection.distinct("car_class_id", {
-        "season_driver_data.cust_id": Number(userId),
-      }),
-    }))
+    userIds.map(async (userId) => {
+      const values = await db
+        .selectDistinct({ car_class_id: Standing.car_class_id })
+        .from(Standing)
+        .where(eq(Standing.cust_id, Number(userId)));
+      const carClassIds = values.map((value) => Number(value.car_class_id));
+      return { userId, carClassIds };
+    })
   );
   return mappings
     .map((mapping) => {
@@ -28,17 +36,33 @@ export async function getStaticPaths() {
 const { id, carClassId } = Astro.params;
 const seoTitle = `Subsessions list for user ID - ${id} and car class ID - ${carClassId}`;
 const seoDescription = seoTitle;
-const dbConnection = await connectToDatabase();
-const { db } = dbConnection;
-const collection = db.collection("subsessions");
-const subsessions = await collection
-  .find({
-    "session_results.2.results": {
-      $elemMatch: { cust_id: Number(id), car_class_id: Number(carClassId) },
-    },
-  })
-  .sort({ _id: -1 })
-  .toArray();
+const subsessionRaceResults = await db
+  .select()
+  .from(SubsessionRaceResults)
+  .where(
+    and(
+      eq(SubsessionRaceResults.cust_id, Number(id)),
+      eq(SubsessionRaceResults.car_class_id, Number(carClassId))
+    )
+  );
+const subsessionsWithoutResult = await db
+  .select()
+  .from(Subsession)
+  .where(
+    sql`${Subsession.subsession_id} IN ${subsessionRaceResults.map((subsession) => subsession.subsession_id)}`
+  )
+  .orderBy(desc(Subsession.subsession_id));
+const subsessions = subsessionsWithoutResult.map((subsessionWithoutResult) => {
+  const { subsession_id } = subsessionWithoutResult;
+  const userResult = subsessionRaceResults.find(
+    (subsessionRaceResult) =>
+      subsessionRaceResult.subsession_id === subsession_id
+  );
+  return {
+    ...subsessionWithoutResult,
+    userResult,
+  };
+});
 ---
 
 <SubsessionsLayout {id} {seoTitle} {seoDescription} {subsessions} />
