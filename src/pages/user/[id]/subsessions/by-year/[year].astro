@@ -1,40 +1,60 @@
 ---
-import { connectToDatabase } from "$lib/mongodb";
+import { db, eq, desc, sql, SubsessionRaceResults, Subsession } from "astro:db";
 import SubsessionsLayout from "$lib/layouts/subsessions.astro";
 import userIds from "$lib/utils/user-ids";
-import type { UserIdYearsMapping } from "$lib/types";
 export async function getStaticPaths() {
-  const dbConnection = await connectToDatabase();
-  const db = dbConnection.db;
-  const collection = db.collection("subsessions");
-  const mappings: Array<UserIdYearsMapping> = await Promise.all(
-    userIds.map(async (userId) => ({
-      userId,
-      years: await collection.distinct("season_year", {
-        "session_results.2.results": { $elemMatch: { cust_id: userId } },
-      }),
-    }))
+  const mappings = await Promise.all(
+    userIds.map(async (userId) => {
+      const subsessions = await db
+        .selectDistinct({ subsession_id: SubsessionRaceResults.subsession_id })
+        .from(SubsessionRaceResults)
+        .where(eq(SubsessionRaceResults.cust_id, Number(userId)));
+      const years = await db
+        .selectDistinct({ season_year: Subsession.season_year })
+        .from(Subsession)
+        .where(
+          sql`${Subsession.subsession_id} IN ${subsessions.map((subsession) => subsession.subsession_id)}`
+        );
+      return { userId, years };
+    })
   );
   return mappings
     .map((mapping) => {
       const { userId, years } = mapping;
-      return years.map((year) => ({ params: { id: userId, year } }));
+      return years.map((year) => ({
+        params: { id: userId, year: year.season_year },
+      }));
     })
     .flat();
 }
 const { id, year } = Astro.params;
 const seoTitle = `Subsessions list for user ID - ${id} and year - ${year}`;
 const seoDescription = seoTitle;
-const dbConnection = await connectToDatabase();
-const { db } = dbConnection;
-const collection = db.collection("subsessions");
-const subsessions = await collection
-  .find({
-    season_year: Number(year),
-    "session_results.2.results": { $elemMatch: { cust_id: Number(id) } },
+const subsessionsWithoutResult = await db
+  .select()
+  .from(Subsession)
+  .where(eq(Subsession.season_year, Number(year)))
+  .orderBy(desc(Subsession.subsession_id));
+const subsessionRaceResults = await db
+  .select()
+  .from(SubsessionRaceResults)
+  .where(
+    sql`${SubsessionRaceResults.cust_id} IS ${id} AND ${SubsessionRaceResults.subsession_id} IN ${subsessionsWithoutResult.map((subsessionWithoutResult) => subsessionWithoutResult.subsession_id)}`
+  );
+
+const subsessions = subsessionsWithoutResult
+  .map((subsessionWithoutResult) => {
+    const { subsession_id } = subsessionWithoutResult;
+    const userResult = subsessionRaceResults.find(
+      (subsessionRaceResult) =>
+        subsessionRaceResult.subsession_id === subsession_id
+    );
+    return {
+      ...subsessionWithoutResult,
+      userResult,
+    };
   })
-  .sort({ _id: -1 })
-  .toArray();
+  .filter((v) => v.userResult);
 ---
 
 <SubsessionsLayout {id} {seoTitle} {seoDescription} {subsessions} />
