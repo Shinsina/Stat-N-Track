@@ -1,40 +1,55 @@
 ---
-import { connectToDatabase } from "$lib/mongodb";
+import {
+  db,
+  and,
+  eq,
+  desc,
+  like,
+  sql,
+  Standing,
+  SubsessionRaceResults,
+  Subsession,
+} from "astro:db";
 import StandingsLayout from "$lib/layouts/standings.astro";
 import userIds from "$lib/utils/user-ids";
-import type { UserIdYearsMapping } from "$lib/types";
 export async function getStaticPaths() {
-  const dbConnection = await connectToDatabase();
-  const db = dbConnection.db;
-  const collection = db.collection("subsessions");
-  const mappings: Array<UserIdYearsMapping> = await Promise.all(
-    userIds.map(async (userId) => ({
-      userId,
-      years: await collection.distinct("season_year", {
-        "session_results.2.results": { $elemMatch: { cust_id: userId } },
-      }),
-    }))
+  const mappings = await Promise.all(
+    userIds.map(async (userId) => {
+      const subsessions = await db
+        .selectDistinct({ subsession_id: SubsessionRaceResults.subsession_id })
+        .from(SubsessionRaceResults)
+        .where(eq(SubsessionRaceResults.cust_id, Number(userId)));
+      const years = await db
+        .selectDistinct({ season_year: Subsession.season_year })
+        .from(Subsession)
+        .where(
+          sql`${Subsession.subsession_id} IN ${subsessions.map((subsession) => subsession.subsession_id)}`
+        );
+      return { userId, years };
+    })
   );
   return mappings
     .map((mapping) => {
       const { userId, years } = mapping;
-      return years.map((year) => ({ params: { id: userId, year } }));
+      return years.map((year) => ({
+        params: { id: userId, year: year.season_year },
+      }));
     })
     .flat();
 }
 const { id, year } = Astro.params;
 const seoTitle = `Standings list for user ID - ${id} and year - ${year}`;
 const seoDescription = seoTitle;
-const dbConnection = await connectToDatabase();
-const { db } = dbConnection;
-const collection = db.collection("standings");
-const standingsResults = await collection
-  .find({
-    "season_driver_data.cust_id": Number(id),
-    season_name: { $regex: year },
-  })
-  .sort({ season_id: -1 })
-  .toArray();
+const standingsResults = await db
+  .select()
+  .from(Standing)
+  .where(
+    and(
+      eq(Standing.cust_id, Number(id)),
+      like(Standing.season_name, `%${year}%`)
+    )
+  )
+  .orderBy(desc(Standing.season_id));
 ---
 
 <StandingsLayout {id} {seoTitle} {seoDescription} {standingsResults} />
