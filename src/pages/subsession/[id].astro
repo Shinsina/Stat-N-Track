@@ -41,8 +41,8 @@ const raceResults = await db
   .from(SubsessionRaceResults)
   .where(eq(SubsessionRaceResults.subsession_id, Number(id)))
   .orderBy(asc(SubsessionRaceResults.finish_position));
-const [practiceResultOne] = practiceResults;
-const [qualifyingResultOne] = qualifyingResults;
+const [practiceResultOne] = practiceResults || [];
+const [qualifyingResultOne] = qualifyingResults || [];
 const splitRaceResults = raceResults.find((result) =>
   result.simsession_name.match(/HEAT/i)
 )
@@ -63,13 +63,13 @@ const splitRaceResults = raceResults.find((result) =>
   : { heatResults: [], mainResults: [] };
 const session_results = [
   {
-    simsession_type_name: practiceResultOne.simsession_type_name,
-    simsession_name: practiceResultOne.simsession_name,
+    simsession_type_name: practiceResultOne.simsession_type_name || 'Open Practice',
+    simsession_name: practiceResultOne.simsession_name || 'PRACTICE',
     results: practiceResults,
   },
   {
-    simsession_type_name: qualifyingResultOne.simsession_type_name,
-    simsession_name: qualifyingResultOne.simsession_name,
+    simsession_type_name: qualifyingResultOne.simsession_type_name || 'Lone Qualifying',
+    simsession_name: qualifyingResultOne.simsession_name || 'QUALIFY',
     results: qualifyingResults,
   },
 ];
@@ -81,25 +81,25 @@ if (heatResults.length && mainResults.length) {
     ...[
       {
         // @ts-ignore
-        simsession_type_name: heatResultOne.simsession_type_name,
+        simsession_type_name: heatResultOne.simsession_type_name || 'Race',
         // @ts-ignore
-        simsession_name: heatResultOne.simsession_name,
+        simsession_name: heatResultOne.simsession_name || 'HEAT',
         results: heatResults,
       },
       {
         // @ts-ignore
-        simsession_type_name: mainResultOne.simsession_type_name,
+        simsession_type_name: mainResultOne.simsession_type_name || 'Race',
         // @ts-ignore
-        simsession_name: mainResultOne.simsession_name,
+        simsession_name: mainResultOne.simsession_name || 'RACE',
         results: mainResults,
       },
     ]
   );
 } else {
-  const [raceResultOne] = raceResults;
+  const [raceResultOne] = raceResults || [];
   session_results.push({
-    simsession_type_name: raceResultOne.simsession_type_name,
-    simsession_name: raceResultOne.simsession_name,
+    simsession_type_name: raceResultOne.simsession_type_name || 'Race',
+    simsession_name: raceResultOne.simsession_name || 'RACE',
     results: raceResults,
   });
 }
