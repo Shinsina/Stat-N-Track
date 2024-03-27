@@ -1,11 +1,7 @@
 ---
 import { db, eq, User, Car, CarClass, Season } from "astro:db";
 import DefaultLayout from "$lib/layouts/default.astro";
-import type {
-  CarClassType,
-  SchedulingTableResult,
-  Track,
-} from "$lib/types";
+import type { CarClassType, SchedulingTableResult, Track } from "$lib/types";
 export async function getStaticPaths() {
   const userIds = await db.selectDistinct({ id: User.cust_id }).from(User);
   return userIds.map(({ id }) => ({ params: { id } }));

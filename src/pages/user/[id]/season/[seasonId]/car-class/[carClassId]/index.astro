@@ -76,14 +76,15 @@ const results = allSeasonSubsessions
       incidents,
       car_name,
       aggregate_champ_points,
-    } = allSeasonRaceResultsForUser.find(
-      (v) => v.subsession_id === subsession_id
-    ) || {};
+    } =
+      allSeasonRaceResultsForUser.find(
+        (v) => v.subsession_id === subsession_id
+      ) || {};
     const { group_name: License } = Array.isArray(allowed_licenses)
       ? allowed_licenses.slice(0, 2).pop()
       : { group_name: "" };
-      const assertTrackAsTrackType = () => track as Track;
-      const trackInfo = assertTrackAsTrackType();
+    const assertTrackAsTrackType = () => track as Track;
+    const trackInfo = assertTrackAsTrackType();
     return {
       subsession_id,
       Track: `${trackInfo.track_name} ${
