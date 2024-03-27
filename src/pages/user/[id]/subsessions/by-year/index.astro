@@ -1,15 +1,27 @@
 ---
-  import { connectToDatabase } from "$lib/mongodb";
+import {
+  db,
+  eq,
+  sql,
+  SubsessionRaceResults,
+  Subsession,
+} from "astro:db";
   import DefaultLayout from "$lib/layouts/default.astro";
   import userIds from "$lib/utils/user-ids";
   export function getStaticPaths() {
     return userIds.map((id) => ({ params: { id } }));
   }
   const { id } = Astro.params;
-  const dbConnection = await connectToDatabase();
-  const db = dbConnection.db;
-  const collection = db.collection("subsessions");
-  const years: Array<number> = await collection.distinct("season_year", { "session_results.2.results": { $elemMatch: { cust_id: Number(id) } } });
+  const subsessions = await db
+        .selectDistinct({ subsession_id: SubsessionRaceResults.subsession_id })
+        .from(SubsessionRaceResults)
+        .where(eq(SubsessionRaceResults.cust_id, Number(id)));
+      const years = await db
+        .selectDistinct({ season_year: Subsession.season_year })
+        .from(Subsession)
+        .where(
+          sql`${Subsession.subsession_id} IN ${subsessions.map((subsession) => subsession.subsession_id)}`
+        );
   const title = `Subsessions By Year - ${id}`;
   const description = `Subsessions by year page for user ID: ${id}`;
 ---
@@ -17,6 +29,6 @@
 
 <DefaultLayout {title} {description}>
 	<div class="text-center text-3xl">
-    {years.map((year) => (<div><a class="underline" href=`/Stat-N-Track/user/${id}/subsessions/by-year/${year}` rel="prefetch">{year}</a></div>))}
+    {years.map((year) => (<div><a class="underline" href=`/Stat-N-Track/user/${id}/subsessions/by-year/${year.season_year}` rel="prefetch">{year.season_year}</a></div>))}
 	</div>
 </DefaultLayout>
