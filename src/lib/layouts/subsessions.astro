@@ -5,7 +5,7 @@ import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import type { Subsession } from "$lib/types";
 import DefaultLayout from "$lib/layouts/default.astro";
-const { id, seoTitle, seoDescription, subsessions } = Astro.props;
+const { seoTitle, seoDescription, subsessions } = Astro.props;
 const results = subsessions.map((subsession: Subsession) => {
   const {
     subsession_id,
@@ -13,6 +13,7 @@ const results = subsessions.map((subsession: Subsession) => {
     corners_per_lap,
     allowed_licenses,
     license_category,
+    userResult,
   } = subsession;
   // Current user in Race session;
   const {
@@ -34,9 +35,7 @@ const results = subsessions.map((subsession: Subsession) => {
     incidents,
     car_name,
     aggregate_champ_points,
-  } = subsession.session_results[2].results.filter(
-    (v: any) => v.cust_id === Number(id)
-  )[0];
+  } = userResult;
   const { group_name: License } = allowed_licenses.slice(0, 2).pop() || {};
 
   return {

@@ -1,9 +1,5 @@
 ---
 import type { License } from "$lib/types";
-interface Props {
-  licenses: Array<License>;
-  licenseCategory: string;
-}
 const { licenses, licenseCategory } = Astro.props;
 const [allowedLicenseOne, allowLicenseTwo] = licenses || [];
 const allowedLicenses = [allowedLicenseOne, allowLicenseTwo];

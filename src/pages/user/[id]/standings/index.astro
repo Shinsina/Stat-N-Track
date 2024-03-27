@@ -1,5 +1,5 @@
 ---
-import { connectToDatabase } from "$lib/mongodb";
+import { db, eq, desc, Standing } from "astro:db";
 import StandingsLayout from "$lib/layouts/standings.astro";
 import userIds from "$lib/utils/user-ids";
 export function getStaticPaths() {
@@ -8,13 +8,11 @@ export function getStaticPaths() {
 const { id } = Astro.params;
 const seoTitle = `All Standings - ${id}`;
 const seoDescription = `All standings page for user ID: ${id}`;
-const dbConnection = await connectToDatabase();
-const { db } = dbConnection;
-const collection = db.collection("standings");
-const standingsResults = await collection
-  .find({ "season_driver_data.cust_id": Number(id) })
-  .sort({ season_id: -1 })
-  .toArray();
+const standingsResults = await db
+  .select()
+  .from(Standing)
+  .where(eq(Standing.cust_id, Number(id)))
+  .orderBy(desc(Standing.season_id));
 ---
 
 <StandingsLayout {id} {seoTitle} {seoDescription} {standingsResults} />

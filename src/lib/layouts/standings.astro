@@ -9,11 +9,8 @@ const finalData: Array<Record<string, any>> = standingsResults.map(
       division,
       division_rank,
       overall_rank,
-      season_driver_data,
       season_id,
       season_name,
-    } = result;
-    const {
       weeks_counted,
       starts,
       wins,
@@ -27,7 +24,7 @@ const finalData: Array<Record<string, any>> = standingsResults.map(
       laps_led,
       incidents,
       points,
-    } = season_driver_data;
+    } = result;
     const [, year] = season_name.match(/([0-9]{4}) Season/) || [0, 0];
     const [, season_number_of_year] = season_name.match(
       /Season ([0-9]{1})/

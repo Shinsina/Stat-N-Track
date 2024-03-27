@@ -1,25 +1,57 @@
 ---
-import { connectToDatabase } from "$lib/mongodb";
-import type { Session, SessionResult, Subsession } from "$lib/types";
+import {
+  db,
+  gt,
+  sql,
+  count,
+  desc,
+  Subsession,
+  SubsessionRaceResults,
+} from "astro:db";
 import DefaultLayout from "$lib/layouts/default.astro";
 import RaceResults from "$lib/components/session-results/race.astro";
 import userIds from "$lib/utils/user-ids";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
-import keysToDisplay from "$lib/utils/race-session-keys-to-display";
 import { bgColorByUserDisplayName } from "$lib/utils/background-color-by-user";
-const dbConnection = await connectToDatabase();
-const { db } = dbConnection;
-const collection = db.collection<Subsession>("subsessions");
-const $and = userIds.map((userId) => ({
-  "session_results.2.results": { $elemMatch: { cust_id: userId } },
-}));
-const subsessions = await collection.find({ $and }).sort({ _id: -1 }).toArray();
+import type { Track } from "$lib/types";
+const sharedRaceSessions = await db
+  .select({
+    subsession_id: SubsessionRaceResults.subsession_id,
+    count: count(SubsessionRaceResults.subsession_id),
+  })
+  .from(SubsessionRaceResults)
+  .where(
+    sql`${SubsessionRaceResults.cust_id} IN ${userIds} AND ${SubsessionRaceResults.simsession_number} = 0 GROUP BY ${SubsessionRaceResults.subsession_id}`
+  )
+  .having(({ count }) => gt(count, 1));
+const sharedSubsessionIds = sharedRaceSessions.map((v) => v.subsession_id);
+const sharedSubsessions = await db
+  .select()
+  .from(Subsession)
+  .where(sql`${Subsession.subsession_id} IN ${sharedSubsessionIds}`)
+  .orderBy(desc(Subsession.subsession_id));
+const sharedSubsessionRaceResults = await db
+  .select()
+  .from(SubsessionRaceResults)
+  .where(
+    sql`${SubsessionRaceResults.cust_id} IN ${userIds} AND ${SubsessionRaceResults.simsession_number} = 0 AND ${SubsessionRaceResults.subsession_id} IN ${sharedSubsessionIds}`
+  );
+const subsessionIdToSharedRaceResultsMap = sharedSubsessionRaceResults.reduce(
+  (map: Map<number, Array<typeof value>>, value) => {
+    const { subsession_id } = value;
+    const currentValue = map.get(subsession_id);
+    if (currentValue) {
+      map.set(subsession_id, [...currentValue, value]);
+    } else {
+      map.set(subsession_id, [value]);
+    }
+    return map;
+  },
+  new Map()
+);
 const headToHeadWins: Record<string, Array<number>> = {};
-const results: Array<{
-  subsessionInfo: Record<string, unknown>;
-  session: Session;
-}> = subsessions.map((subsession: Subsession) => {
+const results = sharedSubsessions.map((subsession) => {
   const {
     subsession_id,
     track,
@@ -34,44 +66,42 @@ const results: Array<{
     race_week_num,
     season_name,
   } = subsession;
-  const { results: allUserResults, ...rest } = subsession.session_results[2];
   // Current Users in race session
-  const results = allUserResults
-    .filter((v: SessionResult) => userIds.includes(v.cust_id))
-    .map((w: SessionResult) => {
-      return Object.keys(w).reduce((object, key) => {
-        if (keysToDisplay.has(key)) {
-          // @ts-ignore
-          object[key] = w[key];
-        }
-        return object;
-      }, {} as SessionResult);
-    })
-    .sort((x: SessionResult, y: SessionResult) => {
-      if (x.finish_position > y.finish_position) {
-        return 1;
-      } else if (y.finish_position > x.finish_position) {
-        return -1;
-      }
-      return 0;
-    });
+  const subsessionResultsForId =
+    subsessionIdToSharedRaceResultsMap.get(subsession_id);
+  const results =
+    subsessionResultsForId && Array.isArray(subsessionResultsForId)
+      ? subsessionResultsForId.sort((x, y) => {
+          if (x.finish_position > y.finish_position) {
+            return 1;
+          } else if (y.finish_position > x.finish_position) {
+            return -1;
+          }
+          return 0;
+        })
+      : [];
+
+  const [winner] = results;
+  const { display_name, simsession_type_name } = winner;
   const session = {
-    ...rest,
+    simsession_type_name,
     results,
   };
-  const [winner] = results;
-  const { display_name } = winner;
   if (headToHeadWins[display_name]) {
     headToHeadWins[display_name].push(subsession_id);
   } else {
     headToHeadWins[display_name] = [subsession_id];
   }
-  const { group_name: License } = allowed_licenses.slice(0, 2).pop() || {};
+  const { group_name: License } = Array.isArray(allowed_licenses)
+    ? allowed_licenses.slice(0, 2).pop()
+    : { group_name: "" };
+  const assertTrackAsTrackType = () => track as Track;
+  const trackInfo = assertTrackAsTrackType();
   return {
     subsessionInfo: {
       subsession_id,
-      Track: `${track.track_name} ${
-        track.config_name !== "N/A" ? track.config_name : ""
+      Track: `${trackInfo.track_name} ${
+        trackInfo.config_name !== "N/A" ? trackInfo.config_name : ""
       }`,
       License,
       license_category,

@@ -1,62 +1,18 @@
 ---
-  import { connectToDatabase } from "$lib/mongodb";
+	import { db, eq, SubsessionRaceResults } from "astro:db";
   import DefaultLayout from "$lib/layouts/default.astro";
 	import userIds from "$lib/utils/user-ids";
-	import type { CarClassMapping } from "$lib/types";
 	export function getStaticPaths() {
 		return userIds.map((id) => ({ params: { id } }));
 	}
   const { id } = Astro.params;
-	const dbConnection = await connectToDatabase();
-	const db = dbConnection.db;
-  const collection = db.collection("subsessions");
-	const allUserSubsessionCarClasses: Array<CarClassMapping> = await collection.aggregate([
-		{
-			"$match": {
-				"session_results.2.results": { $elemMatch: { cust_id: Number(id) } },
-			}
-		},
-		{
-			"$unwind": "$session_results"
-		},
-		{
-			"$match": {
-				"session_results.results": { $elemMatch: { cust_id: Number(id) } },
-				"session_results.simsession_number": 0,
-			}
-		},
-		{
-			"$project": {
-				_id: 0,
-				results: {
-					"$filter": {
-						input: "$session_results.results",
-						cond: { $eq: ["$$result.cust_id", Number(id)]},
-						as: "result",
-					},
-				}
-			}
-		},
-		{
-			"$unwind": "$results",
-		},
-		{
-			"$replaceRoot": {
-				"newRoot": {
-					"$mergeObjects": ["$results", "$$ROOT"],
-				}
-			}
-		},
-		{
-			"$project": {
-				car_class_id: 1,
-				car_class_short_name: 1,
-			},
-		},
-	]).toArray();
+	const carClassMappings = await db
+  .selectDistinct({ car_class_id: SubsessionRaceResults.car_class_id, car_class_short_name: SubsessionRaceResults.car_class_short_name })
+  .from(SubsessionRaceResults)
+  .where(eq(SubsessionRaceResults.cust_id, Number(id)));
 	const carClassMap = new Map();
 	const carClassNames: Set<string> = new Set();
-	allUserSubsessionCarClasses.forEach((carClassMapping) => {
+		carClassMappings.forEach((carClassMapping) => {
 		const { car_class_id, car_class_short_name } = carClassMapping;
 		const carClassNameTrimmed = car_class_short_name.trim();
 		if (!carClassMap.get(car_class_short_name)) {

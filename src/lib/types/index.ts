@@ -1,49 +1,8 @@
-export type Car = {
-  _id: number;
-  ai_enabled: boolean;
-  allow_number_colors: boolean;
-  allow_number_font: boolean;
-  allow_sponsor1: boolean;
-  allow_sponsor2: boolean;
-  allow_wheel_color: boolean;
-  award_exempt: boolean;
-  car_dirpath: string;
-  car_id: number;
-  car_name: string;
-  car_name_abbreviated: string;
-  car_types: Array<{ car_type: string }>;
-  car_weight: number;
-  categories: Array<string>;
-  created: string;
-  first_sale: string;
-  forum_url: string;
-  free_with_subscription: boolean;
-  has_headlights: boolean;
-  has_multiple_dry_tires_types: boolean;
-  hp: number;
-  is_ps_purchasable: boolean;
-  max_power_adjust_pct: number;
-  max_weight_penalty_kg: number;
-  min_power_adjust_pct: number;
-  package_id: number;
-  patterns: number;
-  price: number;
-  price_display: string;
-  retired: boolean;
-  search_filters: string;
-  sku: number;
-};
-
-export type CarClass = {
+export type CarClassType = {
   car_class_id: number;
   cars_in_class: Array<{ car_id: number; car_name: string | undefined }>;
   name: string;
   short_name: string;
-};
-
-export type CarClassMapping = {
-  car_class_id: number;
-  car_class_short_name: string;
 };
 
 export type Helmet = {
@@ -95,153 +54,14 @@ export type RaceSummary = {
   special_event_type_text: string;
 };
 
-export type RaceWeek = {
-  season_id: number;
-  race_week_num: number;
-  series_id: number;
-  series_name: string;
-  season_name: string;
-  schedule_name: string;
-  start_date: string;
-  simulated_time_multiplier: number;
-  race_lap_limit: number | null;
-  race_time_limit: number | null;
-  start_type: string;
-  restart_type: string;
-  qual_attached: boolean;
-  full_course_cautions: boolean;
-  special_event_type: unknown;
-  start_zone: boolean;
-  enable_pitlane_collisions: boolean;
-  short_parade_lap: boolean;
-  track: Track;
-  weather: Weather;
-  track_state: TrackState;
-  race_time_descriptors: Array<unknown>;
-  car_restrictions: Array<unknown>;
-  race_week_cars: Array<unknown>;
-};
-
-export type SchedulingSeason = {
-  _id: number;
-  active: boolean;
-  allowed_season_members: unknown;
-  car_class_ids: Array<number>;
-  car_switching: boolean;
-  car_types: Array<{ car_type: string }>;
-  caution_laps_do_not_count: boolean;
-  complete: boolean;
-  cross_license: boolean;
-  driver_change_rule: number;
-  driver_changes: boolean;
-  drops: number;
-  enable_pitlane_collisions: boolean;
-  fixed_setup: boolean;
-  green_white_checkered_limit: number;
-  grid_by_class: boolean;
-  hardcore_level: number;
-  ignore_license_for_practice: boolean;
-  incident_limit: number;
-  incidient_warn_mode: number;
-  incident_warn_param1: number;
-  incident_warn_param2: number;
-  is_heat_racing: boolean;
-  license_group: number;
-  license_group_types: Array<{ license_group_type: number }>;
-  lucky_dog: boolean;
-  max_team_drivers: number;
-  max_weeks: number;
-  min_team_drivers: number;
-  multiclass: boolean;
-  must_user_diff_tire_types_in_race: boolean;
-  next_race_session: unknown;
-  num_opt_laps: number;
-  official: boolean;
-  op_duration: number;
-  open_practice_session_type_id: number;
-  qualifier_must_start_race: boolean;
-  race_week: number;
-  race_week_to_make_division: number;
-  reg_user_count: number;
-  region_competition: boolean;
-  restrict_by_member: boolean;
-  restrict_to_car: boolean;
-  restrict_viewing: boolean;
-  schedule_description: string;
-  schedules: Array<RaceWeek>;
-  season_id: number;
-  season_name: string;
-  season_quarter: number;
-  season_short_name: string;
-  season_year: number;
-  send_to_open_practice: boolean;
-  series_id: number;
-  short_parade_lap: boolean;
-  start_date: string;
-  start_on_qual_tire: boolean;
-  start_zone: boolean;
-  track_types: Array<{ track_type: string }>;
-  unsport_conduct_rule_mode: number;
-};
-
 export type SchedulingTableResult = {
   "Season Name": string;
   "License Level": string;
-  carClassData: Array<CarClass>;
+  carClassData: Array<CarClassType>;
   tracks: Array<Track>;
   ownedTrackWeeks: Array<number>;
   "Own Car": string;
   "Overall Track Percentage Owned": number;
-};
-
-export type Season = {
-  _id: string;
-  car_class_id: string;
-  division: number;
-  overall_rank: number;
-  season_driver_data: SeasonDriverData;
-  season_id: string;
-  season_name: string;
-  division_rank: number;
-};
-
-export type SeasonDriverData = {
-  rank: number;
-  cust_id: number;
-  display_name: number;
-  division: number;
-  club_id: number;
-  club_name: string;
-  license: SeasonDriverLicense;
-  helmet: Helmet;
-  weeks_counted: number;
-  starts: number;
-  wins: number;
-  top5: number;
-  top25_percent: number;
-  poles: number;
-  avg_start_position: number;
-  avg_finish_position: number;
-  avg_field_size: number;
-  laps: number;
-  laps_led: number;
-  incidents: number;
-  points: number;
-  raw_points: number;
-  week_dropped: boolean;
-  country_code: string;
-  country: string;
-};
-
-export type SeasonDriverLicense = {
-  category_id: number;
-  category: string;
-  license_level: number;
-  safety_rating: number;
-  irating: number;
-  color: string;
-  group_name: string;
-  group_id: number;
 };
 
 export type Session = {
@@ -322,7 +142,7 @@ export type Subsession = {
   allowed_licenses: Array<License>;
   associated_subsession_ids: Array<number>;
   can_protest: boolean;
-  car_classes: Array<CarClass>;
+  car_classes: Array<CarClassType>;
   caution_type: number;
   cooldown_minutes: number;
   corners_per_lap: number;
@@ -366,6 +186,7 @@ export type Subsession = {
   series_short_name: string;
   session_id: number;
   session_results: Array<Session>;
+  userResult: SessionResult,
   special_event_type: number;
   start_time: string;
   subsession_id: number;
@@ -400,16 +221,6 @@ export type TrackState = {
   qualify_grip_compound: number;
   warmup_grip_compound: number;
   race_grip_compound: number;
-};
-
-export type UserIdCarClassIdsMapping = {
-  userId: number;
-  carClassIds: Array<number>;
-};
-
-export type UserIdYearsMapping = {
-  userId: number;
-  years: Array<number>;
 };
 
 export type Weather = {
