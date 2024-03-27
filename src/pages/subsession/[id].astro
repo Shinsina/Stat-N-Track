@@ -3,18 +3,11 @@ import {
   db,
   eq,
   asc,
-  Car,
-  CarClass,
-  PastSeason,
-  Season,
-  Standing,
   Subsession,
   SubsessionPracticeResults,
   SubsessionQualifyingResults,
   SubsessionRaceResults,
-  User,
 } from "astro:db";
-import { connectToDatabase } from "$lib/mongodb";
 import DefaultLayout from "$lib/layouts/default.astro";
 import Header from "$lib/components/subsession/header.astro";
 import TrackInfo from "$lib/components/track/info.astro";
@@ -22,7 +15,6 @@ import LicenseInfo from "$lib/components/subsession/licenseInfo.astro";
 import RaceSummary from "$lib/components/subsession/raceSummary.astro";
 import RelevantIds from "$lib/components/subsession/relevantIds.astro";
 import SessionResultsTables from "$lib/components/session-results/tables.astro";
-import type { Subsession as SubsessionType } from "$lib/types";
 export async function getStaticPaths() {
   const subsessions = await db
     .selectDistinct({ subsession_id: Subsession.subsession_id })
@@ -51,24 +43,66 @@ const raceResults = await db
   .orderBy(asc(SubsessionRaceResults.finish_position));
 const [practiceResultOne] = practiceResults;
 const [qualifyingResultOne] = qualifyingResults;
-const [raceResultOne] = raceResults;
+const splitRaceResults = raceResults.find((result) =>
+  result.simsession_name.match(/HEAT/i)
+)
+  ? raceResults.reduce(
+      (object, raceResult) => {
+        const { simsession_name } = raceResult;
+        if (simsession_name.match(/HEAT/i)) {
+          // @ts-ignore
+          object.heatResults.push(raceResult);
+        } else {
+          // @ts-ignore
+          object.mainResults.push(raceResult);
+        }
+        return object;
+      },
+      { heatResults: [], mainResults: [] }
+    )
+  : { heatResults: [], mainResults: [] };
 const session_results = [
   {
     simsession_type_name: practiceResultOne.simsession_type_name,
     simsession_name: practiceResultOne.simsession_name,
-    results: practiceResults
+    results: practiceResults,
   },
   {
     simsession_type_name: qualifyingResultOne.simsession_type_name,
     simsession_name: qualifyingResultOne.simsession_name,
-    results: qualifyingResults
+    results: qualifyingResults,
   },
-  {
+];
+const { heatResults, mainResults } = splitRaceResults;
+if (heatResults.length && mainResults.length) {
+  const [heatResultOne] = heatResults;
+  const [mainResultOne] = mainResults;
+  session_results.push(
+    ...[
+      {
+        // @ts-ignore
+        simsession_type_name: heatResultOne.simsession_type_name,
+        // @ts-ignore
+        simsession_name: heatResultOne.simsession_name,
+        results: heatResults,
+      },
+      {
+        // @ts-ignore
+        simsession_type_name: mainResultOne.simsession_type_name,
+        // @ts-ignore
+        simsession_name: mainResultOne.simsession_name,
+        results: mainResults,
+      },
+    ]
+  );
+} else {
+  const [raceResultOne] = raceResults;
+  session_results.push({
     simsession_type_name: raceResultOne.simsession_type_name,
     simsession_name: raceResultOne.simsession_name,
     results: raceResults,
-  }
-]
+  });
+}
 const {
   track,
   corners_per_lap: cornersPerLap,
