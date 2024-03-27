@@ -64,14 +64,14 @@ const splitRaceResults = raceResults.find((result) =>
 const session_results = [
   {
     simsession_type_name:
-      practiceResultOne.simsession_type_name || "Open Practice",
-    simsession_name: practiceResultOne.simsession_name || "PRACTICE",
+      practiceResultOne?.simsession_type_name || "Open Practice",
+    simsession_name: practiceResultOne?.simsession_name || "PRACTICE",
     results: practiceResults,
   },
   {
     simsession_type_name:
-      qualifyingResultOne.simsession_type_name || "Lone Qualifying",
-    simsession_name: qualifyingResultOne.simsession_name || "QUALIFY",
+      qualifyingResultOne?.simsession_type_name || "Lone Qualifying",
+    simsession_name: qualifyingResultOne?.simsession_name || "QUALIFY",
     results: qualifyingResults,
   },
 ];
@@ -83,16 +83,16 @@ if (heatResults.length && mainResults.length) {
     ...[
       {
         // @ts-ignore
-        simsession_type_name: heatResultOne.simsession_type_name || "Race",
+        simsession_type_name: heatResultOne?.simsession_type_name || "Race",
         // @ts-ignore
-        simsession_name: heatResultOne.simsession_name || "HEAT",
+        simsession_name: heatResultOne?.simsession_name || "HEAT",
         results: heatResults,
       },
       {
         // @ts-ignore
-        simsession_type_name: mainResultOne.simsession_type_name || "Race",
+        simsession_type_name: mainResultOne?.simsession_type_name || "Race",
         // @ts-ignore
-        simsession_name: mainResultOne.simsession_name || "RACE",
+        simsession_name: mainResultOne?.simsession_name || "RACE",
         results: mainResults,
       },
     ]
