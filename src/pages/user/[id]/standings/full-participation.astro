@@ -7,7 +7,7 @@ export function getStaticPaths() {
 }
 const { id } = Astro.params;
 const seoTitle = `Fully Participated Standings - ${id}`;
-const seoDescription = `Fully partipacipated standings page for user ID: ${id}`;
+const seoDescription = `Fully participated standings page for user ID: ${id}`;
 const standingsResults = await db
   .select()
   .from(Standing)
