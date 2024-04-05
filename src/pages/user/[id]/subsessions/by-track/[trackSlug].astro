@@ -1,0 +1,101 @@
+---
+import {
+  db,
+  eq,
+  desc,
+  sql,
+  like,
+  and,
+  SubsessionRaceResults,
+  Subsession,
+} from "astro:db";
+import SubsessionsLayout from "$lib/layouts/subsessions.astro";
+import userIds from "$lib/utils/user-ids";
+import type { Track } from "$lib/types";
+import generateTrackMap from "$lib/utils/generate-track-map";
+export async function getStaticPaths() {
+  const mappings = await Promise.all(
+    userIds.map(async (userId) => {
+      const subsessions = await db
+        .selectDistinct({ subsession_id: SubsessionRaceResults.subsession_id })
+        .from(SubsessionRaceResults)
+        .where(eq(SubsessionRaceResults.cust_id, Number(userId)));
+      const tracks = await db
+        .selectDistinct({ track: Subsession.track })
+        .from(Subsession)
+        .where(
+          sql`${Subsession.subsession_id} IN ${subsessions.map((subsession) => subsession.subsession_id)}`
+        );
+      return { userId, tracks };
+    })
+  );
+  return mappings
+    .map((mapping) => {
+      const { userId, tracks } = mapping;
+      return tracks.map((trackMapping) => {
+        const { track } = trackMapping as { track: Track };
+        return {
+          params: {
+            id: userId,
+            trackSlug: `${track.track_name} ${track.config_name}`
+              .toLowerCase()
+              .replace(/[\(\)\[\]]/g, "")
+              .replace(/[ \/]/g, "-")
+              .replace("---", "-")
+              .replace("-n-a", ""),
+          },
+        };
+      });
+    })
+    .flat();
+}
+const { id, trackSlug } = Astro.params;
+const seoTitle = `Subsessions list for user ID - ${id} and track - ${trackSlug}`;
+const seoDescription = seoTitle;
+const blah = await db
+  .selectDistinct({ subsession_id: SubsessionRaceResults.subsession_id })
+  .from(SubsessionRaceResults)
+  .where(eq(SubsessionRaceResults.cust_id, Number(id)));
+const tracksFromDb: Array<{ track: unknown | Track }> = await db
+  .selectDistinct({ track: Subsession.track })
+  .from(Subsession)
+  .where(
+    sql`${Subsession.subsession_id} IN ${blah.map((subsession) => subsession.subsession_id)}`
+  );
+const tracks = tracksFromDb as Array<{ track: Track }>;
+const generatedTrackMap = generateTrackMap({ tracks });
+const { trackName, configName } = generatedTrackMap.get(trackSlug) || {};
+const subsessionsWithoutResult = await db
+  .select()
+  .from(Subsession)
+  .where(
+    and(
+      like(Subsession.track, `%${trackName}%`),
+      like(Subsession.track, `%${configName}%`)
+    )
+  )
+  .orderBy(desc(Subsession.subsession_id));
+const subsessionRaceResults = await db
+  .select()
+  .from(SubsessionRaceResults)
+  .where(
+    // @ts-ignore
+    sql`${SubsessionRaceResults.cust_id} IS ${id} AND ${SubsessionRaceResults.subsession_id} IN ${subsessionsWithoutResult.filter((subsession) => subsession.track?.track_name === trackName && subsession.track?.config_name === configName).map((subsessionWithoutResult) => subsessionWithoutResult.subsession_id)}`
+  );
+
+const subsessions = subsessionsWithoutResult
+  .map((subsessionWithoutResult) => {
+    const { subsession_id } = subsessionWithoutResult;
+    const userResult = subsessionRaceResults.find(
+      (subsessionRaceResult) =>
+        subsessionRaceResult.subsession_id === subsession_id
+    );
+    return {
+      ...subsessionWithoutResult,
+      userResult,
+    };
+  })
+  .filter((v) => v.userResult);
+---
+
+<SubsessionsLayout {id} {seoTitle} {seoDescription} {subsessions} />
