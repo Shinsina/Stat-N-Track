@@ -16,6 +16,6 @@ const description = `Scheduling by week page for user ID: ${id}`;
 
 <DefaultLayout {title} {description}>
   <div class="text-center text-3xl">
-    {Object.keys(weeks).map((week) => (<div><a class="underline" href=`/Stat-N-Track/user/${id}/scheduling/by-week/${Number(new Date(week))}` rel="prefetch">{new Date(week).toLocaleString()}</a></div>))}
+    {Object.keys(weeks).map((week) => (<div><a class="underline" href=`/Stat-N-Track/user/${id}/scheduling/by-week/${Number(new Date(week))}` rel="prefetch">{new Date(week).toLocaleString("en-US", { timeZone: "America/Chicago" })}</a></div>))}
   </div>
 </DefaultLayout>
