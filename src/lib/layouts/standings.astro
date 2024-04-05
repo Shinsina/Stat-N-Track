@@ -25,7 +25,8 @@ const finalData: Array<Record<string, any>> = standingsResults.map(
       incidents,
       points,
     } = result;
-    const [, year] = season_name.match(/([0-9]{4}) Season/) || [0, 0];
+    const [, year] = season_name.match(/([0-9]{4}) Season/) ||
+      season_name.match(/([0-9]{4})$/) || [0, 0];
     const [, season_number_of_year] = season_name.match(
       /Season ([0-9]{1})/
     ) || [0, 0];
