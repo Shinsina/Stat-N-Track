@@ -5,7 +5,7 @@ export default ({
   object: Record<string, Array<string>>;
   dateString: string;
 }) => {
-  const d = new Date(String(dateString));
+  const d = new Date(`${String(dateString)} 19:00:00 GMT-05:00`);
   const day = d.getDay();
   const utcDateString = d.toUTCString();
   if (day === 1 && !object[utcDateString]) {
