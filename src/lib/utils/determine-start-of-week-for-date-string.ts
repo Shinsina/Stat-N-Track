@@ -9,7 +9,7 @@ export default ({
   const day = d.getDay();
   const utcDateString = d.toUTCString();
   const minutesAwayFromUTC = d.getTimezoneOffset();
-  const dayZero = minutesAwayFromUTC ? 1 : 0;
+  const dayZero = minutesAwayFromUTC ? 1 : 2;
   if (day === dayZero && !object[utcDateString]) {
     object[utcDateString] = [utcDateString];
   } else if (day !== dayZero) {
