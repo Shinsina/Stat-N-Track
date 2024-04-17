@@ -132,30 +132,4 @@ const description = `Subsession information for subsession - ${id}`;
     </div>
   </div>
   <SessionResultsTables sessions={session_results} />
-  <script>
-    import Alpine from "alpinejs";
-    import Table from "../../lib/components/table/index.ts";
-    Alpine.data("tables", () => ({
-      PRACTICE: false,
-      QUALIFY: false,
-      HEAT: false,
-      RACE: false,
-      toggle() {
-        this.$el.id.split(" ").forEach((id, index) => {
-          if (index) {
-            // @ts-expect-error
-            this[id] = false;
-          } else {
-            // @ts-expect-error
-            this[id] = !this[id];
-          }
-        });
-      },
-    }));
-    Alpine.data("PRACTICE", Table);
-    Alpine.data("QUALIFY", Table);
-    Alpine.data("HEAT", Table);
-    Alpine.data("RACE", Table);
-    Alpine.start();
-  </script>
 </DefaultLayout>

@@ -174,17 +174,4 @@ const description = `Scheduling page for user ID: ${id}`;
       ))
     }
   </div>
-  <script>
-    import Alpine from "alpinejs";
-    // @ts-expect-error
-    import collapse from "@alpinejs/collapse";
-    Alpine.plugin(collapse);
-    Alpine.data("dropdown", () => ({
-      opened: false,
-      toggle() {
-        this.opened = !this.opened;
-      },
-    }));
-    Alpine.start();
-  </script>
 </DefaultLayout>
