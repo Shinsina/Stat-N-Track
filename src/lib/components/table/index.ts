@@ -26,7 +26,7 @@ const stringSort = ({
   return array.sort().reverse();
 };
 
-export default (): AlpineComponent => ({
+export default (): AlpineComponent<{ sort: () => void }> => ({
   sort() {
     const [tableName, columnName, rowCount, direction] = this.$el.id.split(" ");
     const rows = new Map();
