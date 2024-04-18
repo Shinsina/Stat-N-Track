@@ -173,10 +173,8 @@ const description = "Shared subsessions for all Stat 'n' Track users";
   <div
     id="top"
     x-data={JSON.stringify(
-      results.reduce((object, result) => {
-        //@ts-expect-error
+      results.reduce((object: Record<string, unknown>, result) => {
         object.previouslyToggled = "";
-        //@ts-expect-error
         object[`toggle${result.subsessionInfo.subsession_id}`] = false;
         return object;
       }, {})
@@ -253,11 +251,4 @@ const description = "Shared subsessions for all Stat 'n' Track users";
       </div>
     </div>
   </div>
-  <script>
-    import Alpine from "alpinejs";
-    import Table from "$lib/components/table";
-    Alpine.data("table", Table);
-    Alpine.data("RACE", Table);
-    Alpine.start();
-  </script>
 </DefaultLayout>

@@ -86,10 +86,8 @@ trackScheduleMap.forEach((value) => {
     const bestUserResult = userResults
       .sort(
         (a, b) =>
-          // @ts-expect-error
-          a.userResult.aggregate_champ_points -
-          // @ts-expect-error
-          b.userResult.aggregate_champ_points
+          (a.userResult?.aggregate_champ_points || 0) -
+          (b.userResult?.aggregate_champ_points || 0)
       )
       .pop();
     if (bestUserResult) {

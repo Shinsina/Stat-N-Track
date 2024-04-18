@@ -25,8 +25,9 @@ const finalData: Array<Record<string, any>> = standingsResults.map(
       incidents,
       points,
     } = result;
-    const [, year] = season_name.match(/([0-9]{4}) Season/) ||
-      season_name.match(/([0-9]{4})$/) || [0, 0];
+    const [, year] = season_name.trim().match(/([0-9]{4}) Season/) ||
+      season_name.trim().match(/([0-9]{4})$/) ||
+      season_name.trim().match(/^([0-9]{4})/) || [0, 0];
     const [, season_number_of_year] = season_name.match(
       /Season ([0-9]{1})/
     ) || [0, 0];
@@ -129,10 +130,4 @@ const generateLinkForKey = ({
       }
     </table>
   </div>
-  <script>
-    import Alpine from "alpinejs";
-    import Table from "../components/table/index.ts";
-    Alpine.data("table", Table);
-    Alpine.start();
-  </script>
 </DefaultLayout>
