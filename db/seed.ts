@@ -22,17 +22,22 @@ async function paginatedQuery(
   const size = 100;
   const count = await collection.countDocuments({});
   const batches = Math.ceil(count / size);
-  const results = await Promise.all(Array(batches)
-  .fill({})
-  .map((_, index) => {
-    console.log(`Processing batch ${index + 1} of ${batches} for ${collection.collectionName}...`)
-    return collection
-    .find({})
-    .skip(index * size)
-    .limit(size)
-    .toArray()
-  }
-  ));
+  const results = await Promise.all(
+    Array(batches)
+      .fill({})
+      .map((_, index) => {
+        console.log(
+          `Processing batch ${index + 1} of ${batches} for ${
+            collection.collectionName
+          }...`
+        );
+        return collection
+          .find({})
+          .skip(index * size)
+          .limit(size)
+          .toArray();
+      })
+  );
   return results.flat();
 }
 
@@ -122,7 +127,9 @@ export default async function seed() {
   console.log("Past Seasons Seeded!");
   const subsessionsCollection = mongoDb.collection("subsessions");
   // @ts-ignore
-  const subsessions: Array<SubsessionType> = await paginatedQuery(subsessionsCollection);
+  const subsessions: Array<SubsessionType> = await paginatedQuery(
+    subsessionsCollection
+  );
   console.log("Seeding Subsessions...");
   const {
     allPracticeResults,
@@ -130,7 +137,8 @@ export default async function seed() {
     allRaceResults,
     allSubsessions,
   } = subsessions.reduce(
-    (object, subsession) => {
+    // @todo Provide an accurate type for the unknown here
+    (object: Record<string, Array<any>>, subsession) => {
       const { _id, session_results, end_time, start_time, ...rest } =
         subsession;
       session_results.forEach((sessionResult) => {
@@ -142,18 +150,14 @@ export default async function seed() {
             ...rest,
           };
           if (rest.simsession_type_name.match("Practice")) {
-            // @ts-ignore
             object.allPracticeResults.push(resultWithSession);
           } else if (rest.simsession_type_name.match("Qualifying")) {
-            // @ts-ignore
             object.allQualifyingResults.push(resultWithSession);
           } else if (rest.simsession_type_name.match("Race")) {
-            // @ts-ignore
             object.allRaceResults.push(resultWithSession);
           }
         });
       });
-      // @ts-ignore
       object.allSubsessions.push({
         ...rest,
         end_time: new Date(end_time),
