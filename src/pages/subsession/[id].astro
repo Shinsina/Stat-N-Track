@@ -47,13 +47,11 @@ const splitRaceResults = raceResults.find((result) =>
   result.simsession_name.match(/HEAT/i)
 )
   ? raceResults.reduce(
-      (object, raceResult) => {
+      (object: Record<string, Array<typeof raceResult>>, raceResult) => {
         const { simsession_name } = raceResult;
         if (simsession_name.match(/HEAT/i)) {
-          // @ts-ignore
           object.heatResults.push(raceResult);
         } else {
-          // @ts-ignore
           object.mainResults.push(raceResult);
         }
         return object;
@@ -82,16 +80,12 @@ if (heatResults.length && mainResults.length) {
   session_results.push(
     ...[
       {
-        // @ts-ignore
         simsession_type_name: heatResultOne?.simsession_type_name || "Race",
-        // @ts-ignore
         simsession_name: heatResultOne?.simsession_name || "HEAT",
         results: heatResults,
       },
       {
-        // @ts-ignore
         simsession_type_name: mainResultOne?.simsession_type_name || "Race",
-        // @ts-ignore
         simsession_name: mainResultOne?.simsession_name || "RACE",
         results: mainResults,
       },
