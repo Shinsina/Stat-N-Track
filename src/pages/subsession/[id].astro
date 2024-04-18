@@ -117,17 +117,13 @@ const description = `Subsession information for subsession - ${id}`;
 
 <DefaultLayout {title} {description}>
   <div class="grid grid-cols-12">
-    <div class="col-span-4 border-2 grid grid-rows-12">
-      <div class="row-span-1"></div>
-      <TrackInfo {cornersPerLap} {track} />
-      <LicenseInfo {licenses} {licenseCategory} />
-    </div>
-    <div class="col-span-4 border-2">
+    <div class="col-span-12 md:col-span-6 border-2 pt-4">
       <Header {subsession} />
       <RaceSummary {subsession} />
     </div>
-    <div class="col-span-4 border-2 grid grid-rows-12">
-      <div class="row-span-1"></div>
+    <div class="col-span-12 md:col-span-6 border-2">
+      <TrackInfo {cornersPerLap} {track} />
+      <LicenseInfo {licenses} {licenseCategory} />
       <RelevantIds {subsession} sessions={session_results} />
     </div>
   </div>

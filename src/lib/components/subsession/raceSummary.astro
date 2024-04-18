@@ -11,15 +11,21 @@ const {
   start_time,
   end_time,
 } = subsession;
+const started = new Date(start_time).toLocaleString("en-US", {
+  timeZone: "America/Chicago",
+});
+const ended = new Date(end_time).toLocaleString("en-US", {
+  timeZone: "America/Chicago",
+});
 ---
 
 <div class="text-center pb-6">
-  Race Summary:
+  <p>Race Summary:</p>
   <p>Average Lap Time: {parseLapTime(event_average_lap)}</p>
   <p>Laps Complete: {event_laps_complete}</p>
   <p>Number of Cautions: {num_cautions} for {num_caution_laps} laps</p>
   <p>Lead Changes: {num_lead_changes}</p>
   <p>Strength of Field: {event_strength_of_field}</p>
-  <p>Started: {new Date(start_time)}</p>
-  <p>Ended: {new Date(end_time)}</p>
+  <p>Started: {started}</p>
+  <p>Ended: {ended}</p>
 </div>
