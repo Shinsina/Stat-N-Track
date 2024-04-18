@@ -186,7 +186,7 @@ export type Subsession = {
   series_short_name: string;
   session_id: number;
   session_results: Array<Session>;
-  userResult: SessionResult,
+  userResult: SessionResult;
   special_event_type: number;
   start_time: string;
   subsession_id: number;
