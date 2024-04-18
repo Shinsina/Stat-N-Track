@@ -173,10 +173,8 @@ const description = "Shared subsessions for all Stat 'n' Track users";
   <div
     id="top"
     x-data={JSON.stringify(
-      results.reduce((object, result) => {
-        //@ts-expect-error
+      results.reduce((object: Record<string, unknown>, result) => {
         object.previouslyToggled = "";
-        //@ts-expect-error
         object[`toggle${result.subsessionInfo.subsession_id}`] = false;
         return object;
       }, {})
