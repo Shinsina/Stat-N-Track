@@ -1,16 +1,19 @@
 import { MongoClient } from "mongodb";
 
-if (!import.meta.env.MONGODB_URI) {
+if (!process.env.MONGODB_URI && !import.meta.env.MONGODB_URI) {
   throw new Error(
     "Please define the MONGODB_URI environment variable inside a root .env file"
   );
 }
 
-if (!import.meta.env.MONGODB_DB) {
+if (!process.env.MONGODB_DB && !import.meta.env.MONGODB_DB) {
   throw new Error(
     "Please define the MONGODB_DB environment variable inside a root .env file"
   );
 }
+
+const mongodbURI = process.env.MONGODB_URI || import.meta.env.MONGODB_URI;
+const mongodbDb = process.env.MONGODB_DB || import.meta.env.MONGODB_DB
 
 /**
  * Global is used here to maintain a cached connection across hot reloads
@@ -29,11 +32,11 @@ export async function connectToDatabase() {
   }
 
   if (!cached.promise) {
-    cached.promise = MongoClient.connect(import.meta.env.MONGODB_URI).then(
+    cached.promise = MongoClient.connect(mongodbURI).then(
       (client) => {
         return {
           client,
-          db: client.db(import.meta.env.MONGODB_DB),
+          db: client.db(mongodbDb),
         };
       }
     );
