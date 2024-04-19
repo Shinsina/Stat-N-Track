@@ -1,21 +1,6 @@
 export default (lap: number): string => {
   const ingestedLap = String(lap);
-  const placeDecimal = () => {
-    switch (ingestedLap.length) {
-      case 1:
-        return `0.000${ingestedLap}`;
-      case 2:
-        return `0.00${ingestedLap}`;
-      case 3:
-        return `0.0${ingestedLap}`;
-      case 4:
-        return `0.${ingestedLap}`;
-      default:
-        const decimal = ingestedLap.match(/[0-9]{4}$/);
-        return ingestedLap.replace(String(decimal), `.${decimal}`);
-    }
-  };
-  const withDecimal = lap > 0 ? placeDecimal() : ingestedLap;
+  const withDecimal = lap > 0 ? String((lap / 10000).toFixed(4)) : ingestedLap;
   const [priorToDecimal, _] = withDecimal.split(".");
   if (priorToDecimal.length > 2) {
     const seconds = String(priorToDecimal.match(/[0-9]{2}$/));
