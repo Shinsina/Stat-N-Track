@@ -1,5 +1,13 @@
 ---
-import { db, desc, eq, sql, Subsession, SubsessionRaceResults } from "astro:db";
+import {
+  db,
+  desc,
+  eq,
+  and,
+  sql,
+  Subsession,
+  SubsessionRaceResults,
+} from "astro:db";
 import SubsessionsLayout from "$lib/layouts/subsessions.astro";
 import userIds from "$lib/utils/user-ids";
 export function getStaticPaths() {
@@ -11,7 +19,12 @@ const seoDescription = `Subsessions page for user ID: ${id}`;
 const subsessionRaceResults = await db
   .select()
   .from(SubsessionRaceResults)
-  .where(eq(SubsessionRaceResults.cust_id, Number(id)));
+  .where(
+    and(
+      eq(SubsessionRaceResults.cust_id, Number(id)),
+      sql`${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE"]}`
+    )
+  );
 const subsessionsWithoutResult = await db
   .select()
   .from(Subsession)

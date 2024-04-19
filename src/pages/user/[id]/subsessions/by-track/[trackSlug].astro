@@ -80,7 +80,7 @@ const subsessionRaceResults = await db
   .from(SubsessionRaceResults)
   .where(
     // @ts-ignore
-    sql`${SubsessionRaceResults.cust_id} IS ${id} AND ${SubsessionRaceResults.subsession_id} IN ${subsessionsWithoutResult.filter((subsession) => subsession.track?.track_name === trackName && subsession.track?.config_name === configName).map((subsessionWithoutResult) => subsessionWithoutResult.subsession_id)}`
+    sql`${SubsessionRaceResults.cust_id} IS ${id} AND ${SubsessionRaceResults.subsession_id} IN ${subsessionsWithoutResult.filter((subsession) => subsession.track?.track_name === trackName && subsession.track?.config_name === configName).map((subsessionWithoutResult) => subsessionWithoutResult.subsession_id)} AND ${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE"]}`
   );
 
 const subsessions = subsessionsWithoutResult

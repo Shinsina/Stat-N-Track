@@ -1,5 +1,13 @@
 ---
-import { db, eq, desc, sql, SubsessionRaceResults, Subsession } from "astro:db";
+import {
+  db,
+  desc,
+  eq,
+  and,
+  sql,
+  Subsession,
+  SubsessionRaceResults,
+} from "astro:db";
 import SubsessionsLayout from "$lib/layouts/subsessions.astro";
 import userIds from "$lib/utils/user-ids";
 export async function getStaticPaths() {
@@ -39,7 +47,7 @@ const subsessionRaceResults = await db
   .select()
   .from(SubsessionRaceResults)
   .where(
-    sql`${SubsessionRaceResults.cust_id} IS ${id} AND ${SubsessionRaceResults.subsession_id} IN ${subsessionsWithoutResult.map((subsessionWithoutResult) => subsessionWithoutResult.subsession_id)}`
+    sql`${SubsessionRaceResults.cust_id} IS ${id} AND ${SubsessionRaceResults.subsession_id} IN ${subsessionsWithoutResult.map((subsessionWithoutResult) => subsessionWithoutResult.subsession_id)} AND ${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE"]}`
   );
 
 const subsessions = subsessionsWithoutResult

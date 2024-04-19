@@ -41,7 +41,8 @@ const subsessionRaceResults = await db
   .where(
     and(
       eq(SubsessionRaceResults.cust_id, Number(id)),
-      eq(SubsessionRaceResults.car_class_id, Number(carClassId))
+      eq(SubsessionRaceResults.car_class_id, Number(carClassId)),
+      sql`${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE"]}`
     )
   );
 const subsessionsWithoutResult = await db
