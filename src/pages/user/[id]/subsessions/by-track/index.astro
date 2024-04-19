@@ -26,6 +26,6 @@ const description = `Subsessions by track page for user ID: ${id}`;
 
 <DefaultLayout {title} {description}>
   <div class="text-center text-3xl">
-    {Array.from(trackMap).sort().map(([key, track]) => (<div><a class="underline" href=`/Stat-N-Track/user/${id}/subsessions/by-track/${key}` rel="prefetch">{track.trackName} {track.configName.replace('N/A', '')}</a></div>))}
+    {Array.from(trackMap).sort().map(([key, track]) => (<div><a class="underline" href=`/Stat-N-Track/user/${id}/subsessions/by-track/${key}` >{track.trackName} {track.configName.replace('N/A', '')}</a></div>))}
 	</div>
 </DefaultLayout>
