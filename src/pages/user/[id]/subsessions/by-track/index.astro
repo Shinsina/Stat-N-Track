@@ -1,5 +1,5 @@
 ---
-import { db, eq, sql, SubsessionRaceResults, Subsession } from "astro:db";
+import { db, eq, SubsessionRaceResults, Subsession } from "astro:db";
 import DefaultLayout from "$lib/layouts/default.astro";
 import userIds from "$lib/utils/user-ids";
 import type { Track } from "$lib/types";
@@ -8,16 +8,11 @@ export function getStaticPaths() {
   return userIds.map((id) => ({ params: { id } }));
 }
 const { id } = Astro.params;
-const subsessions = await db
-  .selectDistinct({ subsession_id: SubsessionRaceResults.subsession_id })
-  .from(SubsessionRaceResults)
-  .where(eq(SubsessionRaceResults.cust_id, Number(id)));
 const tracksFromDb = await db
   .selectDistinct({ track: Subsession.track })
   .from(Subsession)
-  .where(
-    sql`${Subsession.subsession_id} IN ${subsessions.map((subsession) => subsession.subsession_id)}`
-  );
+  .innerJoin(SubsessionRaceResults, eq(Subsession.subsession_id, SubsessionRaceResults.subsession_id))
+  .where(eq(SubsessionRaceResults.cust_id, Number(id)));
 const tracks = tracksFromDb as Array<{ track: Track }>
 const trackMap = generateTrackMap({ tracks });
 const title = `Subsessions By Track - ${id}`;

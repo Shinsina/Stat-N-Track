@@ -2,7 +2,7 @@
 import {
   db,
   eq,
-  sql,
+  asc,
   SubsessionRaceResults,
   Subsession,
 } from "astro:db";
@@ -12,16 +12,12 @@ import {
     return userIds.map((id) => ({ params: { id } }));
   }
   const { id } = Astro.params;
-  const subsessions = await db
-        .selectDistinct({ subsession_id: SubsessionRaceResults.subsession_id })
-        .from(SubsessionRaceResults)
-        .where(eq(SubsessionRaceResults.cust_id, Number(id)));
-      const years = await db
-        .selectDistinct({ season_year: Subsession.season_year })
-        .from(Subsession)
-        .where(
-          sql`${Subsession.subsession_id} IN ${subsessions.map((subsession) => subsession.subsession_id)}`
-        );
+  const years = await db
+    .selectDistinct({ season_year: Subsession.season_year })
+    .from(Subsession)
+    .innerJoin(SubsessionRaceResults, eq(Subsession.subsession_id, SubsessionRaceResults.subsession_id))
+    .where(eq(SubsessionRaceResults.cust_id, Number(id)))
+    .orderBy(asc(Subsession.season_year));
   const title = `Standings By Year - ${id}`;
   const description = `Standings by year page for user ID: ${id}`;
 ---

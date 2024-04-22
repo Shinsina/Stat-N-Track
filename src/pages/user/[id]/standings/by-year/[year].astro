@@ -5,7 +5,7 @@ import {
   eq,
   desc,
   like,
-  sql,
+  asc,
   Standing,
   SubsessionRaceResults,
   Subsession,
@@ -15,16 +15,15 @@ import userIds from "$lib/utils/user-ids";
 export async function getStaticPaths() {
   const mappings = await Promise.all(
     userIds.map(async (userId) => {
-      const subsessions = await db
-        .selectDistinct({ subsession_id: SubsessionRaceResults.subsession_id })
-        .from(SubsessionRaceResults)
-        .where(eq(SubsessionRaceResults.cust_id, Number(userId)));
       const years = await db
         .selectDistinct({ season_year: Subsession.season_year })
         .from(Subsession)
-        .where(
-          sql`${Subsession.subsession_id} IN ${subsessions.map((subsession) => subsession.subsession_id)}`
-        );
+        .innerJoin(
+          SubsessionRaceResults,
+          eq(Subsession.subsession_id, SubsessionRaceResults.subsession_id)
+        )
+        .where(eq(SubsessionRaceResults.cust_id, Number(userId)))
+        .orderBy(asc(Subsession.season_year));
       return { userId, years };
     })
   );
