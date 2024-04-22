@@ -3,7 +3,7 @@ import {
   db,
   desc,
   eq,
-  and,
+  asc,
   sql,
   Subsession,
   SubsessionRaceResults,
@@ -13,16 +13,15 @@ import userIds from "$lib/utils/user-ids";
 export async function getStaticPaths() {
   const mappings = await Promise.all(
     userIds.map(async (userId) => {
-      const subsessions = await db
-        .selectDistinct({ subsession_id: SubsessionRaceResults.subsession_id })
-        .from(SubsessionRaceResults)
-        .where(eq(SubsessionRaceResults.cust_id, Number(userId)));
       const years = await db
         .selectDistinct({ season_year: Subsession.season_year })
         .from(Subsession)
-        .where(
-          sql`${Subsession.subsession_id} IN ${subsessions.map((subsession) => subsession.subsession_id)}`
-        );
+        .innerJoin(
+          SubsessionRaceResults,
+          eq(Subsession.subsession_id, SubsessionRaceResults.subsession_id)
+        )
+        .where(eq(SubsessionRaceResults.cust_id, Number(userId)))
+        .orderBy(asc(Subsession.season_year));
       return { userId, years };
     })
   );
@@ -38,31 +37,17 @@ export async function getStaticPaths() {
 const { id, year } = Astro.params;
 const seoTitle = `Subsessions list for user ID - ${id} and year - ${year}`;
 const seoDescription = seoTitle;
-const subsessionsWithoutResult = await db
-  .select()
-  .from(Subsession)
-  .where(eq(Subsession.season_year, Number(year)))
-  .orderBy(desc(Subsession.subsession_id));
-const subsessionRaceResults = await db
+const subsessions = await db
   .select()
   .from(SubsessionRaceResults)
+  .innerJoin(
+    Subsession,
+    eq(SubsessionRaceResults.subsession_id, Subsession.subsession_id)
+  )
   .where(
-    sql`${SubsessionRaceResults.cust_id} IS ${id} AND ${SubsessionRaceResults.subsession_id} IN ${subsessionsWithoutResult.map((subsessionWithoutResult) => subsessionWithoutResult.subsession_id)} AND ${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE"]}`
-  );
-
-const subsessions = subsessionsWithoutResult
-  .map((subsessionWithoutResult) => {
-    const { subsession_id } = subsessionWithoutResult;
-    const userResult = subsessionRaceResults.find(
-      (subsessionRaceResult) =>
-        subsessionRaceResult.subsession_id === subsession_id
-    );
-    return {
-      ...subsessionWithoutResult,
-      userResult,
-    };
-  })
-  .filter((v) => v.userResult);
+    sql`${SubsessionRaceResults.cust_id} IS ${id} AND ${Subsession.season_year} IS ${Number(year)} AND ${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE", "N/A"]}`
+  )
+  .orderBy(desc(Subsession.subsession_id));
 ---
 
 <SubsessionsLayout {id} {seoTitle} {seoDescription} {subsessions} />

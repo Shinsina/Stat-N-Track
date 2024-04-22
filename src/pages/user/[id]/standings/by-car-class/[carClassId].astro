@@ -32,7 +32,7 @@ const standingsResults = await db
   .where(
     and(
       eq(Standing.cust_id, Number(id)),
-      eq(Standing.car_class_id, String(carClassId))
+      eq(Standing.car_class_id, Number(carClassId))
     )
   )
   .orderBy(desc(Standing.season_id));

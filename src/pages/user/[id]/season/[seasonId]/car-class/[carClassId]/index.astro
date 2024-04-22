@@ -32,31 +32,27 @@ const { id, seasonId, carClassId } = Astro.params;
 const allSeasonSubsessions = await db
   .select()
   .from(Subsession)
-  .where(eq(Subsession.season_id, Number(seasonId)));
-const allSeasonRaceResultsForUser = await db
-  .select()
-  .from(SubsessionRaceResults)
+  .innerJoin(
+    SubsessionRaceResults,
+    eq(Subsession.subsession_id, SubsessionRaceResults.subsession_id)
+  )
   .where(
     and(
+      eq(Subsession.season_id, Number(seasonId)),
       eq(SubsessionRaceResults.cust_id, Number(id)),
       eq(SubsessionRaceResults.car_class_id, Number(carClassId)),
       sql`${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE", "N/A"]}`
     )
   );
-const results = allSeasonSubsessions
-  .filter((v) =>
-    allSeasonRaceResultsForUser
-      .map((w) => w.subsession_id)
-      .includes(v.subsession_id)
-  )
-  .map((subsession) => {
+const results = allSeasonSubsessions.map(
+  ({ Subsession, SubsessionRaceResults }) => {
     const {
       subsession_id,
       track,
       corners_per_lap,
       allowed_licenses,
       license_category,
-    } = subsession;
+    } = Subsession;
     // Current user in Race session;
     const {
       finish_position,
@@ -77,10 +73,7 @@ const results = allSeasonSubsessions
       incidents,
       car_name,
       aggregate_champ_points,
-    } =
-      allSeasonRaceResultsForUser.find(
-        (v) => v.subsession_id === subsession_id
-      ) || {};
+    } = SubsessionRaceResults;
     const { group_name: License } = Array.isArray(allowed_licenses)
       ? allowed_licenses.slice(0, 2).pop()
       : { group_name: "" };
@@ -113,7 +106,8 @@ const results = allSeasonSubsessions
       car_name,
       aggregate_champ_points,
     };
-  });
+  }
+);
 const keysToDisplay = new Set(Object.keys(results[0]));
 const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
 const title = `Season information for season ID ${seasonId} - car class ID - ${carClassId} and user ID - ${id}`;

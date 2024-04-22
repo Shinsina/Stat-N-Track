@@ -3,69 +3,76 @@ import handleResults from "$lib/utils/handle-session-results";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
-import type { Subsession } from "$lib/types";
+import type { SessionResult, Subsession as SubsessionType } from "$lib/types";
 import DefaultLayout from "$lib/layouts/default.astro";
 const { seoTitle, seoDescription, subsessions } = Astro.props;
-const results = subsessions.map((subsession: Subsession) => {
-  const {
-    subsession_id,
-    track,
-    corners_per_lap,
-    allowed_licenses,
-    license_category,
-    userResult,
-  } = subsession;
-  // Current user in Race session;
-  const {
-    finish_position,
-    finish_position_in_class,
-    laps_lead,
-    laps_complete,
-    average_lap,
-    best_lap_time,
-    reason_out,
-    champ_points,
-    starting_position,
-    starting_position_in_class,
-    car_class_short_name,
-    division_name,
-    new_license_level,
-    new_cpi,
-    newi_rating,
-    incidents,
-    car_name,
-    aggregate_champ_points,
-  } = userResult;
-  const { group_name: License } = allowed_licenses.slice(0, 2).pop() || {};
+const results = subsessions.map(
+  ({
+    Subsession,
+    SubsessionRaceResults,
+  }: {
+    Subsession: SubsessionType;
+    SubsessionRaceResults: SessionResult;
+  }) => {
+    const {
+      subsession_id,
+      track,
+      corners_per_lap,
+      allowed_licenses,
+      license_category,
+    } = Subsession;
+    // Current user in Race session;
+    const {
+      finish_position,
+      finish_position_in_class,
+      laps_lead,
+      laps_complete,
+      average_lap,
+      best_lap_time,
+      reason_out,
+      champ_points,
+      starting_position,
+      starting_position_in_class,
+      car_class_short_name,
+      division_name,
+      new_license_level,
+      new_cpi,
+      newi_rating,
+      incidents,
+      car_name,
+      aggregate_champ_points,
+    } = SubsessionRaceResults;
+    const { group_name: License } = allowed_licenses.slice(0, 2).pop() || {};
 
-  return {
-    subsession_id,
-    Track: `${track.track_name} ${
-      track.config_name !== "N/A" ? track.config_name : ""
-    }`,
-    Corners: corners_per_lap,
-    License,
-    license_category,
-    finish_position,
-    finish_position_in_class,
-    laps_lead,
-    laps_complete,
-    average_lap,
-    best_lap_time,
-    reason_out,
-    champ_points,
-    starting_position,
-    starting_position_in_class,
-    car_class_short_name,
-    division_name,
-    new_license_level,
-    new_cpi,
-    newi_rating,
-    incidents,
-    car_name,
-    aggregate_champ_points,
-  };
-});
+    return {
+      subsession_id,
+      Track: `${track.track_name} ${
+        track.config_name !== "N/A" ? track.config_name : ""
+      }`,
+      Corners: corners_per_lap,
+      License,
+      license_category,
+      finish_position,
+      finish_position_in_class,
+      laps_lead,
+      laps_complete,
+      average_lap,
+      best_lap_time,
+      reason_out,
+      champ_points,
+      starting_position,
+      starting_position_in_class,
+      car_class_short_name,
+      division_name,
+      new_license_level,
+      new_cpi,
+      newi_rating,
+      incidents,
+      car_name,
+      aggregate_champ_points,
+    };
+  }
+);
 const keysToDisplay = new Set(Object.keys(results[0] || {}));
 const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
 ---

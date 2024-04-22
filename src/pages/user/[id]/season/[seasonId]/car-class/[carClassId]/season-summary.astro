@@ -33,22 +33,19 @@ const { id, seasonId, carClassId } = Astro.params;
 const allSeasonSubsessions = await db
   .select()
   .from(Subsession)
-  .where(eq(Subsession.season_id, Number(seasonId)));
-const allSeasonRaceResultsForUser = await db
-  .select()
-  .from(SubsessionRaceResults)
+  .innerJoin(
+    SubsessionRaceResults,
+    eq(Subsession.subsession_id, SubsessionRaceResults.subsession_id)
+  )
   .where(
     and(
+      eq(Subsession.season_id, Number(seasonId)),
       eq(SubsessionRaceResults.cust_id, Number(id)),
       eq(SubsessionRaceResults.car_class_id, Number(carClassId)),
       sql`${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE", "N/A"]}`
     )
   );
-const subsessions = allSeasonSubsessions.filter((v) =>
-  allSeasonRaceResultsForUser
-    .map((w) => w.subsession_id)
-    .includes(v.subsession_id)
-);
+const subsessions = allSeasonSubsessions;
 const [season] = await db
   .select()
   .from(Standing)
@@ -74,15 +71,15 @@ const resultsPerWeek: Array<{
 }> = [];
 trackScheduleMap.forEach((value) => {
   const respectiveSubsessions = subsessions.filter(
-    (subsession) =>
-      Number(subsession.race_week_num) === Number(value.race_week_num)
+    ({ Subsession }) =>
+      Number(Subsession.race_week_num) === Number(value.race_week_num)
   );
-  const userResults = respectiveSubsessions.map((subsession) => ({
-    subsession,
-    userResult: allSeasonRaceResultsForUser.find(
-      (v) => v.subsession_id === subsession.subsession_id
-    ),
-  }));
+  const userResults = respectiveSubsessions.map(
+    ({ Subsession, SubsessionRaceResults }) => ({
+      subsession: Subsession,
+      userResult: SubsessionRaceResults,
+    })
+  );
   if (userResults.length > 1) {
     const bestUserResult = userResults
       .sort(

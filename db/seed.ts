@@ -116,21 +116,6 @@ export default async function seed() {
     })
   );
   console.log("Seeded Seasons!");
-  const standingsCollection = mongoDb.collection("standings");
-  const standings = await paginatedQuery(standingsCollection);
-  console.log("Seeding Standings...");
-  await db.delete(Standing);
-  await db.insert(Standing).values(
-    standings.map((standing: any) => {
-      const { _id: id, season_driver_data, ...rest } = standing;
-      return {
-        id,
-        ...season_driver_data,
-        ...rest,
-      };
-    })
-  );
-  console.log("Standings Seeded!");
   const pastSeasonsCollection = mongoDb.collection("pastseasons");
   const pastSeasons = await paginatedQuery(pastSeasonsCollection);
   console.log("Seeding Past Seasons...");
@@ -142,6 +127,29 @@ export default async function seed() {
     })
   );
   console.log("Past Seasons Seeded!");
+  const standingsCollection = mongoDb.collection("standings");
+  const standings = await paginatedQuery(standingsCollection);
+  console.log("Seeding Standings...");
+  await db.delete(Standing);
+  await db.insert(Standing).values(
+    standings.map((standing: any) => {
+      const {
+        _id: id,
+        car_class_id,
+        season_driver_data,
+        season_id,
+        ...rest
+      } = standing;
+      return {
+        id,
+        car_class_id: Number(car_class_id),
+        season_id: Number(season_id),
+        ...season_driver_data,
+        ...rest,
+      };
+    })
+  );
+  console.log("Standings Seeded!");
   const subsessionsCollection = mongoDb.collection("subsessions");
   // @ts-ignore
   const subsessions: Array<SubsessionType> = await paginatedQuery(
@@ -165,6 +173,7 @@ export default async function seed() {
             subsession_id: _id,
             ...result,
             ...rest,
+            id: `${_id}_${rest.simsession_name}_${result.cust_id}`,
           };
           if (rest.simsession_type_name.match("Practice")) {
             object.allPracticeResults.push(resultWithSession);

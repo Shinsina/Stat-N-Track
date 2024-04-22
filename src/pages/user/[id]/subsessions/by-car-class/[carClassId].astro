@@ -35,34 +35,21 @@ export async function getStaticPaths() {
 const { id, carClassId } = Astro.params;
 const seoTitle = `Subsessions list for user ID - ${id} and car class ID - ${carClassId}`;
 const seoDescription = seoTitle;
-const subsessionRaceResults = await db
+const subsessions = await db
   .select()
   .from(SubsessionRaceResults)
+  .innerJoin(
+    Subsession,
+    eq(SubsessionRaceResults.subsession_id, Subsession.subsession_id)
+  )
   .where(
     and(
       eq(SubsessionRaceResults.cust_id, Number(id)),
       eq(SubsessionRaceResults.car_class_id, Number(carClassId)),
       sql`${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE", "N/A"]}`
     )
-  );
-const subsessionsWithoutResult = await db
-  .select()
-  .from(Subsession)
-  .where(
-    sql`${Subsession.subsession_id} IN ${subsessionRaceResults.map((subsession) => subsession.subsession_id)}`
   )
   .orderBy(desc(Subsession.subsession_id));
-const subsessions = subsessionsWithoutResult.map((subsessionWithoutResult) => {
-  const { subsession_id } = subsessionWithoutResult;
-  const userResult = subsessionRaceResults.find(
-    (subsessionRaceResult) =>
-      subsessionRaceResult.subsession_id === subsession_id
-  );
-  return {
-    ...subsessionWithoutResult,
-    userResult,
-  };
-});
 ---
 
 <SubsessionsLayout {id} {seoTitle} {seoDescription} {subsessions} />
