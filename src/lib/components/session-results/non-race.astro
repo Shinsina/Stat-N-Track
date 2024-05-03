@@ -1,0 +1,17 @@
+---
+import SessionResults from "$lib/components/subsession/session-results.astro";
+import keysToDisplay from "$lib/utils/non-race-session-keys-to-display";
+import type { Session } from "$lib/types";
+interface Props {
+  session: Session;
+  notMultiClass: Boolean;
+}
+const { session, notMultiClass } = Astro.props;
+if (notMultiClass) {
+  keysToDisplay.delete('finish_position_in_class');
+  keysToDisplay.delete('class_interval');
+  keysToDisplay.delete('car_class_short_name');
+}
+---
+
+<SessionResults {session} {keysToDisplay} />
