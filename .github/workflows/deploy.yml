@@ -23,8 +23,6 @@ jobs:
       - name: Install, build, and upload your site
         env:
           ASTRO_STUDIO_APP_TOKEN: ${{secrets.ASTRO_STUDIO_APP_TOKEN }}
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          MONGODB_DB: ${{ secrets.MONGODB_DB }}
         uses: withastro/action@v0
         with:
             # path: . # The root location of your Astro project inside the repository. (optional)
