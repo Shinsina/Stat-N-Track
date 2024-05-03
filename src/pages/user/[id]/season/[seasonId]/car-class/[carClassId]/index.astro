@@ -1,6 +1,7 @@
 ---
 import {
   db,
+  asc,
   and,
   eq,
   sql,
@@ -43,7 +44,8 @@ const allSeasonSubsessions = await db
       eq(SubsessionRaceResults.car_class_id, Number(carClassId)),
       sql`${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE", "N/A"]}`
     )
-  );
+  )
+  .orderBy(asc(Subsession.subsession_id));
 const results = allSeasonSubsessions.map(
   ({ Subsession, SubsessionRaceResults }) => {
     const {

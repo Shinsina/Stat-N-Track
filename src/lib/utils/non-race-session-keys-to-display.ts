@@ -1,11 +1,4 @@
----
-import SessionResults from "$lib/components/subsession/session-results.astro";
-import type { Session } from "$lib/types";
-interface Props {
-  session: Session;
-}
-const { session } = Astro.props;
-const keysToDisplay = new Set([
+export default new Set([
   "cust_id",
   "display_name",
   "finish_position",
@@ -22,6 +15,3 @@ const keysToDisplay = new Set([
   "incidents",
   "car_name",
 ]);
----
-
-<SessionResults {session} {keysToDisplay} />

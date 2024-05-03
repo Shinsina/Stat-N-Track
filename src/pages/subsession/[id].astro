@@ -107,6 +107,7 @@ const {
 } = subsession || {};
 const title = `Subsession - ${id}`;
 const description = `Subsession information for subsession - ${id}`;
+const notMultiClass = Array.isArray(subsession.car_classes) && subsession.car_classes.length === 1
 ---
 
 <DefaultLayout {title} {description}>
@@ -121,5 +122,5 @@ const description = `Subsession information for subsession - ${id}`;
       <RelevantIds {subsession} sessions={session_results} />
     </div>
   </div>
-  <SessionResultsTables sessions={session_results} />
+  <SessionResultsTables sessions={session_results} {notMultiClass} />
 </DefaultLayout>

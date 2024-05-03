@@ -165,7 +165,7 @@ const Standing = defineTable({
     country: column.text(),
     season_id: column.number({ references: () => PastSeason.columns.season_id }),
     season_name: column.text(),
-    division_rank: column.number(),
+    division_rank: column.number({ default: 0 }),
   },
 });
 
