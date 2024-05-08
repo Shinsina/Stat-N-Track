@@ -14,7 +14,12 @@ import handleResults from "$lib/utils/handle-session-results";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
-import type { License, SessionResult, Track } from "$lib/types";
+import type {
+  License,
+  SessionResult,
+  Subsession as SubsessionType,
+  Track,
+} from "$lib/types";
 import userIds from "$lib/utils/user-ids";
 export async function getStaticPaths() {
   const seasons = await db
@@ -66,7 +71,7 @@ trackSchedule.forEach((track) => {
 });
 
 const resultsPerWeek: Array<{
-  subsession: typeof Subsession;
+  subsession: SubsessionType;
   userResult: SessionResult;
 }> = [];
 trackScheduleMap.forEach((value) => {
@@ -141,16 +146,16 @@ const results = resultsPerWeek.map((result) => {
     allowed_licenses.length
       ? (allowed_licenses.slice(0, 2).pop() as License)
       : ({} as License);
+  const subsessionAsSubsessionType = subsession as unknown as SubsessionType;
   const sof = {
-    "Strength Of Field": subsession.race_summary
-      ? // @ts-expect-error
-        subsession.race_summary.field_strength
+    "Strength Of Field": subsessionAsSubsessionType.race_summary
+      ? subsessionAsSubsessionType.race_summary.field_strength
       : null,
   };
+  const trackAsTrackType = track as unknown as Track;
   return {
     subsession_id,
-    // @ts-expect-error
-    Track: `${track.track_name} ${track.config_name && track.config_name !== "N/A" ? track.config_name : ""}`,
+    Track: `${trackAsTrackType.track_name} ${trackAsTrackType.config_name && trackAsTrackType.config_name !== "N/A" ? trackAsTrackType.config_name : ""}`,
     Corners: corners_per_lap,
     License,
     license_category,

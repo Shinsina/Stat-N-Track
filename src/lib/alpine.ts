@@ -1,5 +1,4 @@
 import type { Alpine } from "alpinejs";
-// @ts-expect-error
 import collapse from "@alpinejs/collapse";
 import Table from "$lib/components/table";
 
@@ -17,12 +16,17 @@ export default (Alpine: Alpine) => {
     RACE: false,
     toggle() {
       this.$el.id.split(" ").forEach((id, index) => {
-        if (index) {
-          // @ts-expect-error
-          this[id] = false;
-        } else {
-          // @ts-expect-error
-          this[id] = !this[id];
+        if (
+          id === "PRACTICE" ||
+          id === "QUALIFY" ||
+          id === "HEAT" ||
+          id === "RACE"
+        ) {
+          if (index) {
+            this[id] = false;
+          } else {
+            this[id] = !this[id];
+          }
         }
       });
     },
