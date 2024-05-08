@@ -76,22 +76,25 @@ export default async function seed() {
   await db.insert(CarClass).values(carClasses);
   console.log("Car Classes Seeded!");
   console.log("Seeding Seasons...");
-  await db.insert(Season).values(
-    seasons.map((season: any) => {
-      const { start_date, ...rest } = season;
-      return {
-        ...rest,
-        start_date: new Date(start_date),
-      };
-    })
-  );
+  const seasonsAsArray = Array.isArray(seasons)
+    ? seasons.map((season: any) => {
+        const { start_date, ...rest } = season;
+        return {
+          ...rest,
+          start_date: new Date(start_date),
+        };
+      })
+    : [];
+  await db.insert(Season).values(seasonsAsArray);
   console.log("Seeded Seasons!");
   console.log("Seeding Past Seasons...");
+  const pastSeasonsAsObject = pastSeasons as Record<string, any>;
   await db.insert(PastSeason).values(
-    Object.keys(pastSeasons)
+    Object.keys(pastSeasonsAsObject)
       .map((key) =>
-        pastSeasons[key].series.seasons.filter((season) =>
-          seasonIdArray.includes(season.season_id)
+        pastSeasonsAsObject[key].series.seasons.filter(
+          (season: typeof PastSeason) =>
+            seasonIdArray.includes(Number(season.season_id))
         )
       )
       .flat()
@@ -113,16 +116,17 @@ export default async function seed() {
   );
   console.log("Standings Seeded!");
   console.log("Seeding Subsessions...");
+  const subsessionsTyped = subsessions as Record<string, SubsessionType>;
   const {
     allPracticeResults,
     allQualifyingResults,
     allRaceResults,
     allSubsessions,
-  } = Object.keys(subsessions).reduce(
+  } = Object.keys(subsessionsTyped).reduce(
     // @todo Provide an accurate type for the unknown here
     (object: Record<string, Array<any>>, key) => {
       const { session_results, end_time, start_time, ...rest } =
-        subsessions[key];
+        subsessionsTyped[key];
       session_results.forEach((sessionResult) => {
         const { results, ...rest } = sessionResult;
         results.forEach((result) => {
