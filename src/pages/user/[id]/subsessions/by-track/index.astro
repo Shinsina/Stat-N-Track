@@ -19,7 +19,7 @@ const title = `Subsessions By Track - ${id}`;
 const description = `Subsessions by track page for user ID: ${id}`;
 ---
 
-<DefaultLayout {title} {description}>
+<DefaultLayout {id} {title} {description}>
   <div class="text-center text-3xl">
     {Array.from(trackMap).sort().map(([key, track]) => (<div><a class="underline" href=`/Stat-N-Track/user/${id}/subsessions/by-track/${key}` >{track.trackName} {track.configName.replace('N/A', '')}</a></div>))}
 	</div>

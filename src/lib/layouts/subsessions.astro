@@ -5,7 +5,7 @@ import lapTimeFields from "$lib/utils/lap-time-fields";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import type { SessionResult, Subsession as SubsessionType } from "$lib/types";
 import DefaultLayout from "$lib/layouts/default.astro";
-const { seoTitle, seoDescription, subsessions } = Astro.props;
+const { id, seoTitle, seoDescription, subsessions } = Astro.props;
 const results = subsessions.map(
   ({
     Subsession,
@@ -77,7 +77,7 @@ const keysToDisplay = new Set(Object.keys(results[0] || {}));
 const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
 ---
 
-<DefaultLayout title={seoTitle} description={seoDescription}>
+<DefaultLayout {id} title={seoTitle} description={seoDescription}>
   <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
     <table x-ref="Table" x-data="table" class="text-center col-span-1">
       <tr x-ref="Headings"

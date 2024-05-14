@@ -60,7 +60,7 @@ const tracksFromDb: Array<{ track: unknown | Track }> = await db
 const tracks = tracksFromDb as Array<{ track: Track }>;
 const generatedTrackMap = generateTrackMap({ tracks });
 const { trackName, configName } = generatedTrackMap.get(trackSlug) || {};
-const subsessions = await db
+const allSubsessionsForTrack = await db
   .select()
   .from(Subsession)
   .innerJoin(
@@ -75,6 +75,14 @@ const subsessions = await db
     )
   )
   .orderBy(desc(Subsession.subsession_id));
+const subsessions = allSubsessionsForTrack.filter(
+  ({
+    Subsession: {
+      // @ts-expect-error
+      track: { track_name, config_name },
+    },
+  }) => track_name === trackName && config_name === configName
+);
 ---
 
 <SubsessionsLayout {id} {seoTitle} {seoDescription} {subsessions} />

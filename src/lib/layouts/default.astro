@@ -1,5 +1,5 @@
 ---
-const { title, description } = Astro.props;
+const { id, title, description } = Astro.props;
 const seoTitle = title ? `Stat 'n' Track: ${title}` : "Stat 'n' Track";
 const seoDescription =
   description || "An iRacing planner and statistics analyzer";
@@ -37,6 +37,72 @@ const seoDescription =
         >
       </div>
     </div>
+    { id ? (<div
+      class="text-center lg:text-3xl md:text-lg sm:text-md grid grid-cols-5 py-2 border-white border-x-2 border-b-2"
+    >
+      <div>
+        <a class="underline" href=`/Stat-N-Track/user/${id}/scheduling`
+          >Scheduling</a
+        >
+      </div>
+      <div>
+        <a class="underline" href=`/Stat-N-Track/user/${id}/scheduling/by-week`
+          >Scheduling By Week</a
+        >
+      </div>
+      <div>
+        <a class="underline" href=`/Stat-N-Track/user/${id}/subsessions`
+          >All Sessions</a
+        >
+      </div>
+      <div>
+        <a class="underline" href=`/Stat-N-Track/user/${id}/subsessions/by-year`
+          >Sessions By Year</a
+        >
+      </div>
+      <div>
+        <a
+          class="underline"
+          href=`/Stat-N-Track/user/${id}/subsessions/by-car-class`
+          >Sessions By Car Class</a
+        >
+      </div>
+    </div>
+    <div
+      class="text-center lg:text-3xl md:text-lg sm:text-md grid grid-cols-5 py-2 border-white border-x-2 border-b-2"
+    >
+      <div>
+        <a
+          class="underline"
+          href=`/Stat-N-Track/user/${id}/subsessions/by-track`
+          >Sessions By Track</a
+        >
+      </div>
+      <div>
+        <a class="underline" href=`/Stat-N-Track/user/${id}/standings`
+          >All Season Standings</a
+        >
+      </div>
+      <div>
+        <a
+          class="underline"
+          href=`/Stat-N-Track/user/${id}/standings/full-participation`
+          >Fully Participated Season Standings</a
+        >
+      </div>
+      <div>
+        <a class="underline" href=`/Stat-N-Track/user/${id}/standings/by-year`
+          >Season Standings By Year</a
+        >
+      </div>
+      <div>
+        <a
+          class="underline"
+          href=`/Stat-N-Track/user/${id}/standings/by-car-class`
+          >Season Standings By Car Class</a
+        >
+      </div>
+    </div>) : <></> }
     <slot />
   </body>
 </html>
