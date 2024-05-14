@@ -22,10 +22,11 @@
 	});
 	const title = `Subsessions By Car Class - ${id}`;
 	const description = `Subessions by car class page for user ID: ${id}`;
+	console.log(carClassNames.size);
 ---
 
 
-<DefaultLayout {title} {description}>
+<DefaultLayout {id} {title} {description}>
 	<div class="text-center text-3xl">
 	 {Array.from(carClassNames).sort().map((carClassName) => (<div><a class="underline" href=`/Stat-N-Track/user/${id}/subsessions/by-car-class/${carClassMap.get(carClassName)}` >{carClassName}</a></div>))}
 	</div>
