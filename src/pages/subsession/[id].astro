@@ -107,16 +107,19 @@ const {
 } = subsession || {};
 const title = `Subsession - ${id}`;
 const description = `Subsession information for subsession - ${id}`;
-const notMultiClass = Array.isArray(subsession.car_classes) && subsession.car_classes.length === 1
+const notMultiClass =
+  Array.isArray(subsession.car_classes) && subsession.car_classes.length === 1;
 ---
 
 <DefaultLayout {title} {description}>
   <div class="grid grid-cols-12">
-    <div class="col-span-12 md:col-span-6 border-2 pt-4">
+    <div
+      class="col-span-12 md:col-span-6 border-x-2 md:border-r-0 md:border-l-2 pt-4"
+    >
       <Header {subsession} />
       <RaceSummary {subsession} />
     </div>
-    <div class="col-span-12 md:col-span-6 border-2">
+    <div class="col-span-12 md:col-span-6 border-x-2">
       <TrackInfo {cornersPerLap} {track} />
       <LicenseInfo {licenses} {licenseCategory} />
       <RelevantIds {subsession} sessions={session_results} />

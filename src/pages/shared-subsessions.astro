@@ -14,7 +14,7 @@ import userIds from "$lib/utils/user-ids";
 import parseLapTime from "$lib/utils/parse-lap-time";
 import fieldIdToLabelMap from "$lib/utils/field-id-to-label-map";
 import { bgColorByUserDisplayName } from "$lib/utils/background-color-by-user";
-import type { Track } from "$lib/types";
+import type { License as LicenseType, Track } from "$lib/types";
 const sharedRaceSessions = await db
   .select({
     subsession_id: SubsessionRaceResults.subsession_id,
@@ -93,7 +93,7 @@ const results = sharedSubsessions.map((subsession) => {
     headToHeadWins[display_name] = [subsession_id];
   }
   const { group_name: License } = Array.isArray(allowed_licenses)
-    ? allowed_licenses.slice(0, 2).pop()
+    ? allowed_licenses.slice(0, 2).pop() as LicenseType
     : { group_name: "" };
   const assertTrackAsTrackType = () => track as Track;
   const trackInfo = assertTrackAsTrackType();
@@ -232,7 +232,10 @@ const description = "Shared subsessions for all Stat 'n' Track users";
                 {Object.keys(result.subsessionInfo).map((key) => (
                   <td
                     x-ref={`Table ${key} ${rowNumber}`}
-                    id={`${key}~${rowNumber}~${result.subsessionInfo[key]}`}
+                    id={
+                      // @ts-ignore
+                      `${key}~${rowNumber}~${result.subsessionInfo[key]}`
+                    }
                     class="border-2"
                   >
                     <Fragment

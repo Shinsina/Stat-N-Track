@@ -12,7 +12,7 @@ const relevantIds = Object.keys(subsession)
     (key) => `${key}: ${JSON.stringify(subsession[key as keyof Subsession])}`
   );
 const relevantIdMap: Record<string, Set<number>> = {};
-const excludeKeys = new Set(["_id", "cust_id", "reason_out_id"]);
+const excludeKeys = new Set(["_id", "cust_id", "reason_out_id", "subsession_id"]);
 sessions.forEach((session: Session) => {
   const { results } = session;
   results.forEach((result) => {
