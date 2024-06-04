@@ -24,7 +24,7 @@ import seasonIdArray from "./distinct-season-ids.json";
 import subsessions from "./subsessions-output.json";
 
 function batchInserts(array: Array<any>): Array<Array<any>> {
-  const size = 200;
+  const size = 100;
   const count = array.length;
   const batches = Math.ceil(count / size);
   return Array(batches)
@@ -168,6 +168,11 @@ export default async function seed() {
   );
   if (subsessionCount !== allSubsessions.length) {
     await db.delete(Subsession);
+    await Promise.all(
+      batchInserts(allSubsessions).map((batch) =>
+        db.insert(Subsession).values(batch)
+      )
+    );
     await db.insert(Subsession).values(allSubsessions);
   }
   console.log("Seeding Subsession Practice Results...");
