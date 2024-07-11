@@ -108,6 +108,11 @@ const description = `Scheduling page for user ID: ${id}`;
 ---
 
 <DefaultLayout {id} {title} {description}>
+  <style>
+    [x-cloak] {
+      display: none !important;
+    }
+  </style>
   <div class="grid grid-cols-4 text-center pt-6">
     {
       Object.keys(results[0])
