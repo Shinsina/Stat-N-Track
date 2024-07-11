@@ -17,5 +17,8 @@ export default defineConfig({
   prefetch: {
     defaultStrategy: 'viewport',
     prefetchAll: true
+  },
+  image: {
+    domains: ['images-static.iracing.com']
   }
 });
