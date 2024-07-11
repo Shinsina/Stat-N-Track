@@ -158,6 +158,11 @@ const description = "Shared subsessions for all Stat 'n' Track users";
 ---
 
 <DefaultLayout {title} {description}>
+  <style>
+    [x-cloak] {
+      display: none !important;
+    }
+  </style>
   <div class="flex flex-col">
     <div class="self-center text-center lg:text-2xl md:text-md sm:text-sm py-4">
       <div class="font-bold border-b-2 border-white">Head to Head Wins</div>
@@ -206,7 +211,7 @@ const description = "Shared subsessions for all Stat 'n' Track users";
           </div>
         ))
       }
-      <div class="grid grid-cols-1 pt-6">
+      <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
         <table x-ref="Table" x-data="table" class="text-center col-span-1">
           <tr x-ref="Headings">
             {

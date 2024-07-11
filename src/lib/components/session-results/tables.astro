@@ -20,6 +20,11 @@ const race: Session =
 ---
 
 <div x-data="tables">
+  <style>
+    [x-cloak] {
+      display: none !important;
+    }
+  </style>
   <div class=`grid grid-cols-${sessions.length} text-center pb-6`>
     <button
       id="PRACTICE QUALIFY HEAT RACE"
@@ -54,7 +59,7 @@ const race: Session =
       Race Table
     </button>
   </div>
-  <div x-if="true">
+  <div>
     <div
       x-cloak
       x-show="PRACTICE"
