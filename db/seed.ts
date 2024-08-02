@@ -12,6 +12,7 @@ import {
   SubsessionRaceResults,
   User,
 } from "astro:db";
+import fs from "fs";
 import type { Subsession as SubsessionType } from "$lib/types";
 import users from "./users.json";
 import cars from "./cars.json";
@@ -20,20 +21,27 @@ import seasons from "./seasons.json";
 import pastSeasons from "./past-seasons-output.json";
 import jackStandings from "./jack-standings-output.json";
 import jakeStandings from "./jake-standings-output.json";
+import kyleStandings from "./kyle-standings-output.json";
 import seasonIdArray from "./distinct-season-ids.json";
-import subsessions from "./subsessions-output.json";
 
+const batchSize = 100;
 function batchInserts(array: Array<any>): Array<Array<any>> {
-  const size = 100;
   const count = array.length;
-  const batches = Math.ceil(count / size);
+  const batches = Math.ceil(count / batchSize);
   return Array(batches)
     .fill({})
     .map((_, index) =>
-      array.slice(index * size, (index + 1) * size).filter((v) => v)
+      array.slice(index * batchSize, (index + 1) * batchSize).filter((v) => v)
     );
 }
 
+function delay(delayInMilliseconds: number): Promise<unknown> {
+  return new Promise((resolution) =>
+    setTimeout(resolution, delayInMilliseconds)
+  );
+}
+
+// @todo Re-examine this, "works" but can be better
 // https://astro.build/db/seed
 export default async function seed() {
   await db.delete(SubsessionRaceResults);
@@ -100,7 +108,7 @@ export default async function seed() {
       .flat()
   );
   console.log("Past Seasons Seeded!");
-  const standings = [...jackStandings, ...jakeStandings];
+  const standings = [...jackStandings, ...jakeStandings, ...kyleStandings];
   console.log("Seeding Standings...");
   await db.insert(Standing).values(
     standings.map((standing: any) => {
@@ -116,6 +124,8 @@ export default async function seed() {
   );
   console.log("Standings Seeded!");
   console.log("Seeding Subsessions...");
+  const raw = fs.readFileSync("./db/subsessions-output.json");
+  const subsessions = JSON.parse(String(raw));
   const subsessionsTyped = subsessions as Record<string, SubsessionType>;
   const {
     allPracticeResults,
@@ -169,9 +179,14 @@ export default async function seed() {
   if (subsessionCount !== allSubsessions.length) {
     await db.delete(Subsession);
     await Promise.all(
-      batchInserts(allSubsessions).map((batch) =>
-        db.insert(Subsession).values(batch)
-      )
+      batchInserts(allSubsessions).map(async (batch, index) => {
+        const trueIndex = index + 1;
+        await delay(2000 * trueIndex);
+        console.log(
+          `Processing up to the ${trueIndex * batchSize}th subsession result`
+        );
+        return db.insert(Subsession).values(batch);
+      })
     );
     await db.insert(Subsession).values(allSubsessions);
   }
@@ -186,9 +201,14 @@ export default async function seed() {
   if (practiceResultCount !== allPracticeResults.length) {
     await db.delete(SubsessionPracticeResults);
     await Promise.all(
-      batchInserts(allPracticeResults).map((batch) =>
-        db.insert(SubsessionPracticeResults).values(batch)
-      )
+      batchInserts(allPracticeResults).map(async (batch, index) => {
+        const trueIndex = index + 1;
+        await delay(2000 * trueIndex);
+        console.log(
+          `Processing up to the ${trueIndex * batchSize}th practice result`
+        );
+        return db.insert(SubsessionPracticeResults).values(batch);
+      })
     );
   }
   console.log("Subsession Practice Results Seeded!");
@@ -203,9 +223,14 @@ export default async function seed() {
   if (qualifyingResultCount !== allQualifyingResults.length) {
     await db.delete(SubsessionQualifyingResults);
     await Promise.all(
-      batchInserts(allQualifyingResults).map((batch) =>
-        db.insert(SubsessionQualifyingResults).values(batch)
-      )
+      batchInserts(allQualifyingResults).map(async (batch, index) => {
+        const trueIndex = index + 1;
+        await delay(2000 * trueIndex);
+        console.log(
+          `Processing up to the ${trueIndex * batchSize}th qualifying result`
+        );
+        return db.insert(SubsessionQualifyingResults).values(batch);
+      })
     );
   }
   console.log("Subsession Qualifying Results Seeded!");
@@ -220,9 +245,14 @@ export default async function seed() {
   if (raceResultCount !== allRaceResults.length) {
     await db.delete(SubsessionRaceResults);
     await Promise.all(
-      batchInserts(allRaceResults).map((batch) =>
-        db.insert(SubsessionRaceResults).values(batch)
-      )
+      batchInserts(allRaceResults).map(async (batch, index) => {
+        const trueIndex = index + 1;
+        await delay(2000 * trueIndex);
+        console.log(
+          `Processing up to the ${trueIndex * batchSize}th race result`
+        );
+        return db.insert(SubsessionRaceResults).values(batch);
+      })
     );
   }
   console.log("Subsession Race Results Seeded!");
