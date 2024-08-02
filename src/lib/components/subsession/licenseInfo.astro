@@ -11,14 +11,16 @@ const allowedLicenses = [allowedLicenseOne, allowLicenseTwo];
   <div>
     Allowed Licenses:
     {
-      allowedLicenses.map((license: License, index: number) => (
-        <p>
-          {license.group_name}{" "}
-          {!index
-            ? `${license.min_license_level / license.license_group}.00`
-            : "and above"}
-        </p>
-      ))
+      allowedLicenses
+        .filter((v) => v)
+        .map((license: License, index: number) => (
+          <p>
+            {license.group_name}{" "}
+            {!index
+              ? `${license.min_license_level / license.license_group}.00`
+              : "and above"}
+          </p>
+        ))
     }
   </div>
 </div>

@@ -141,7 +141,7 @@ const Standing = defineTable({
     division: column.number(),
     overall_rank: column.number(),
     rank: column.number(),
-    cust_id: column.number({ references: () => User.columns.cust_id }),
+    cust_id: column.number(),
     display_name: column.text(),
     club_id: column.number(),
     license: column.json(),

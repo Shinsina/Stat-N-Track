@@ -110,7 +110,7 @@ const results = allSeasonSubsessions.map(
     };
   }
 );
-const keysToDisplay = new Set(Object.keys(results[0]));
+const keysToDisplay = new Set(Object.keys(results[0] || {}));
 const { keysArray, handledResults } = handleResults({ keysToDisplay, results });
 const title = `Season information for season ID ${seasonId} - car class ID - ${carClassId} and user ID - ${id}`;
 const description = title;
