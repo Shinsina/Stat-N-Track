@@ -7,15 +7,19 @@ const primaryNavigationLinks = [
   { href: "/Stat-N-Track/", label: "Home" },
   { href: "/Stat-N-Track/user/300752/", label: "Jacob Collins" },
   { href: "/Stat-N-Track/user/815162/", label: "Jack Glenzinski" },
+  { href: "/Stat-N-Track/user/251134", label: 'Kyle Klendworth' },
   { href: "/Stat-N-Track/shared-subsessions/", label: "Shared Subsessions" },
 ];
+const schedulingLinks = id && ['300752', '815162'].includes(id) ? [
+  { href: `/Stat-N-Track/user/${id}/scheduling/`, label: "Scheduling" },
+  {
+    href: `/Stat-N-Track/user/${id}/scheduling/by-week/`,
+    label: "Scheduling By Week",
+  },
+] : []
 const userNavigationLinks = id
   ? [
-      { href: `/Stat-N-Track/user/${id}/scheduling/`, label: "Scheduling" },
-      {
-        href: `/Stat-N-Track/user/${id}/scheduling/by-week/`,
-        label: "Scheduling By Week",
-      },
+      ...schedulingLinks,
       { href: `/Stat-N-Track/user/${id}/subsessions/`, label: "All Sessions" },
       {
         href: `/Stat-N-Track/user/${id}/subsessions/by-year/`,
