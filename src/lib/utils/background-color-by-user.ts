@@ -1,4 +1,7 @@
 export const bgColorByUserId = (userId: number): string => {
+  if (userId === 251134) {
+    return "bg-red-700";
+  }
   if (userId === 300752) {
     return "bg-orange-700";
   }
@@ -9,6 +12,9 @@ export const bgColorByUserId = (userId: number): string => {
 };
 
 export const bgColorByUserDisplayName = (displayName: string): string => {
+  if (displayName === "Kyle Klendworth") {
+    return "bg-red-700";
+  }
   if (displayName === "Jacob Collins") {
     return "bg-orange-700";
   }
