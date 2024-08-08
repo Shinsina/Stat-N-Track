@@ -26,17 +26,19 @@ const sharedRaceSessions = await db
   )
   .having(({ count }) => gt(count, 1));
 const sharedSubsessionIds = sharedRaceSessions.map((v) => v.subsession_id);
-const sharedSubsessions = await db
-  .select()
-  .from(Subsession)
-  .where(sql`${Subsession.subsession_id} IN ${sharedSubsessionIds}`)
-  .orderBy(desc(Subsession.subsession_id));
-const sharedSubsessionRaceResults = await db
-  .select()
-  .from(SubsessionRaceResults)
-  .where(
-    sql`${SubsessionRaceResults.cust_id} IN ${userIds} AND ${SubsessionRaceResults.simsession_number} = 0 AND ${SubsessionRaceResults.subsession_id} IN ${sharedSubsessionIds}`
-  );
+const [sharedSubsessions, sharedSubsessionRaceResults] = await db.batch([
+  db
+    .select()
+    .from(Subsession)
+    .where(sql`${Subsession.subsession_id} IN ${sharedSubsessionIds}`)
+    .orderBy(desc(Subsession.subsession_id)),
+  db
+    .select()
+    .from(SubsessionRaceResults)
+    .where(
+      sql`${SubsessionRaceResults.cust_id} IN ${userIds} AND ${SubsessionRaceResults.simsession_number} = 0 AND ${SubsessionRaceResults.subsession_id} IN ${sharedSubsessionIds}`
+    ),
+]);
 const subsessionIdToSharedRaceResultsMap = sharedSubsessionRaceResults.reduce(
   (map: Map<number, Array<typeof value>>, value) => {
     const { subsession_id } = value;
@@ -93,7 +95,7 @@ const results = sharedSubsessions.map((subsession) => {
     headToHeadWins[display_name] = [subsession_id];
   }
   const { group_name: License } = Array.isArray(allowed_licenses)
-    ? allowed_licenses.slice(0, 2).pop() as LicenseType
+    ? (allowed_licenses.slice(0, 2).pop() as LicenseType)
     : { group_name: "" };
   const assertTrackAsTrackType = () => track as Track;
   const trackInfo = assertTrackAsTrackType();

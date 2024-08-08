@@ -35,31 +35,43 @@ export async function getStaticPaths() {
   }));
 }
 const { id, seasonId, carClassId } = Astro.params;
-const allSeasonSubsessions = await db
-  .select()
-  .from(Subsession)
-  .innerJoin(
-    SubsessionRaceResults,
-    eq(Subsession.subsession_id, SubsessionRaceResults.subsession_id)
-  )
-  .where(
-    and(
-      eq(Subsession.season_id, Number(seasonId)),
-      eq(SubsessionRaceResults.cust_id, Number(id)),
-      eq(SubsessionRaceResults.car_class_id, Number(carClassId)),
-      sql`${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE", "N/A"]}`
+const [subsessions, seasons, pastSeasonInformations] = await db.batch([
+  db
+    .select()
+    .from(Subsession)
+    .innerJoin(
+      SubsessionRaceResults,
+      eq(Subsession.subsession_id, SubsessionRaceResults.subsession_id)
     )
-  );
-const subsessions = allSeasonSubsessions;
-const [season] = await db
-  .select()
-  .from(Standing)
-  .where(eq(Standing.id, `${seasonId}_${carClassId}_${id}`));
-const [pastSeasonInformation] = await db
-  .select()
-  .from(PastSeason)
-  .where(eq(PastSeason.season_id, Number(seasonId)));
-const trackSchedule = Array.isArray(pastSeasonInformation.race_weeks)
+    .where(
+      and(
+        eq(Subsession.season_id, Number(seasonId)),
+        eq(SubsessionRaceResults.cust_id, Number(id)),
+        eq(SubsessionRaceResults.car_class_id, Number(carClassId)),
+        sql`${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE", "N/A"]}`
+      )
+    ),
+  db
+    .select()
+    .from(Standing)
+    .where(eq(Standing.id, `${seasonId}_${carClassId}_${id}`)),
+  db
+    .select()
+    .from(PastSeason)
+    .where(eq(PastSeason.season_id, Number(seasonId))),
+]);
+const season = seasons.pop() || {
+  division: 0,
+  division_rank: 0,
+  overall_rank: 0,
+  season_name: "",
+  display_name: "",
+  points: 0,
+};
+const pastSeasonInformation = pastSeasonInformations.pop() || {
+  race_weeks: [],
+};
+const trackSchedule = Array.isArray(pastSeasonInformation?.race_weeks)
   ? pastSeasonInformation.race_weeks.map((raceWeek: Record<string, Track>) => ({
       ...raceWeek.track,
       race_week_num: raceWeek.race_week_num,
