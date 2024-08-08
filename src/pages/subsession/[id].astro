@@ -22,25 +22,28 @@ export async function getStaticPaths() {
   return subsessions.map(({ subsession_id: id }) => ({ params: { id } }));
 }
 const { id } = Astro.params;
-const [subsession] = await db
-  .select()
-  .from(Subsession)
-  .where(eq(Subsession.subsession_id, Number(id)));
-const practiceResults = await db
-  .select()
-  .from(SubsessionPracticeResults)
-  .where(eq(SubsessionPracticeResults.subsession_id, Number(id)))
-  .orderBy(asc(SubsessionPracticeResults.finish_position));
-const qualifyingResults = await db
-  .select()
-  .from(SubsessionQualifyingResults)
-  .where(eq(SubsessionQualifyingResults.subsession_id, Number(id)))
-  .orderBy(asc(SubsessionQualifyingResults.finish_position));
-const raceResults = await db
-  .select()
-  .from(SubsessionRaceResults)
-  .where(eq(SubsessionRaceResults.subsession_id, Number(id)))
-  .orderBy(asc(SubsessionRaceResults.finish_position));
+const [subsessions, practiceResults, qualifyingResults, raceResults] = await db.batch([
+  db
+    .select()
+    .from(Subsession)
+    .where(eq(Subsession.subsession_id, Number(id))),
+  db
+    .select()
+    .from(SubsessionPracticeResults)
+    .where(eq(SubsessionPracticeResults.subsession_id, Number(id)))
+    .orderBy(asc(SubsessionPracticeResults.finish_position)),
+  db
+    .select()
+    .from(SubsessionQualifyingResults)
+    .where(eq(SubsessionQualifyingResults.subsession_id, Number(id)))
+    .orderBy(asc(SubsessionQualifyingResults.finish_position)),
+  db
+    .select()
+    .from(SubsessionRaceResults)
+    .where(eq(SubsessionRaceResults.subsession_id, Number(id)))
+    .orderBy(asc(SubsessionRaceResults.finish_position)),
+]);
+const subsession = subsessions.pop();
 const [practiceResultOne] = practiceResults || [{}];
 const [qualifyingResultOne] = qualifyingResults || [{}];
 const splitRaceResults = raceResults.find((result) =>
@@ -108,7 +111,7 @@ const {
 const title = `Subsession - ${id}`;
 const description = `Subsession information for subsession - ${id}`;
 const notMultiClass =
-  Array.isArray(subsession.car_classes) && subsession.car_classes.length === 1;
+  Array.isArray(subsession?.car_classes) && subsession?.car_classes.length === 1;
 ---
 
 <DefaultLayout {title} {description}>

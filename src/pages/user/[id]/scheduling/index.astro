@@ -7,13 +7,25 @@ export async function getStaticPaths() {
   return userIds.map(({ id }) => ({ params: { id } }));
 }
 const { id } = Astro.params;
-const [user] = await db
+const [users, cars, carClassesResults, carClasses, seasons] = await db.batch([
+db
   .select({
     carPackages: User.car_packages,
     trackPackages: User.track_packages,
   })
   .from(User)
-  .where(eq(User.cust_id, id));
+  .where(eq(User.cust_id, id)),
+  db.select().from(Car),
+  db
+  .select({
+    carClassId: CarClass.car_class_id,
+    carsInClass: CarClass.cars_in_class,
+  })
+  .from(CarClass),
+  db.select().from(CarClass),
+  db.select().from(Season)
+]);
+const user = users.pop() || { carPackages: [], trackPackages: [] };
 const { carPackages, trackPackages } = user;
 const carIds = Array.isArray(carPackages)
   ? carPackages.map((carPackage) => carPackage.content_ids).flat()
@@ -21,26 +33,18 @@ const carIds = Array.isArray(carPackages)
 const trackIds = Array.isArray(trackPackages)
   ? trackPackages.map((trackPackage) => trackPackage.content_ids).flat()
   : [];
-const cars = await db.select().from(Car);
 const carsMap = new Map();
 cars.forEach((car) => {
   const { car_id } = car;
   carsMap.set(car_id, car);
 });
-// @todo Improve this query to not have to do this
-const carClassesResults = await db
-  .select({
-    carClassId: CarClass.car_class_id,
-    carsInClass: CarClass.cars_in_class,
-  })
-  .from(CarClass);
+// @todo Improve CarClass query to not have to do this
 const carClassIdsForCarIds = carClassesResults
   .filter((result: any) =>
     result.carsInClass.some((v: any) => carIds.includes(v.car_id))
   )
   .map((result) => result.carClassId);
 // End comment of previous todo
-const carClasses = await db.select().from(CarClass);
 const carClassesMap = new Map();
 carClasses.forEach((carClass) => {
   const { car_class_id, cars_in_class } = carClass;
@@ -49,7 +53,6 @@ carClasses.forEach((carClass) => {
     : [];
   carClassesMap.set(car_class_id, { ...carClass, cars_in_class: carsInClass });
 });
-const seasons = await db.select().from(Season);
 const carClassIdSet = new Set(carClassIdsForCarIds);
 const trackIdSet = new Set(trackIds);
 const licenseGroupToNameMap: Record<string, string> = {
