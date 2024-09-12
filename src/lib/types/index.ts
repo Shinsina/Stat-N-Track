@@ -135,6 +135,8 @@ export type SessionResult = {
   watched: boolean;
   friend: boolean;
   ai: boolean;
+  // @todo Determine if this needs to be migrated away from this type
+  driver_results?: Array<SessionResult>
 };
 
 export type Subsession = {
