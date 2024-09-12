@@ -37,8 +37,33 @@ export async function getStaticPaths() {
 const { id, year } = Astro.params;
 const seoTitle = `Subsessions list for user ID - ${id} and year - ${year}`;
 const seoDescription = seoTitle;
-const subsessions = await db
-  .select()
+const rawSubsessions = await db
+  .select({
+    subsession_id: Subsession.subsession_id,
+    track: Subsession.track,
+    corners_per_lap: Subsession.corners_per_lap,
+    allowed_licenses: Subsession.allowed_licenses,
+    license_category: Subsession.license_category,
+    finish_position: SubsessionRaceResults.finish_position,
+    finish_position_in_class: SubsessionRaceResults.finish_position_in_class,
+    laps_lead: SubsessionRaceResults.laps_lead,
+    laps_complete: SubsessionRaceResults.laps_complete,
+    average_lap: SubsessionRaceResults.average_lap,
+    best_lap_time: SubsessionRaceResults.best_lap_time,
+    reason_out: SubsessionRaceResults.reason_out,
+    champ_points: SubsessionRaceResults.champ_points,
+    starting_position: SubsessionRaceResults.starting_position,
+    starting_position_in_class:
+      SubsessionRaceResults.starting_position_in_class,
+    car_class_short_name: SubsessionRaceResults.car_class_short_name,
+    division_name: SubsessionRaceResults.division_name,
+    new_license_level: SubsessionRaceResults.new_license_level,
+    new_cpi: SubsessionRaceResults.new_cpi,
+    newi_rating: SubsessionRaceResults.newi_rating,
+    incidents: SubsessionRaceResults.incidents,
+    car_name: SubsessionRaceResults.car_name,
+    aggregate_champ_points: SubsessionRaceResults.aggregate_champ_points,
+  })
   .from(SubsessionRaceResults)
   .innerJoin(
     Subsession,
@@ -48,6 +73,24 @@ const subsessions = await db
     sql`${SubsessionRaceResults.cust_id} IS ${id} AND ${Subsession.season_year} IS ${Number(year)} AND ${SubsessionRaceResults.simsession_name} IN ${["RACE", "FEATURE", "N/A"]}`
   )
   .orderBy(desc(Subsession.subsession_id));
+const subsessions = rawSubsessions.map((subsession) => {
+  const {
+    subsession_id,
+    track,
+    corners_per_lap,
+    allowed_licenses,
+    license_category,
+    ...rest
+  } = subsession;
+  const Subsession = {
+    subsession_id,
+    track,
+    corners_per_lap,
+    allowed_licenses,
+    license_category,
+  };
+  return { Subsession, SubsessionRaceResults: rest };
+});
 ---
 
 <SubsessionsLayout {id} {seoTitle} {seoDescription} {subsessions} />
