@@ -19,9 +19,7 @@ import cars from "./cars.json";
 import carClasses from "./car-classes.json";
 import seasons from "./seasons.json";
 import pastSeasons from "./past-seasons-output.json";
-import jackStandings from "./jack-standings-output.json";
-import jakeStandings from "./jake-standings-output.json";
-import kyleStandings from "./kyle-standings-output.json";
+import standings from "./standings-output.json";
 import seasonIdArray from "./distinct-season-ids.json";
 
 const batchSize = 100;
@@ -41,7 +39,7 @@ function delay(delayInMilliseconds: number): Promise<unknown> {
   );
 }
 
-// @todo Re-examine this, "works" but can be better
+// @todo Re-write this so it is additive or "upsert-like" rather than starting from ground 0 every time
 // https://astro.build/db/seed
 export default async function seed() {
   await db.delete(SubsessionRaceResults);
@@ -75,7 +73,8 @@ export default async function seed() {
       return {
         ...rest,
         created: new Date(created),
-        first_sale: new Date(first_sale),
+        // Appears the Mini Stock doesn't have this field so just assume "now" in these cases
+        first_sale: first_sale ? new Date(first_sale) : new Date(),
       };
     })
   );
@@ -108,50 +107,83 @@ export default async function seed() {
       .flat()
   );
   console.log("Past Seasons Seeded!");
-  const standings = [...jackStandings, ...jakeStandings, ...kyleStandings];
   console.log("Seeding Standings...");
-  await db.insert(Standing).values(
-    standings.map((standing: any) => {
-      const { car_class_id, season_driver_data, season_id, ...rest } = standing;
-      return {
-        id: `${season_id}_${car_class_id}_${season_driver_data.cust_id}`,
-        car_class_id: Number(car_class_id),
-        season_id: Number(season_id),
-        ...season_driver_data,
-        ...rest,
-      };
+  const allStandings = standings.map((standing: any) => {
+    const { car_class_id, season_driver_data, season_id, ...rest } = standing;
+    return {
+      id: `${season_id}_${car_class_id}_${season_driver_data.cust_id}`,
+      car_class_id: Number(car_class_id),
+      season_id: Number(season_id),
+      ...season_driver_data,
+      ...rest,
+    };
+  });
+  await Promise.all(
+    batchInserts(allStandings).map(async (batch, index) => {
+      const trueIndex = index + 1;
+      await delay(2000 * trueIndex);
+      console.log(
+        `Processing up to the ${trueIndex * batchSize}th standings result`
+      );
+      // The following seasons appear to have had their car classes removed:
+      // Ring Meister Ricmotech Series - Fixed - 2024 Season 3
+      // Weekly Race Challenge - 2024 Season 1
+      return db.insert(Standing).values(batch.filter((v) => carClasses.map((v) => v.car_class_id).includes(v.car_class_id)));
     })
   );
   console.log("Standings Seeded!");
   console.log("Seeding Subsessions...");
-  const raw = fs.readFileSync("./db/subsessions-output.json");
-  const subsessions = JSON.parse(String(raw));
-  const subsessionsTyped = subsessions as Record<string, SubsessionType>;
+  const subsessions: Array<SubsessionType> = [];
+  for (let i = 1; i <= 10; i += 1) {
+    const raw = fs.readFileSync(`./db/${i}-subsessions-output.json`);
+    const batchSubsessions = JSON.parse(String(raw));
+    subsessions.push(...batchSubsessions);
+  }
   const {
     allPracticeResults,
     allQualifyingResults,
     allRaceResults,
     allSubsessions,
-  } = Object.keys(subsessionsTyped).reduce(
+  } = subsessions.reduce(
     // @todo Provide an accurate type for the unknown here
-    (object: Record<string, Array<any>>, key) => {
+    (object: Record<string, Array<any>>, subsession) => {
       const { session_results, end_time, start_time, ...rest } =
-        subsessionsTyped[key];
+        subsession;
       session_results.forEach((sessionResult) => {
         const { results, ...rest } = sessionResult;
         results.forEach((result) => {
-          const resultWithSession = {
-            subsession_id: key,
-            ...result,
-            ...rest,
-            id: `${key}_${rest.simsession_name}_${result.cust_id}`,
-          };
-          if (rest.simsession_type_name.match("Practice")) {
-            object.allPracticeResults.push(resultWithSession);
-          } else if (rest.simsession_type_name.match("Qualifying")) {
-            object.allQualifyingResults.push(resultWithSession);
-          } else if (rest.simsession_type_name.match("Race")) {
-            object.allRaceResults.push(resultWithSession);
+          if (!result.driver_results) {
+            const resultWithSession = {
+              subsession_id: subsession.subsession_id,
+              ...result,
+              ...rest,
+              id: `${subsession.subsession_id}_${rest.simsession_name}_${result.cust_id}`,
+            };
+            if (rest.simsession_type_name.match("Practice")) {
+              object.allPracticeResults.push(resultWithSession);
+            } else if (rest.simsession_type_name.match("Qualifying")) {
+              object.allQualifyingResults.push(resultWithSession);
+            } else if (rest.simsession_type_name.match("Race")) {
+              object.allRaceResults.push(resultWithSession);
+            }
+          } else if (result.driver_results && Array.isArray(result.driver_results)) {
+            result.driver_results.forEach((driverResult) => {
+              const resultWithSession = {
+                subsession_id: subsession.subsession_id,
+                ...driverResult,
+                ...rest,
+                // Apparently you can be entered into the EXACT SAME SPLIT on multiple teams, this accounts for that.
+                // @ts-expect-error
+                id: `${subsession.subsession_id}_${rest.simsession_name}_${driverResult.cust_id}_${driverResult.team_id}`,
+              };
+              if (rest.simsession_type_name.match("Practice")) {
+                object.allPracticeResults.push(resultWithSession);
+              } else if (rest.simsession_type_name.match("Qualifying")) {
+                object.allQualifyingResults.push(resultWithSession);
+              } else if (rest.simsession_type_name.match("Race")) {
+                object.allRaceResults.push(resultWithSession);
+              }
+            });
           }
         });
       });

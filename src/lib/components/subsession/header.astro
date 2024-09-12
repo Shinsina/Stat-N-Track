@@ -6,16 +6,15 @@ const { series_logo, season_name, race_week_num, max_weeks } = subsession;
 
 <div class="grid grid-cols-3">
   <div class="col-span-3">
-    <div class="flex justify-center">
-      <Image
+      { series_logo ? (<div class="flex justify-center">
+        <Image
         src={`https://images-static.iracing.com/img/logos/series/${series_logo}`}
         alt="Series Logo"
         width={300}
         height={175}
         format="avif"
         loading="eager"
-      />
-    </div>
+      /></div>) : <></>}
     <div class="text-center py-4">
       <p><b>{season_name}</b></p>
       <p><b>Week {race_week_num + 1} of {max_weeks}</b></p>

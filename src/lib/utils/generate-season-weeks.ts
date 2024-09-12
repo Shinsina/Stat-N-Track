@@ -5,8 +5,8 @@ export default ({
 }: {
   seasons: Array<{ schedules: Array<{ start_date: string }> }>;
 }) => {
-  const seasonStart = Date.UTC(2024, 5, 11, 0, 0, 0, 0);
-  const seasonEnd = Date.UTC(2024, 7, 28, 0, 0, 0, 0);
+  const seasonStart = Date.UTC(2024, 8, 10, 0, 0, 0, 0);
+  const seasonEnd = Date.UTC(2024, 11, 4, 0, 0, 0, 0);
   const startDates = seasons.reduce(
     (
       set: Set<string>,
