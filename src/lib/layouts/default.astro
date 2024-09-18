@@ -5,7 +5,6 @@ const seoDescription =
   description || "An iRacing planner and statistics analyzer";
 const primaryNavigationLinks = [
   { href: "/Stat-N-Track/", label: "Home" },
-  { href: "/Stat-N-Track/users/", label: "Drivers" },
   { href: "/Stat-N-Track/shared-subsessions/", label: "Shared Subsessions" },
 ];
 const schedulingLinks = id && ['300752', '815162'].includes(id) ? [
@@ -47,6 +46,10 @@ const userNavigationLinks = id
         href: `/Stat-N-Track/user/${id}/standings/by-car-class/`,
         label: "Season Standings By Car Class",
       },
+      {
+        href: `/Stat-N-Track/user/${id}/head-to-head/`,
+        label: "Head To Head Matchups"
+      }
     ]
   : [];
 ---
@@ -85,23 +88,10 @@ const userNavigationLinks = id
     </div>
     { userNavigationLinks.length ? (
     <div
-      class="text-center lg:text-3xl md:text-lg sm:text-md grid grid-cols-5 py-2 border-white border-x-2 border-b-2"
+      class="text-center lg:text-xl md:text-lg sm:text-md grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 py-2 border-white border-x-2 border-b-2"
     >
       {
-        userNavigationLinks.slice(0, 5).map(({ href, label }) => (
-          <div>
-            <a class="underline" {href}>
-              {label}
-            </a>
-          </div>
-        ))
-      }
-    </div>
-    <div
-      class="text-center lg:text-3xl md:text-lg sm:text-md grid grid-cols-5 py-2 border-white border-x-2 border-b-2"
-    >
-      {
-        userNavigationLinks.slice(5, 10).map(({ href, label }) => (
+        userNavigationLinks.map(({ href, label }) => (
           <div>
             <a class="underline" {href}>
               {label}

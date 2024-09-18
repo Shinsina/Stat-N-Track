@@ -1,0 +1,27 @@
+---
+import SharedSubsessionsLayout from "$lib/layouts/shared-subsessions.astro";
+import allUserIds from "$lib/utils/user-ids";
+import userIdToNameMap from "$lib/utils/user-id-to-name-map";
+export async function getStaticPaths() {
+  return allUserIds
+    .map((id, index) => {
+      const allOtherIds = [
+        ...allUserIds.slice(0, index),
+        ...allUserIds.slice(index + 1, allUserIds.length),
+      ];
+      return allOtherIds.map((otherId) => ({
+        params: {
+          id,
+          otherId,
+        },
+      }));
+    })
+    .flat();
+}
+const { id, otherId } = Astro.params;
+const userIds = [id, otherId];
+const title = `Head To Head Matchup: ${userIdToNameMap.get(Number(id))} versus ${userIdToNameMap.get(Number(otherId))}`;
+const description = `Subession result comparison between ${userIdToNameMap.get(Number(id))} and ${userIdToNameMap.get(Number(otherId))}`;
+---
+
+<SharedSubsessionsLayout {title} {description} {userIds} />
