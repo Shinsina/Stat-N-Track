@@ -311,7 +311,7 @@ const User = defineTable({
     dev: column.boolean(),
     display_name: column.text(),
     download_server: column.text(),
-    email: column.text(),
+    email: column.text({ default: '' }),
     first_name: column.text(),
     flags: column.number(),
     flags_hex: column.text(),
@@ -337,7 +337,7 @@ const User = defineTable({
     suit: column.json(),
     track_packages: column.json(),
     twenty_pct_discount: column.boolean(),
-    username: column.text(),
+    username: column.text({ default: '' }),
     rain_test: column.boolean({ default: false }),
   },
 });
