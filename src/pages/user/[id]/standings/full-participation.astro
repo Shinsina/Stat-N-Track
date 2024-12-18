@@ -1,5 +1,5 @@
 ---
-import { db, and, eq, desc, Standing } from "astro:db";
+import { db, and, eq, gte, desc, Standing } from "astro:db";
 import StandingsLayout from "$lib/layouts/standings.astro";
 import userIds from "$lib/utils/user-ids";
 export function getStaticPaths() {
@@ -11,7 +11,8 @@ const seoDescription = `Fully participated standings page for user ID: ${id}`;
 const standingsResults = await db
   .select()
   .from(Standing)
-  .where(and(eq(Standing.cust_id, Number(id)), eq(Standing.weeks_counted, 8)))
+  // @todo Determine if there is a better way to account for "special series" or leap seasons
+  .where(and(eq(Standing.cust_id, Number(id)), gte(Standing.weeks_counted, 8)))
   .orderBy(desc(Standing.season_id));
 ---
 
