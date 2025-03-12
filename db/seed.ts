@@ -203,7 +203,7 @@ export default async function seed() {
   }
   console.log("Seeding Subsessions...");
   const subsessions: Array<SubsessionType> = [];
-  for (let i = 1; i <= 10; i += 1) {
+  for (let i = 1; i <= 13; i += 1) {
     const raw = fs.readFileSync(`./db/${i}-subsessions-output.json`);
     const batchSubsessions = JSON.parse(String(raw));
     subsessions.push(...batchSubsessions);
