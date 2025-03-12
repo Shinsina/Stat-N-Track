@@ -3,8 +3,10 @@ export default new Map([
   [188056, "Doug South"],
   [251134, "Kyle Klendworth"],
   [300752, "Jacob Collins"],
+  [331322, "Jesper Öhrman"],
   [589449, "Bryan Campbell2"],
   [714312, "Sam Karasala"],
   [746377, "Ty Quila"],
   [815162, "Jack Glenzinski"],
+  [908575, "Cody Cavaco"],
 ]);
