@@ -10,7 +10,6 @@ export default new Set([
   "best_lap_num",
   "best_lap_time",
   "car_class_short_name",
-  "club_shortname",
   "division_name",
   "incidents",
   "car_name",
