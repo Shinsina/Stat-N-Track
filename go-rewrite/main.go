@@ -404,14 +404,14 @@ func main() {
 			return output_labels
 		},
 		"handle_results": func(keys_to_display []string, results []SessionResult) HandleResultsOutput {
-			unique_key_map := make(map[string]bool)
+			unique_key_map := make(map[string]string)
 			handled_results := []SessionResult{}
 			for _, result := range results {
 				reflected_result := reflect.ValueOf(&result).Elem()
 				fields := reflect.VisibleFields(reflect.TypeOf(result))
 				for _, field := range fields {
 					if slices.Contains(keys_to_display, strings.ToLower(field.Name)) {
-						unique_key_map[field.Name] = true
+						unique_key_map[strings.ToLower(field.Name)] = field.Name
 						// Being lazy because types are cumbersome sometimes
 						if strings.Contains(field.Name, "Position") {
 							field_value := reflected_result.FieldByName(field.Name)
@@ -422,10 +422,11 @@ func main() {
 				handled_results = append(handled_results, result)
 			}
 			keys := make([]string, 0, len(unique_key_map))
-			for k := range unique_key_map {
-				keys = append(keys, k)
+			for _, k := range keys_to_display {
+				if unique_key_map[k] != "" {
+					keys = append(keys, unique_key_map[k])
+				}
 			}
-			fmt.Println(keys)
 			return HandleResultsOutput{keys, handled_results}
 		},
 		"return_value_at_key": func(result SessionResult, key string) any {
