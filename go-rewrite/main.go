@@ -9,6 +9,7 @@ import (
 	"reflect"
 	"regexp"
 	"slices"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -222,6 +223,32 @@ type HandleConsolidatedResultsOutput struct {
 	Handled_Consolidated_Results []ConsolidatedSubsessionResult
 }
 
+type RaceWeek struct {
+	Race_Week_Num int   `json:"race_week_num"`
+	Track         Track `json:"track"`
+}
+
+type Season struct {
+	Season_ID  int        `json:"season_id"`
+	Race_Weeks []RaceWeek `json:"race_weeks"`
+}
+
+type Series struct {
+	Seasons []Season `json:"seasons"`
+}
+
+type PastSeason struct {
+	Series_ID int    `json:"series_id"`
+	Series    Series `json:"series"`
+}
+
+type SummaryStats struct {
+	Avg_Start  string
+	Avg_Finish string
+	Wins       int
+	Incidents  int
+}
+
 func convert_lap_time(lap_time int) string {
 	ingested_lap := strconv.FormatFloat(float64(lap_time), 'f', 4, 64)
 	with_decimal := ""
@@ -266,32 +293,37 @@ func consolidate_subsession_result(subsession Subsession) ConsolidatedSubsession
 		// @todo Determine if this causes issues
 		license = subsession.Allow_Licenses[1].Group_Name
 	}
-	race_result := subsession.Session_Results[0].Results[0]
-	return ConsolidatedSubsessionResult{
-		subsession.Subsession_ID,
-		track,
-		subsession.Corners_Per_Lap,
-		license,
-		subsession.License_Category,
-		race_result.Finish_Position,
-		race_result.Finish_Position_In_Class,
-		race_result.Laps_Lead,
-		race_result.Laps_Complete,
-		race_result.Average_Lap,
-		race_result.Best_Lap_Time,
-		race_result.Reason_Out,
-		race_result.Champ_Points,
-		race_result.Starting_Position,
-		race_result.Starting_Position_In_Class,
-		race_result.Car_Class_Short_Name,
-		race_result.Division_Name,
-		race_result.New_License_Level,
-		race_result.New_CPI,
-		race_result.Newi_Rating,
-		race_result.Incidents,
-		race_result.Car_Name,
-		race_result.Aggregate_Champ_Points,
+	if len(subsession.Session_Results) > 0 {
+		race_result := subsession.Session_Results[0].Results[0]
+		return ConsolidatedSubsessionResult{
+			subsession.Subsession_ID,
+			track,
+			subsession.Corners_Per_Lap,
+			license,
+			subsession.License_Category,
+			race_result.Finish_Position,
+			race_result.Finish_Position_In_Class,
+			race_result.Laps_Lead,
+			race_result.Laps_Complete,
+			race_result.Average_Lap,
+			race_result.Best_Lap_Time,
+			race_result.Reason_Out,
+			race_result.Champ_Points,
+			race_result.Starting_Position,
+			race_result.Starting_Position_In_Class,
+			race_result.Car_Class_Short_Name,
+			race_result.Division_Name,
+			race_result.New_License_Level,
+			race_result.New_CPI,
+			race_result.Newi_Rating,
+			race_result.Incidents,
+			race_result.Car_Name,
+			race_result.Aggregate_Champ_Points,
+		}
 	}
+	var race_result = new(ConsolidatedSubsessionResult)
+	race_result.Track = track
+	return *race_result
 }
 
 func generate_subsession_pages() {
@@ -555,7 +587,6 @@ func generate_subsession_pages() {
 		if err != nil {
 			fmt.Println(3, err)
 		}
-		// fmt.Printf("%+v\n", subsession)
 		err = subsessions_html_template.Execute(file, subsession)
 		if err != nil {
 			fmt.Println(4, err)
@@ -682,6 +713,61 @@ func generate_standing_pages() {
 		"lowercase": func(value string) string {
 			return strings.ToLower(value)
 		},
+		"generate_summary_stats": func(standing_with_subsessions StandingWithSubsessions) SummaryStats {
+			weeks_counted := standing_with_subsessions.Standing.Season_Driver_Data.Weeks_Counted
+			subsessions := standing_with_subsessions.Subsessions
+			total_start_position := 0
+			total_finish_position := 0
+			total_incidents := 0
+			wins := 0
+			sort.Slice(subsessions, func(i, j int) bool {
+				if len(subsessions[i].Session_Results) > 0 && len(subsessions[j].Session_Results) > 0 {
+					return subsessions[i].Session_Results[0].Results[0].Champ_Points > subsessions[j].Session_Results[0].Results[0].Champ_Points
+				}
+				return false
+			})
+			var subsessions_slice []Subsession
+			if len(subsessions) > 8 {
+				subsessions_slice = subsessions[0:9]
+			} else {
+				subsessions_slice = subsessions
+			}
+			for _, subsession := range subsessions_slice {
+				if len(subsession.Session_Results) > 0 {
+					result := subsession.Session_Results[0].Results[0]
+					total_start_position += result.Starting_Position_In_Class + 1
+					finish_position := result.Finish_Position_In_Class + 1
+					total_finish_position += finish_position
+					if finish_position == 1 {
+						wins += 1
+					}
+					total_incidents += result.Incidents
+				}
+			}
+			avg_start := strconv.FormatFloat(float64(float64(total_start_position)/float64(weeks_counted)), 'f', 2, 64)
+			avg_finish := strconv.FormatFloat(float64(float64(total_finish_position)/float64(weeks_counted)), 'f', 2, 64)
+			return SummaryStats{
+				Avg_Start:  avg_start,
+				Avg_Finish: avg_finish,
+				Wins:       wins,
+				Incidents:  total_incidents,
+			}
+		},
+	}
+	raw_past_seasons_input, err := os.ReadFile("./past-seasons-output.json")
+	if err != nil {
+		fmt.Println(7, raw_past_seasons_input)
+	}
+	var past_seasons []PastSeason
+	err = json.Unmarshal(raw_past_seasons_input, &past_seasons)
+	if err != nil {
+		fmt.Println(8, err)
+	}
+	season_id_to_race_week_map := make(map[int][]RaceWeek)
+	for _, past_season := range past_seasons {
+		for _, season := range past_season.Series.Seasons {
+			season_id_to_race_week_map[season.Season_ID] = season.Race_Weeks
+		}
 	}
 	// @todo Account for team sessions
 	season_html_template, err := template.New("seasons.html").Funcs(seasons_function_map).ParseFiles("seasons.html")
@@ -721,8 +807,31 @@ func generate_standing_pages() {
 			}
 		})
 		if len(subsessions_for_season) >= 1 {
-			// @todo Determine why column order is not maintained
 			standing_with_subsessions := StandingWithSubsessions{standing, subsessions_for_season}
+			var subsessions_by_week []Subsession
+			race_weeks_for_season := season_id_to_race_week_map[standing.Season_ID]
+			for _, race_week := range race_weeks_for_season {
+				subsessions_for_week := slices.Collect(func(yield func(Subsession) bool) {
+					for _, subsession := range subsessions_for_season {
+						if subsession.Race_Week_Num == race_week.Race_Week_Num {
+							if !yield(subsession) {
+								return
+							}
+						}
+					}
+				})
+				sort.Slice(subsessions_for_week, func(i, j int) bool {
+					return subsessions_for_week[i].Session_Results[0].Results[0].Champ_Points > subsessions_for_week[j].Session_Results[0].Results[0].Champ_Points
+				})
+				if len(subsessions_for_week) > 0 {
+					best_user_result := subsessions_for_week[0]
+					subsessions_by_week = append(subsessions_by_week, best_user_result)
+				} else {
+					var subsession_for_week = new(Subsession)
+					subsession_for_week.Track = race_week.Track
+					subsessions_by_week = append(subsessions_by_week, *subsession_for_week)
+				}
+			}
 			os.MkdirAll(fmt.Sprintf("./user/%s/season/%s/car-class/%s", strconv.Itoa(standing.Season_Driver_Data.Cust_ID), strconv.Itoa(standing.Season_ID), strconv.Itoa(standing.Car_Class_ID)), os.ModePerm)
 			file, err := os.Create(fmt.Sprintf("./user/%s/season/%s/car-class/%s/index.html", strconv.Itoa(standing.Season_Driver_Data.Cust_ID), strconv.Itoa(standing.Season_ID), strconv.Itoa(standing.Car_Class_ID)))
 			if err != nil {
@@ -733,6 +842,18 @@ func generate_standing_pages() {
 				fmt.Println(8, err)
 			}
 			file.Close()
+			season_summaries_html_template, err := template.New("season-summaries.html").Funcs(seasons_function_map).ParseFiles("season-summaries.html")
+			standings_with_subsession_by_week := StandingWithSubsessions{standing, subsessions_by_week}
+			os.MkdirAll(fmt.Sprintf("./user/%s/season/%s/car-class/%s/season-summary", strconv.Itoa(standing.Season_Driver_Data.Cust_ID), strconv.Itoa(standing.Season_ID), strconv.Itoa(standing.Car_Class_ID)), os.ModePerm)
+			season_summary_file, err := os.Create(fmt.Sprintf("./user/%s/season/%s/car-class/%s/season-summary/index.html", strconv.Itoa(standing.Season_Driver_Data.Cust_ID), strconv.Itoa(standing.Season_ID), strconv.Itoa(standing.Car_Class_ID)))
+			if err != nil {
+				fmt.Println(9, err)
+			}
+			err = season_summaries_html_template.Execute(season_summary_file, standings_with_subsession_by_week)
+			if err != nil {
+				fmt.Println(10, err)
+			}
+			season_summary_file.Close()
 		}
 	}
 }
