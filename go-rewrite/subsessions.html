@@ -119,7 +119,8 @@
         {{ $display_keys := retrieve_keys_to_display .Car_Classes "PRACTICE" }}
         {{ $handled_results_output := handle_results $display_keys $practice.Results }}
         <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
-          <table x-load x-load-src="../alpine-components/practice-table.js" x-ref="Table" x-data="PRACTICE" class="text-center col-span-1">
+          <table x-load x-load-src="../alpine-components/practice-table.js" x-ref="Table" x-data="PRACTICE"
+            class="text-center col-span-1">
             <tr x-ref="Headings">
               {{range $key_label_index, $key_label := retrieve_key_labels $handled_results_output.Keys }}
               {{$actual_key := or $key_label "cust_id"}}
@@ -157,7 +158,8 @@
         {{ $display_keys := retrieve_keys_to_display .Car_Classes "QUALIFY" }}
         {{ $handled_results_output := handle_results $display_keys $qualifying.Results }}
         <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
-          <table x-load x-load-src="../alpine-components/qualifying-table.js" x-ref="Table" x-data="QUALIFY" class="text-center col-span-1">
+          <table x-load x-load-src="../alpine-components/qualifying-table.js" x-ref="Table" x-data="QUALIFY"
+            class="text-center col-span-1">
             <tr x-ref="Headings">
               {{range $key_label_index, $key_label := retrieve_key_labels $handled_results_output.Keys }}
               {{$actual_key := or $key_label "cust_id"}}
@@ -195,7 +197,8 @@
         {{ $display_keys := retrieve_keys_to_display .Car_Classes "HEAT" }}
         {{ $handled_results_output := handle_results $display_keys $heat.Results }}
         <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
-          <table x-load x-load-src="../alpine-components/heat-table.js" x-ref="Table" x-data="HEAT" class="text-center col-span-1">
+          <table x-load x-load-src="../alpine-components/heat-table.js" x-ref="Table" x-data="HEAT"
+            class="text-center col-span-1">
             <tr x-ref="Headings">
               {{range $key_label_index, $key_label := retrieve_key_labels $handled_results_output.Keys }}
               {{$actual_key := or $key_label "cust_id"}}
@@ -233,7 +236,8 @@
         {{ $display_keys := retrieve_keys_to_display .Car_Classes "RACE" }}
         {{ $handled_results_output := handle_results $display_keys $race.Results }}
         <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
-          <table x-load x-load-src="../alpine-components/race-table.js" x-ref="Table" x-data="RACE" class="text-center col-span-1">
+          <table x-load x-load-src="../alpine-components/race-table.js" x-ref="Table" x-data="RACE"
+            class="text-center col-span-1">
             <tr x-ref="Headings">
               {{range $key_label_index, $key_label := retrieve_key_labels $handled_results_output.Keys }}
               {{$actual_key := or $key_label "cust_id"}}
