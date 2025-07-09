@@ -157,6 +157,71 @@ type HandleResultsOutput struct {
 	Handled_Results []SessionResult
 }
 
+type Standing struct {
+	Car_Class_ID       int              `json:"car_class_id"`
+	Division           int              `json:"division"`
+	Overall_Rank       int              `json:"overall_rank"`
+	Season_Driver_Data SeasonDriverData `json:"season_driver_data"`
+	Season_ID          int              `json:"season_id"`
+	Season_Name        string           `json:"season_name"`
+	Division_Rank      int              `json:"division_rank"`
+}
+
+type SeasonDriverData struct {
+	Rank                int    `json:"rank"`
+	Cust_ID             int    `json:"cust_id"`
+	Display_Name        string `json:"display_name"`
+	Weeks_Counted       int    `json:"weeks_counted"`
+	Starts              int    `json:"starts"`
+	Wins                int    `json:"wins"`
+	Top5                int    `json:"top5"`
+	Top25_Percent       int    `json:"top25_percent"`
+	Poles               int    `json:"poles"`
+	Avg_Start_Position  int    `json:"avg_start_position"`
+	Avg_Finish_Position int    `json:"avg_finish_position"`
+	Avg_Field_Size      int    `json:"avg_field_size"`
+	Laps                int    `json:"laps"`
+	Laps_Led            int    `json:"laps_led"`
+	Incidents           int    `json:"incidents"`
+	Points              int    `json:"points"`
+}
+
+type StandingWithSubsessions struct {
+	Standing    Standing
+	Subsessions []Subsession
+}
+
+type ConsolidatedSubsessionResult struct {
+	Subsession_ID              int
+	Track                      string
+	Corners_Per_Lap            int
+	License                    string
+	License_Category           string
+	Finish_Position            int
+	Finish_Position_In_Class   int
+	Laps_Lead                  int
+	Laps_Complete              int
+	Average_Lap                int
+	Best_Lap_Time              int
+	Reason_Out                 string
+	Champ_Points               int
+	Starting_Position          int
+	Starting_Position_In_Class int
+	Car_Class_Short_Name       string
+	Division_Name              string
+	New_License_Level          int
+	New_CPI                    float64
+	Newi_Rating                int
+	Incidents                  int
+	Car_Name                   string
+	Aggregate_Champ_Points     int
+}
+
+type HandleConsolidatedResultsOutput struct {
+	Keys                         []string
+	Handled_Consolidated_Results []ConsolidatedSubsessionResult
+}
+
 func convert_lap_time(lap_time int) string {
 	ingested_lap := strconv.FormatFloat(float64(lap_time), 'f', 4, 64)
 	with_decimal := ""
@@ -189,7 +254,47 @@ func convert_lap_time(lap_time int) string {
 	return strconv.FormatFloat(numerical_value, 'f', 3, 64)
 }
 
-func main() {
+func consolidate_subsession_result(subsession Subsession) ConsolidatedSubsessionResult {
+	track := ""
+	if subsession.Track.Config_Name != "N/A" {
+		track = fmt.Sprintf("%s %s", subsession.Track.Track_Name, subsession.Track.Config_Name)
+	} else {
+		track = subsession.Track.Track_Name
+	}
+	license := ""
+	if len(subsession.Allow_Licenses) > 0 {
+		// @todo Determine if this causes issues
+		license = subsession.Allow_Licenses[1].Group_Name
+	}
+	race_result := subsession.Session_Results[0].Results[0]
+	return ConsolidatedSubsessionResult{
+		subsession.Subsession_ID,
+		track,
+		subsession.Corners_Per_Lap,
+		license,
+		subsession.License_Category,
+		race_result.Finish_Position,
+		race_result.Finish_Position_In_Class,
+		race_result.Laps_Lead,
+		race_result.Laps_Complete,
+		race_result.Average_Lap,
+		race_result.Best_Lap_Time,
+		race_result.Reason_Out,
+		race_result.Champ_Points,
+		race_result.Starting_Position,
+		race_result.Starting_Position_In_Class,
+		race_result.Car_Class_Short_Name,
+		race_result.Division_Name,
+		race_result.New_License_Level,
+		race_result.New_CPI,
+		race_result.Newi_Rating,
+		race_result.Incidents,
+		race_result.Car_Name,
+		race_result.Aggregate_Champ_Points,
+	}
+}
+
+func generate_subsession_pages() {
 	raw_subsessions_input, err := os.ReadFile("./1-subsessions-output.json")
 	if err != nil {
 		fmt.Println(1, err)
@@ -199,7 +304,7 @@ func main() {
 	if err != nil {
 		fmt.Println(2, err)
 	}
-	function_map := template.FuncMap{
+	subsessions_function_map := template.FuncMap{
 		"bump": func(i int) int {
 			return i + 1
 		},
@@ -441,20 +546,198 @@ func main() {
 			return keys[index]
 		},
 	}
-	template_file := "subsessions.html"
-	html_template, err := template.New(template_file).Funcs(function_map).ParseFiles(template_file)
+	// @todo Account for team sessions
+	subsessions_html_template, err := template.New("subsessions.html").Funcs(subsessions_function_map).ParseFiles("subsessions.html")
 	for subsession_index, subsession := range subsessions {
-		fmt.Println(fmt.Sprintf("Creating %s file of %s", strconv.Itoa(subsession_index), strconv.Itoa(len(subsessions))))
+		fmt.Println(fmt.Sprintf("Creating %s file of %s", strconv.Itoa(subsession_index+1), strconv.Itoa(len(subsessions))))
 		os.MkdirAll(fmt.Sprintf("./subsession/%s", strconv.Itoa(subsession.Subsession_ID)), os.ModePerm)
 		file, err := os.Create(fmt.Sprintf("./subsession/%s/index.html", strconv.Itoa(subsession.Subsession_ID)))
 		if err != nil {
 			fmt.Println(3, err)
 		}
 		// fmt.Printf("%+v\n", subsession)
-		err = html_template.Execute(file, subsession)
+		err = subsessions_html_template.Execute(file, subsession)
 		if err != nil {
 			fmt.Println(4, err)
 		}
 		file.Close()
 	}
+}
+
+func generate_standing_pages() {
+	raw_subsessions_input, err := os.ReadFile("./1-subsessions-output.json")
+	if err != nil {
+		fmt.Println(1, err)
+	}
+	var subsessions []Subsession
+	err = json.Unmarshal(raw_subsessions_input, &subsessions)
+	if err != nil {
+		fmt.Println(2, err)
+	}
+	raw_standings_input, err := os.ReadFile("./standings-output.json")
+	if err != nil {
+		fmt.Println(5, err)
+	}
+	var standings []Standing
+	err = json.Unmarshal(raw_standings_input, &standings)
+	if err != nil {
+		fmt.Println(6, err)
+	}
+	seasons_function_map := template.FuncMap{
+		"retrieve_keys_to_display": func() []string {
+			return []string{
+				"subsession_id",
+				"track",
+				"corners_per_lap",
+				"license",
+				"license_category",
+				"finish_position",
+				"finish_position_in_class",
+				"laps_lead",
+				"laps_complete",
+				"average_lap",
+				"best_lap_time",
+				"reason_out",
+				"champ_points",
+				"starting_position",
+				"starting_position_in_class",
+				"car_class_short_name",
+				"division_name",
+				"new_license_level",
+				"new_cpi",
+				"newi_rating",
+				"incidents",
+				"car_name",
+				"aggregate_champ_points",
+			}
+		},
+		"retrieve_key_map": func() map[string]string {
+			key_map := make(map[string]string)
+			key_map["subsession_id"] = "subsession_id"
+			key_map["track"] = "Track"
+			key_map["corners_per_lap"] = "Corners"
+			key_map["license"] = "License"
+			key_map["license_category"] = "License Category"
+			key_map["finish_position"] = "Finish"
+			key_map["finish_position_in_class"] = "Finish (In Class)"
+			key_map["laps_lead"] = "Laps Lead"
+			key_map["laps_complete"] = "Laps Complete"
+			key_map["average_lap"] = "AVG Laptime"
+			key_map["best_lap_time"] = "Fastest Lap Time"
+			key_map["reason_out"] = "Status"
+			key_map["champ_points"] = "Points"
+			key_map["starting_position"] = "Starting Position"
+			key_map["starting_position_in_class"] = "Starting Position (In Class)"
+			key_map["car_class_short_name"] = "Car Class"
+			key_map["division_name"] = "Division"
+			key_map["new_license_level"] = "New License Level"
+			key_map["new_cpi"] = "New Corners Per Incident"
+			key_map["newi_rating"] = "New iRating"
+			key_map["incidents"] = "Incidents"
+			key_map["car_name"] = "Car"
+			key_map["aggregate_champ_points"] = "Best Points For Week"
+			return key_map
+		},
+		"handle_results": func(keys_to_display []string, results []Subsession) HandleConsolidatedResultsOutput {
+			unique_key_map := make(map[string]string)
+			handled_results := []ConsolidatedSubsessionResult{}
+			consolidated_subsession_results := []ConsolidatedSubsessionResult{}
+			for _, subsession := range results {
+				consolidated_subsession_results = append(consolidated_subsession_results, consolidate_subsession_result(subsession))
+			}
+			for _, result := range consolidated_subsession_results {
+				reflected_result := reflect.ValueOf(&result).Elem()
+				fields := reflect.VisibleFields(reflect.TypeOf(result))
+				for _, field := range fields {
+					if slices.Contains(keys_to_display, strings.ToLower(field.Name)) {
+						unique_key_map[strings.ToLower(field.Name)] = field.Name
+						// Being lazy because types are cumbersome sometimes
+						if strings.Contains(field.Name, "Position") {
+							field_value := reflected_result.FieldByName(field.Name)
+							field_value.SetInt(field_value.Int() + 1)
+						}
+					}
+				}
+				handled_results = append(handled_results, result)
+			}
+			keys := make([]string, 0, len(unique_key_map))
+			for _, k := range keys_to_display {
+				if unique_key_map[k] != "" {
+					keys = append(keys, unique_key_map[k])
+				}
+			}
+			return HandleConsolidatedResultsOutput{keys, handled_results}
+		},
+		"return_value_at_key": func(result ConsolidatedSubsessionResult, key string) any {
+			reflected_result := reflect.ValueOf(&result).Elem()
+			value := reflected_result.FieldByName(key)
+			if slices.Contains([]string{"Interval", "Class_Interval", "Average_Lap", "Best_Lap_Time"}, key) {
+				return convert_lap_time(int(value.Int()))
+			}
+			return value
+		},
+		"return_key_label": func(key_map map[string]string, key string) string {
+			return key_map[strings.ToLower(key)]
+		},
+		"lowercase": func(value string) string {
+			return strings.ToLower(value)
+		},
+	}
+	// @todo Account for team sessions
+	season_html_template, err := template.New("seasons.html").Funcs(seasons_function_map).ParseFiles("seasons.html")
+	for standings_index, standing := range standings {
+		fmt.Println(fmt.Sprintf("Creating %s file of %s", strconv.Itoa(standings_index+1), strconv.Itoa(len(standings))))
+		subsessions_for_season := slices.Collect(func(yield func(Subsession) bool) {
+			for _, subsession := range subsessions {
+				if subsession.Season_ID == standing.Season_ID {
+					race_sessions := slices.Collect(func(yield func(Session) bool) {
+						for _, session := range subsession.Session_Results {
+							if session.Simsession_Name == "RACE" || session.Simsession_Name == "FEATURE" || session.Simsession_Name == "N/A" {
+								if !yield(session) {
+									return
+								}
+							}
+						}
+					})
+					if len(race_sessions) == 1 {
+						subsession.Session_Results = race_sessions
+						race_results := slices.Collect(func(yield func(SessionResult) bool) {
+							for _, race_result := range race_sessions[0].Results {
+								if race_result.Cust_ID == standing.Season_Driver_Data.Cust_ID && race_result.Car_Class_ID == standing.Car_Class_ID {
+									if !yield(race_result) {
+										return
+									}
+								}
+							}
+						})
+						if len(race_results) == 1 {
+							subsession.Session_Results[0].Results = race_results
+							if !yield(subsession) {
+								return
+							}
+						}
+					}
+				}
+			}
+		})
+		if len(subsessions_for_season) >= 1 {
+			// @todo Determine why column order is not maintained
+			standing_with_subsessions := StandingWithSubsessions{standing, subsessions_for_season}
+			os.MkdirAll(fmt.Sprintf("./user/%s/season/%s/car-class/%s", strconv.Itoa(standing.Season_Driver_Data.Cust_ID), strconv.Itoa(standing.Season_ID), strconv.Itoa(standing.Car_Class_ID)), os.ModePerm)
+			file, err := os.Create(fmt.Sprintf("./user/%s/season/%s/car-class/%s/index.html", strconv.Itoa(standing.Season_Driver_Data.Cust_ID), strconv.Itoa(standing.Season_ID), strconv.Itoa(standing.Car_Class_ID)))
+			if err != nil {
+				fmt.Println(7, err)
+			}
+			err = season_html_template.Execute(file, standing_with_subsessions)
+			if err != nil {
+				fmt.Println(8, err)
+			}
+			file.Close()
+		}
+	}
+}
+
+func main() {
+	// generate_subsession_pages()
+	generate_standing_pages()
 }
