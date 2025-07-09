@@ -720,25 +720,52 @@ func generate_standing_pages() {
 			total_finish_position := 0
 			total_incidents := 0
 			wins := 0
-			sort.Slice(subsessions, func(i, j int) bool {
-				if len(subsessions[i].Session_Results) > 0 && len(subsessions[j].Session_Results) > 0 {
-					return subsessions[i].Session_Results[0].Results[0].Champ_Points > subsessions[j].Session_Results[0].Results[0].Champ_Points
+			subsessions_with_results := slices.Collect(func(yield func(Subsession) bool) {
+				for _, subsession := range subsessions {
+					race_sessions := slices.Collect(func(yield func(Session) bool) {
+						for _, session := range subsession.Session_Results {
+							if session.Simsession_Name == "RACE" || session.Simsession_Name == "FEATURE" || session.Simsession_Name == "N/A" {
+								if !yield(session) {
+									return
+								}
+							}
+						}
+					})
+					if len(race_sessions) == 1 {
+						subsession.Session_Results = race_sessions
+						race_results := slices.Collect(func(yield func(SessionResult) bool) {
+							for _, race_result := range race_sessions[0].Results {
+								if race_result.Cust_ID == standing_with_subsessions.Standing.Season_Driver_Data.Cust_ID && race_result.Car_Class_ID == standing_with_subsessions.Standing.Car_Class_ID {
+									if !yield(race_result) {
+										return
+									}
+								}
+							}
+						})
+						if len(race_results) == 1 {
+							subsession.Session_Results[0].Results = race_results
+							if !yield(subsession) {
+								return
+							}
+						}
+					}
 				}
-				return false
+			})
+			sort.Slice(subsessions_with_results, func(i, j int) bool {
+				return subsessions_with_results[i].Session_Results[0].Results[0].Champ_Points > subsessions_with_results[j].Session_Results[0].Results[0].Champ_Points
 			})
 			var subsessions_slice []Subsession
-			if len(subsessions) > 8 {
-				subsessions_slice = subsessions[0:9]
+			if len(subsessions_with_results) > 8 {
+				subsessions_slice = subsessions_with_results[0:9]
 			} else {
-				subsessions_slice = subsessions
+				subsessions_slice = subsessions_with_results
 			}
 			for _, subsession := range subsessions_slice {
 				if len(subsession.Session_Results) > 0 {
 					result := subsession.Session_Results[0].Results[0]
 					total_start_position += result.Starting_Position_In_Class + 1
-					finish_position := result.Finish_Position_In_Class + 1
-					total_finish_position += finish_position
-					if finish_position == 1 {
+					total_finish_position += result.Finish_Position_In_Class + 1
+					if result.Finish_Position_In_Class+1 == 1 {
 						wins += 1
 					}
 					total_incidents += result.Incidents
