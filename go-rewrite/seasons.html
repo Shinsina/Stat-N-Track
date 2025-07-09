@@ -38,26 +38,37 @@
     </div>
   </a>
   <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
-    <table x-load x-load-src="../../../../../alpine-components/table.js" x-ref="Table" x-data="table" class="text-center col-span-1">
+    <table x-load x-load-src="../../../../../alpine-components/table.js" x-ref="Table" x-data="table"
+      class="text-center col-span-1">
       <tr x-ref="Headings">
         {{ $display_keys := retrieve_keys_to_display }}
         {{ $retrieved_key_map := retrieve_key_map }}
         {{ $consolidated_subsession_results := handle_results $display_keys .Subsessions }}
         {{ $subsessions_length := len .Subsessions }}
-        {{range $key_index, $key := $display_keys  }}
-          <th id="Table {{ $key }} {{ $subsessions_length }}" class="border-2" x-on:click="sort">{{ return_key_label $retrieved_key_map $key  }}</th>
+        {{range $key_index, $key := $display_keys }}
+        <th id="Table {{ $key }} {{ $subsessions_length }}" class="border-2" x-on:click="sort">
+          {{ return_key_label $retrieved_key_map $key }}
+        </th>
         {{- end}}
       </tr>
-      {{range $subsession_index, $consolidated_subsession_result := $consolidated_subsession_results.Handled_Consolidated_Results}}
-        <tr x-ref="Table {{ $subsession_index }}">
-          {{range $key_index, $key := $consolidated_subsession_results.Keys }}
-          <td x-ref="Table {{ lowercase $key }} {{ $subsession_index }}"
-            id="Table~{{ lowercase $key }}~{{ $subsession_index }}~{{return_value_at_key $consolidated_subsession_result $key}}"
-            class="border-2">
+      {{range $subsession_index, $consolidated_subsession_result :=
+      $consolidated_subsession_results.Handled_Consolidated_Results}}
+      <tr x-ref="Table {{ $subsession_index }}">
+        {{range $key_index, $key := $consolidated_subsession_results.Keys }}
+        <td x-ref="Table {{ lowercase $key }} {{ $subsession_index }}"
+          id="Table~{{ lowercase $key }}~{{ $subsession_index }}~{{return_value_at_key $consolidated_subsession_result $key}}"
+          class="border-2">
+          {{if eq $key "Subsession_ID"}}
+          <a class="underline"
+            href="/Stat-N-Track/subsession/{{return_value_at_key $consolidated_subsession_result $key}}">
             {{return_value_at_key $consolidated_subsession_result $key}}
-          </td>
-          {{end}}
-        </tr>
+          </a>
+          {{ else }}
+          {{return_value_at_key $consolidated_subsession_result $key}}
+          {{ end }}
+        </td>
+        {{end}}
+      </tr>
       {{- end}}
     </table>
   </div>
