@@ -249,6 +249,13 @@ type SummaryStats struct {
 	Incidents  int
 }
 
+type SubsessionListSheetData struct {
+	Description          string
+	Subsessions          []Subsession
+	Stylesheet_Path      string
+	Table_Component_Path string
+}
+
 func convert_lap_time(lap_time int) string {
 	ingested_lap := strconv.FormatFloat(float64(lap_time), 'f', 4, 64)
 	with_decimal := ""
@@ -595,26 +602,8 @@ func generate_subsession_pages() {
 	}
 }
 
-func generate_standing_pages() {
-	raw_subsessions_input, err := os.ReadFile("./1-subsessions-output.json")
-	if err != nil {
-		fmt.Println(1, err)
-	}
-	var subsessions []Subsession
-	err = json.Unmarshal(raw_subsessions_input, &subsessions)
-	if err != nil {
-		fmt.Println(2, err)
-	}
-	raw_standings_input, err := os.ReadFile("./standings-output.json")
-	if err != nil {
-		fmt.Println(5, err)
-	}
-	var standings []Standing
-	err = json.Unmarshal(raw_standings_input, &standings)
-	if err != nil {
-		fmt.Println(6, err)
-	}
-	seasons_function_map := template.FuncMap{
+func create_seasons_function_map() template.FuncMap {
+	return template.FuncMap{
 		"retrieve_keys_to_display": func() []string {
 			return []string{
 				"subsession_id",
@@ -781,6 +770,28 @@ func generate_standing_pages() {
 			}
 		},
 	}
+}
+
+func generate_standing_pages() {
+	raw_subsessions_input, err := os.ReadFile("./1-subsessions-output.json")
+	if err != nil {
+		fmt.Println(1, err)
+	}
+	var subsessions []Subsession
+	err = json.Unmarshal(raw_subsessions_input, &subsessions)
+	if err != nil {
+		fmt.Println(2, err)
+	}
+	raw_standings_input, err := os.ReadFile("./standings-output.json")
+	if err != nil {
+		fmt.Println(5, err)
+	}
+	var standings []Standing
+	err = json.Unmarshal(raw_standings_input, &standings)
+	if err != nil {
+		fmt.Println(6, err)
+	}
+	seasons_function_map := create_seasons_function_map()
 	raw_past_seasons_input, err := os.ReadFile("./past-seasons-output.json")
 	if err != nil {
 		fmt.Println(7, raw_past_seasons_input)
@@ -885,7 +896,153 @@ func generate_standing_pages() {
 	}
 }
 
+func generate_subsession_list_pages() {
+	raw_subsessions_input, err := os.ReadFile("./1-subsessions-output.json")
+	if err != nil {
+		fmt.Println(1, err)
+	}
+	var subsessions []Subsession
+	err = json.Unmarshal(raw_subsessions_input, &subsessions)
+	if err != nil {
+		fmt.Println(2, err)
+	}
+	// @todo Pull this from a file
+	cust_ids := []int{300752}
+	// cust_ids := []int{300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	for _, cust_id := range cust_ids {
+		fmt.Println(fmt.Sprintf("Creating subsession listing files for %s", strconv.Itoa(cust_id)))
+		subsessions_for_user_by_car_class := make(map[int][]Subsession)
+		subsessions_for_user_by_track := make(map[string][]Subsession)
+		subsessions_for_user_by_year := make(map[int][]Subsession)
+		subsessions_for_user := slices.Collect(func(yield func(Subsession) bool) {
+			for _, subsession := range subsessions {
+				race_sessions := slices.Collect(func(yield func(Session) bool) {
+					for _, session := range subsession.Session_Results {
+						if session.Simsession_Name == "RACE" || session.Simsession_Name == "FEATURE" || session.Simsession_Name == "N/A" {
+							if !yield(session) {
+								return
+							}
+						}
+					}
+				})
+				if len(race_sessions) == 1 {
+					subsession.Session_Results = race_sessions
+					race_results := slices.Collect(func(yield func(SessionResult) bool) {
+						for _, race_result := range race_sessions[0].Results {
+							if race_result.Cust_ID == cust_id {
+								if !yield(race_result) {
+									return
+								}
+							}
+						}
+					})
+					if len(race_results) == 1 {
+						subsession.Session_Results[0].Results = race_results
+						if len(subsessions_for_user_by_year[subsession.Season_Year]) > 0 {
+							subsessions_for_user_by_year[subsession.Season_Year] = append(subsessions_for_user_by_year[subsession.Season_Year], subsession)
+						} else {
+							subsessions_for_user_by_year[subsession.Season_Year] = []Subsession{subsession}
+						}
+						if len(subsessions_for_user_by_car_class[race_results[0].Car_Class_ID]) > 0 {
+							subsessions_for_user_by_car_class[race_results[0].Car_Class_ID] = append(subsessions_for_user_by_car_class[race_results[0].Car_Class_ID], subsession)
+						} else {
+							subsessions_for_user_by_car_class[race_results[0].Car_Class_ID] = []Subsession{subsession}
+						}
+						// @todo See if there is more effecient way to do this
+						track_slug := strings.ToLower(fmt.Sprintf("%s %s", subsession.Track.Track_Name, subsession.Track.Config_Name))
+						track_slug = strings.ReplaceAll(track_slug, "[", "")
+						track_slug = strings.ReplaceAll(track_slug, "]", "")
+						track_slug = strings.ReplaceAll(track_slug, "(", "")
+						track_slug = strings.ReplaceAll(track_slug, ")", "")
+						track_slug = strings.ReplaceAll(track_slug, " ", "-")
+						track_slug = strings.ReplaceAll(track_slug, "---", "-")
+						track_slug = strings.ReplaceAll(track_slug, "-n/a", "")
+						if len(subsessions_for_user_by_track[track_slug]) > 0 {
+							subsessions_for_user_by_track[track_slug] = append(subsessions_for_user_by_track[track_slug], subsession)
+						} else {
+							subsessions_for_user_by_track[track_slug] = []Subsession{subsession}
+						}
+						if !yield(subsession) {
+							return
+						}
+					}
+				}
+			}
+		})
+		subsessions_function_map := create_seasons_function_map()
+		subsessions_list_html_template, err := template.New("subsession-lists.html").Funcs(subsessions_function_map).ParseFiles("subsession-lists.html")
+		if err != nil {
+			fmt.Println(11, err)
+		}
+		os.MkdirAll(fmt.Sprintf("./user/%s/subsessions", strconv.Itoa(cust_id)), os.ModePerm)
+		file, err := os.Create(fmt.Sprintf("./user/%s/subsessions/index.html", strconv.Itoa(cust_id)))
+		if err != nil {
+			fmt.Println(12, err)
+		}
+		description := fmt.Sprintf("Subsessions - %s", strconv.Itoa(cust_id))
+		sort.Slice(subsessions_for_user, func(i, j int) bool {
+			return subsessions_for_user[i].Subsession_ID > subsessions_for_user[j].Subsession_ID
+		})
+		description_with_all_subsessions := SubsessionListSheetData{description, subsessions_for_user, "../../season.css", "../../alpine-components/table.js"}
+		err = subsessions_list_html_template.Execute(file, description_with_all_subsessions)
+		if err != nil {
+			fmt.Println(13, err)
+		}
+		stylesheet_file_path := "../../../../season.css"
+		table_component_file_path := "../../../../alpine-components/table.js"
+		for key, value := range subsessions_for_user_by_car_class {
+			sort.Slice(value, func(i, j int) bool {
+				return value[i].Subsession_ID > value[j].Subsession_ID
+			})
+			os.MkdirAll(fmt.Sprintf("./user/%s/subsessions/by-car-class/%s", strconv.Itoa(cust_id), strconv.Itoa(key)), os.ModePerm)
+			file, err := os.Create(fmt.Sprintf("./user/%s/subsessions/by-car-class/%s/index.html", strconv.Itoa(cust_id), strconv.Itoa(key)))
+			if err != nil {
+				fmt.Println(14, err)
+			}
+			description := fmt.Sprintf("Subsessions list for user ID - %s and car class ID - %s", strconv.Itoa(cust_id), strconv.Itoa(key))
+			description_with_subsessions := SubsessionListSheetData{description, value, stylesheet_file_path, table_component_file_path}
+			err = subsessions_list_html_template.Execute(file, description_with_subsessions)
+			if err != nil {
+				fmt.Println(15, err)
+			}
+		}
+		for key, value := range subsessions_for_user_by_track {
+			sort.Slice(value, func(i, j int) bool {
+				return value[i].Subsession_ID > value[j].Subsession_ID
+			})
+			os.MkdirAll(fmt.Sprintf("./user/%s/subsessions/by-track/%s", strconv.Itoa(cust_id), key), os.ModePerm)
+			file, err := os.Create(fmt.Sprintf("./user/%s/subsessions/by-track/%s/index.html", strconv.Itoa(cust_id), key))
+			if err != nil {
+				fmt.Println(16, err)
+			}
+			description := fmt.Sprintf("Subsessions list for user ID - %s and track - %s", strconv.Itoa(cust_id), key)
+			description_with_subsessions := SubsessionListSheetData{description, value, stylesheet_file_path, table_component_file_path}
+			err = subsessions_list_html_template.Execute(file, description_with_subsessions)
+			if err != nil {
+				fmt.Println(17, err)
+			}
+		}
+		for key, value := range subsessions_for_user_by_year {
+			sort.Slice(value, func(i, j int) bool {
+				return value[i].Subsession_ID > value[j].Subsession_ID
+			})
+			os.MkdirAll(fmt.Sprintf("./user/%s/subsessions/by-year/%s", strconv.Itoa(cust_id), strconv.Itoa(key)), os.ModePerm)
+			file, err := os.Create(fmt.Sprintf("./user/%s/subsessions/by-year/%s/index.html", strconv.Itoa(cust_id), strconv.Itoa(key)))
+			if err != nil {
+				fmt.Println(18, err)
+			}
+			description := fmt.Sprintf("Subsessions list for user ID - %s and year - %s", strconv.Itoa(cust_id), strconv.Itoa(key))
+			description_with_subsessions := SubsessionListSheetData{description, value, stylesheet_file_path, table_component_file_path}
+			err = subsessions_list_html_template.Execute(file, description_with_subsessions)
+			if err != nil {
+				fmt.Println(19, err)
+			}
+		}
+	}
+}
+
 func main() {
 	// generate_subsession_pages()
-	generate_standing_pages()
+	// generate_standing_pages()
+	generate_subsession_list_pages()
 }
