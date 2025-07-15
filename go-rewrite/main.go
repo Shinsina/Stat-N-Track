@@ -256,6 +256,31 @@ type SubsessionListSheetData struct {
 	Table_Component_Path string
 }
 
+type ConsolidatedStandingResult struct {
+	Season_ID           int
+	Year                int
+	Season_Number       int
+	Car_Class_ID        int
+	Season_Summary      int
+	Division            int
+	Division_Rank       int
+	Overall_Rank        int
+	Points              int
+	Season_Name         string
+	Weeks_Counted       int
+	Starts              int
+	Wins                int
+	Top5                int
+	Top25_Percent       int
+	Poles               int
+	Avg_Start_Position  int
+	Avg_Finish_Position int
+	Avg_Field_Size      int
+	Laps                int
+	Laps_Led            int
+	Incidents           int
+}
+
 func convert_lap_time(lap_time int) string {
 	ingested_lap := strconv.FormatFloat(float64(lap_time), 'f', 4, 64)
 	with_decimal := ""
@@ -1041,8 +1066,106 @@ func generate_subsession_list_pages() {
 	}
 }
 
+func consolidate_standing_result(standing Standing) ConsolidatedStandingResult {
+	matcher, _ := regexp.Compile("[0-9]{4}")
+	matchs := matcher.FindAllString(standing.Season_Name, 2)
+	year := matchs[len(matchs)-1]
+	year_as_int, _ := strconv.Atoi(year)
+	matcher_2, _ := regexp.Compile("Season [0-9]{1}")
+	match := matcher_2.FindString(standing.Season_Name)
+	season_number := "0"
+	if len(match) > 0 {
+		matcher_3, _ := regexp.Compile("[0-9]{1}")
+		match_2 := matcher_3.FindString(match)
+		if len(match_2) > 0 {
+			season_number = match_2
+		}
+	}
+	season_number_as_int, _ := strconv.Atoi(season_number)
+	return ConsolidatedStandingResult{
+		standing.Season_ID,
+		year_as_int,
+		season_number_as_int,
+		standing.Car_Class_ID,
+		season_number_as_int,
+		standing.Division,
+		standing.Division_Rank,
+		standing.Overall_Rank,
+		standing.Season_Driver_Data.Points,
+		standing.Season_Name,
+		standing.Season_Driver_Data.Weeks_Counted,
+		standing.Season_Driver_Data.Starts,
+		standing.Season_Driver_Data.Wins,
+		standing.Season_Driver_Data.Top5,
+		standing.Season_Driver_Data.Top25_Percent,
+		standing.Season_Driver_Data.Poles,
+		standing.Season_Driver_Data.Avg_Start_Position,
+		standing.Season_Driver_Data.Avg_Finish_Position,
+		standing.Season_Driver_Data.Avg_Field_Size,
+		standing.Season_Driver_Data.Laps,
+		standing.Season_Driver_Data.Laps_Led,
+		standing.Season_Driver_Data.Incidents,
+	}
+}
+
+func generate_standing_list_pages() {
+	raw_standings_input, err := os.ReadFile("./standings-output.json")
+	if err != nil {
+		fmt.Println(5, err)
+	}
+	var standings []Standing
+	err = json.Unmarshal(raw_standings_input, &standings)
+	if err != nil {
+		fmt.Println(6, err)
+	}
+	standings_list_function_map := template.FuncMap{
+		"handle_results": func(keys_to_display []string, results []Standing) []ConsolidatedStandingResult {
+			handled_results := []ConsolidatedStandingResult{}
+			for _, standing := range results {
+				handled_results = append(handled_results, consolidate_standing_result(standing))
+			}
+			return handled_results
+		},
+	}
+	// @todo Pull this from a file
+	cust_ids := []int{300752}
+	// cust_ids := []int{300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	for _, cust_id := range cust_ids {
+		standings_for_user_by_car_class := make(map[int][]Standing)
+		standings_for_user_by_year := make(map[int][]Standing)
+		standings_for_user_full_participation := []Standing{}
+		standings_for_user := slices.Collect(func(yield func(Standing) bool) {
+			for _, standing := range standings {
+				if standing.Season_Driver_Data.Cust_ID == cust_id {
+					if len(standings_for_user_by_car_class[standing.Car_Class_ID]) > 0 {
+						standings_for_user_by_car_class[standing.Car_Class_ID] = append(standings_for_user_by_car_class[standing.Car_Class_ID], standing)
+					} else {
+						standings_for_user_by_car_class[standing.Car_Class_ID] = []Standing{standing}
+					}
+					matcher, _ := regexp.Compile("[0-9]{4}")
+					matchs := matcher.FindAllString(standing.Season_Name, 2)
+					year := matchs[len(matchs)-1]
+					year_as_int, _ := strconv.Atoi(year)
+					if len(standings_for_user_by_year[year_as_int]) >= 0 {
+						standings_for_user_by_year[year_as_int] = append(standings_for_user_by_year[year_as_int], standing)
+					} else {
+						standings_for_user_by_year[year_as_int] = []Standing{standing}
+					}
+					if standing.Season_Driver_Data.Weeks_Counted >= 8 {
+						standings_for_user_full_participation = append(standings_for_user_full_participation, standing)
+					}
+					if !yield(standing) {
+						return
+					}
+				}
+			}
+		})
+	}
+}
+
 func main() {
 	// generate_subsession_pages()
 	// generate_standing_pages()
-	generate_subsession_list_pages()
+	// generate_subsession_list_pages()
+	generate_standing_list_pages()
 }
