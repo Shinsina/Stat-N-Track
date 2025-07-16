@@ -281,6 +281,18 @@ type ConsolidatedStandingResult struct {
 	Incidents           int
 }
 
+type StandingListSheetData struct {
+	Description          string
+	Standings            []Standing
+	Stylesheet_Path      string
+	Table_Component_Path string
+}
+
+type HandleConsolidatedStandingResultsOutput struct {
+	Keys                         []string
+	Handled_Consolidated_Results []ConsolidatedStandingResult
+}
+
 func convert_lap_time(lap_time int) string {
 	ingested_lap := strconv.FormatFloat(float64(lap_time), 'f', 4, 64)
 	with_decimal := ""
@@ -658,7 +670,7 @@ func create_seasons_function_map() template.FuncMap {
 		},
 		"retrieve_key_map": func() map[string]string {
 			key_map := make(map[string]string)
-			key_map["subsession_id"] = "subsession_id"
+			key_map["subsession_id"] = "Subsession ID"
 			key_map["track"] = "Track"
 			key_map["corners_per_lap"] = "Corners"
 			key_map["license"] = "License"
@@ -1119,12 +1131,99 @@ func generate_standing_list_pages() {
 		fmt.Println(6, err)
 	}
 	standings_list_function_map := template.FuncMap{
-		"handle_results": func(keys_to_display []string, results []Standing) []ConsolidatedStandingResult {
-			handled_results := []ConsolidatedStandingResult{}
-			for _, standing := range results {
-				handled_results = append(handled_results, consolidate_standing_result(standing))
+		"retrieve_keys_to_display": func() []string {
+			return []string{
+				"season_id",
+				"year",
+				"season_number",
+				"car_class_id",
+				"season_summary",
+				"division",
+				"division_rank",
+				"overall_rank",
+				"points",
+				"season_name",
+				"weeks_counted",
+				"starts",
+				"wins",
+				"top5",
+				"top25_percent",
+				"poles",
+				"avg_start_position",
+				"avg_finish_position",
+				"avg_field_size",
+				"laps",
+				"laps_led",
+				"incidents",
 			}
-			return handled_results
+		},
+		"retrieve_key_map": func() map[string]string {
+			key_map := make(map[string]string)
+			key_map["season_id"] = "Season ID"
+			key_map["year"] = "Year"
+			key_map["season_number"] = "Season Number"
+			key_map["car_class_id"] = "Car Class ID"
+			key_map["season_summary"] = "Season Summary"
+			key_map["division"] = "Division"
+			key_map["division_rank"] = "Rank (Division)"
+			key_map["overall_rank"] = "Rank (Overall)"
+			key_map["points"] = "Points"
+			key_map["season_name"] = "Season Name"
+			key_map["weeks_counted"] = "Participation Weeks"
+			key_map["starts"] = "Starts"
+			key_map["wins"] = "Wins"
+			key_map["top5"] = "Top 5s"
+			key_map["top25_percent"] = "Top 25% Finishes"
+			key_map["poles"] = "Poles"
+			key_map["avg_start_position"] = "Average Starting Position"
+			key_map["avg_finish_position"] = "Average Finishing Position"
+			key_map["avg_field_size"] = "Average Field Size"
+			key_map["laps"] = "Laps"
+			key_map["laps_led"] = "Laps Led"
+			key_map["incidents"] = "Incidents"
+			return key_map
+		},
+		"handle_results": func(keys_to_display []string, results []Standing) HandleConsolidatedStandingResultsOutput {
+			unique_key_map := make(map[string]string)
+			handled_results := []ConsolidatedStandingResult{}
+			consolidated_standing_results := []ConsolidatedStandingResult{}
+			for _, standing := range results {
+				consolidated_standing_results = append(consolidated_standing_results, consolidate_standing_result(standing))
+			}
+			for _, result := range consolidated_standing_results {
+				reflected_result := reflect.ValueOf(&result).Elem()
+				fields := reflect.VisibleFields(reflect.TypeOf(result))
+				for _, field := range fields {
+					if slices.Contains(keys_to_display, strings.ToLower(field.Name)) {
+						unique_key_map[strings.ToLower(field.Name)] = field.Name
+						// Being lazy because types are cumbersome sometimes
+						if field.Name == "Division" {
+							field_value := reflected_result.FieldByName(field.Name)
+							field_value.SetInt(field_value.Int() + 1)
+						}
+					}
+				}
+				handled_results = append(handled_results, result)
+			}
+			keys := make([]string, 0, len(unique_key_map))
+			for _, k := range keys_to_display {
+				if unique_key_map[k] != "" {
+					keys = append(keys, unique_key_map[k])
+				}
+			}
+			return HandleConsolidatedStandingResultsOutput{keys, handled_results}
+		},
+		"return_value_at_key": func(result ConsolidatedStandingResult, key string) any {
+			reflected_result := reflect.ValueOf(&result).Elem()
+			// fmt.Printf("%+v\n", reflected_result)
+			// fmt.Println(key)
+			return reflected_result.FieldByName(key)
+		},
+		"return_key_label": func(key_map map[string]string, key string) string {
+			return key_map[strings.ToLower(key)]
+		},
+		"lowercase": func(value string) string {
+			return strings.ToLower(value)
 		},
 	}
 	// @todo Pull this from a file
@@ -1160,6 +1259,72 @@ func generate_standing_list_pages() {
 				}
 			}
 		})
+		standings_list_html_template, err := template.New("standing-lists.html").Funcs(standings_list_function_map).ParseFiles("standing-lists.html")
+		if err != nil {
+			fmt.Println(11, err)
+		}
+		os.MkdirAll(fmt.Sprintf("./user/%s/standings", strconv.Itoa(cust_id)), os.ModePerm)
+		file, err := os.Create(fmt.Sprintf("./user/%s/standings/index.html", strconv.Itoa(cust_id)))
+		if err != nil {
+			fmt.Println(12, err)
+		}
+		description := fmt.Sprintf("All Standings - %s", strconv.Itoa(cust_id))
+		sort.Slice(standings_for_user, func(i, j int) bool {
+			return standings_for_user[i].Season_ID > standings_for_user[j].Season_ID
+		})
+		description_with_all_standings := StandingListSheetData{description, standings_for_user, "../../season.css", "../../alpine-components/table.js"}
+		err = standings_list_html_template.Execute(file, description_with_all_standings)
+		if err != nil {
+			fmt.Println(13, err)
+		}
+		sort.Slice(standings_for_user_full_participation, func(i, j int) bool {
+			return standings_for_user_full_participation[i].Season_ID > standings_for_user_full_participation[j].Season_ID
+		})
+		os.MkdirAll(fmt.Sprintf("./user/%s/standings/full-participation", strconv.Itoa(cust_id)), os.ModePerm)
+		full_participation_file, err := os.Create(fmt.Sprintf("./user/%s/standings/full-participation/index.html", strconv.Itoa(cust_id)))
+		if err != nil {
+			fmt.Println(16, err)
+		}
+		full_participation_description := fmt.Sprintf("Fully participated standings list for user ID - %s", strconv.Itoa(cust_id))
+		description_with_full_participation_standings := StandingListSheetData{full_participation_description, standings_for_user_full_participation, "../../../season.css", "../../../alpine-components/table.js"}
+		err = standings_list_html_template.Execute(full_participation_file, description_with_full_participation_standings)
+		if err != nil {
+			fmt.Println(17, err)
+		}
+		stylesheet_file_path := "../../../../season.css"
+		table_component_file_path := "../../../../alpine-components/table.js"
+		for key, value := range standings_for_user_by_car_class {
+			sort.Slice(value, func(i, j int) bool {
+				return value[i].Season_ID > value[j].Season_ID
+			})
+			os.MkdirAll(fmt.Sprintf("./user/%s/standings/by-car-class/%s", strconv.Itoa(cust_id), strconv.Itoa(key)), os.ModePerm)
+			file, err := os.Create(fmt.Sprintf("./user/%s/standings/by-car-class/%s/index.html", strconv.Itoa(cust_id), strconv.Itoa(key)))
+			if err != nil {
+				fmt.Println(14, err)
+			}
+			description := fmt.Sprintf("Standings list for user ID - %s and car class ID - %s", strconv.Itoa(cust_id), strconv.Itoa(key))
+			description_with_standings := StandingListSheetData{description, value, stylesheet_file_path, table_component_file_path}
+			err = standings_list_html_template.Execute(file, description_with_standings)
+			if err != nil {
+				fmt.Println(15, err)
+			}
+		}
+		for key, value := range standings_for_user_by_year {
+			sort.Slice(value, func(i, j int) bool {
+				return value[i].Season_ID > value[j].Season_ID
+			})
+			os.MkdirAll(fmt.Sprintf("./user/%s/standings/by-year/%s", strconv.Itoa(cust_id), strconv.Itoa(key)), os.ModePerm)
+			file, err := os.Create(fmt.Sprintf("./user/%s/standings/by-year/%s/index.html", strconv.Itoa(cust_id), strconv.Itoa(key)))
+			if err != nil {
+				fmt.Println(18, err)
+			}
+			description := fmt.Sprintf("Standings list for user ID - %s and year - %s", strconv.Itoa(cust_id), strconv.Itoa(key))
+			description_with_standings := StandingListSheetData{description, value, stylesheet_file_path, table_component_file_path}
+			err = standings_list_html_template.Execute(file, description_with_standings)
+			if err != nil {
+				fmt.Println(19, err)
+			}
+		}
 	}
 }
 
