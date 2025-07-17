@@ -1099,7 +1099,7 @@ func consolidate_standing_result(standing Standing) ConsolidatedStandingResult {
 		year_as_int,
 		season_number_as_int,
 		standing.Car_Class_ID,
-		season_number_as_int,
+		standing.Season_ID,
 		standing.Division,
 		standing.Division_Rank,
 		standing.Overall_Rank,
