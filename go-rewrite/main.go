@@ -370,6 +370,218 @@ func consolidate_subsession_result(subsession Subsession) ConsolidatedSubsession
 	return *race_result
 }
 
+func create_seasons_function_map() template.FuncMap {
+	return template.FuncMap{
+		"retrieve_keys_to_display": func() []string {
+			return []string{
+				"subsession_id",
+				"track",
+				"corners_per_lap",
+				"license",
+				"license_category",
+				"finish_position",
+				"finish_position_in_class",
+				"laps_lead",
+				"laps_complete",
+				"average_lap",
+				"best_lap_time",
+				"reason_out",
+				"champ_points",
+				"starting_position",
+				"starting_position_in_class",
+				"car_class_short_name",
+				"division_name",
+				"new_license_level",
+				"new_cpi",
+				"newi_rating",
+				"incidents",
+				"car_name",
+				"aggregate_champ_points",
+			}
+		},
+		"retrieve_key_map": func() map[string]string {
+			key_map := make(map[string]string)
+			key_map["subsession_id"] = "Subsession ID"
+			key_map["track"] = "Track"
+			key_map["corners_per_lap"] = "Corners"
+			key_map["license"] = "License"
+			key_map["license_category"] = "License Category"
+			key_map["finish_position"] = "Finish"
+			key_map["finish_position_in_class"] = "Finish (In Class)"
+			key_map["laps_lead"] = "Laps Lead"
+			key_map["laps_complete"] = "Laps Complete"
+			key_map["average_lap"] = "AVG Laptime"
+			key_map["best_lap_time"] = "Fastest Lap Time"
+			key_map["reason_out"] = "Status"
+			key_map["champ_points"] = "Points"
+			key_map["starting_position"] = "Starting Position"
+			key_map["starting_position_in_class"] = "Starting Position (In Class)"
+			key_map["car_class_short_name"] = "Car Class"
+			key_map["division_name"] = "Division"
+			key_map["new_license_level"] = "New License Level"
+			key_map["new_cpi"] = "New Corners Per Incident"
+			key_map["newi_rating"] = "New iRating"
+			key_map["incidents"] = "Incidents"
+			key_map["car_name"] = "Car"
+			key_map["aggregate_champ_points"] = "Best Points For Week"
+			return key_map
+		},
+		"handle_results": func(keys_to_display []string, results []Subsession) HandleConsolidatedResultsOutput {
+			unique_key_map := make(map[string]string)
+			handled_results := []ConsolidatedSubsessionResult{}
+			consolidated_subsession_results := []ConsolidatedSubsessionResult{}
+			for _, subsession := range results {
+				consolidated_subsession_results = append(consolidated_subsession_results, consolidate_subsession_result(subsession))
+			}
+			for _, result := range consolidated_subsession_results {
+				reflected_result := reflect.ValueOf(&result).Elem()
+				fields := reflect.VisibleFields(reflect.TypeOf(result))
+				for _, field := range fields {
+					if slices.Contains(keys_to_display, strings.ToLower(field.Name)) {
+						unique_key_map[strings.ToLower(field.Name)] = field.Name
+						// Being lazy because types are cumbersome sometimes
+						if strings.Contains(field.Name, "Position") {
+							field_value := reflected_result.FieldByName(field.Name)
+							field_value.SetInt(field_value.Int() + 1)
+						}
+					}
+				}
+				handled_results = append(handled_results, result)
+			}
+			keys := make([]string, 0, len(unique_key_map))
+			for _, k := range keys_to_display {
+				if unique_key_map[k] != "" {
+					keys = append(keys, unique_key_map[k])
+				}
+			}
+			return HandleConsolidatedResultsOutput{keys, handled_results}
+		},
+		"return_value_at_key": func(result ConsolidatedSubsessionResult, key string) any {
+			reflected_result := reflect.ValueOf(&result).Elem()
+			value := reflected_result.FieldByName(key)
+			if slices.Contains([]string{"Interval", "Class_Interval", "Average_Lap", "Best_Lap_Time"}, key) {
+				return convert_lap_time(int(value.Int()))
+			}
+			return value
+		},
+		"return_key_label": func(key_map map[string]string, key string) string {
+			return key_map[strings.ToLower(key)]
+		},
+		"lowercase": func(value string) string {
+			return strings.ToLower(value)
+		},
+		"generate_summary_stats": func(standing_with_subsessions StandingWithSubsessions) SummaryStats {
+			weeks_counted := standing_with_subsessions.Standing.Season_Driver_Data.Weeks_Counted
+			subsessions := standing_with_subsessions.Subsessions
+			total_start_position := 0
+			total_finish_position := 0
+			total_incidents := 0
+			wins := 0
+			subsessions_with_results := slices.Collect(func(yield func(Subsession) bool) {
+				for _, subsession := range subsessions {
+					race_sessions := slices.Collect(func(yield func(Session) bool) {
+						for _, session := range subsession.Session_Results {
+							if session.Simsession_Name == "RACE" || session.Simsession_Name == "FEATURE" || session.Simsession_Name == "N/A" {
+								if !yield(session) {
+									return
+								}
+							}
+						}
+					})
+					if len(race_sessions) == 1 {
+						subsession.Session_Results = race_sessions
+						race_results := slices.Collect(func(yield func(SessionResult) bool) {
+							for _, race_result := range race_sessions[0].Results {
+								if race_result.Cust_ID == standing_with_subsessions.Standing.Season_Driver_Data.Cust_ID && race_result.Car_Class_ID == standing_with_subsessions.Standing.Car_Class_ID {
+									if !yield(race_result) {
+										return
+									}
+								}
+							}
+						})
+						if len(race_results) == 1 {
+							subsession.Session_Results[0].Results = race_results
+							if !yield(subsession) {
+								return
+							}
+						}
+					}
+				}
+			})
+			sort.Slice(subsessions_with_results, func(i, j int) bool {
+				return subsessions_with_results[i].Session_Results[0].Results[0].Champ_Points > subsessions_with_results[j].Session_Results[0].Results[0].Champ_Points
+			})
+			var subsessions_slice []Subsession
+			if len(subsessions_with_results) > 8 {
+				subsessions_slice = subsessions_with_results[0:9]
+			} else {
+				subsessions_slice = subsessions_with_results
+			}
+			for _, subsession := range subsessions_slice {
+				if len(subsession.Session_Results) > 0 {
+					result := subsession.Session_Results[0].Results[0]
+					total_start_position += result.Starting_Position_In_Class + 1
+					total_finish_position += result.Finish_Position_In_Class + 1
+					if result.Finish_Position_In_Class+1 == 1 {
+						wins += 1
+					}
+					total_incidents += result.Incidents
+				}
+			}
+			avg_start := strconv.FormatFloat(float64(float64(total_start_position)/float64(weeks_counted)), 'f', 2, 64)
+			avg_finish := strconv.FormatFloat(float64(float64(total_finish_position)/float64(weeks_counted)), 'f', 2, 64)
+			return SummaryStats{
+				Avg_Start:  avg_start,
+				Avg_Finish: avg_finish,
+				Wins:       wins,
+				Incidents:  total_incidents,
+			}
+		},
+	}
+}
+
+func consolidate_standing_result(standing Standing) ConsolidatedStandingResult {
+	matcher, _ := regexp.Compile("[0-9]{4}")
+	matchs := matcher.FindAllString(standing.Season_Name, 2)
+	year := matchs[len(matchs)-1]
+	year_as_int, _ := strconv.Atoi(year)
+	matcher_2, _ := regexp.Compile("Season [0-9]{1}")
+	match := matcher_2.FindString(standing.Season_Name)
+	season_number := "0"
+	if len(match) > 0 {
+		matcher_3, _ := regexp.Compile("[0-9]{1}")
+		match_2 := matcher_3.FindString(match)
+		if len(match_2) > 0 {
+			season_number = match_2
+		}
+	}
+	season_number_as_int, _ := strconv.Atoi(season_number)
+	return ConsolidatedStandingResult{
+		standing.Season_ID,
+		year_as_int,
+		season_number_as_int,
+		standing.Car_Class_ID,
+		standing.Season_ID,
+		standing.Division,
+		standing.Division_Rank,
+		standing.Overall_Rank,
+		standing.Season_Driver_Data.Points,
+		standing.Season_Name,
+		standing.Season_Driver_Data.Weeks_Counted,
+		standing.Season_Driver_Data.Starts,
+		standing.Season_Driver_Data.Wins,
+		standing.Season_Driver_Data.Top5,
+		standing.Season_Driver_Data.Top25_Percent,
+		standing.Season_Driver_Data.Poles,
+		standing.Season_Driver_Data.Avg_Start_Position,
+		standing.Season_Driver_Data.Avg_Finish_Position,
+		standing.Season_Driver_Data.Avg_Field_Size,
+		standing.Season_Driver_Data.Laps,
+		standing.Season_Driver_Data.Laps_Led,
+		standing.Season_Driver_Data.Incidents,
+	}
+}
+
 func generate_subsession_pages() {
 	raw_subsessions_input, err := os.ReadFile("./1-subsessions-output.json")
 	if err != nil {
@@ -639,176 +851,6 @@ func generate_subsession_pages() {
 	}
 }
 
-func create_seasons_function_map() template.FuncMap {
-	return template.FuncMap{
-		"retrieve_keys_to_display": func() []string {
-			return []string{
-				"subsession_id",
-				"track",
-				"corners_per_lap",
-				"license",
-				"license_category",
-				"finish_position",
-				"finish_position_in_class",
-				"laps_lead",
-				"laps_complete",
-				"average_lap",
-				"best_lap_time",
-				"reason_out",
-				"champ_points",
-				"starting_position",
-				"starting_position_in_class",
-				"car_class_short_name",
-				"division_name",
-				"new_license_level",
-				"new_cpi",
-				"newi_rating",
-				"incidents",
-				"car_name",
-				"aggregate_champ_points",
-			}
-		},
-		"retrieve_key_map": func() map[string]string {
-			key_map := make(map[string]string)
-			key_map["subsession_id"] = "Subsession ID"
-			key_map["track"] = "Track"
-			key_map["corners_per_lap"] = "Corners"
-			key_map["license"] = "License"
-			key_map["license_category"] = "License Category"
-			key_map["finish_position"] = "Finish"
-			key_map["finish_position_in_class"] = "Finish (In Class)"
-			key_map["laps_lead"] = "Laps Lead"
-			key_map["laps_complete"] = "Laps Complete"
-			key_map["average_lap"] = "AVG Laptime"
-			key_map["best_lap_time"] = "Fastest Lap Time"
-			key_map["reason_out"] = "Status"
-			key_map["champ_points"] = "Points"
-			key_map["starting_position"] = "Starting Position"
-			key_map["starting_position_in_class"] = "Starting Position (In Class)"
-			key_map["car_class_short_name"] = "Car Class"
-			key_map["division_name"] = "Division"
-			key_map["new_license_level"] = "New License Level"
-			key_map["new_cpi"] = "New Corners Per Incident"
-			key_map["newi_rating"] = "New iRating"
-			key_map["incidents"] = "Incidents"
-			key_map["car_name"] = "Car"
-			key_map["aggregate_champ_points"] = "Best Points For Week"
-			return key_map
-		},
-		"handle_results": func(keys_to_display []string, results []Subsession) HandleConsolidatedResultsOutput {
-			unique_key_map := make(map[string]string)
-			handled_results := []ConsolidatedSubsessionResult{}
-			consolidated_subsession_results := []ConsolidatedSubsessionResult{}
-			for _, subsession := range results {
-				consolidated_subsession_results = append(consolidated_subsession_results, consolidate_subsession_result(subsession))
-			}
-			for _, result := range consolidated_subsession_results {
-				reflected_result := reflect.ValueOf(&result).Elem()
-				fields := reflect.VisibleFields(reflect.TypeOf(result))
-				for _, field := range fields {
-					if slices.Contains(keys_to_display, strings.ToLower(field.Name)) {
-						unique_key_map[strings.ToLower(field.Name)] = field.Name
-						// Being lazy because types are cumbersome sometimes
-						if strings.Contains(field.Name, "Position") {
-							field_value := reflected_result.FieldByName(field.Name)
-							field_value.SetInt(field_value.Int() + 1)
-						}
-					}
-				}
-				handled_results = append(handled_results, result)
-			}
-			keys := make([]string, 0, len(unique_key_map))
-			for _, k := range keys_to_display {
-				if unique_key_map[k] != "" {
-					keys = append(keys, unique_key_map[k])
-				}
-			}
-			return HandleConsolidatedResultsOutput{keys, handled_results}
-		},
-		"return_value_at_key": func(result ConsolidatedSubsessionResult, key string) any {
-			reflected_result := reflect.ValueOf(&result).Elem()
-			value := reflected_result.FieldByName(key)
-			if slices.Contains([]string{"Interval", "Class_Interval", "Average_Lap", "Best_Lap_Time"}, key) {
-				return convert_lap_time(int(value.Int()))
-			}
-			return value
-		},
-		"return_key_label": func(key_map map[string]string, key string) string {
-			return key_map[strings.ToLower(key)]
-		},
-		"lowercase": func(value string) string {
-			return strings.ToLower(value)
-		},
-		"generate_summary_stats": func(standing_with_subsessions StandingWithSubsessions) SummaryStats {
-			weeks_counted := standing_with_subsessions.Standing.Season_Driver_Data.Weeks_Counted
-			subsessions := standing_with_subsessions.Subsessions
-			total_start_position := 0
-			total_finish_position := 0
-			total_incidents := 0
-			wins := 0
-			subsessions_with_results := slices.Collect(func(yield func(Subsession) bool) {
-				for _, subsession := range subsessions {
-					race_sessions := slices.Collect(func(yield func(Session) bool) {
-						for _, session := range subsession.Session_Results {
-							if session.Simsession_Name == "RACE" || session.Simsession_Name == "FEATURE" || session.Simsession_Name == "N/A" {
-								if !yield(session) {
-									return
-								}
-							}
-						}
-					})
-					if len(race_sessions) == 1 {
-						subsession.Session_Results = race_sessions
-						race_results := slices.Collect(func(yield func(SessionResult) bool) {
-							for _, race_result := range race_sessions[0].Results {
-								if race_result.Cust_ID == standing_with_subsessions.Standing.Season_Driver_Data.Cust_ID && race_result.Car_Class_ID == standing_with_subsessions.Standing.Car_Class_ID {
-									if !yield(race_result) {
-										return
-									}
-								}
-							}
-						})
-						if len(race_results) == 1 {
-							subsession.Session_Results[0].Results = race_results
-							if !yield(subsession) {
-								return
-							}
-						}
-					}
-				}
-			})
-			sort.Slice(subsessions_with_results, func(i, j int) bool {
-				return subsessions_with_results[i].Session_Results[0].Results[0].Champ_Points > subsessions_with_results[j].Session_Results[0].Results[0].Champ_Points
-			})
-			var subsessions_slice []Subsession
-			if len(subsessions_with_results) > 8 {
-				subsessions_slice = subsessions_with_results[0:9]
-			} else {
-				subsessions_slice = subsessions_with_results
-			}
-			for _, subsession := range subsessions_slice {
-				if len(subsession.Session_Results) > 0 {
-					result := subsession.Session_Results[0].Results[0]
-					total_start_position += result.Starting_Position_In_Class + 1
-					total_finish_position += result.Finish_Position_In_Class + 1
-					if result.Finish_Position_In_Class+1 == 1 {
-						wins += 1
-					}
-					total_incidents += result.Incidents
-				}
-			}
-			avg_start := strconv.FormatFloat(float64(float64(total_start_position)/float64(weeks_counted)), 'f', 2, 64)
-			avg_finish := strconv.FormatFloat(float64(float64(total_finish_position)/float64(weeks_counted)), 'f', 2, 64)
-			return SummaryStats{
-				Avg_Start:  avg_start,
-				Avg_Finish: avg_finish,
-				Wins:       wins,
-				Incidents:  total_incidents,
-			}
-		},
-	}
-}
-
 func generate_standing_pages() {
 	raw_subsessions_input, err := os.ReadFile("./1-subsessions-output.json")
 	if err != nil {
@@ -1075,48 +1117,6 @@ func generate_subsession_list_pages() {
 				fmt.Println(19, err)
 			}
 		}
-	}
-}
-
-func consolidate_standing_result(standing Standing) ConsolidatedStandingResult {
-	matcher, _ := regexp.Compile("[0-9]{4}")
-	matchs := matcher.FindAllString(standing.Season_Name, 2)
-	year := matchs[len(matchs)-1]
-	year_as_int, _ := strconv.Atoi(year)
-	matcher_2, _ := regexp.Compile("Season [0-9]{1}")
-	match := matcher_2.FindString(standing.Season_Name)
-	season_number := "0"
-	if len(match) > 0 {
-		matcher_3, _ := regexp.Compile("[0-9]{1}")
-		match_2 := matcher_3.FindString(match)
-		if len(match_2) > 0 {
-			season_number = match_2
-		}
-	}
-	season_number_as_int, _ := strconv.Atoi(season_number)
-	return ConsolidatedStandingResult{
-		standing.Season_ID,
-		year_as_int,
-		season_number_as_int,
-		standing.Car_Class_ID,
-		standing.Season_ID,
-		standing.Division,
-		standing.Division_Rank,
-		standing.Overall_Rank,
-		standing.Season_Driver_Data.Points,
-		standing.Season_Name,
-		standing.Season_Driver_Data.Weeks_Counted,
-		standing.Season_Driver_Data.Starts,
-		standing.Season_Driver_Data.Wins,
-		standing.Season_Driver_Data.Top5,
-		standing.Season_Driver_Data.Top25_Percent,
-		standing.Season_Driver_Data.Poles,
-		standing.Season_Driver_Data.Avg_Start_Position,
-		standing.Season_Driver_Data.Avg_Finish_Position,
-		standing.Season_Driver_Data.Avg_Field_Size,
-		standing.Season_Driver_Data.Laps,
-		standing.Season_Driver_Data.Laps_Led,
-		standing.Season_Driver_Data.Incidents,
 	}
 }
 
