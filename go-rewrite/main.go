@@ -1230,6 +1230,7 @@ func generate_standing_list_pages() {
 	cust_ids := []int{300752}
 	// cust_ids := []int{300752, 331322, 589449, 714312, 746377, 815162, 908575}
 	for _, cust_id := range cust_ids {
+		fmt.Println(fmt.Sprintf("Creating standing listing files for %s", strconv.Itoa(cust_id)))
 		standings_for_user_by_car_class := make(map[int][]Standing)
 		standings_for_user_by_year := make(map[int][]Standing)
 		standings_for_user_full_participation := []Standing{}
