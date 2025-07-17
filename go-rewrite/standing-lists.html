@@ -50,9 +50,9 @@
         <td x-ref="Table {{ lowercase $key }} {{ $standing_index }}"
           id="Table~{{ lowercase $key }}~{{ $standing_index }}~{{return_value_at_key $consolidated_standing_result $key}}"
           class="border-2">
-          {{if eq $key "Subsession_ID"}}
+          {{if should_have_link $key}}
           <a class="underline"
-            href="/Stat-N-Track/subsession/{{return_value_at_key $consolidated_standing_result $key}}">
+            href="{{ generate_link_for_key $key $consolidated_standing_result }}">
             {{return_value_at_key $consolidated_standing_result $key}}
           </a>
           {{ else }}

@@ -279,6 +279,7 @@ type ConsolidatedStandingResult struct {
 	Laps                int
 	Laps_Led            int
 	Incidents           int
+	Cust_ID             int
 }
 
 type StandingListSheetData struct {
@@ -579,6 +580,7 @@ func consolidate_standing_result(standing Standing) ConsolidatedStandingResult {
 		standing.Season_Driver_Data.Laps,
 		standing.Season_Driver_Data.Laps_Led,
 		standing.Season_Driver_Data.Incidents,
+		standing.Season_Driver_Data.Cust_ID,
 	}
 }
 
@@ -1215,8 +1217,6 @@ func generate_standing_list_pages() {
 		},
 		"return_value_at_key": func(result ConsolidatedStandingResult, key string) any {
 			reflected_result := reflect.ValueOf(&result).Elem()
-			// fmt.Printf("%+v\n", reflected_result)
-			// fmt.Println(key)
 			return reflected_result.FieldByName(key)
 		},
 		"return_key_label": func(key_map map[string]string, key string) string {
@@ -1224,6 +1224,33 @@ func generate_standing_list_pages() {
 		},
 		"lowercase": func(value string) string {
 			return strings.ToLower(value)
+		},
+		"should_have_link": func(key string) bool {
+			lowercase_key := strings.ToLower(key)
+			if lowercase_key == "season_id" || lowercase_key == "year" || lowercase_key == "car_class_id" || lowercase_key == "season_summary" {
+				return true
+			}
+			return false
+		},
+		"generate_link_for_key": func(key string, consolidated_standing_result ConsolidatedStandingResult) string {
+			lowercase_key := strings.ToLower(key)
+			cust_id_as_string := strconv.Itoa(consolidated_standing_result.Cust_ID)
+			season_id_as_string := strconv.Itoa(consolidated_standing_result.Season_ID)
+			year_as_string := strconv.Itoa(consolidated_standing_result.Year)
+			car_class_id_as_string := strconv.Itoa(consolidated_standing_result.Car_Class_ID)
+			if lowercase_key == "season_id" {
+				return fmt.Sprintf("/Stat-N-Track/user/%s/season/%s/car-class/%s/", cust_id_as_string, season_id_as_string, car_class_id_as_string)
+			}
+			if lowercase_key == "year" {
+				return fmt.Sprintf("/Stat-N-Track/user/%s/standings/by-year/%s/", cust_id_as_string, year_as_string)
+			}
+			if lowercase_key == "car_class_id" {
+				return fmt.Sprintf("/Stat-N-Track/user/%s/standings/by-car-class/%s/", cust_id_as_string, car_class_id_as_string)
+			}
+			if lowercase_key == "season_summary" {
+				return fmt.Sprintf("/Stat-N-Track/user/%s/season/%s/car-class/%s/season-summary/", cust_id_as_string, season_id_as_string, car_class_id_as_string)
+			}
+			return ""
 		},
 	}
 	// @todo Pull this from a file
