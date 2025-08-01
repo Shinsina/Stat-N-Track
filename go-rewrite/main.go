@@ -294,6 +294,42 @@ type HandleConsolidatedStandingResultsOutput struct {
 	Handled_Consolidated_Results []ConsolidatedStandingResult
 }
 
+type SimpleCarClass struct {
+	ID         int    `json:"car_class_id"`
+	Short_Name string `json:"short_name"`
+}
+
+type CarClassStandingListOfListsData struct {
+	Base_Path       string
+	Items           []SimpleCarClass
+	Description     string
+	Stylesheet_Path string
+}
+
+type Year struct {
+	ID         int
+	Short_Name string
+}
+
+type YearStandingListOfListsData struct {
+	Base_Path       string
+	Items           []Year
+	Description     string
+	Stylesheet_Path string
+}
+
+type SimpleTrack struct {
+	ID         string
+	Short_Name string
+}
+
+type TrackSubsessionListOfListsData struct {
+	Base_Path       string
+	Items           []SimpleTrack
+	Description     string
+	Stylesheet_Path string
+}
+
 func convert_lap_time(lap_time int) string {
 	ingested_lap := strconv.FormatFloat(float64(lap_time), 'f', 4, 64)
 	with_decimal := ""
@@ -987,6 +1023,29 @@ func generate_subsession_list_pages() {
 	if err != nil {
 		fmt.Println(2, err)
 	}
+	subsession_list_of_lists_function_map := template.FuncMap{
+		"generate_full_path": func(base_path string, id int) string {
+			return fmt.Sprintf("%s%s", base_path, strconv.Itoa(id))
+		},
+	}
+	subsession_by_track_list_of_lists_function_map := template.FuncMap{
+		"generate_full_path": func(base_path string, id string) string {
+			return fmt.Sprintf("%s%s", base_path, id)
+		},
+	}
+	raw_car_class_input, err := os.ReadFile("./car-classes.json")
+	if err != nil {
+		fmt.Println(1, err)
+	}
+	var car_classes []SimpleCarClass
+	err = json.Unmarshal(raw_car_class_input, &car_classes)
+	if err != nil {
+		fmt.Println(2, err)
+	}
+	car_class_id_to_car_name := make(map[int]string)
+	for _, car_class := range car_classes {
+		car_class_id_to_car_name[car_class.ID] = car_class.Short_Name
+	}
 	// @todo Pull this from a file
 	cust_ids := []int{300752}
 	// cust_ids := []int{300752, 331322, 589449, 714312, 746377, 815162, 908575}
@@ -1055,6 +1114,14 @@ func generate_subsession_list_pages() {
 		if err != nil {
 			fmt.Println(11, err)
 		}
+		subsession_list_of_lists_html_template, err := template.New("list-of-lists.html").Funcs(subsession_list_of_lists_function_map).ParseFiles("list-of-lists.html")
+		if err != nil {
+			fmt.Println(12, err)
+		}
+		subsession_by_track_list_of_lists_html_template, err := template.New("list-of-lists.html").Funcs(subsession_by_track_list_of_lists_function_map).ParseFiles("list-of-lists.html")
+		if err != nil {
+			fmt.Println(12, err)
+		}
 		os.MkdirAll(fmt.Sprintf("./user/%s/subsessions", strconv.Itoa(cust_id)), os.ModePerm)
 		file, err := os.Create(fmt.Sprintf("./user/%s/subsessions/index.html", strconv.Itoa(cust_id)))
 		if err != nil {
@@ -1071,7 +1138,10 @@ func generate_subsession_list_pages() {
 		}
 		stylesheet_file_path := "../../../../season.css"
 		table_component_file_path := "../../../../alpine-components/table.js"
+		car_classes_index := make([]SimpleCarClass, len(subsessions_for_user_by_car_class))
+		car_class_iteration := 0
 		for key, value := range subsessions_for_user_by_car_class {
+			car_classes_index[car_class_iteration] = SimpleCarClass{ID: key, Short_Name: car_class_id_to_car_name[key]}
 			sort.Slice(value, func(i, j int) bool {
 				return value[i].Subsession_ID > value[j].Subsession_ID
 			})
@@ -1086,8 +1156,30 @@ func generate_subsession_list_pages() {
 			if err != nil {
 				fmt.Println(15, err)
 			}
+			car_class_iteration++
 		}
+		sort.Slice(car_classes_index, func(i, j int) bool {
+			return car_classes_index[i].Short_Name < car_classes_index[j].Short_Name
+		})
+		car_class_index_file, err := os.Create(fmt.Sprintf("./user/%s/subsessions/by-car-class/index.html", strconv.Itoa(cust_id)))
+		if err != nil {
+			fmt.Println(16, err)
+		}
+		car_class_index_file_description := fmt.Sprintf("Subsessions by car class page for user ID: %s", strconv.Itoa(cust_id))
+		car_class_base_path := fmt.Sprintf("/Stat-N-Track/user/%s/subsessions/by-car-class/", strconv.Itoa(cust_id))
+		car_class_standings_list_of_lists_data := CarClassStandingListOfListsData{car_class_base_path, car_classes_index, car_class_index_file_description, "../../../season.css"}
+		err = subsession_list_of_lists_html_template.Execute(car_class_index_file, car_class_standings_list_of_lists_data)
+		if err != nil {
+			fmt.Println(16, err)
+		}
+		tracks_index := make([]SimpleTrack, len(subsessions_for_user_by_track))
+		tracks_iteration := 0
 		for key, value := range subsessions_for_user_by_track {
+			config_name := ""
+			if value[0].Track.Config_Name != "N/A" {
+				config_name = value[0].Track.Config_Name
+			}
+			tracks_index[tracks_iteration] = SimpleTrack{ID: key, Short_Name: fmt.Sprintf("%s %s", value[0].Track.Track_Name, config_name)}
 			sort.Slice(value, func(i, j int) bool {
 				return value[i].Subsession_ID > value[j].Subsession_ID
 			})
@@ -1102,8 +1194,26 @@ func generate_subsession_list_pages() {
 			if err != nil {
 				fmt.Println(17, err)
 			}
+			tracks_iteration++
 		}
+		sort.Slice(tracks_index, func(i, j int) bool {
+			return tracks_index[i].Short_Name < tracks_index[j].Short_Name
+		})
+		track_index_file, err := os.Create(fmt.Sprintf("./user/%s/subsessions/by-track/index.html", strconv.Itoa(cust_id)))
+		if err != nil {
+			fmt.Println(16, err)
+		}
+		track_index_file_description := fmt.Sprintf("Subsessions by track page for user ID: %s", strconv.Itoa(cust_id))
+		track_base_path := fmt.Sprintf("/Stat-N-Track/user/%s/subsessions/by-track/", strconv.Itoa(cust_id))
+		track_subsession_list_of_lists_data := TrackSubsessionListOfListsData{track_base_path, tracks_index, track_index_file_description, "../../../season.css"}
+		err = subsession_by_track_list_of_lists_html_template.Execute(track_index_file, track_subsession_list_of_lists_data)
+		if err != nil {
+			fmt.Println(16, err)
+		}
+		years_index := make([]Year, len(subsessions_for_user_by_year))
+		years_iteration := 0
 		for key, value := range subsessions_for_user_by_year {
+			years_index[years_iteration] = Year{ID: key, Short_Name: strconv.Itoa(key)}
 			sort.Slice(value, func(i, j int) bool {
 				return value[i].Subsession_ID > value[j].Subsession_ID
 			})
@@ -1118,6 +1228,21 @@ func generate_subsession_list_pages() {
 			if err != nil {
 				fmt.Println(19, err)
 			}
+			years_iteration++
+		}
+		sort.Slice(years_index, func(i, j int) bool {
+			return years_index[i].ID < years_index[j].ID
+		})
+		year_index_file, err := os.Create(fmt.Sprintf("./user/%s/subsessions/by-year/index.html", strconv.Itoa(cust_id)))
+		if err != nil {
+			fmt.Println(16, err)
+		}
+		year_index_file_description := fmt.Sprintf("Subsessions by year page for user ID: %s", strconv.Itoa(cust_id))
+		year_base_path := fmt.Sprintf("/Stat-N-Track/user/%s/subsessions/by-year/", strconv.Itoa(cust_id))
+		year_standings_list_of_lists_data := YearStandingListOfListsData{year_base_path, years_index, year_index_file_description, "../../../season.css"}
+		err = subsession_list_of_lists_html_template.Execute(year_index_file, year_standings_list_of_lists_data)
+		if err != nil {
+			fmt.Println(16, err)
 		}
 	}
 }
@@ -1253,6 +1378,24 @@ func generate_standing_list_pages() {
 			return ""
 		},
 	}
+	standings_list_of_lists_function_map := template.FuncMap{
+		"generate_full_path": func(base_path string, id int) string {
+			return fmt.Sprintf("%s%s", base_path, strconv.Itoa(id))
+		},
+	}
+	raw_car_class_input, err := os.ReadFile("./car-classes.json")
+	if err != nil {
+		fmt.Println(1, err)
+	}
+	var car_classes []SimpleCarClass
+	err = json.Unmarshal(raw_car_class_input, &car_classes)
+	if err != nil {
+		fmt.Println(2, err)
+	}
+	car_class_id_to_car_name := make(map[int]string)
+	for _, car_class := range car_classes {
+		car_class_id_to_car_name[car_class.ID] = car_class.Short_Name
+	}
 	// @todo Pull this from a file
 	cust_ids := []int{300752}
 	// cust_ids := []int{300752, 331322, 589449, 714312, 746377, 815162, 908575}
@@ -1291,6 +1434,10 @@ func generate_standing_list_pages() {
 		if err != nil {
 			fmt.Println(11, err)
 		}
+		standings_list_of_lists_html_template, err := template.New("list-of-lists.html").Funcs(standings_list_of_lists_function_map).ParseFiles("list-of-lists.html")
+		if err != nil {
+			fmt.Println(12, err)
+		}
 		os.MkdirAll(fmt.Sprintf("./user/%s/standings", strconv.Itoa(cust_id)), os.ModePerm)
 		file, err := os.Create(fmt.Sprintf("./user/%s/standings/index.html", strconv.Itoa(cust_id)))
 		if err != nil {
@@ -1321,7 +1468,10 @@ func generate_standing_list_pages() {
 		}
 		stylesheet_file_path := "../../../../season.css"
 		table_component_file_path := "../../../../alpine-components/table.js"
+		car_classes_index := make([]SimpleCarClass, len(standings_for_user_by_car_class))
+		car_class_iteration := 0
 		for key, value := range standings_for_user_by_car_class {
+			car_classes_index[car_class_iteration] = SimpleCarClass{ID: key, Short_Name: car_class_id_to_car_name[key]}
 			sort.Slice(value, func(i, j int) bool {
 				return value[i].Season_ID > value[j].Season_ID
 			})
@@ -1336,8 +1486,26 @@ func generate_standing_list_pages() {
 			if err != nil {
 				fmt.Println(15, err)
 			}
+			car_class_iteration++
 		}
+		sort.Slice(car_classes_index, func(i, j int) bool {
+			return car_classes_index[i].Short_Name < car_classes_index[j].Short_Name
+		})
+		car_class_index_file, err := os.Create(fmt.Sprintf("./user/%s/standings/by-car-class/index.html", strconv.Itoa(cust_id)))
+		if err != nil {
+			fmt.Println(16, err)
+		}
+		car_class_index_file_description := fmt.Sprintf("Car class standings page for user ID: %s", strconv.Itoa(cust_id))
+		car_class_base_path := fmt.Sprintf("/Stat-N-Track/user/%s/standings/by-car-class/", strconv.Itoa(cust_id))
+		car_class_standings_list_of_lists_data := CarClassStandingListOfListsData{car_class_base_path, car_classes_index, car_class_index_file_description, "../../../season.css"}
+		err = standings_list_of_lists_html_template.Execute(car_class_index_file, car_class_standings_list_of_lists_data)
+		if err != nil {
+			fmt.Println(16, err)
+		}
+		years_index := make([]Year, len(standings_for_user_by_year))
+		years_iteration := 0
 		for key, value := range standings_for_user_by_year {
+			years_index[years_iteration] = Year{ID: key, Short_Name: strconv.Itoa(key)}
 			sort.Slice(value, func(i, j int) bool {
 				return value[i].Season_ID > value[j].Season_ID
 			})
@@ -1352,6 +1520,21 @@ func generate_standing_list_pages() {
 			if err != nil {
 				fmt.Println(19, err)
 			}
+			years_iteration++
+		}
+		sort.Slice(years_index, func(i, j int) bool {
+			return years_index[i].ID < years_index[j].ID
+		})
+		year_index_file, err := os.Create(fmt.Sprintf("./user/%s/standings/by-year/index.html", strconv.Itoa(cust_id)))
+		if err != nil {
+			fmt.Println(16, err)
+		}
+		year_index_file_description := fmt.Sprintf("Standings by year page for user ID: %s", strconv.Itoa(cust_id))
+		year_base_path := fmt.Sprintf("/Stat-N-Track/user/%s/standings/by-year/", strconv.Itoa(cust_id))
+		year_standings_list_of_lists_data := YearStandingListOfListsData{year_base_path, years_index, year_index_file_description, "../../../season.css"}
+		err = standings_list_of_lists_html_template.Execute(year_index_file, year_standings_list_of_lists_data)
+		if err != nil {
+			fmt.Println(16, err)
 		}
 	}
 }
@@ -1360,5 +1543,5 @@ func main() {
 	// generate_subsession_pages()
 	// generate_standing_pages()
 	// generate_subsession_list_pages()
-	generate_standing_list_pages()
+	// generate_standing_list_pages()
 }
