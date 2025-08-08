@@ -349,6 +349,18 @@ type SimpleTrack struct {
 	Short_Name string
 }
 
+type SimpleCustomer struct {
+	ID         int
+	Short_Name string
+}
+
+type HeadToHeadistOfListsData struct {
+	Base_Path       string
+	Items           []SimpleCustomer
+	Description     string
+	Stylesheet_Path string
+}
+
 type TrackSubsessionListOfListsData struct {
 	Base_Path       string
 	Items           []SimpleTrack
@@ -2061,7 +2073,7 @@ func generate_head_to_head_pages() {
 		sort.Slice(head_to_head_subsessions, func(i, j int) bool {
 			return head_to_head_subsessions[i].Subsession_ID > head_to_head_subsessions[j].Subsession_ID
 		})
-		description_with_head_to_head_subsessions := SubsessionListSheetData{fmt.Sprintf("Head to Head Matchup for cust_ids %s and %s", cust_ids[0], cust_ids[1]), head_to_head_subsessions, "../../../season.css", "../../../alpine-components/table.js"}
+		description_with_head_to_head_subsessions := SubsessionListSheetData{fmt.Sprintf("Head to Head Matchup for user IDs %s and %s", cust_ids[0], cust_ids[1]), head_to_head_subsessions, "../../../season.css", "../../../alpine-components/table.js"}
 		file_one, err := os.Create(fmt.Sprintf("./user/%s/head-to-head/%s/index.html", cust_ids[0], cust_ids[1]))
 		if err != nil {
 			fmt.Println(3, err)
@@ -2080,6 +2092,43 @@ func generate_head_to_head_pages() {
 			fmt.Println(4, err)
 		}
 	}
+	cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	cust_id_to_name_map := make(map[int]string)
+	cust_id_to_name_map[182407] = "Antonio Estrada"
+	cust_id_to_name_map[251134] = "Kyle Klendworth"
+	cust_id_to_name_map[300752] = "Jacob Collins"
+	cust_id_to_name_map[331322] = "Jesper Öhrman"
+	cust_id_to_name_map[589449] = "Bryan Campbell2"
+	cust_id_to_name_map[714312] = "Sam Karasala"
+	cust_id_to_name_map[746377] = "Ty Quila"
+	cust_id_to_name_map[815162] = "Jack Glenzinski"
+	cust_id_to_name_map[908575] = "Cody Cavaco"
+	for _, cust_id := range cust_ids {
+		opponents_list := []SimpleCustomer{}
+		for key, value := range cust_id_to_name_map {
+			if key != cust_id {
+				opponents_list = append(opponents_list, SimpleCustomer{key, value})
+			}
+		}
+		index_file_description := fmt.Sprintf("Head to head matchups for user ID: %s", strconv.Itoa(cust_id))
+		base_path := fmt.Sprintf("/Stat-N-Track/user/%s/head-to-head/", strconv.Itoa(cust_id))
+		head_to_head_list_of_lists_function_map := template.FuncMap{
+			"generate_full_path": func(base_path string, id int) string {
+				return fmt.Sprintf("%s%s", base_path, strconv.Itoa(id))
+			},
+		}
+		head_to_head_list_of_lists_data := HeadToHeadistOfListsData{base_path, opponents_list, index_file_description, "../../season.css"}
+		head_to_head_list_of_lists_html_template, err := template.New("list-of-lists.html").Funcs(head_to_head_list_of_lists_function_map).ParseFiles("list-of-lists.html")
+		if err != nil {
+			fmt.Println(12, err)
+		}
+		file, err := os.Create(fmt.Sprintf("./user/%s/head-to-head/index.html", strconv.Itoa(cust_id)))
+		if err != nil {
+			fmt.Println(12, err)
+		}
+		err = head_to_head_list_of_lists_html_template.Execute(file, head_to_head_list_of_lists_data)
+	}
+
 }
 
 func main() {
