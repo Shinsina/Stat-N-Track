@@ -218,6 +218,32 @@ type ConsolidatedSubsessionResult struct {
 	Aggregate_Champ_Points     int
 }
 
+type ConsolidatedHeadToHeadSubsessionResult struct {
+	Subsession_ID           int
+	Track                   string
+	Corners_Per_Lap         int
+	License                 string
+	License_Category        string
+	Event_Average_Lap       int
+	Event_Laps_Complete     int
+	Event_Strength_Of_Field int
+	Num_Caution_Laps        int
+	Num_Cautions            int
+	Num_Lead_Changes        int
+	Race_Week_Num           int
+	Season_Name             string
+}
+
+type HandleConsolidatedHeadToHeadResultsOutput struct {
+	Keys                         []string
+	Handled_Consolidated_Results []ConsolidatedHeadToHeadSubsessionResult
+}
+
+type HeadToHeadWinsOutput struct {
+	Key       string
+	Win_Count int
+}
+
 type HandleConsolidatedResultsOutput struct {
 	Keys                         []string
 	Handled_Consolidated_Results []ConsolidatedSubsessionResult
@@ -403,6 +429,40 @@ func consolidate_subsession_result(subsession Subsession) ConsolidatedSubsession
 		}
 	}
 	var race_result = new(ConsolidatedSubsessionResult)
+	race_result.Track = track
+	return *race_result
+}
+
+func consolidate_head_to_head_subsession_result(subsession Subsession) ConsolidatedHeadToHeadSubsessionResult {
+	track := ""
+	if subsession.Track.Config_Name != "N/A" {
+		track = fmt.Sprintf("%s %s", subsession.Track.Track_Name, subsession.Track.Config_Name)
+	} else {
+		track = subsession.Track.Track_Name
+	}
+	license := ""
+	if len(subsession.Allow_Licenses) > 0 {
+		// @todo Determine if this causes issues
+		license = subsession.Allow_Licenses[1].Group_Name
+	}
+	if len(subsession.Session_Results) > 0 {
+		return ConsolidatedHeadToHeadSubsessionResult{
+			subsession.Subsession_ID,
+			track,
+			subsession.Corners_Per_Lap,
+			license,
+			subsession.License_Category,
+			subsession.Event_Average_Lap,
+			subsession.Event_Laps_Complete,
+			subsession.Event_Strength_Of_Field,
+			subsession.Num_Caution_Laps,
+			subsession.Num_Cautions,
+			subsession.Num_Lead_Changes,
+			subsession.Race_Week_Num,
+			subsession.Season_Name,
+		}
+	}
+	var race_result = new(ConsolidatedHeadToHeadSubsessionResult)
 	race_result.Track = track
 	return *race_result
 }
@@ -1048,7 +1108,7 @@ func generate_subsession_list_pages() {
 	}
 	// @todo Pull this from a file
 	cust_ids := []int{300752}
-	// cust_ids := []int{300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	// cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
 	for _, cust_id := range cust_ids {
 		fmt.Println(fmt.Sprintf("Creating subsession listing files for %s", strconv.Itoa(cust_id)))
 		subsessions_for_user_by_car_class := make(map[int][]Subsession)
@@ -1398,7 +1458,7 @@ func generate_standing_list_pages() {
 	}
 	// @todo Pull this from a file
 	cust_ids := []int{300752}
-	// cust_ids := []int{300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	// cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
 	for _, cust_id := range cust_ids {
 		fmt.Println(fmt.Sprintf("Creating standing listing files for %s", strconv.Itoa(cust_id)))
 		standings_for_user_by_car_class := make(map[int][]Standing)
@@ -1539,9 +1599,494 @@ func generate_standing_list_pages() {
 	}
 }
 
+func generate_head_to_head_pages() {
+	raw_subsessions_input, err := os.ReadFile("./1-subsessions-output.json")
+	if err != nil {
+		fmt.Println(1, err)
+	}
+	var subsessions []Subsession
+	err = json.Unmarshal(raw_subsessions_input, &subsessions)
+	if err != nil {
+		fmt.Println(2, err)
+	}
+	cust_id_pairs := []string{
+		"300752_182407",
+		"300752_251134",
+		"300752_331322",
+		"300752_589449",
+		"300752_714312",
+		"300752_746377",
+		"300752_815162",
+		"300752_908575",
+		"331322_182407",
+		"331322_251134",
+		"331322_589449",
+		"331322_714312",
+		"331322_746377",
+		"331322_815162",
+		"331322_908575",
+		"589449_182407",
+		"589449_251134",
+		"589449_714312",
+		"589449_746377",
+		"589449_815162",
+		"589449_908575",
+		"714312_182407",
+		"714312_251134",
+		"714312_746377",
+		"714312_815162",
+		"714312_908575",
+		"746377_182407",
+		"746377_251134",
+		"746377_815162",
+		"746377_908575",
+		"815162_182407",
+		"815162_251134",
+		"815162_908575",
+		"908575_182407",
+		"908575_251134",
+	}
+	// fmt.Println(fmt.Sprintf("Creating %s file of %s", strconv.Itoa(standings_index+1), strconv.Itoa(len(standings))))
+	subsessions_function_map := template.FuncMap{
+		"bump": func(i int) int {
+			return i + 1
+		},
+		"convert_time": func(timestamp string) string {
+			// Note: This can be changed to use any timezone you so choose
+			timezone, _ := time.LoadLocation("America/Chicago")
+			converted_time, _ := time.ParseInLocation("2006-01-02T15:04:05Z", timestamp, time.UTC)
+			const layout = "1/2/2006 3:04pm"
+			return converted_time.In(timezone).Format(layout)
+		},
+		"convert_lap_time": func(lap_time int) string {
+			return convert_lap_time(lap_time)
+		},
+		"filter_allowed_licenses": func(licenses []License) []string {
+			filtered_allowed_licenses := []string{}
+			for index, license := range licenses {
+				if index < 2 {
+					if index == 0 {
+						filtered_allowed_licenses = append(filtered_allowed_licenses, fmt.Sprintf("%s %s.00", license.Group_Name, strconv.Itoa(license.Min_License_Level/license.License_Group)))
+					} else {
+						filtered_allowed_licenses = append(filtered_allowed_licenses, fmt.Sprintf("%s and above", license.Group_Name))
+					}
+				}
+			}
+			return filtered_allowed_licenses
+		},
+		"find_session": func(sessions []Session, session_name string) Session {
+			session_to_return := Session{}
+			if len(sessions) >= 4 {
+				if session_name == "RACE" {
+					session_to_return = sessions[len(sessions)-1]
+					session_to_return.Simsession_Name = "RACE"
+					return session_to_return
+				} else if session_name == "HEAT" {
+					session_to_return = sessions[len(sessions)-2]
+					session_to_return.Simsession_Name = "HEAT"
+					return session_to_return
+				}
+			}
+			for _, session := range sessions {
+				if session.Simsession_Name == session_name {
+					session_to_return = session
+				}
+			}
+			return session_to_return
+		},
+		"retrieve_keys_to_display": func(car_classes []CarClass, session_name string) []string {
+			// Admittedly this whole function is kinda lazy but meh
+			if len(car_classes) > 1 && session_name == "RACE" {
+				return []string{
+					"cust_id",
+					"display_name",
+					"finish_position",
+					"finish_position_in_class",
+					"laps_lead",
+					"laps_complete",
+					"interval",
+					"class_interval",
+					"average_lap",
+					"best_lap_num",
+					"best_lap_time",
+					"reason_out",
+					"champ_points",
+					"drop_race",
+					"starting_position",
+					"starting_position_in_class",
+					"car_class_short_name",
+					"division_name",
+					"old_license_level",
+					"old_cpi",
+					"oldi_rating",
+					"new_license_level",
+					"new_cpi",
+					"newi_rating",
+					"incidents",
+					"car_name",
+					"aggregate_champ_points",
+				}
+			} else if len(car_classes) > 1 {
+				return []string{
+					"cust_id",
+					"display_name",
+					"finish_position",
+					"finish_position_in_class",
+					"laps_complete",
+					"interval",
+					"class_interval",
+					"average_lap",
+					"best_lap_num",
+					"best_lap_time",
+					"car_class_short_name",
+					"division_name",
+					"incidents",
+					"car_name",
+				}
+			} else if session_name == "RACE" {
+				return []string{
+					"cust_id",
+					"display_name",
+					"finish_position",
+					"laps_lead",
+					"laps_complete",
+					"interval",
+					"average_lap",
+					"best_lap_num",
+					"best_lap_time",
+					"reason_out",
+					"champ_points",
+					"drop_race",
+					"starting_position",
+					"division_name",
+					"old_license_level",
+					"old_cpi",
+					"oldi_rating",
+					"new_license_level",
+					"new_cpi",
+					"newi_rating",
+					"incidents",
+					"car_name",
+					"aggregate_champ_points",
+				}
+			}
+			return []string{
+				"cust_id",
+				"display_name",
+				"finish_position",
+				"laps_complete",
+				"interval",
+				"average_lap",
+				"best_lap_num",
+				"best_lap_time",
+				"division_name",
+				"incidents",
+				"car_name",
+			}
+		},
+		"retrieve_key_labels": func(keys []string) []string {
+			key_map := make(map[string]string)
+			key_map["display_name"] = "Name"
+			key_map["finish_position"] = "Finish"
+			key_map["finish_position_in_class"] = "Finish (In Class)"
+			key_map["laps_lead"] = "Laps Lead"
+			key_map["laps_complete"] = "Laps Completed"
+			key_map["interval"] = "Interval to P1"
+			key_map["class_interval"] = "Interval to P1 (In Class)"
+			key_map["average_lap"] = "AVG Laptime"
+			key_map["best_lap_num"] = "Fastest Lap"
+			key_map["best_lap_time"] = "Fastest Lap Time"
+			key_map["reason_out"] = "Status"
+			key_map["champ_points"] = "Points"
+			key_map["drop_race"] = "Drop Race"
+			key_map["starting_position"] = "Starting Position"
+			key_map["starting_position_in_class"] = "Starting Position (In Class)"
+			key_map["car_class_short_name"] = "Car Class"
+			key_map["division_name"] = "Division"
+			key_map["old_license_level"] = "Old License Level"
+			key_map["old_cpi"] = "Old Corners Per Incident"
+			key_map["oldi_rating"] = "Old iRating"
+			key_map["new_license_level"] = "New License Level"
+			key_map["new_cpi"] = "New Corners Per Incident"
+			key_map["newi_rating"] = "New iRating"
+			key_map["incidents"] = "Incidents"
+			key_map["car_name"] = "Car"
+			key_map["aggregate_champ_points"] = "Best Points For Week"
+			key_map["license_category"] = "License Category"
+			key_map["year"] = "Year"
+			key_map["season_number_of_year"] = "Season Number"
+			key_map["car_class_id"] = "Car Class ID"
+			key_map["division"] = "Division"
+			key_map["division_rank"] = "Rank (Division)"
+			key_map["overall_rank"] = "Rank (Overall)"
+			key_map["season_id"] = "Season ID"
+			key_map["season_name"] = "Season Name"
+			key_map["season_summary"] = "Season Summary"
+			key_map["weeks_counted"] = "Participation Weeks"
+			key_map["starts"] = "Starts"
+			key_map["wins"] = "Wins"
+			key_map["top5"] = "Top 5's"
+			key_map["top25_percent"] = "Top 25% Finishes"
+			key_map["poles"] = "Poles"
+			key_map["avg_start_position"] = "Average Starting Position"
+			key_map["avg_finish_position"] = "Average Finish Position"
+			key_map["avg_field_size"] = "Average Field Size"
+			key_map["laps"] = "Laps Completed"
+			key_map["laps_led"] = "Laps Led"
+			key_map["points"] = "Points"
+			key_map["category"] = "License Category"
+			key_map["safety_rating"] = "Safety Rating"
+			key_map["irating"] = "iRating"
+			key_map["group_name"] = "License Group Name"
+			key_map["race_week_num"] = "Race Week Number"
+			key_map["num_lead_changes"] = "Number of Lead Changes"
+			key_map["num_cautions"] = "Number of Cautions"
+			key_map["num_caution_laps"] = "Number of Caution Laps"
+			key_map["event_strength_of_field"] = "Strength of Field"
+			key_map["event_laps_complete"] = "Total Laps"
+			key_map["event_average_lap"] = "Average Lap Time"
+			output_labels := []string{}
+			for _, key := range keys {
+				output_labels = append(output_labels, key_map[strings.ToLower(key)])
+			}
+			return output_labels
+		},
+		"handle_results": func(keys_to_display []string, results []SessionResult) HandleResultsOutput {
+			unique_key_map := make(map[string]string)
+			handled_results := []SessionResult{}
+			for _, result := range results {
+				reflected_result := reflect.ValueOf(&result).Elem()
+				fields := reflect.VisibleFields(reflect.TypeOf(result))
+				for _, field := range fields {
+					if slices.Contains(keys_to_display, strings.ToLower(field.Name)) {
+						unique_key_map[strings.ToLower(field.Name)] = field.Name
+						// Being lazy because types are cumbersome sometimes
+						if strings.Contains(field.Name, "Position") {
+							field_value := reflected_result.FieldByName(field.Name)
+							field_value.SetInt(field_value.Int() + 1)
+						}
+					}
+				}
+				handled_results = append(handled_results, result)
+			}
+			keys := make([]string, 0, len(unique_key_map))
+			for _, k := range keys_to_display {
+				if unique_key_map[k] != "" {
+					keys = append(keys, unique_key_map[k])
+				}
+			}
+			return HandleResultsOutput{keys, handled_results}
+		},
+		"return_value_at_key": func(result SessionResult, key string) any {
+			reflected_result := reflect.ValueOf(&result).Elem()
+			value := reflected_result.FieldByName(key)
+			if slices.Contains([]string{"Interval", "Class_Interval", "Average_Lap", "Best_Lap_Time"}, key) {
+				return convert_lap_time(int(value.Int()))
+			}
+			return value
+		},
+		"return_key_value_at_index": func(keys []string, index int) string {
+			return keys[index]
+		},
+		"retrieve_key_map": func() map[string]string {
+			key_map := make(map[string]string)
+			key_map["season_id"] = "Season ID"
+			key_map["year"] = "Year"
+			key_map["season_number"] = "Season Number"
+			key_map["car_class_id"] = "Car Class ID"
+			key_map["season_summary"] = "Season Summary"
+			key_map["division"] = "Division"
+			key_map["division_rank"] = "Rank (Division)"
+			key_map["overall_rank"] = "Rank (Overall)"
+			key_map["points"] = "Points"
+			key_map["season_name"] = "Season Name"
+			key_map["weeks_counted"] = "Participation Weeks"
+			key_map["starts"] = "Starts"
+			key_map["wins"] = "Wins"
+			key_map["top5"] = "Top 5s"
+			key_map["top25_percent"] = "Top 25% Finishes"
+			key_map["poles"] = "Poles"
+			key_map["avg_start_position"] = "Average Starting Position"
+			key_map["avg_finish_position"] = "Average Finishing Position"
+			key_map["avg_field_size"] = "Average Field Size"
+			key_map["laps"] = "Laps"
+			key_map["laps_led"] = "Laps Led"
+			key_map["incidents"] = "Incidents"
+			return key_map
+		},
+		"table_retrieve_keys_to_display": func() []string {
+			return []string{
+				"subsession_id",
+				"track",
+				"license",
+				"license_category",
+				"event_average_lap",
+				"event_laps_complete",
+				"event_strength_of_field",
+				"num_caution_laps",
+				"num_cautions",
+				"num_lead_changes",
+				"race_week_num",
+				"season_name",
+			}
+		},
+		"table_retrieve_key_map": func() map[string]string {
+			key_map := make(map[string]string)
+			key_map["subsession_id"] = "Subsession ID"
+			key_map["track"] = "Track"
+			key_map["license"] = "License"
+			key_map["license_category"] = "License Category"
+			key_map["event_average_lap"] = "Average Laptime"
+			key_map["event_laps_complete"] = "Total Laps"
+			key_map["event_strength_of_field"] = "Strength of Field"
+			key_map["num_caution_laps"] = "Number of Caution Laps"
+			key_map["num_cautions"] = "Number of Cautions"
+			key_map["num_lead_changes"] = "Number of Lead Changes"
+			key_map["race_week_num"] = "Race Week Number"
+			key_map["season_name"] = "Season Name"
+			return key_map
+		},
+		"table_handle_results": func(keys_to_display []string, results []Subsession) HandleConsolidatedHeadToHeadResultsOutput {
+			unique_key_map := make(map[string]string)
+			handled_results := []ConsolidatedHeadToHeadSubsessionResult{}
+			consolidated_subsession_results := []ConsolidatedHeadToHeadSubsessionResult{}
+			for _, subsession := range results {
+				consolidated_subsession_results = append(consolidated_subsession_results, consolidate_head_to_head_subsession_result(subsession))
+			}
+			for _, result := range consolidated_subsession_results {
+				reflected_result := reflect.ValueOf(&result).Elem()
+				fields := reflect.VisibleFields(reflect.TypeOf(result))
+				for _, field := range fields {
+					if slices.Contains(keys_to_display, strings.ToLower(field.Name)) {
+						unique_key_map[strings.ToLower(field.Name)] = field.Name
+						// Being lazy because types are cumbersome sometimes
+						if strings.Contains(field.Name, "Position") {
+							field_value := reflected_result.FieldByName(field.Name)
+							field_value.SetInt(field_value.Int() + 1)
+						}
+					}
+				}
+				handled_results = append(handled_results, result)
+			}
+			keys := make([]string, 0, len(unique_key_map))
+			for _, k := range keys_to_display {
+				if unique_key_map[k] != "" {
+					keys = append(keys, unique_key_map[k])
+				}
+			}
+			return HandleConsolidatedHeadToHeadResultsOutput{keys, handled_results}
+		},
+		"table_return_value_at_key": func(result ConsolidatedHeadToHeadSubsessionResult, key string) any {
+			reflected_result := reflect.ValueOf(&result).Elem()
+			value := reflected_result.FieldByName(key)
+			if slices.Contains([]string{"Interval", "Class_Interval", "Average_Lap", "Best_Lap_Time"}, key) {
+				return convert_lap_time(int(value.Int()))
+			}
+			return value
+		},
+		"return_key_label": func(key_map map[string]string, key string) string {
+			return key_map[strings.ToLower(key)]
+		},
+		"lowercase": func(value string) string {
+			return strings.ToLower(value)
+		},
+		"generate_toggle_data": func(subsessions []Subsession) string {
+			values := []string{"{\"previouslyToggled\": '',"}
+			for _, subsession := range subsessions {
+				values = append(values, fmt.Sprintf("\"toggle%s\": false,", strconv.Itoa(subsession.Subsession_ID)))
+			}
+			values = append(values, "}")
+			return strings.Join(values, "")
+		},
+		"generate_head_to_head_wins_table": func(subsessions []Subsession) []HeadToHeadWinsOutput {
+			winner_name_to_win_count_map := make(map[string]int)
+			for _, subsession := range subsessions {
+				winner := subsession.Session_Results[0].Results[0].Display_Name
+				if winner_name_to_win_count_map[winner] >= 0 {
+					winner_name_to_win_count_map[winner] += 1
+				} else {
+					winner_name_to_win_count_map[winner] = 1
+				}
+			}
+			output := []HeadToHeadWinsOutput{}
+
+			for k, v := range winner_name_to_win_count_map {
+				output = append(output, HeadToHeadWinsOutput{k, v})
+			}
+			sort.Slice(output, func(i, j int) bool {
+				return output[i].Win_Count > output[j].Win_Count
+			})
+			return output
+		},
+	}
+	shared_subsessions_html_template, err := template.New("shared-subsessions.html").Funcs(subsessions_function_map).ParseFiles("shared-subsessions.html")
+	for _, cust_id_pair := range cust_id_pairs {
+		cust_ids := strings.Split(cust_id_pair, "_")
+		head_to_head_subsessions := slices.Collect(func(yield func(Subsession) bool) {
+			for _, subsession := range subsessions {
+				race_sessions := slices.Collect(func(yield func(Session) bool) {
+					for _, session := range subsession.Session_Results {
+						if session.Simsession_Name == "RACE" || session.Simsession_Name == "FEATURE" || session.Simsession_Name == "N/A" {
+							if !yield(session) {
+								return
+							}
+						}
+					}
+				})
+				if len(race_sessions) == 1 {
+					subsession.Session_Results = race_sessions
+					race_results := slices.Collect(func(yield func(SessionResult) bool) {
+						for _, race_result := range race_sessions[0].Results {
+							for _, cust_id := range cust_ids {
+								cust_id_as_int, _ := strconv.Atoi(cust_id)
+								if race_result.Cust_ID == cust_id_as_int {
+									if !yield(race_result) {
+										return
+									}
+								}
+							}
+						}
+					})
+					if len(race_results) == len(cust_ids) {
+						subsession.Session_Results[0].Results = race_results
+						if !yield(subsession) {
+							return
+						}
+					}
+				}
+			}
+		})
+		os.MkdirAll(fmt.Sprintf("./user/%s/head-to-head/%s", cust_ids[0], cust_ids[1]), os.ModePerm)
+		os.MkdirAll(fmt.Sprintf("./user/%s/head-to-head/%s", cust_ids[1], cust_ids[0]), os.ModePerm)
+		sort.Slice(head_to_head_subsessions, func(i, j int) bool {
+			return head_to_head_subsessions[i].Subsession_ID > head_to_head_subsessions[j].Subsession_ID
+		})
+		fmt.Println(len(head_to_head_subsessions))
+		description_with_head_to_head_subsessions := SubsessionListSheetData{"HOOPLAH", head_to_head_subsessions, "../../../season.css", "../../../alpine-components/table.js"}
+		file_one, err := os.Create(fmt.Sprintf("./user/%s/head-to-head/%s/index.html", cust_ids[0], cust_ids[1]))
+		if err != nil {
+			fmt.Println(3, err)
+		}
+		err = shared_subsessions_html_template.Execute(file_one, description_with_head_to_head_subsessions)
+		if err != nil {
+			fmt.Println(4, err)
+		}
+		file_one.Close()
+		file_two, err := os.Create(fmt.Sprintf("./user/%s/head-to-head/%s/index.html", cust_ids[1], cust_ids[0]))
+		if err != nil {
+			fmt.Println(3, err)
+		}
+		err = shared_subsessions_html_template.Execute(file_two, description_with_head_to_head_subsessions)
+		if err != nil {
+			fmt.Println(4, err)
+		}
+	}
+}
+
 func main() {
 	// generate_subsession_pages()
 	// generate_standing_pages()
 	// generate_subsession_list_pages()
 	// generate_standing_list_pages()
+	generate_head_to_head_pages()
 }
