@@ -935,7 +935,7 @@ func generate_subsession_pages() {
 	// @todo Account for team sessions
 	subsessions_html_template, err := template.New("subsessions.html").Funcs(subsessions_function_map).ParseFiles("subsessions.html")
 	for subsession_index, subsession := range subsessions {
-		fmt.Println(fmt.Sprintf("Creating %s file of %s", strconv.Itoa(subsession_index+1), strconv.Itoa(len(subsessions))))
+		fmt.Println(fmt.Sprintf("Creating subsession file %s of %s", strconv.Itoa(subsession_index+1), strconv.Itoa(len(subsessions))))
 		os.MkdirAll(fmt.Sprintf("./subsession/%s", strconv.Itoa(subsession.Subsession_ID)), os.ModePerm)
 		file, err := os.Create(fmt.Sprintf("./subsession/%s/index.html", strconv.Itoa(subsession.Subsession_ID)))
 		if err != nil {
@@ -987,7 +987,7 @@ func generate_standing_pages() {
 	// @todo Account for team sessions
 	season_html_template, err := template.New("seasons.html").Funcs(seasons_function_map).ParseFiles("seasons.html")
 	for standings_index, standing := range standings {
-		fmt.Println(fmt.Sprintf("Creating %s file of %s", strconv.Itoa(standings_index+1), strconv.Itoa(len(standings))))
+		fmt.Println(fmt.Sprintf("Creating standings file %s  of %s", strconv.Itoa(standings_index+1), strconv.Itoa(len(standings))))
 		subsessions_for_season := slices.Collect(func(yield func(Subsession) bool) {
 			for _, subsession := range subsessions {
 				if subsession.Season_ID == standing.Season_ID {
@@ -1646,7 +1646,6 @@ func generate_head_to_head_pages() {
 		"908575_182407",
 		"908575_251134",
 	}
-	// fmt.Println(fmt.Sprintf("Creating %s file of %s", strconv.Itoa(standings_index+1), strconv.Itoa(len(standings))))
 	subsessions_function_map := template.FuncMap{
 		"bump": func(i int) int {
 			return i + 1
@@ -2020,7 +2019,8 @@ func generate_head_to_head_pages() {
 		},
 	}
 	shared_subsessions_html_template, err := template.New("shared-subsessions.html").Funcs(subsessions_function_map).ParseFiles("shared-subsessions.html")
-	for _, cust_id_pair := range cust_id_pairs {
+	for cust_id_pair_index, cust_id_pair := range cust_id_pairs {
+		fmt.Println(fmt.Sprintf("Creating head to head matchup file %s of %s", strconv.Itoa(cust_id_pair_index+1), strconv.Itoa(len(cust_id_pairs))))
 		cust_ids := strings.Split(cust_id_pair, "_")
 		head_to_head_subsessions := slices.Collect(func(yield func(Subsession) bool) {
 			for _, subsession := range subsessions {
@@ -2061,7 +2061,6 @@ func generate_head_to_head_pages() {
 		sort.Slice(head_to_head_subsessions, func(i, j int) bool {
 			return head_to_head_subsessions[i].Subsession_ID > head_to_head_subsessions[j].Subsession_ID
 		})
-		fmt.Println(len(head_to_head_subsessions))
 		description_with_head_to_head_subsessions := SubsessionListSheetData{"HOOPLAH", head_to_head_subsessions, "../../../season.css", "../../../alpine-components/table.js"}
 		file_one, err := os.Create(fmt.Sprintf("./user/%s/head-to-head/%s/index.html", cust_ids[0], cust_ids[1]))
 		if err != nil {
