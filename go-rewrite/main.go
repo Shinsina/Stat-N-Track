@@ -2061,7 +2061,7 @@ func generate_head_to_head_pages() {
 		sort.Slice(head_to_head_subsessions, func(i, j int) bool {
 			return head_to_head_subsessions[i].Subsession_ID > head_to_head_subsessions[j].Subsession_ID
 		})
-		description_with_head_to_head_subsessions := SubsessionListSheetData{"HOOPLAH", head_to_head_subsessions, "../../../season.css", "../../../alpine-components/table.js"}
+		description_with_head_to_head_subsessions := SubsessionListSheetData{fmt.Sprintf("Head to Head Matchup for cust_ids %s and %s", cust_ids[0], cust_ids[1]), head_to_head_subsessions, "../../../season.css", "../../../alpine-components/table.js"}
 		file_one, err := os.Create(fmt.Sprintf("./user/%s/head-to-head/%s/index.html", cust_ids[0], cust_ids[1]))
 		if err != nil {
 			fmt.Println(3, err)
