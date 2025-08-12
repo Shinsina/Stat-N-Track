@@ -374,6 +374,13 @@ type TrackSubsessionListOfListsData struct {
 	Stylesheet_Path string
 }
 
+type IndexPageData struct {
+	Base_Path       string
+	Items           []SimpleCustomer
+	Description     string
+	Stylesheet_Path string
+}
+
 func convert_lap_time(lap_time int) string {
 	ingested_lap := strconv.FormatFloat(float64(lap_time), 'f', 4, 64)
 	with_decimal := ""
@@ -2132,7 +2139,54 @@ func generate_head_to_head_pages() {
 		}
 		err = head_to_head_list_of_lists_html_template.Execute(file, head_to_head_list_of_lists_data)
 	}
+}
 
+func generate_index_pages() {
+	// @todo Pull this from a file
+	cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	cust_id_to_name_map := make(map[int]string)
+	cust_id_to_name_map[182407] = "Antonio Estrada"
+	cust_id_to_name_map[251134] = "Kyle Klendworth"
+	cust_id_to_name_map[300752] = "Jacob Collins"
+	cust_id_to_name_map[331322] = "Jesper Öhrman"
+	cust_id_to_name_map[589449] = "Bryan Campbell2"
+	cust_id_to_name_map[714312] = "Sam Karasala"
+	cust_id_to_name_map[746377] = "Ty Quila"
+	cust_id_to_name_map[815162] = "Jack Glenzinski"
+	cust_id_to_name_map[908575] = "Cody Cavaco"
+	list := []SimpleCustomer{}
+	index_function_map := template.FuncMap{
+		"generate_full_path": func(base_path string, id int) string {
+			return fmt.Sprintf("%s%s", base_path, strconv.Itoa(id))
+		},
+	}
+	for cust_id_index, cust_id := range cust_ids {
+		fmt.Println(fmt.Sprintf("Creating driver index file %s of %s", strconv.Itoa(cust_id_index+1), strconv.Itoa(len(cust_ids))))
+		index_file_description := fmt.Sprintf("Stat 'N' Track: User - %s", strconv.Itoa(cust_id))
+		driver_index_page_data := HeadToHeadistOfListsData{"/Stat-N-Track/user/", cust_id, list, index_file_description, "../season.css"}
+		driver_index_page_html_template, err := template.New("list-of-lists.html").Funcs(index_function_map).ParseFiles("list-of-lists.html")
+		if err != nil {
+			fmt.Println(12, err)
+		}
+		file, err := os.Create(fmt.Sprintf("./user/%s/index.html", strconv.Itoa(cust_id)))
+		if err != nil {
+			fmt.Println(12, err)
+		}
+		err = driver_index_page_html_template.Execute(file, driver_index_page_data)
+	}
+	for key, value := range cust_id_to_name_map {
+		list = append(list, SimpleCustomer{key, value})
+	}
+	index_page_data := IndexPageData{"/Stat-N-Track/user/", list, "Stat 'N' Track", "./user/season.css"}
+	index_page_html_template, err := template.New("index-template.html").Funcs(index_function_map).ParseFiles("index-template.html")
+	if err != nil {
+		fmt.Println(12, err)
+	}
+	file, err := os.Create("./index.html")
+	if err != nil {
+		fmt.Println(12, err)
+	}
+	err = index_page_html_template.Execute(file, index_page_data)
 }
 
 func main() {
@@ -2141,4 +2195,5 @@ func main() {
 	generate_subsession_list_pages()
 	generate_standing_list_pages()
 	generate_head_to_head_pages()
+	generate_index_pages()
 }
