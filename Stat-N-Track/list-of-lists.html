@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://shinsina.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://shinsina.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://shinsina.github.io/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="https://shinsina.github.io/favicon.ico" />
+  <link rel="stylesheet" href="{{ .Stylesheet_Path }}" />
+  <!-- Alpine Plugins -->
+  <script defer src="https://cdn.jsdelivr.net/npm/async-alpine@2.0.2/dist/async-alpine.script.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.9/dist/cdn.min.js"></script>
+  <!-- Alpine Core -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description"
+    content="{{ .Description }}" />
+  <title>Stat 'N' Track: {{ .Description }}</title>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+  <div class="text-center border-white border-2">
+    <p class="block lg:text-5xl md:text-2xl sm:text-xl break-words text-center">
+      Stat 'N' Track
+    </p>
+    <div class="block lg:text-3xl md:text-lg sm:text-md break-words text-center py-2">
+      <a class="underline p-2" href="/Stat-N-Track/">Home</a>
+    </div>
+  </div>
+  <div
+    class="text-center lg:text-xl md:text-lg sm:text-md grid grid-cols-1 md:grid-cols-3 lg:grid-cols-9 py-2 border-white border-x-2 border-b-2"
+  >
+    <div><a class="underline" href="/Stat-N-Track/user/{{ .Cust_ID }}/subsessions/">All Sessions</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/{{ .Cust_ID }}/subsessions/by-year/">Sessions By Year</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/{{ .Cust_ID }}/subsessions/by-car-class/">Sessions By Car Class</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/{{ .Cust_ID }}/subsessions/by-track/">Sessions By Track</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/{{ .Cust_ID }}/standings/">All Season Standings</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/{{ .Cust_ID }}/standings/full-participation/">Fully Participated Season Standings</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/{{ .Cust_ID }}/standings/by-year/">Season Standings By Year</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/{{ .Cust_ID }}/standings/by-car-class/">Season Standings By Car Class</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/{{ .Cust_ID }}/head-to-head/">Head to Head Matchups</a></div>
+  </div>
+  <div class="text-center text-3xl">
+    {{ $base_path := .Base_Path }}
+      {{range $item := .Items}}
+        <div><a class="underline" href="{{ generate_full_path $base_path $item.ID }}" >{{ $item.Short_Name }}</a></div>
+      {{ end }}
+   </div>
+</body>
+
+</html>
