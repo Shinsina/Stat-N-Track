@@ -2177,6 +2177,9 @@ func generate_index_pages() {
 	for key, value := range cust_id_to_name_map {
 		list = append(list, SimpleCustomer{key, value})
 	}
+	sort.Slice(list, func(i, j int) bool {
+		return list[i].ID < list[j].ID
+	})
 	index_page_data := IndexPageData{"/Stat-N-Track/user/", list, "Stat 'N' Track", "./user/season.css"}
 	index_page_html_template, err := template.New("index-template.html").Funcs(index_function_map).ParseFiles("index-template.html")
 	if err != nil {
@@ -2190,10 +2193,10 @@ func generate_index_pages() {
 }
 
 func main() {
-	generate_subsession_pages()
-	generate_standing_pages()
-	generate_subsession_list_pages()
-	generate_standing_list_pages()
-	generate_head_to_head_pages()
+	// generate_subsession_pages()
+	// generate_standing_pages()
+	// generate_subsession_list_pages()
+	// generate_standing_list_pages()
+	// generate_head_to_head_pages()
 	generate_index_pages()
 }
