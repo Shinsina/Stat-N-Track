@@ -2193,10 +2193,10 @@ func generate_index_pages() {
 }
 
 func main() {
-	// generate_subsession_pages()
-	// generate_standing_pages()
-	// generate_subsession_list_pages()
-	// generate_standing_list_pages()
-	// generate_head_to_head_pages()
+	generate_subsession_pages()
+	generate_standing_pages()
+	generate_subsession_list_pages()
+	generate_standing_list_pages()
+	generate_head_to_head_pages()
 	generate_index_pages()
 }
