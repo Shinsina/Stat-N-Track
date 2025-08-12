@@ -1119,8 +1119,7 @@ func generate_subsession_list_pages() {
 		car_class_id_to_car_name[car_class.ID] = car_class.Short_Name
 	}
 	// @todo Pull this from a file
-	cust_ids := []int{300752}
-	// cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
 	for _, cust_id := range cust_ids {
 		fmt.Println(fmt.Sprintf("Creating subsession listing files for %s", strconv.Itoa(cust_id)))
 		subsessions_for_user_by_car_class := make(map[int][]Subsession)
@@ -1160,7 +1159,6 @@ func generate_subsession_list_pages() {
 						} else {
 							subsessions_for_user_by_car_class[race_results[0].Car_Class_ID] = []Subsession{subsession}
 						}
-						// @todo See if there is more effecient way to do this
 						track_slug := strings.ToLower(fmt.Sprintf("%s %s", subsession.Track.Track_Name, subsession.Track.Config_Name))
 						track_slug = strings.ReplaceAll(track_slug, "[", "")
 						track_slug = strings.ReplaceAll(track_slug, "]", "")
@@ -1469,8 +1467,7 @@ func generate_standing_list_pages() {
 		car_class_id_to_car_name[car_class.ID] = car_class.Short_Name
 	}
 	// @todo Pull this from a file
-	cust_ids := []int{300752}
-	// cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
 	for _, cust_id := range cust_ids {
 		fmt.Println(fmt.Sprintf("Creating standing listing files for %s", strconv.Itoa(cust_id)))
 		standings_for_user_by_car_class := make(map[int][]Standing)
@@ -2132,9 +2129,9 @@ func generate_head_to_head_pages() {
 }
 
 func main() {
-	// generate_subsession_pages()
-	// generate_standing_pages()
-	// generate_subsession_list_pages()
-	// generate_standing_list_pages()
+	generate_subsession_pages()
+	generate_standing_pages()
+	generate_subsession_list_pages()
+	generate_standing_list_pages()
 	generate_head_to_head_pages()
 }
