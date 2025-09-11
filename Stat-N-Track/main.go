@@ -1132,7 +1132,7 @@ func generate_subsession_list_pages() {
 		car_class_id_to_car_name[car_class.ID] = car_class.Short_Name
 	}
 	// @todo Pull this from a file
-	cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	cust_ids := []int{300752, 815162}
 	for _, cust_id := range cust_ids {
 		fmt.Println(fmt.Sprintf("Creating subsession listing files for %s", strconv.Itoa(cust_id)))
 		subsessions_for_user_by_car_class := make(map[int][]Subsession)
@@ -1480,7 +1480,7 @@ func generate_standing_list_pages() {
 		car_class_id_to_car_name[car_class.ID] = car_class.Short_Name
 	}
 	// @todo Pull this from a file
-	cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	cust_ids := []int{300752, 815162}
 	for _, cust_id := range cust_ids {
 		fmt.Println(fmt.Sprintf("Creating standing listing files for %s", strconv.Itoa(cust_id)))
 		standings_for_user_by_car_class := make(map[int][]Standing)
@@ -1632,41 +1632,43 @@ func generate_head_to_head_pages() {
 		fmt.Println(2, err)
 	}
 	cust_id_pairs := []string{
-		"300752_182407",
-		"300752_251134",
-		"300752_331322",
-		"300752_589449",
-		"300752_714312",
-		"300752_746377",
 		"300752_815162",
-		"300752_908575",
-		"331322_182407",
-		"331322_251134",
-		"331322_589449",
-		"331322_714312",
-		"331322_746377",
-		"331322_815162",
-		"331322_908575",
-		"589449_182407",
-		"589449_251134",
-		"589449_714312",
-		"589449_746377",
-		"589449_815162",
-		"589449_908575",
-		"714312_182407",
-		"714312_251134",
-		"714312_746377",
-		"714312_815162",
-		"714312_908575",
-		"746377_182407",
-		"746377_251134",
-		"746377_815162",
-		"746377_908575",
-		"815162_182407",
-		"815162_251134",
-		"815162_908575",
-		"908575_182407",
-		"908575_251134",
+		/*
+			"300752_182407",
+			"300752_251134",
+			"300752_331322",
+			"300752_589449",
+			"300752_714312",
+			"300752_746377",
+			"300752_908575",
+			"331322_182407",
+			"331322_251134",
+			"331322_589449",
+			"331322_714312",
+			"331322_746377",
+			"331322_815162",
+			"331322_908575",
+			"589449_182407",
+			"589449_251134",
+			"589449_714312",
+			"589449_746377",
+			"589449_815162",
+			"589449_908575",
+			"714312_182407",
+			"714312_251134",
+			"714312_746377",
+			"714312_815162",
+			"714312_908575",
+			"746377_182407",
+			"746377_251134",
+			"746377_815162",
+			"746377_908575",
+			"815162_182407",
+			"815162_251134",
+			"815162_908575",
+			"908575_182407",
+			"908575_251134",
+		*/
 	}
 	subsessions_function_map := template.FuncMap{
 		"bump": func(i int) int {
@@ -2103,17 +2105,17 @@ func generate_head_to_head_pages() {
 			fmt.Println(4, err)
 		}
 	}
-	cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	cust_ids := []int{300752, 815162}
 	cust_id_to_name_map := make(map[int]string)
-	cust_id_to_name_map[182407] = "Antonio Estrada"
-	cust_id_to_name_map[251134] = "Kyle Klendworth"
+	// cust_id_to_name_map[182407] = "Antonio Estrada"
+	// cust_id_to_name_map[251134] = "Kyle Klendworth"
 	cust_id_to_name_map[300752] = "Jacob Collins"
-	cust_id_to_name_map[331322] = "Jesper Öhrman"
-	cust_id_to_name_map[589449] = "Bryan Campbell2"
-	cust_id_to_name_map[714312] = "Sam Karasala"
-	cust_id_to_name_map[746377] = "Ty Quila"
+	// cust_id_to_name_map[331322] = "Jesper Öhrman"
+	// cust_id_to_name_map[589449] = "Bryan Campbell2"
+	// cust_id_to_name_map[714312] = "Sam Karasala"
+	// cust_id_to_name_map[746377] = "Ty Quila"
 	cust_id_to_name_map[815162] = "Jack Glenzinski"
-	cust_id_to_name_map[908575] = "Cody Cavaco"
+	// cust_id_to_name_map[908575] = "Cody Cavaco"
 	for _, cust_id := range cust_ids {
 		opponents_list := []SimpleCustomer{}
 		for key, value := range cust_id_to_name_map {
@@ -2143,17 +2145,17 @@ func generate_head_to_head_pages() {
 
 func generate_index_pages() {
 	// @todo Pull this from a file
-	cust_ids := []int{182407, 251134, 300752, 331322, 589449, 714312, 746377, 815162, 908575}
+	cust_ids := []int{300752, 815162}
 	cust_id_to_name_map := make(map[int]string)
-	cust_id_to_name_map[182407] = "Antonio Estrada"
-	cust_id_to_name_map[251134] = "Kyle Klendworth"
+	// cust_id_to_name_map[182407] = "Antonio Estrada"
+	// cust_id_to_name_map[251134] = "Kyle Klendworth"
 	cust_id_to_name_map[300752] = "Jacob Collins"
-	cust_id_to_name_map[331322] = "Jesper Öhrman"
-	cust_id_to_name_map[589449] = "Bryan Campbell2"
-	cust_id_to_name_map[714312] = "Sam Karasala"
-	cust_id_to_name_map[746377] = "Ty Quila"
+	// cust_id_to_name_map[331322] = "Jesper Öhrman"
+	// cust_id_to_name_map[589449] = "Bryan Campbell2"
+	// cust_id_to_name_map[714312] = "Sam Karasala"
+	// cust_id_to_name_map[746377] = "Ty Quila"
 	cust_id_to_name_map[815162] = "Jack Glenzinski"
-	cust_id_to_name_map[908575] = "Cody Cavaco"
+	// cust_id_to_name_map[908575] = "Cody Cavaco"
 	list := []SimpleCustomer{}
 	index_function_map := template.FuncMap{
 		"generate_full_path": func(base_path string, id int) string {
