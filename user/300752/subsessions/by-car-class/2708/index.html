@@ -1,0 +1,1458 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://shinsina.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://shinsina.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://shinsina.github.io/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="https://shinsina.github.io/favicon.ico" />
+  <link rel="stylesheet" href="../../../../season.css" />
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/async-alpine@2.0.2/dist/async-alpine.script.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.9/dist/cdn.min.js"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description"
+    content="Subsessions list for user ID - 300752 and car class ID - 2708" />
+  <title>Stat 'N' Track: Subsessions list for user ID - 300752 and car class ID - 2708</title>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+  <div class="text-center border-white border-2">
+    <p class="block lg:text-5xl md:text-2xl sm:text-xl break-words text-center">
+      Stat 'N' Track
+    </p>
+    <div class="block lg:text-3xl md:text-lg sm:text-md break-words text-center py-2">
+      <a class="underline p-2" href="/Stat-N-Track/">Home</a>
+    </div>
+  </div>
+  <div
+    class="text-center lg:text-xl md:text-lg sm:text-md grid grid-cols-1 md:grid-cols-3 lg:grid-cols-9 py-2 border-white border-x-2 border-b-2"
+  >
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/">All Sessions</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/by-year/">Sessions By Year</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/by-car-class/">Sessions By Car Class</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/by-track/">Sessions By Track</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/">All Season Standings</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/full-participation/">Fully Participated Season Standings</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/by-year/">Season Standings By Year</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/by-car-class/">Season Standings By Car Class</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/head-to-head/">Head to Head Matchups</a></div>
+  </div>
+  <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+    <table x-load x-load-src="../../../../alpine-components/table.js" x-ref="Table" x-data="table"
+      class="text-center col-span-1">
+      <tr x-ref="Headings">
+        
+        
+        
+        
+        
+        <th id="Table subsession_id 7" class="border-2" x-on:click="sort">
+          Subsession ID
+        </th>
+        <th id="Table track 7" class="border-2" x-on:click="sort">
+          Track
+        </th>
+        <th id="Table corners_per_lap 7" class="border-2" x-on:click="sort">
+          Corners
+        </th>
+        <th id="Table license 7" class="border-2" x-on:click="sort">
+          License
+        </th>
+        <th id="Table license_category 7" class="border-2" x-on:click="sort">
+          License Category
+        </th>
+        <th id="Table finish_position 7" class="border-2" x-on:click="sort">
+          Finish
+        </th>
+        <th id="Table finish_position_in_class 7" class="border-2" x-on:click="sort">
+          Finish (In Class)
+        </th>
+        <th id="Table laps_lead 7" class="border-2" x-on:click="sort">
+          Laps Lead
+        </th>
+        <th id="Table laps_complete 7" class="border-2" x-on:click="sort">
+          Laps Complete
+        </th>
+        <th id="Table average_lap 7" class="border-2" x-on:click="sort">
+          AVG Laptime
+        </th>
+        <th id="Table best_lap_time 7" class="border-2" x-on:click="sort">
+          Fastest Lap Time
+        </th>
+        <th id="Table reason_out 7" class="border-2" x-on:click="sort">
+          Status
+        </th>
+        <th id="Table champ_points 7" class="border-2" x-on:click="sort">
+          Points
+        </th>
+        <th id="Table starting_position 7" class="border-2" x-on:click="sort">
+          Starting Position
+        </th>
+        <th id="Table starting_position_in_class 7" class="border-2" x-on:click="sort">
+          Starting Position (In Class)
+        </th>
+        <th id="Table car_class_short_name 7" class="border-2" x-on:click="sort">
+          Car Class
+        </th>
+        <th id="Table division_name 7" class="border-2" x-on:click="sort">
+          Division
+        </th>
+        <th id="Table new_license_level 7" class="border-2" x-on:click="sort">
+          New License Level
+        </th>
+        <th id="Table new_cpi 7" class="border-2" x-on:click="sort">
+          New Corners Per Incident
+        </th>
+        <th id="Table newi_rating 7" class="border-2" x-on:click="sort">
+          New iRating
+        </th>
+        <th id="Table incidents 7" class="border-2" x-on:click="sort">
+          Incidents
+        </th>
+        <th id="Table car_name 7" class="border-2" x-on:click="sort">
+          Car
+        </th>
+        <th id="Table aggregate_champ_points 7" class="border-2" x-on:click="sort">
+          Best Points For Week
+        </th>
+      </tr>
+      
+      <tr x-ref="Table 0">
+        
+        <td x-ref="Table subsession_id 0"
+          id="Table~subsession_id~0~65960089"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/subsession/65960089">
+            65960089
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table track 0"
+          id="Table~track~0~Daytona International Speedway Road Course"
+          class="border-2">
+          
+          Daytona International Speedway Road Course
+          
+        </td>
+        
+        <td x-ref="Table corners_per_lap 0"
+          id="Table~corners_per_lap~0~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table license 0"
+          id="Table~license~0~Class B"
+          class="border-2">
+          
+          Class B
+          
+        </td>
+        
+        <td x-ref="Table license_category 0"
+          id="Table~license_category~0~Road"
+          class="border-2">
+          
+          Road
+          
+        </td>
+        
+        <td x-ref="Table finish_position 0"
+          id="Table~finish_position~0~13"
+          class="border-2">
+          
+          13
+          
+        </td>
+        
+        <td x-ref="Table finish_position_in_class 0"
+          id="Table~finish_position_in_class~0~13"
+          class="border-2">
+          
+          13
+          
+        </td>
+        
+        <td x-ref="Table laps_lead 0"
+          id="Table~laps_lead~0~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table laps_complete 0"
+          id="Table~laps_complete~0~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table average_lap 0"
+          id="Table~average_lap~0~1:46.6330"
+          class="border-2">
+          
+          1:46.6330
+          
+        </td>
+        
+        <td x-ref="Table best_lap_time 0"
+          id="Table~best_lap_time~0~1:45.2405"
+          class="border-2">
+          
+          1:45.2405
+          
+        </td>
+        
+        <td x-ref="Table reason_out 0"
+          id="Table~reason_out~0~Running"
+          class="border-2">
+          
+          Running
+          
+        </td>
+        
+        <td x-ref="Table champ_points 0"
+          id="Table~champ_points~0~61"
+          class="border-2">
+          
+          61
+          
+        </td>
+        
+        <td x-ref="Table starting_position 0"
+          id="Table~starting_position~0~18"
+          class="border-2">
+          
+          18
+          
+        </td>
+        
+        <td x-ref="Table starting_position_in_class 0"
+          id="Table~starting_position_in_class~0~18"
+          class="border-2">
+          
+          18
+          
+        </td>
+        
+        <td x-ref="Table car_class_short_name 0"
+          id="Table~car_class_short_name~0~GT3 Class"
+          class="border-2">
+          
+          GT3 Class
+          
+        </td>
+        
+        <td x-ref="Table division_name 0"
+          id="Table~division_name~0~Division 2"
+          class="border-2">
+          
+          Division 2
+          
+        </td>
+        
+        <td x-ref="Table new_license_level 0"
+          id="Table~new_license_level~0~20"
+          class="border-2">
+          
+          20
+          
+        </td>
+        
+        <td x-ref="Table new_cpi 0"
+          id="Table~new_cpi~0~91.80885"
+          class="border-2">
+          
+          91.80885
+          
+        </td>
+        
+        <td x-ref="Table newi_rating 0"
+          id="Table~newi_rating~0~2768"
+          class="border-2">
+          
+          2768
+          
+        </td>
+        
+        <td x-ref="Table incidents 0"
+          id="Table~incidents~0~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table car_name 0"
+          id="Table~car_name~0~Ferrari 296 GT3"
+          class="border-2">
+          
+          Ferrari 296 GT3
+          
+        </td>
+        
+        <td x-ref="Table aggregate_champ_points 0"
+          id="Table~aggregate_champ_points~0~61"
+          class="border-2">
+          
+          61
+          
+        </td>
+        
+      </tr>
+      <tr x-ref="Table 1">
+        
+        <td x-ref="Table subsession_id 1"
+          id="Table~subsession_id~1~65448375"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/subsession/65448375">
+            65448375
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table track 1"
+          id="Table~track~1~Circuit de Spa-Francorchamps Grand Prix Pits - 2010"
+          class="border-2">
+          
+          Circuit de Spa-Francorchamps Grand Prix Pits - 2010
+          
+        </td>
+        
+        <td x-ref="Table corners_per_lap 1"
+          id="Table~corners_per_lap~1~21"
+          class="border-2">
+          
+          21
+          
+        </td>
+        
+        <td x-ref="Table license 1"
+          id="Table~license~1~Class B"
+          class="border-2">
+          
+          Class B
+          
+        </td>
+        
+        <td x-ref="Table license_category 1"
+          id="Table~license_category~1~Road"
+          class="border-2">
+          
+          Road
+          
+        </td>
+        
+        <td x-ref="Table finish_position 1"
+          id="Table~finish_position~1~10"
+          class="border-2">
+          
+          10
+          
+        </td>
+        
+        <td x-ref="Table finish_position_in_class 1"
+          id="Table~finish_position_in_class~1~10"
+          class="border-2">
+          
+          10
+          
+        </td>
+        
+        <td x-ref="Table laps_lead 1"
+          id="Table~laps_lead~1~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table laps_complete 1"
+          id="Table~laps_complete~1~9"
+          class="border-2">
+          
+          9
+          
+        </td>
+        
+        <td x-ref="Table average_lap 1"
+          id="Table~average_lap~1~2:21.1048"
+          class="border-2">
+          
+          2:21.1048
+          
+        </td>
+        
+        <td x-ref="Table best_lap_time 1"
+          id="Table~best_lap_time~1~2:19.5622"
+          class="border-2">
+          
+          2:19.5622
+          
+        </td>
+        
+        <td x-ref="Table reason_out 1"
+          id="Table~reason_out~1~Running"
+          class="border-2">
+          
+          Running
+          
+        </td>
+        
+        <td x-ref="Table champ_points 1"
+          id="Table~champ_points~1~77"
+          class="border-2">
+          
+          77
+          
+        </td>
+        
+        <td x-ref="Table starting_position 1"
+          id="Table~starting_position~1~15"
+          class="border-2">
+          
+          15
+          
+        </td>
+        
+        <td x-ref="Table starting_position_in_class 1"
+          id="Table~starting_position_in_class~1~15"
+          class="border-2">
+          
+          15
+          
+        </td>
+        
+        <td x-ref="Table car_class_short_name 1"
+          id="Table~car_class_short_name~1~GT3 Class"
+          class="border-2">
+          
+          GT3 Class
+          
+        </td>
+        
+        <td x-ref="Table division_name 1"
+          id="Table~division_name~1~Division 2"
+          class="border-2">
+          
+          Division 2
+          
+        </td>
+        
+        <td x-ref="Table new_license_level 1"
+          id="Table~new_license_level~1~20"
+          class="border-2">
+          
+          20
+          
+        </td>
+        
+        <td x-ref="Table new_cpi 1"
+          id="Table~new_cpi~1~96.965225"
+          class="border-2">
+          
+          96.965225
+          
+        </td>
+        
+        <td x-ref="Table newi_rating 1"
+          id="Table~newi_rating~1~2603"
+          class="border-2">
+          
+          2603
+          
+        </td>
+        
+        <td x-ref="Table incidents 1"
+          id="Table~incidents~1~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table car_name 1"
+          id="Table~car_name~1~Ferrari 296 GT3"
+          class="border-2">
+          
+          Ferrari 296 GT3
+          
+        </td>
+        
+        <td x-ref="Table aggregate_champ_points 1"
+          id="Table~aggregate_champ_points~1~77"
+          class="border-2">
+          
+          77
+          
+        </td>
+        
+      </tr>
+      <tr x-ref="Table 2">
+        
+        <td x-ref="Table subsession_id 2"
+          id="Table~subsession_id~2~65048812"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/subsession/65048812">
+            65048812
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table track 2"
+          id="Table~track~2~Watkins Glen International Boot"
+          class="border-2">
+          
+          Watkins Glen International Boot
+          
+        </td>
+        
+        <td x-ref="Table corners_per_lap 2"
+          id="Table~corners_per_lap~2~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table license 2"
+          id="Table~license~2~Class B"
+          class="border-2">
+          
+          Class B
+          
+        </td>
+        
+        <td x-ref="Table license_category 2"
+          id="Table~license_category~2~Road"
+          class="border-2">
+          
+          Road
+          
+        </td>
+        
+        <td x-ref="Table finish_position 2"
+          id="Table~finish_position~2~15"
+          class="border-2">
+          
+          15
+          
+        </td>
+        
+        <td x-ref="Table finish_position_in_class 2"
+          id="Table~finish_position_in_class~2~15"
+          class="border-2">
+          
+          15
+          
+        </td>
+        
+        <td x-ref="Table laps_lead 2"
+          id="Table~laps_lead~2~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table laps_complete 2"
+          id="Table~laps_complete~2~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table average_lap 2"
+          id="Table~average_lap~2~1:46.4946"
+          class="border-2">
+          
+          1:46.4946
+          
+        </td>
+        
+        <td x-ref="Table best_lap_time 2"
+          id="Table~best_lap_time~2~1:44.6023"
+          class="border-2">
+          
+          1:44.6023
+          
+        </td>
+        
+        <td x-ref="Table reason_out 2"
+          id="Table~reason_out~2~Running"
+          class="border-2">
+          
+          Running
+          
+        </td>
+        
+        <td x-ref="Table champ_points 2"
+          id="Table~champ_points~2~50"
+          class="border-2">
+          
+          50
+          
+        </td>
+        
+        <td x-ref="Table starting_position 2"
+          id="Table~starting_position~2~18"
+          class="border-2">
+          
+          18
+          
+        </td>
+        
+        <td x-ref="Table starting_position_in_class 2"
+          id="Table~starting_position_in_class~2~18"
+          class="border-2">
+          
+          18
+          
+        </td>
+        
+        <td x-ref="Table car_class_short_name 2"
+          id="Table~car_class_short_name~2~GT3 Class"
+          class="border-2">
+          
+          GT3 Class
+          
+        </td>
+        
+        <td x-ref="Table division_name 2"
+          id="Table~division_name~2~Division 3"
+          class="border-2">
+          
+          Division 3
+          
+        </td>
+        
+        <td x-ref="Table new_license_level 2"
+          id="Table~new_license_level~2~20"
+          class="border-2">
+          
+          20
+          
+        </td>
+        
+        <td x-ref="Table new_cpi 2"
+          id="Table~new_cpi~2~105.41553"
+          class="border-2">
+          
+          105.41553
+          
+        </td>
+        
+        <td x-ref="Table newi_rating 2"
+          id="Table~newi_rating~2~2694"
+          class="border-2">
+          
+          2694
+          
+        </td>
+        
+        <td x-ref="Table incidents 2"
+          id="Table~incidents~2~4"
+          class="border-2">
+          
+          4
+          
+        </td>
+        
+        <td x-ref="Table car_name 2"
+          id="Table~car_name~2~Ferrari 296 GT3"
+          class="border-2">
+          
+          Ferrari 296 GT3
+          
+        </td>
+        
+        <td x-ref="Table aggregate_champ_points 2"
+          id="Table~aggregate_champ_points~2~50"
+          class="border-2">
+          
+          50
+          
+        </td>
+        
+      </tr>
+      <tr x-ref="Table 3">
+        
+        <td x-ref="Table subsession_id 3"
+          id="Table~subsession_id~3~64979589"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/subsession/64979589">
+            64979589
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table track 3"
+          id="Table~track~3~Watkins Glen International Boot"
+          class="border-2">
+          
+          Watkins Glen International Boot
+          
+        </td>
+        
+        <td x-ref="Table corners_per_lap 3"
+          id="Table~corners_per_lap~3~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table license 3"
+          id="Table~license~3~Class B"
+          class="border-2">
+          
+          Class B
+          
+        </td>
+        
+        <td x-ref="Table license_category 3"
+          id="Table~license_category~3~Road"
+          class="border-2">
+          
+          Road
+          
+        </td>
+        
+        <td x-ref="Table finish_position 3"
+          id="Table~finish_position~3~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table finish_position_in_class 3"
+          id="Table~finish_position_in_class~3~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table laps_lead 3"
+          id="Table~laps_lead~3~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table laps_complete 3"
+          id="Table~laps_complete~3~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table average_lap 3"
+          id="Table~average_lap~3~1:45.7164"
+          class="border-2">
+          
+          1:45.7164
+          
+        </td>
+        
+        <td x-ref="Table best_lap_time 3"
+          id="Table~best_lap_time~3~1:44.5837"
+          class="border-2">
+          
+          1:44.5837
+          
+        </td>
+        
+        <td x-ref="Table reason_out 3"
+          id="Table~reason_out~3~Running"
+          class="border-2">
+          
+          Running
+          
+        </td>
+        
+        <td x-ref="Table champ_points 3"
+          id="Table~champ_points~3~70"
+          class="border-2">
+          
+          70
+          
+        </td>
+        
+        <td x-ref="Table starting_position 3"
+          id="Table~starting_position~3~13"
+          class="border-2">
+          
+          13
+          
+        </td>
+        
+        <td x-ref="Table starting_position_in_class 3"
+          id="Table~starting_position_in_class~3~13"
+          class="border-2">
+          
+          13
+          
+        </td>
+        
+        <td x-ref="Table car_class_short_name 3"
+          id="Table~car_class_short_name~3~GT3 Class"
+          class="border-2">
+          
+          GT3 Class
+          
+        </td>
+        
+        <td x-ref="Table division_name 3"
+          id="Table~division_name~3~Division 3"
+          class="border-2">
+          
+          Division 3
+          
+        </td>
+        
+        <td x-ref="Table new_license_level 3"
+          id="Table~new_license_level~3~20"
+          class="border-2">
+          
+          20
+          
+        </td>
+        
+        <td x-ref="Table new_cpi 3"
+          id="Table~new_cpi~3~116.69152"
+          class="border-2">
+          
+          116.69152
+          
+        </td>
+        
+        <td x-ref="Table newi_rating 3"
+          id="Table~newi_rating~3~2721"
+          class="border-2">
+          
+          2721
+          
+        </td>
+        
+        <td x-ref="Table incidents 3"
+          id="Table~incidents~3~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table car_name 3"
+          id="Table~car_name~3~Ferrari 296 GT3"
+          class="border-2">
+          
+          Ferrari 296 GT3
+          
+        </td>
+        
+        <td x-ref="Table aggregate_champ_points 3"
+          id="Table~aggregate_champ_points~3~70"
+          class="border-2">
+          
+          70
+          
+        </td>
+        
+      </tr>
+      <tr x-ref="Table 4">
+        
+        <td x-ref="Table subsession_id 4"
+          id="Table~subsession_id~4~64977739"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/subsession/64977739">
+            64977739
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table track 4"
+          id="Table~track~4~Watkins Glen International Boot"
+          class="border-2">
+          
+          Watkins Glen International Boot
+          
+        </td>
+        
+        <td x-ref="Table corners_per_lap 4"
+          id="Table~corners_per_lap~4~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table license 4"
+          id="Table~license~4~Class B"
+          class="border-2">
+          
+          Class B
+          
+        </td>
+        
+        <td x-ref="Table license_category 4"
+          id="Table~license_category~4~Road"
+          class="border-2">
+          
+          Road
+          
+        </td>
+        
+        <td x-ref="Table finish_position 4"
+          id="Table~finish_position~4~5"
+          class="border-2">
+          
+          5
+          
+        </td>
+        
+        <td x-ref="Table finish_position_in_class 4"
+          id="Table~finish_position_in_class~4~5"
+          class="border-2">
+          
+          5
+          
+        </td>
+        
+        <td x-ref="Table laps_lead 4"
+          id="Table~laps_lead~4~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table laps_complete 4"
+          id="Table~laps_complete~4~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table average_lap 4"
+          id="Table~average_lap~4~1:45.0606"
+          class="border-2">
+          
+          1:45.0606
+          
+        </td>
+        
+        <td x-ref="Table best_lap_time 4"
+          id="Table~best_lap_time~4~1:44.1863"
+          class="border-2">
+          
+          1:44.1863
+          
+        </td>
+        
+        <td x-ref="Table reason_out 4"
+          id="Table~reason_out~4~Running"
+          class="border-2">
+          
+          Running
+          
+        </td>
+        
+        <td x-ref="Table champ_points 4"
+          id="Table~champ_points~4~116"
+          class="border-2">
+          
+          116
+          
+        </td>
+        
+        <td x-ref="Table starting_position 4"
+          id="Table~starting_position~4~10"
+          class="border-2">
+          
+          10
+          
+        </td>
+        
+        <td x-ref="Table starting_position_in_class 4"
+          id="Table~starting_position_in_class~4~10"
+          class="border-2">
+          
+          10
+          
+        </td>
+        
+        <td x-ref="Table car_class_short_name 4"
+          id="Table~car_class_short_name~4~GT3 Class"
+          class="border-2">
+          
+          GT3 Class
+          
+        </td>
+        
+        <td x-ref="Table division_name 4"
+          id="Table~division_name~4~Division 3"
+          class="border-2">
+          
+          Division 3
+          
+        </td>
+        
+        <td x-ref="Table new_license_level 4"
+          id="Table~new_license_level~4~20"
+          class="border-2">
+          
+          20
+          
+        </td>
+        
+        <td x-ref="Table new_cpi 4"
+          id="Table~new_cpi~4~114.36477"
+          class="border-2">
+          
+          114.36477
+          
+        </td>
+        
+        <td x-ref="Table newi_rating 4"
+          id="Table~newi_rating~4~2727"
+          class="border-2">
+          
+          2727
+          
+        </td>
+        
+        <td x-ref="Table incidents 4"
+          id="Table~incidents~4~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table car_name 4"
+          id="Table~car_name~4~Ferrari 296 GT3"
+          class="border-2">
+          
+          Ferrari 296 GT3
+          
+        </td>
+        
+        <td x-ref="Table aggregate_champ_points 4"
+          id="Table~aggregate_champ_points~4~116"
+          class="border-2">
+          
+          116
+          
+        </td>
+        
+      </tr>
+      <tr x-ref="Table 5">
+        
+        <td x-ref="Table subsession_id 5"
+          id="Table~subsession_id~5~64941723"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/subsession/64941723">
+            64941723
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table track 5"
+          id="Table~track~5~Watkins Glen International Boot"
+          class="border-2">
+          
+          Watkins Glen International Boot
+          
+        </td>
+        
+        <td x-ref="Table corners_per_lap 5"
+          id="Table~corners_per_lap~5~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table license 5"
+          id="Table~license~5~Class B"
+          class="border-2">
+          
+          Class B
+          
+        </td>
+        
+        <td x-ref="Table license_category 5"
+          id="Table~license_category~5~Road"
+          class="border-2">
+          
+          Road
+          
+        </td>
+        
+        <td x-ref="Table finish_position 5"
+          id="Table~finish_position~5~8"
+          class="border-2">
+          
+          8
+          
+        </td>
+        
+        <td x-ref="Table finish_position_in_class 5"
+          id="Table~finish_position_in_class~5~8"
+          class="border-2">
+          
+          8
+          
+        </td>
+        
+        <td x-ref="Table laps_lead 5"
+          id="Table~laps_lead~5~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table laps_complete 5"
+          id="Table~laps_complete~5~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table average_lap 5"
+          id="Table~average_lap~5~1:46.2870"
+          class="border-2">
+          
+          1:46.2870
+          
+        </td>
+        
+        <td x-ref="Table best_lap_time 5"
+          id="Table~best_lap_time~5~1:45.0461"
+          class="border-2">
+          
+          1:45.0461
+          
+        </td>
+        
+        <td x-ref="Table reason_out 5"
+          id="Table~reason_out~5~Running"
+          class="border-2">
+          
+          Running
+          
+        </td>
+        
+        <td x-ref="Table champ_points 5"
+          id="Table~champ_points~5~84"
+          class="border-2">
+          
+          84
+          
+        </td>
+        
+        <td x-ref="Table starting_position 5"
+          id="Table~starting_position~5~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table starting_position_in_class 5"
+          id="Table~starting_position_in_class~5~12"
+          class="border-2">
+          
+          12
+          
+        </td>
+        
+        <td x-ref="Table car_class_short_name 5"
+          id="Table~car_class_short_name~5~GT3 Class"
+          class="border-2">
+          
+          GT3 Class
+          
+        </td>
+        
+        <td x-ref="Table division_name 5"
+          id="Table~division_name~5~Division 3"
+          class="border-2">
+          
+          Division 3
+          
+        </td>
+        
+        <td x-ref="Table new_license_level 5"
+          id="Table~new_license_level~5~20"
+          class="border-2">
+          
+          20
+          
+        </td>
+        
+        <td x-ref="Table new_cpi 5"
+          id="Table~new_cpi~5~111.03314"
+          class="border-2">
+          
+          111.03314
+          
+        </td>
+        
+        <td x-ref="Table newi_rating 5"
+          id="Table~newi_rating~5~2667"
+          class="border-2">
+          
+          2667
+          
+        </td>
+        
+        <td x-ref="Table incidents 5"
+          id="Table~incidents~5~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table car_name 5"
+          id="Table~car_name~5~Ferrari 296 GT3"
+          class="border-2">
+          
+          Ferrari 296 GT3
+          
+        </td>
+        
+        <td x-ref="Table aggregate_champ_points 5"
+          id="Table~aggregate_champ_points~5~84"
+          class="border-2">
+          
+          84
+          
+        </td>
+        
+      </tr>
+      <tr x-ref="Table 6">
+        
+        <td x-ref="Table subsession_id 6"
+          id="Table~subsession_id~6~64402519"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/subsession/64402519">
+            64402519
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table track 6"
+          id="Table~track~6~Road America Full Course"
+          class="border-2">
+          
+          Road America Full Course
+          
+        </td>
+        
+        <td x-ref="Table corners_per_lap 6"
+          id="Table~corners_per_lap~6~18"
+          class="border-2">
+          
+          18
+          
+        </td>
+        
+        <td x-ref="Table license 6"
+          id="Table~license~6~Class B"
+          class="border-2">
+          
+          Class B
+          
+        </td>
+        
+        <td x-ref="Table license_category 6"
+          id="Table~license_category~6~Road"
+          class="border-2">
+          
+          Road
+          
+        </td>
+        
+        <td x-ref="Table finish_position 6"
+          id="Table~finish_position~6~14"
+          class="border-2">
+          
+          14
+          
+        </td>
+        
+        <td x-ref="Table finish_position_in_class 6"
+          id="Table~finish_position_in_class~6~14"
+          class="border-2">
+          
+          14
+          
+        </td>
+        
+        <td x-ref="Table laps_lead 6"
+          id="Table~laps_lead~6~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table laps_complete 6"
+          id="Table~laps_complete~6~10"
+          class="border-2">
+          
+          10
+          
+        </td>
+        
+        <td x-ref="Table average_lap 6"
+          id="Table~average_lap~6~2:08.2471"
+          class="border-2">
+          
+          2:08.2471
+          
+        </td>
+        
+        <td x-ref="Table best_lap_time 6"
+          id="Table~best_lap_time~6~2:05.9940"
+          class="border-2">
+          
+          2:05.9940
+          
+        </td>
+        
+        <td x-ref="Table reason_out 6"
+          id="Table~reason_out~6~Running"
+          class="border-2">
+          
+          Running
+          
+        </td>
+        
+        <td x-ref="Table champ_points 6"
+          id="Table~champ_points~6~41"
+          class="border-2">
+          
+          41
+          
+        </td>
+        
+        <td x-ref="Table starting_position 6"
+          id="Table~starting_position~6~16"
+          class="border-2">
+          
+          16
+          
+        </td>
+        
+        <td x-ref="Table starting_position_in_class 6"
+          id="Table~starting_position_in_class~6~16"
+          class="border-2">
+          
+          16
+          
+        </td>
+        
+        <td x-ref="Table car_class_short_name 6"
+          id="Table~car_class_short_name~6~GT3 Class"
+          class="border-2">
+          
+          GT3 Class
+          
+        </td>
+        
+        <td x-ref="Table division_name 6"
+          id="Table~division_name~6~Division 3"
+          class="border-2">
+          
+          Division 3
+          
+        </td>
+        
+        <td x-ref="Table new_license_level 6"
+          id="Table~new_license_level~6~20"
+          class="border-2">
+          
+          20
+          
+        </td>
+        
+        <td x-ref="Table new_cpi 6"
+          id="Table~new_cpi~6~95.78601"
+          class="border-2">
+          
+          95.78601
+          
+        </td>
+        
+        <td x-ref="Table newi_rating 6"
+          id="Table~newi_rating~6~2598"
+          class="border-2">
+          
+          2598
+          
+        </td>
+        
+        <td x-ref="Table incidents 6"
+          id="Table~incidents~6~3"
+          class="border-2">
+          
+          3
+          
+        </td>
+        
+        <td x-ref="Table car_name 6"
+          id="Table~car_name~6~Ferrari 296 GT3"
+          class="border-2">
+          
+          Ferrari 296 GT3
+          
+        </td>
+        
+        <td x-ref="Table aggregate_champ_points 6"
+          id="Table~aggregate_champ_points~6~41"
+          class="border-2">
+          
+          41
+          
+        </td>
+        
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

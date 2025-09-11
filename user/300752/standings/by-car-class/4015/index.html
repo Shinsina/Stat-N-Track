@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://shinsina.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://shinsina.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://shinsina.github.io/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="https://shinsina.github.io/favicon.ico" />
+  <link rel="stylesheet" href="../../../../season.css" />
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/async-alpine@2.0.2/dist/async-alpine.script.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.9/dist/cdn.min.js"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description"
+    content="Standings list for user ID - 300752 and car class ID - 4015" />
+  <title>Stat 'N' Track: Standings list for user ID - 300752 and car class ID - 4015</title>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+  <div class="text-center border-white border-2">
+    <p class="block lg:text-5xl md:text-2xl sm:text-xl break-words text-center">
+      Stat 'N' Track
+    </p>
+    <div class="block lg:text-3xl md:text-lg sm:text-md break-words text-center py-2">
+      <a class="underline p-2" href="/Stat-N-Track/">Home</a>
+    </div>
+  </div>
+  <div
+    class="text-center lg:text-xl md:text-lg sm:text-md grid grid-cols-1 md:grid-cols-3 lg:grid-cols-9 py-2 border-white border-x-2 border-b-2"
+  >
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/">All Sessions</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/by-year/">Sessions By Year</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/by-car-class/">Sessions By Car Class</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/by-track/">Sessions By Track</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/">All Season Standings</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/full-participation/">Fully Participated Season Standings</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/by-year/">Season Standings By Year</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/by-car-class/">Season Standings By Car Class</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/head-to-head/">Head to Head Matchups</a></div>
+  </div>
+  <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+    <table x-load x-load-src="../../../../alpine-components/table.js" x-ref="Table" x-data="table"
+      class="text-center col-span-1">
+      <tr x-ref="Headings">
+        
+        
+        
+        
+        
+        <th id="Table season_id 4" class="border-2" x-on:click="sort">
+          Season ID
+        </th>
+        <th id="Table year 4" class="border-2" x-on:click="sort">
+          Year
+        </th>
+        <th id="Table season_number 4" class="border-2" x-on:click="sort">
+          Season Number
+        </th>
+        <th id="Table car_class_id 4" class="border-2" x-on:click="sort">
+          Car Class ID
+        </th>
+        <th id="Table season_summary 4" class="border-2" x-on:click="sort">
+          Season Summary
+        </th>
+        <th id="Table division 4" class="border-2" x-on:click="sort">
+          Division
+        </th>
+        <th id="Table division_rank 4" class="border-2" x-on:click="sort">
+          Rank (Division)
+        </th>
+        <th id="Table overall_rank 4" class="border-2" x-on:click="sort">
+          Rank (Overall)
+        </th>
+        <th id="Table points 4" class="border-2" x-on:click="sort">
+          Points
+        </th>
+        <th id="Table season_name 4" class="border-2" x-on:click="sort">
+          Season Name
+        </th>
+        <th id="Table weeks_counted 4" class="border-2" x-on:click="sort">
+          Participation Weeks
+        </th>
+        <th id="Table starts 4" class="border-2" x-on:click="sort">
+          Starts
+        </th>
+        <th id="Table wins 4" class="border-2" x-on:click="sort">
+          Wins
+        </th>
+        <th id="Table top5 4" class="border-2" x-on:click="sort">
+          Top 5s
+        </th>
+        <th id="Table top25_percent 4" class="border-2" x-on:click="sort">
+          Top 25% Finishes
+        </th>
+        <th id="Table poles 4" class="border-2" x-on:click="sort">
+          Poles
+        </th>
+        <th id="Table avg_start_position 4" class="border-2" x-on:click="sort">
+          Average Starting Position
+        </th>
+        <th id="Table avg_finish_position 4" class="border-2" x-on:click="sort">
+          Average Finishing Position
+        </th>
+        <th id="Table avg_field_size 4" class="border-2" x-on:click="sort">
+          Average Field Size
+        </th>
+        <th id="Table laps 4" class="border-2" x-on:click="sort">
+          Laps
+        </th>
+        <th id="Table laps_led 4" class="border-2" x-on:click="sort">
+          Laps Led
+        </th>
+        <th id="Table incidents 4" class="border-2" x-on:click="sort">
+          Incidents
+        </th>
+      </tr>
+      
+      <tr x-ref="Table 0">
+        
+        <td x-ref="Table season_id 0"
+          id="Table~season_id~0~5564"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/season/5564/car-class/4015/">
+            5564
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table year 0"
+          id="Table~year~0~2025"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/standings/by-year/2025/">
+            2025
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table season_number 0"
+          id="Table~season_number~0~3"
+          class="border-2">
+          
+          3
+          
+        </td>
+        
+        <td x-ref="Table car_class_id 0"
+          id="Table~car_class_id~0~4015"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/standings/by-car-class/4015/">
+            4015
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table season_summary 0"
+          id="Table~season_summary~0~5564"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/season/5564/car-class/4015/season-summary/">
+            5564
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table division 0"
+          id="Table~division~0~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table division_rank 0"
+          id="Table~division_rank~0~18"
+          class="border-2">
+          
+          18
+          
+        </td>
+        
+        <td x-ref="Table overall_rank 0"
+          id="Table~overall_rank~0~64"
+          class="border-2">
+          
+          64
+          
+        </td>
+        
+        <td x-ref="Table points 0"
+          id="Table~points~0~285"
+          class="border-2">
+          
+          285
+          
+        </td>
+        
+        <td x-ref="Table season_name 0"
+          id="Table~season_name~0~Production Car Challenge by Sim-Lab - 2025 Season 3"
+          class="border-2">
+          
+          Production Car Challenge by Sim-Lab - 2025 Season 3
+          
+        </td>
+        
+        <td x-ref="Table weeks_counted 0"
+          id="Table~weeks_counted~0~3"
+          class="border-2">
+          
+          3
+          
+        </td>
+        
+        <td x-ref="Table starts 0"
+          id="Table~starts~0~4"
+          class="border-2">
+          
+          4
+          
+        </td>
+        
+        <td x-ref="Table wins 0"
+          id="Table~wins~0~3"
+          class="border-2">
+          
+          3
+          
+        </td>
+        
+        <td x-ref="Table top5 0"
+          id="Table~top5~0~4"
+          class="border-2">
+          
+          4
+          
+        </td>
+        
+        <td x-ref="Table top25_percent 0"
+          id="Table~top25_percent~0~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table poles 0"
+          id="Table~poles~0~3"
+          class="border-2">
+          
+          3
+          
+        </td>
+        
+        <td x-ref="Table avg_start_position 0"
+          id="Table~avg_start_position~0~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table avg_finish_position 0"
+          id="Table~avg_finish_position~0~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table avg_field_size 0"
+          id="Table~avg_field_size~0~3"
+          class="border-2">
+          
+          3
+          
+        </td>
+        
+        <td x-ref="Table laps 0"
+          id="Table~laps~0~51"
+          class="border-2">
+          
+          51
+          
+        </td>
+        
+        <td x-ref="Table laps_led 0"
+          id="Table~laps_led~0~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table incidents 0"
+          id="Table~incidents~0~16"
+          class="border-2">
+          
+          16
+          
+        </td>
+        
+      </tr>
+      <tr x-ref="Table 1">
+        
+        <td x-ref="Table season_id 1"
+          id="Table~season_id~1~5393"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/season/5393/car-class/4015/">
+            5393
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table year 1"
+          id="Table~year~1~2025"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/standings/by-year/2025/">
+            2025
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table season_number 1"
+          id="Table~season_number~1~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table car_class_id 1"
+          id="Table~car_class_id~1~4015"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/standings/by-car-class/4015/">
+            4015
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table season_summary 1"
+          id="Table~season_summary~1~5393"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/season/5393/car-class/4015/season-summary/">
+            5393
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table division 1"
+          id="Table~division~1~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table division_rank 1"
+          id="Table~division_rank~1~95"
+          class="border-2">
+          
+          95
+          
+        </td>
+        
+        <td x-ref="Table overall_rank 1"
+          id="Table~overall_rank~1~1168"
+          class="border-2">
+          
+          1168
+          
+        </td>
+        
+        <td x-ref="Table points 1"
+          id="Table~points~1~54"
+          class="border-2">
+          
+          54
+          
+        </td>
+        
+        <td x-ref="Table season_name 1"
+          id="Table~season_name~1~Clio Cup - 2025 Season 2"
+          class="border-2">
+          
+          Clio Cup - 2025 Season 2
+          
+        </td>
+        
+        <td x-ref="Table weeks_counted 1"
+          id="Table~weeks_counted~1~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table starts 1"
+          id="Table~starts~1~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table wins 1"
+          id="Table~wins~1~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table top5 1"
+          id="Table~top5~1~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table top25_percent 1"
+          id="Table~top25_percent~1~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table poles 1"
+          id="Table~poles~1~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table avg_start_position 1"
+          id="Table~avg_start_position~1~8"
+          class="border-2">
+          
+          8
+          
+        </td>
+        
+        <td x-ref="Table avg_finish_position 1"
+          id="Table~avg_finish_position~1~7"
+          class="border-2">
+          
+          7
+          
+        </td>
+        
+        <td x-ref="Table avg_field_size 1"
+          id="Table~avg_field_size~1~17"
+          class="border-2">
+          
+          17
+          
+        </td>
+        
+        <td x-ref="Table laps 1"
+          id="Table~laps~1~16"
+          class="border-2">
+          
+          16
+          
+        </td>
+        
+        <td x-ref="Table laps_led 1"
+          id="Table~laps_led~1~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table incidents 1"
+          id="Table~incidents~1~3"
+          class="border-2">
+          
+          3
+          
+        </td>
+        
+      </tr>
+      <tr x-ref="Table 2">
+        
+        <td x-ref="Table season_id 2"
+          id="Table~season_id~2~5340"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/season/5340/car-class/4015/">
+            5340
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table year 2"
+          id="Table~year~2~2024"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/standings/by-year/2024/">
+            2024
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table season_number 2"
+          id="Table~season_number~2~4"
+          class="border-2">
+          
+          4
+          
+        </td>
+        
+        <td x-ref="Table car_class_id 2"
+          id="Table~car_class_id~2~4015"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/standings/by-car-class/4015/">
+            4015
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table season_summary 2"
+          id="Table~season_summary~2~5340"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/season/5340/car-class/4015/season-summary/">
+            5340
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table division 2"
+          id="Table~division~2~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table division_rank 2"
+          id="Table~division_rank~2~7"
+          class="border-2">
+          
+          7
+          
+        </td>
+        
+        <td x-ref="Table overall_rank 2"
+          id="Table~overall_rank~2~21"
+          class="border-2">
+          
+          21
+          
+        </td>
+        
+        <td x-ref="Table points 2"
+          id="Table~points~2~98"
+          class="border-2">
+          
+          98
+          
+        </td>
+        
+        <td x-ref="Table season_name 2"
+          id="Table~season_name~2~SCCA Runoffs - Renault Clio - 2024 Season 4"
+          class="border-2">
+          
+          SCCA Runoffs - Renault Clio - 2024 Season 4
+          
+        </td>
+        
+        <td x-ref="Table weeks_counted 2"
+          id="Table~weeks_counted~2~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table starts 2"
+          id="Table~starts~2~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table wins 2"
+          id="Table~wins~2~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table top5 2"
+          id="Table~top5~2~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table top25_percent 2"
+          id="Table~top25_percent~2~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table poles 2"
+          id="Table~poles~2~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table avg_start_position 2"
+          id="Table~avg_start_position~2~20"
+          class="border-2">
+          
+          20
+          
+        </td>
+        
+        <td x-ref="Table avg_finish_position 2"
+          id="Table~avg_finish_position~2~13"
+          class="border-2">
+          
+          13
+          
+        </td>
+        
+        <td x-ref="Table avg_field_size 2"
+          id="Table~avg_field_size~2~28"
+          class="border-2">
+          
+          28
+          
+        </td>
+        
+        <td x-ref="Table laps 2"
+          id="Table~laps~2~28"
+          class="border-2">
+          
+          28
+          
+        </td>
+        
+        <td x-ref="Table laps_led 2"
+          id="Table~laps_led~2~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+        <td x-ref="Table incidents 2"
+          id="Table~incidents~2~14"
+          class="border-2">
+          
+          14
+          
+        </td>
+        
+      </tr>
+      <tr x-ref="Table 3">
+        
+        <td x-ref="Table season_id 3"
+          id="Table~season_id~3~5205"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/season/5205/car-class/4015/">
+            5205
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table year 3"
+          id="Table~year~3~2025"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/standings/by-year/2025/">
+            2025
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table season_number 3"
+          id="Table~season_number~3~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table car_class_id 3"
+          id="Table~car_class_id~3~4015"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/standings/by-car-class/4015/">
+            4015
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table season_summary 3"
+          id="Table~season_summary~3~5205"
+          class="border-2">
+          
+          <a class="underline"
+            href="/Stat-N-Track/user/300752/season/5205/car-class/4015/season-summary/">
+            5205
+          </a>
+          
+        </td>
+        
+        <td x-ref="Table division 3"
+          id="Table~division~3~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table division_rank 3"
+          id="Table~division_rank~3~102"
+          class="border-2">
+          
+          102
+          
+        </td>
+        
+        <td x-ref="Table overall_rank 3"
+          id="Table~overall_rank~3~853"
+          class="border-2">
+          
+          853
+          
+        </td>
+        
+        <td x-ref="Table points 3"
+          id="Table~points~3~85"
+          class="border-2">
+          
+          85
+          
+        </td>
+        
+        <td x-ref="Table season_name 3"
+          id="Table~season_name~3~Clio Cup - 2025 Season 1 - Fixed"
+          class="border-2">
+          
+          Clio Cup - 2025 Season 1 - Fixed
+          
+        </td>
+        
+        <td x-ref="Table weeks_counted 3"
+          id="Table~weeks_counted~3~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table starts 3"
+          id="Table~starts~3~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table wins 3"
+          id="Table~wins~3~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table top5 3"
+          id="Table~top5~3~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table top25_percent 3"
+          id="Table~top25_percent~3~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table poles 3"
+          id="Table~poles~3~2"
+          class="border-2">
+          
+          2
+          
+        </td>
+        
+        <td x-ref="Table avg_start_position 3"
+          id="Table~avg_start_position~3~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table avg_finish_position 3"
+          id="Table~avg_finish_position~3~1"
+          class="border-2">
+          
+          1
+          
+        </td>
+        
+        <td x-ref="Table avg_field_size 3"
+          id="Table~avg_field_size~3~6"
+          class="border-2">
+          
+          6
+          
+        </td>
+        
+        <td x-ref="Table laps 3"
+          id="Table~laps~3~16"
+          class="border-2">
+          
+          16
+          
+        </td>
+        
+        <td x-ref="Table laps_led 3"
+          id="Table~laps_led~3~15"
+          class="border-2">
+          
+          15
+          
+        </td>
+        
+        <td x-ref="Table incidents 3"
+          id="Table~incidents~3~0"
+          class="border-2">
+          
+          0
+          
+        </td>
+        
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>
