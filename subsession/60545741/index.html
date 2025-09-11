@@ -1,0 +1,6025 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://shinsina.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://shinsina.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://shinsina.github.io/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="https://shinsina.github.io/favicon.ico" />
+  <link rel="stylesheet" href="../index.css" />
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/async-alpine@2.0.2/dist/async-alpine.script.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.9/dist/cdn.min.js"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content="Subsession information for subsession - 60545741" />
+  <title>Stat 'N' Track: Subsession - 60545741</title>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+  <div class="text-center border-white border-2">
+    <p class="block lg:text-5xl md:text-2xl sm:text-xl break-words text-center">
+      Stat 'N' Track
+    </p>
+    <div class="block lg:text-3xl md:text-lg sm:text-md break-words text-center py-2">
+      <a class="underline p-2" href="/Stat-N-Track/">Home</a>
+    </div>
+  </div>
+  <div class="grid grid-cols-12">
+    <div class="col-span-12 md:col-span-6 border-x-2 md:border-r-0 md:border-l-2 pt-4">
+      <div class="grid grid-cols-3">
+        <div class="col-span-3">
+          
+          <div class="flex justify-center">
+            <img src="https://images-static.iracing.com/img/logos/series/seriesid_514.png" alt="Series Logo" width=300
+              height=175 format="avif" loading="eager" />
+          </div>
+          
+          <div class="text-center py-4">
+            <p><b>Toyota GR86 Cup by SIMAGIC 2023 Season 2</b></p>
+            <p><b>Week 2 of 12</b></p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center pb-6">
+        <p>Race Summary:</p>
+        <p>Average Lap Time: 1:01.5223</p>
+        <p>Laps Complete: 15</p>
+        <p>Number of Cautions: 0 for 0 laps</p>
+        <p>Lead Changes: 1</p>
+        <p>Strength of Field: 1538</p>
+        <p>Started: 3/23/2023 9:15pm</p>
+        <p>Ended: 3/23/2023 9:45pm</p>
+      </div>
+    </div>
+    <div class="col-span-12 md:col-span-6 border-x-2">
+      <div class="text-center border-b-2">
+        <p>Track Facts:</p>
+        <p>Name: Lime Rock Park</p>
+        <p>Configuration: Grand Prix</p>
+        <p>Category: Road</p>
+        <p>Corners: 9</p>
+      </div>
+      <div class="text-center border-b-2">
+        <p>License Information:</p>
+        <p>License Category: Road</p>
+        <div>
+          
+          Allowed Licenses:
+          <p>Rookie 4.00</p>
+          <p>Class D and above</p>
+        </div>
+      </div>
+      <div class="text-center row-span-1">
+        <p>Relevant IDs:</p>
+        <p>license_category_id: 2</p>
+        <p>season_id: 4126</p>
+        <p>series_id: 514</p>
+        <p>session_id: 201346110</p>
+        <p>subsession_id: 60545741</p>
+        
+      </div>
+    </div>
+  </div>
+  <div x-load x-load-src="../alpine-components/tables.js" x-data="tables">
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+    <div class="grid grid-cols-3 text-center pb-6">
+      <button id="PRACTICE QUALIFY HEAT RACE" x-on:click="toggle" class="border-2 bg-gray-700">
+        Practice Table
+      </button>
+      <button id="QUALIFY PRACTICE HEAT RACE" x-on:click="toggle" class="border-2 bg-gray-700">
+        Qualifying Table
+      </button>
+      
+      
+      <button id="RACE PRACTICE QUALIFY HEAT" x-on:click="toggle" class="border-2 bg-gray-700">
+        Race Table
+      </button>
+    </div>
+    <div>
+      <div x-cloak x-show="PRACTICE" x-transition:enter.duration.500ms x-transition:leave.duration.0ms>
+        
+        <div class="grid grid-cols-1">
+          <table class="text-center col-span-1">
+            <tr class="bg-gray-500">
+              <th class="border-2">Session Type</th>
+            </tr>
+            <tr>
+              <td class="border-2">Open Practice</td>
+            </tr>
+          </table>
+        </div>
+        
+        
+        <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+          <table x-load x-load-src="../alpine-components/practice-table.js" x-ref="Table" x-data="PRACTICE"
+            class="text-center col-span-1">
+            <tr x-ref="Headings">
+              
+              
+              <th
+                id="Table Cust_ID 20"
+                class="border-2" x-on:click="sort">cust_id</th>
+              
+              <th
+                id="Table Display_Name 20"
+                class="border-2" x-on:click="sort">Name</th>
+              
+              <th
+                id="Table Finish_Position 20"
+                class="border-2" x-on:click="sort">Finish</th>
+              
+              <th
+                id="Table Laps_Complete 20"
+                class="border-2" x-on:click="sort">Laps Completed</th>
+              
+              <th
+                id="Table Interval 20"
+                class="border-2" x-on:click="sort">Interval to P1</th>
+              
+              <th
+                id="Table Average_Lap 20"
+                class="border-2" x-on:click="sort">AVG Laptime</th>
+              
+              <th
+                id="Table Best_Lap_Num 20"
+                class="border-2" x-on:click="sort">Fastest Lap</th>
+              
+              <th
+                id="Table Best_Lap_Time 20"
+                class="border-2" x-on:click="sort">Fastest Lap Time</th>
+              
+              <th
+                id="Table Division_Name 20"
+                class="border-2" x-on:click="sort">Division</th>
+              
+              <th
+                id="Table Incidents 20"
+                class="border-2" x-on:click="sort">Incidents</th>
+              
+              <th
+                id="Table Car_Name 20"
+                class="border-2" x-on:click="sort">Car</th>
+            </tr>
+            
+            <tr x-ref="Table 0">
+              
+              <td x-ref="Table Cust_ID 0"
+                id="PRACTICE~Cust_ID~0~499467"
+                class="border-2">
+                499467
+              </td>
+              
+              <td x-ref="Table Display_Name 0"
+                id="PRACTICE~Display_Name~0~Eric Stumpf"
+                class="border-2">
+                Eric Stumpf
+              </td>
+              
+              <td x-ref="Table Finish_Position 0"
+                id="PRACTICE~Finish_Position~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Laps_Complete 0"
+                id="PRACTICE~Laps_Complete~0~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 0"
+                id="PRACTICE~Interval~0~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 0"
+                id="PRACTICE~Average_Lap~0~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 0"
+                id="PRACTICE~Best_Lap_Num~0~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 0"
+                id="PRACTICE~Best_Lap_Time~0~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 0"
+                id="PRACTICE~Division_Name~0~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 0"
+                id="PRACTICE~Incidents~0~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 0"
+                id="PRACTICE~Car_Name~0~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 1">
+              
+              <td x-ref="Table Cust_ID 1"
+                id="PRACTICE~Cust_ID~1~688024"
+                class="border-2">
+                688024
+              </td>
+              
+              <td x-ref="Table Display_Name 1"
+                id="PRACTICE~Display_Name~1~Paulo Tosta"
+                class="border-2">
+                Paulo Tosta
+              </td>
+              
+              <td x-ref="Table Finish_Position 1"
+                id="PRACTICE~Finish_Position~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Laps_Complete 1"
+                id="PRACTICE~Laps_Complete~1~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 1"
+                id="PRACTICE~Interval~1~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 1"
+                id="PRACTICE~Average_Lap~1~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 1"
+                id="PRACTICE~Best_Lap_Num~1~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 1"
+                id="PRACTICE~Best_Lap_Time~1~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 1"
+                id="PRACTICE~Division_Name~1~Division 7"
+                class="border-2">
+                Division 7
+              </td>
+              
+              <td x-ref="Table Incidents 1"
+                id="PRACTICE~Incidents~1~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 1"
+                id="PRACTICE~Car_Name~1~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 2">
+              
+              <td x-ref="Table Cust_ID 2"
+                id="PRACTICE~Cust_ID~2~744610"
+                class="border-2">
+                744610
+              </td>
+              
+              <td x-ref="Table Display_Name 2"
+                id="PRACTICE~Display_Name~2~Marcus Jeffries"
+                class="border-2">
+                Marcus Jeffries
+              </td>
+              
+              <td x-ref="Table Finish_Position 2"
+                id="PRACTICE~Finish_Position~2~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Laps_Complete 2"
+                id="PRACTICE~Laps_Complete~2~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 2"
+                id="PRACTICE~Interval~2~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 2"
+                id="PRACTICE~Average_Lap~2~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 2"
+                id="PRACTICE~Best_Lap_Num~2~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 2"
+                id="PRACTICE~Best_Lap_Time~2~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 2"
+                id="PRACTICE~Division_Name~2~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 2"
+                id="PRACTICE~Incidents~2~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 2"
+                id="PRACTICE~Car_Name~2~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 3">
+              
+              <td x-ref="Table Cust_ID 3"
+                id="PRACTICE~Cust_ID~3~46706"
+                class="border-2">
+                46706
+              </td>
+              
+              <td x-ref="Table Display_Name 3"
+                id="PRACTICE~Display_Name~3~Josh DeVoy"
+                class="border-2">
+                Josh DeVoy
+              </td>
+              
+              <td x-ref="Table Finish_Position 3"
+                id="PRACTICE~Finish_Position~3~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Laps_Complete 3"
+                id="PRACTICE~Laps_Complete~3~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 3"
+                id="PRACTICE~Interval~3~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 3"
+                id="PRACTICE~Average_Lap~3~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 3"
+                id="PRACTICE~Best_Lap_Num~3~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 3"
+                id="PRACTICE~Best_Lap_Time~3~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 3"
+                id="PRACTICE~Division_Name~3~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 3"
+                id="PRACTICE~Incidents~3~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 3"
+                id="PRACTICE~Car_Name~3~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 4">
+              
+              <td x-ref="Table Cust_ID 4"
+                id="PRACTICE~Cust_ID~4~774043"
+                class="border-2">
+                774043
+              </td>
+              
+              <td x-ref="Table Display_Name 4"
+                id="PRACTICE~Display_Name~4~Todd Sack"
+                class="border-2">
+                Todd Sack
+              </td>
+              
+              <td x-ref="Table Finish_Position 4"
+                id="PRACTICE~Finish_Position~4~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Laps_Complete 4"
+                id="PRACTICE~Laps_Complete~4~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 4"
+                id="PRACTICE~Interval~4~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 4"
+                id="PRACTICE~Average_Lap~4~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 4"
+                id="PRACTICE~Best_Lap_Num~4~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 4"
+                id="PRACTICE~Best_Lap_Time~4~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 4"
+                id="PRACTICE~Division_Name~4~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Incidents 4"
+                id="PRACTICE~Incidents~4~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 4"
+                id="PRACTICE~Car_Name~4~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 5">
+              
+              <td x-ref="Table Cust_ID 5"
+                id="PRACTICE~Cust_ID~5~879886"
+                class="border-2">
+                879886
+              </td>
+              
+              <td x-ref="Table Display_Name 5"
+                id="PRACTICE~Display_Name~5~Thomas Sapozhnikov"
+                class="border-2">
+                Thomas Sapozhnikov
+              </td>
+              
+              <td x-ref="Table Finish_Position 5"
+                id="PRACTICE~Finish_Position~5~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Laps_Complete 5"
+                id="PRACTICE~Laps_Complete~5~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 5"
+                id="PRACTICE~Interval~5~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 5"
+                id="PRACTICE~Average_Lap~5~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 5"
+                id="PRACTICE~Best_Lap_Num~5~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 5"
+                id="PRACTICE~Best_Lap_Time~5~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 5"
+                id="PRACTICE~Division_Name~5~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 5"
+                id="PRACTICE~Incidents~5~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 5"
+                id="PRACTICE~Car_Name~5~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 6">
+              
+              <td x-ref="Table Cust_ID 6"
+                id="PRACTICE~Cust_ID~6~185695"
+                class="border-2">
+                185695
+              </td>
+              
+              <td x-ref="Table Display_Name 6"
+                id="PRACTICE~Display_Name~6~Rob Franklin"
+                class="border-2">
+                Rob Franklin
+              </td>
+              
+              <td x-ref="Table Finish_Position 6"
+                id="PRACTICE~Finish_Position~6~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Laps_Complete 6"
+                id="PRACTICE~Laps_Complete~6~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 6"
+                id="PRACTICE~Interval~6~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 6"
+                id="PRACTICE~Average_Lap~6~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 6"
+                id="PRACTICE~Best_Lap_Num~6~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 6"
+                id="PRACTICE~Best_Lap_Time~6~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 6"
+                id="PRACTICE~Division_Name~6~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 6"
+                id="PRACTICE~Incidents~6~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Car_Name 6"
+                id="PRACTICE~Car_Name~6~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 7">
+              
+              <td x-ref="Table Cust_ID 7"
+                id="PRACTICE~Cust_ID~7~300752"
+                class="border-2">
+                300752
+              </td>
+              
+              <td x-ref="Table Display_Name 7"
+                id="PRACTICE~Display_Name~7~Jacob Collins"
+                class="border-2">
+                Jacob Collins
+              </td>
+              
+              <td x-ref="Table Finish_Position 7"
+                id="PRACTICE~Finish_Position~7~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Laps_Complete 7"
+                id="PRACTICE~Laps_Complete~7~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 7"
+                id="PRACTICE~Interval~7~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 7"
+                id="PRACTICE~Average_Lap~7~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 7"
+                id="PRACTICE~Best_Lap_Num~7~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 7"
+                id="PRACTICE~Best_Lap_Time~7~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 7"
+                id="PRACTICE~Division_Name~7~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 7"
+                id="PRACTICE~Incidents~7~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 7"
+                id="PRACTICE~Car_Name~7~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 8">
+              
+              <td x-ref="Table Cust_ID 8"
+                id="PRACTICE~Cust_ID~8~881566"
+                class="border-2">
+                881566
+              </td>
+              
+              <td x-ref="Table Display_Name 8"
+                id="PRACTICE~Display_Name~8~Dieter Alleman2"
+                class="border-2">
+                Dieter Alleman2
+              </td>
+              
+              <td x-ref="Table Finish_Position 8"
+                id="PRACTICE~Finish_Position~8~9"
+                class="border-2">
+                9
+              </td>
+              
+              <td x-ref="Table Laps_Complete 8"
+                id="PRACTICE~Laps_Complete~8~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 8"
+                id="PRACTICE~Interval~8~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 8"
+                id="PRACTICE~Average_Lap~8~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 8"
+                id="PRACTICE~Best_Lap_Num~8~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 8"
+                id="PRACTICE~Best_Lap_Time~8~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 8"
+                id="PRACTICE~Division_Name~8~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Incidents 8"
+                id="PRACTICE~Incidents~8~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 8"
+                id="PRACTICE~Car_Name~8~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 9">
+              
+              <td x-ref="Table Cust_ID 9"
+                id="PRACTICE~Cust_ID~9~592274"
+                class="border-2">
+                592274
+              </td>
+              
+              <td x-ref="Table Display_Name 9"
+                id="PRACTICE~Display_Name~9~Steve Michaels"
+                class="border-2">
+                Steve Michaels
+              </td>
+              
+              <td x-ref="Table Finish_Position 9"
+                id="PRACTICE~Finish_Position~9~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Laps_Complete 9"
+                id="PRACTICE~Laps_Complete~9~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 9"
+                id="PRACTICE~Interval~9~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 9"
+                id="PRACTICE~Average_Lap~9~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 9"
+                id="PRACTICE~Best_Lap_Num~9~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 9"
+                id="PRACTICE~Best_Lap_Time~9~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 9"
+                id="PRACTICE~Division_Name~9~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 9"
+                id="PRACTICE~Incidents~9~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Car_Name 9"
+                id="PRACTICE~Car_Name~9~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 10">
+              
+              <td x-ref="Table Cust_ID 10"
+                id="PRACTICE~Cust_ID~10~864833"
+                class="border-2">
+                864833
+              </td>
+              
+              <td x-ref="Table Display_Name 10"
+                id="PRACTICE~Display_Name~10~Guilherme Marra"
+                class="border-2">
+                Guilherme Marra
+              </td>
+              
+              <td x-ref="Table Finish_Position 10"
+                id="PRACTICE~Finish_Position~10~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Laps_Complete 10"
+                id="PRACTICE~Laps_Complete~10~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 10"
+                id="PRACTICE~Interval~10~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 10"
+                id="PRACTICE~Average_Lap~10~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 10"
+                id="PRACTICE~Best_Lap_Num~10~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 10"
+                id="PRACTICE~Best_Lap_Time~10~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 10"
+                id="PRACTICE~Division_Name~10~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Incidents 10"
+                id="PRACTICE~Incidents~10~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Car_Name 10"
+                id="PRACTICE~Car_Name~10~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 11">
+              
+              <td x-ref="Table Cust_ID 11"
+                id="PRACTICE~Cust_ID~11~709105"
+                class="border-2">
+                709105
+              </td>
+              
+              <td x-ref="Table Display_Name 11"
+                id="PRACTICE~Display_Name~11~Bryan Alvarez"
+                class="border-2">
+                Bryan Alvarez
+              </td>
+              
+              <td x-ref="Table Finish_Position 11"
+                id="PRACTICE~Finish_Position~11~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Laps_Complete 11"
+                id="PRACTICE~Laps_Complete~11~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 11"
+                id="PRACTICE~Interval~11~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 11"
+                id="PRACTICE~Average_Lap~11~1:09.8636"
+                class="border-2">
+                1:09.8636
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 11"
+                id="PRACTICE~Best_Lap_Num~11~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 11"
+                id="PRACTICE~Best_Lap_Time~11~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 11"
+                id="PRACTICE~Division_Name~11~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Incidents 11"
+                id="PRACTICE~Incidents~11~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 11"
+                id="PRACTICE~Car_Name~11~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 12">
+              
+              <td x-ref="Table Cust_ID 12"
+                id="PRACTICE~Cust_ID~12~555675"
+                class="border-2">
+                555675
+              </td>
+              
+              <td x-ref="Table Display_Name 12"
+                id="PRACTICE~Display_Name~12~Daniel Spitzer"
+                class="border-2">
+                Daniel Spitzer
+              </td>
+              
+              <td x-ref="Table Finish_Position 12"
+                id="PRACTICE~Finish_Position~12~13"
+                class="border-2">
+                13
+              </td>
+              
+              <td x-ref="Table Laps_Complete 12"
+                id="PRACTICE~Laps_Complete~12~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 12"
+                id="PRACTICE~Interval~12~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 12"
+                id="PRACTICE~Average_Lap~12~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 12"
+                id="PRACTICE~Best_Lap_Num~12~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 12"
+                id="PRACTICE~Best_Lap_Time~12~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 12"
+                id="PRACTICE~Division_Name~12~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 12"
+                id="PRACTICE~Incidents~12~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 12"
+                id="PRACTICE~Car_Name~12~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 13">
+              
+              <td x-ref="Table Cust_ID 13"
+                id="PRACTICE~Cust_ID~13~876307"
+                class="border-2">
+                876307
+              </td>
+              
+              <td x-ref="Table Display_Name 13"
+                id="PRACTICE~Display_Name~13~Christopher Digennaro"
+                class="border-2">
+                Christopher Digennaro
+              </td>
+              
+              <td x-ref="Table Finish_Position 13"
+                id="PRACTICE~Finish_Position~13~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Laps_Complete 13"
+                id="PRACTICE~Laps_Complete~13~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 13"
+                id="PRACTICE~Interval~13~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 13"
+                id="PRACTICE~Average_Lap~13~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 13"
+                id="PRACTICE~Best_Lap_Num~13~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 13"
+                id="PRACTICE~Best_Lap_Time~13~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 13"
+                id="PRACTICE~Division_Name~13~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 13"
+                id="PRACTICE~Incidents~13~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 13"
+                id="PRACTICE~Car_Name~13~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 14">
+              
+              <td x-ref="Table Cust_ID 14"
+                id="PRACTICE~Cust_ID~14~515384"
+                class="border-2">
+                515384
+              </td>
+              
+              <td x-ref="Table Display_Name 14"
+                id="PRACTICE~Display_Name~14~Brandon Sherrer"
+                class="border-2">
+                Brandon Sherrer
+              </td>
+              
+              <td x-ref="Table Finish_Position 14"
+                id="PRACTICE~Finish_Position~14~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Laps_Complete 14"
+                id="PRACTICE~Laps_Complete~14~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 14"
+                id="PRACTICE~Interval~14~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 14"
+                id="PRACTICE~Average_Lap~14~1:11.3819"
+                class="border-2">
+                1:11.3819
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 14"
+                id="PRACTICE~Best_Lap_Num~14~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 14"
+                id="PRACTICE~Best_Lap_Time~14~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 14"
+                id="PRACTICE~Division_Name~14~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Incidents 14"
+                id="PRACTICE~Incidents~14~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 14"
+                id="PRACTICE~Car_Name~14~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 15">
+              
+              <td x-ref="Table Cust_ID 15"
+                id="PRACTICE~Cust_ID~15~882231"
+                class="border-2">
+                882231
+              </td>
+              
+              <td x-ref="Table Display_Name 15"
+                id="PRACTICE~Display_Name~15~Gabriel Genz"
+                class="border-2">
+                Gabriel Genz
+              </td>
+              
+              <td x-ref="Table Finish_Position 15"
+                id="PRACTICE~Finish_Position~15~16"
+                class="border-2">
+                16
+              </td>
+              
+              <td x-ref="Table Laps_Complete 15"
+                id="PRACTICE~Laps_Complete~15~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 15"
+                id="PRACTICE~Interval~15~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 15"
+                id="PRACTICE~Average_Lap~15~1:11.1464"
+                class="border-2">
+                1:11.1464
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 15"
+                id="PRACTICE~Best_Lap_Num~15~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 15"
+                id="PRACTICE~Best_Lap_Time~15~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 15"
+                id="PRACTICE~Division_Name~15~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Incidents 15"
+                id="PRACTICE~Incidents~15~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 15"
+                id="PRACTICE~Car_Name~15~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 16">
+              
+              <td x-ref="Table Cust_ID 16"
+                id="PRACTICE~Cust_ID~16~884131"
+                class="border-2">
+                884131
+              </td>
+              
+              <td x-ref="Table Display_Name 16"
+                id="PRACTICE~Display_Name~16~Fernando Muniz3"
+                class="border-2">
+                Fernando Muniz3
+              </td>
+              
+              <td x-ref="Table Finish_Position 16"
+                id="PRACTICE~Finish_Position~16~17"
+                class="border-2">
+                17
+              </td>
+              
+              <td x-ref="Table Laps_Complete 16"
+                id="PRACTICE~Laps_Complete~16~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 16"
+                id="PRACTICE~Interval~16~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 16"
+                id="PRACTICE~Average_Lap~16~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 16"
+                id="PRACTICE~Best_Lap_Num~16~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 16"
+                id="PRACTICE~Best_Lap_Time~16~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 16"
+                id="PRACTICE~Division_Name~16~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Incidents 16"
+                id="PRACTICE~Incidents~16~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 16"
+                id="PRACTICE~Car_Name~16~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 17">
+              
+              <td x-ref="Table Cust_ID 17"
+                id="PRACTICE~Cust_ID~17~330790"
+                class="border-2">
+                330790
+              </td>
+              
+              <td x-ref="Table Display_Name 17"
+                id="PRACTICE~Display_Name~17~Jordan M Hill"
+                class="border-2">
+                Jordan M Hill
+              </td>
+              
+              <td x-ref="Table Finish_Position 17"
+                id="PRACTICE~Finish_Position~17~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Laps_Complete 17"
+                id="PRACTICE~Laps_Complete~17~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 17"
+                id="PRACTICE~Interval~17~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 17"
+                id="PRACTICE~Average_Lap~17~1:10.3637"
+                class="border-2">
+                1:10.3637
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 17"
+                id="PRACTICE~Best_Lap_Num~17~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 17"
+                id="PRACTICE~Best_Lap_Time~17~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 17"
+                id="PRACTICE~Division_Name~17~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 17"
+                id="PRACTICE~Incidents~17~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 17"
+                id="PRACTICE~Car_Name~17~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 18">
+              
+              <td x-ref="Table Cust_ID 18"
+                id="PRACTICE~Cust_ID~18~877926"
+                class="border-2">
+                877926
+              </td>
+              
+              <td x-ref="Table Display_Name 18"
+                id="PRACTICE~Display_Name~18~John Duong2"
+                class="border-2">
+                John Duong2
+              </td>
+              
+              <td x-ref="Table Finish_Position 18"
+                id="PRACTICE~Finish_Position~18~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Laps_Complete 18"
+                id="PRACTICE~Laps_Complete~18~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 18"
+                id="PRACTICE~Interval~18~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 18"
+                id="PRACTICE~Average_Lap~18~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 18"
+                id="PRACTICE~Best_Lap_Num~18~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 18"
+                id="PRACTICE~Best_Lap_Time~18~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 18"
+                id="PRACTICE~Division_Name~18~Rookie"
+                class="border-2">
+                Rookie
+              </td>
+              
+              <td x-ref="Table Incidents 18"
+                id="PRACTICE~Incidents~18~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Car_Name 18"
+                id="PRACTICE~Car_Name~18~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 19">
+              
+              <td x-ref="Table Cust_ID 19"
+                id="PRACTICE~Cust_ID~19~761463"
+                class="border-2">
+                761463
+              </td>
+              
+              <td x-ref="Table Display_Name 19"
+                id="PRACTICE~Display_Name~19~Alberto Ravarino"
+                class="border-2">
+                Alberto Ravarino
+              </td>
+              
+              <td x-ref="Table Finish_Position 19"
+                id="PRACTICE~Finish_Position~19~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Laps_Complete 19"
+                id="PRACTICE~Laps_Complete~19~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 19"
+                id="PRACTICE~Interval~19~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 19"
+                id="PRACTICE~Average_Lap~19~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 19"
+                id="PRACTICE~Best_Lap_Num~19~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 19"
+                id="PRACTICE~Best_Lap_Time~19~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 19"
+                id="PRACTICE~Division_Name~19~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Incidents 19"
+                id="PRACTICE~Incidents~19~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 19"
+                id="PRACTICE~Car_Name~19~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+          </table>
+        </div>
+      </div>
+      <div x-cloak x-show="QUALIFY" x-transition:enter.duration.500ms x-transition:leave.duration.0ms>
+        
+        <div class="grid grid-cols-1">
+          <table class="text-center col-span-1">
+            <tr class="bg-gray-500">
+              <th class="border-2">Session Type</th>
+            </tr>
+            <tr>
+              <td class="border-2">Lone Qualifying</td>
+            </tr>
+          </table>
+        </div>
+        
+        
+        <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+          <table x-load x-load-src="../alpine-components/qualifying-table.js" x-ref="Table" x-data="QUALIFY"
+            class="text-center col-span-1">
+            <tr x-ref="Headings">
+              
+              
+              <th
+                id="Table Cust_ID 20"
+                class="border-2" x-on:click="sort">cust_id</th>
+              
+              <th
+                id="Table Display_Name 20"
+                class="border-2" x-on:click="sort">Name</th>
+              
+              <th
+                id="Table Finish_Position 20"
+                class="border-2" x-on:click="sort">Finish</th>
+              
+              <th
+                id="Table Laps_Complete 20"
+                class="border-2" x-on:click="sort">Laps Completed</th>
+              
+              <th
+                id="Table Interval 20"
+                class="border-2" x-on:click="sort">Interval to P1</th>
+              
+              <th
+                id="Table Average_Lap 20"
+                class="border-2" x-on:click="sort">AVG Laptime</th>
+              
+              <th
+                id="Table Best_Lap_Num 20"
+                class="border-2" x-on:click="sort">Fastest Lap</th>
+              
+              <th
+                id="Table Best_Lap_Time 20"
+                class="border-2" x-on:click="sort">Fastest Lap Time</th>
+              
+              <th
+                id="Table Division_Name 20"
+                class="border-2" x-on:click="sort">Division</th>
+              
+              <th
+                id="Table Incidents 20"
+                class="border-2" x-on:click="sort">Incidents</th>
+              
+              <th
+                id="Table Car_Name 20"
+                class="border-2" x-on:click="sort">Car</th>
+            </tr>
+            
+            <tr x-ref="Table 0">
+              
+              <td x-ref="Table Cust_ID 0"
+                id="QUALIFY~Cust_ID~0~884131"
+                class="border-2">
+                884131
+              </td>
+              
+              <td x-ref="Table Display_Name 0"
+                id="QUALIFY~Display_Name~0~Fernando Muniz3"
+                class="border-2">
+                Fernando Muniz3
+              </td>
+              
+              <td x-ref="Table Finish_Position 0"
+                id="QUALIFY~Finish_Position~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Laps_Complete 0"
+                id="QUALIFY~Laps_Complete~0~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 0"
+                id="QUALIFY~Interval~0~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 0"
+                id="QUALIFY~Average_Lap~0~1:00.3127"
+                class="border-2">
+                1:00.3127
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 0"
+                id="QUALIFY~Best_Lap_Num~0~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 0"
+                id="QUALIFY~Best_Lap_Time~0~1:00.0718"
+                class="border-2">
+                1:00.0718
+              </td>
+              
+              <td x-ref="Table Division_Name 0"
+                id="QUALIFY~Division_Name~0~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Incidents 0"
+                id="QUALIFY~Incidents~0~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 0"
+                id="QUALIFY~Car_Name~0~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 1">
+              
+              <td x-ref="Table Cust_ID 1"
+                id="QUALIFY~Cust_ID~1~709105"
+                class="border-2">
+                709105
+              </td>
+              
+              <td x-ref="Table Display_Name 1"
+                id="QUALIFY~Display_Name~1~Bryan Alvarez"
+                class="border-2">
+                Bryan Alvarez
+              </td>
+              
+              <td x-ref="Table Finish_Position 1"
+                id="QUALIFY~Finish_Position~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Laps_Complete 1"
+                id="QUALIFY~Laps_Complete~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 1"
+                id="QUALIFY~Interval~1~0.148"
+                class="border-2">
+                0.148
+              </td>
+              
+              <td x-ref="Table Average_Lap 1"
+                id="QUALIFY~Average_Lap~1~1:00.2194"
+                class="border-2">
+                1:00.2194
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 1"
+                id="QUALIFY~Best_Lap_Num~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 1"
+                id="QUALIFY~Best_Lap_Time~1~1:00.2194"
+                class="border-2">
+                1:00.2194
+              </td>
+              
+              <td x-ref="Table Division_Name 1"
+                id="QUALIFY~Division_Name~1~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Incidents 1"
+                id="QUALIFY~Incidents~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 1"
+                id="QUALIFY~Car_Name~1~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 2">
+              
+              <td x-ref="Table Cust_ID 2"
+                id="QUALIFY~Cust_ID~2~774043"
+                class="border-2">
+                774043
+              </td>
+              
+              <td x-ref="Table Display_Name 2"
+                id="QUALIFY~Display_Name~2~Todd Sack"
+                class="border-2">
+                Todd Sack
+              </td>
+              
+              <td x-ref="Table Finish_Position 2"
+                id="QUALIFY~Finish_Position~2~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Laps_Complete 2"
+                id="QUALIFY~Laps_Complete~2~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 2"
+                id="QUALIFY~Interval~2~0.157"
+                class="border-2">
+                0.157
+              </td>
+              
+              <td x-ref="Table Average_Lap 2"
+                id="QUALIFY~Average_Lap~2~1:00.3783"
+                class="border-2">
+                1:00.3783
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 2"
+                id="QUALIFY~Best_Lap_Num~2~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 2"
+                id="QUALIFY~Best_Lap_Time~2~1:00.2292"
+                class="border-2">
+                1:00.2292
+              </td>
+              
+              <td x-ref="Table Division_Name 2"
+                id="QUALIFY~Division_Name~2~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Incidents 2"
+                id="QUALIFY~Incidents~2~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 2"
+                id="QUALIFY~Car_Name~2~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 3">
+              
+              <td x-ref="Table Cust_ID 3"
+                id="QUALIFY~Cust_ID~3~877926"
+                class="border-2">
+                877926
+              </td>
+              
+              <td x-ref="Table Display_Name 3"
+                id="QUALIFY~Display_Name~3~John Duong2"
+                class="border-2">
+                John Duong2
+              </td>
+              
+              <td x-ref="Table Finish_Position 3"
+                id="QUALIFY~Finish_Position~3~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Laps_Complete 3"
+                id="QUALIFY~Laps_Complete~3~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 3"
+                id="QUALIFY~Interval~3~0.219"
+                class="border-2">
+                0.219
+              </td>
+              
+              <td x-ref="Table Average_Lap 3"
+                id="QUALIFY~Average_Lap~3~1:00.2909"
+                class="border-2">
+                1:00.2909
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 3"
+                id="QUALIFY~Best_Lap_Num~3~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 3"
+                id="QUALIFY~Best_Lap_Time~3~1:00.2909"
+                class="border-2">
+                1:00.2909
+              </td>
+              
+              <td x-ref="Table Division_Name 3"
+                id="QUALIFY~Division_Name~3~Rookie"
+                class="border-2">
+                Rookie
+              </td>
+              
+              <td x-ref="Table Incidents 3"
+                id="QUALIFY~Incidents~3~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 3"
+                id="QUALIFY~Car_Name~3~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 4">
+              
+              <td x-ref="Table Cust_ID 4"
+                id="QUALIFY~Cust_ID~4~882231"
+                class="border-2">
+                882231
+              </td>
+              
+              <td x-ref="Table Display_Name 4"
+                id="QUALIFY~Display_Name~4~Gabriel Genz"
+                class="border-2">
+                Gabriel Genz
+              </td>
+              
+              <td x-ref="Table Finish_Position 4"
+                id="QUALIFY~Finish_Position~4~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Laps_Complete 4"
+                id="QUALIFY~Laps_Complete~4~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 4"
+                id="QUALIFY~Interval~4~0.337"
+                class="border-2">
+                0.337
+              </td>
+              
+              <td x-ref="Table Average_Lap 4"
+                id="QUALIFY~Average_Lap~4~1:00.5283"
+                class="border-2">
+                1:00.5283
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 4"
+                id="QUALIFY~Best_Lap_Num~4~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 4"
+                id="QUALIFY~Best_Lap_Time~4~1:00.4089"
+                class="border-2">
+                1:00.4089
+              </td>
+              
+              <td x-ref="Table Division_Name 4"
+                id="QUALIFY~Division_Name~4~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Incidents 4"
+                id="QUALIFY~Incidents~4~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 4"
+                id="QUALIFY~Car_Name~4~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 5">
+              
+              <td x-ref="Table Cust_ID 5"
+                id="QUALIFY~Cust_ID~5~300752"
+                class="border-2">
+                300752
+              </td>
+              
+              <td x-ref="Table Display_Name 5"
+                id="QUALIFY~Display_Name~5~Jacob Collins"
+                class="border-2">
+                Jacob Collins
+              </td>
+              
+              <td x-ref="Table Finish_Position 5"
+                id="QUALIFY~Finish_Position~5~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Laps_Complete 5"
+                id="QUALIFY~Laps_Complete~5~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 5"
+                id="QUALIFY~Interval~5~0.495"
+                class="border-2">
+                0.495
+              </td>
+              
+              <td x-ref="Table Average_Lap 5"
+                id="QUALIFY~Average_Lap~5~1:00.7434"
+                class="border-2">
+                1:00.7434
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 5"
+                id="QUALIFY~Best_Lap_Num~5~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 5"
+                id="QUALIFY~Best_Lap_Time~5~1:00.5669"
+                class="border-2">
+                1:00.5669
+              </td>
+              
+              <td x-ref="Table Division_Name 5"
+                id="QUALIFY~Division_Name~5~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 5"
+                id="QUALIFY~Incidents~5~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 5"
+                id="QUALIFY~Car_Name~5~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 6">
+              
+              <td x-ref="Table Cust_ID 6"
+                id="QUALIFY~Cust_ID~6~864833"
+                class="border-2">
+                864833
+              </td>
+              
+              <td x-ref="Table Display_Name 6"
+                id="QUALIFY~Display_Name~6~Guilherme Marra"
+                class="border-2">
+                Guilherme Marra
+              </td>
+              
+              <td x-ref="Table Finish_Position 6"
+                id="QUALIFY~Finish_Position~6~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Laps_Complete 6"
+                id="QUALIFY~Laps_Complete~6~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 6"
+                id="QUALIFY~Interval~6~0.513"
+                class="border-2">
+                0.513
+              </td>
+              
+              <td x-ref="Table Average_Lap 6"
+                id="QUALIFY~Average_Lap~6~1:01.2029"
+                class="border-2">
+                1:01.2029
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 6"
+                id="QUALIFY~Best_Lap_Num~6~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 6"
+                id="QUALIFY~Best_Lap_Time~6~1:00.5849"
+                class="border-2">
+                1:00.5849
+              </td>
+              
+              <td x-ref="Table Division_Name 6"
+                id="QUALIFY~Division_Name~6~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Incidents 6"
+                id="QUALIFY~Incidents~6~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 6"
+                id="QUALIFY~Car_Name~6~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 7">
+              
+              <td x-ref="Table Cust_ID 7"
+                id="QUALIFY~Cust_ID~7~499467"
+                class="border-2">
+                499467
+              </td>
+              
+              <td x-ref="Table Display_Name 7"
+                id="QUALIFY~Display_Name~7~Eric Stumpf"
+                class="border-2">
+                Eric Stumpf
+              </td>
+              
+              <td x-ref="Table Finish_Position 7"
+                id="QUALIFY~Finish_Position~7~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Laps_Complete 7"
+                id="QUALIFY~Laps_Complete~7~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 7"
+                id="QUALIFY~Interval~7~0.523"
+                class="border-2">
+                0.523
+              </td>
+              
+              <td x-ref="Table Average_Lap 7"
+                id="QUALIFY~Average_Lap~7~1:00.6245"
+                class="border-2">
+                1:00.6245
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 7"
+                id="QUALIFY~Best_Lap_Num~7~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 7"
+                id="QUALIFY~Best_Lap_Time~7~1:00.5945"
+                class="border-2">
+                1:00.5945
+              </td>
+              
+              <td x-ref="Table Division_Name 7"
+                id="QUALIFY~Division_Name~7~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 7"
+                id="QUALIFY~Incidents~7~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 7"
+                id="QUALIFY~Car_Name~7~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 8">
+              
+              <td x-ref="Table Cust_ID 8"
+                id="QUALIFY~Cust_ID~8~515384"
+                class="border-2">
+                515384
+              </td>
+              
+              <td x-ref="Table Display_Name 8"
+                id="QUALIFY~Display_Name~8~Brandon Sherrer"
+                class="border-2">
+                Brandon Sherrer
+              </td>
+              
+              <td x-ref="Table Finish_Position 8"
+                id="QUALIFY~Finish_Position~8~9"
+                class="border-2">
+                9
+              </td>
+              
+              <td x-ref="Table Laps_Complete 8"
+                id="QUALIFY~Laps_Complete~8~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 8"
+                id="QUALIFY~Interval~8~0.606"
+                class="border-2">
+                0.606
+              </td>
+              
+              <td x-ref="Table Average_Lap 8"
+                id="QUALIFY~Average_Lap~8~1:01.0801"
+                class="border-2">
+                1:01.0801
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 8"
+                id="QUALIFY~Best_Lap_Num~8~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 8"
+                id="QUALIFY~Best_Lap_Time~8~1:00.6781"
+                class="border-2">
+                1:00.6781
+              </td>
+              
+              <td x-ref="Table Division_Name 8"
+                id="QUALIFY~Division_Name~8~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Incidents 8"
+                id="QUALIFY~Incidents~8~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 8"
+                id="QUALIFY~Car_Name~8~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 9">
+              
+              <td x-ref="Table Cust_ID 9"
+                id="QUALIFY~Cust_ID~9~881566"
+                class="border-2">
+                881566
+              </td>
+              
+              <td x-ref="Table Display_Name 9"
+                id="QUALIFY~Display_Name~9~Dieter Alleman2"
+                class="border-2">
+                Dieter Alleman2
+              </td>
+              
+              <td x-ref="Table Finish_Position 9"
+                id="QUALIFY~Finish_Position~9~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Laps_Complete 9"
+                id="QUALIFY~Laps_Complete~9~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 9"
+                id="QUALIFY~Interval~9~0.615"
+                class="border-2">
+                0.615
+              </td>
+              
+              <td x-ref="Table Average_Lap 9"
+                id="QUALIFY~Average_Lap~9~1:01.2744"
+                class="border-2">
+                1:01.2744
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 9"
+                id="QUALIFY~Best_Lap_Num~9~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 9"
+                id="QUALIFY~Best_Lap_Time~9~1:00.6867"
+                class="border-2">
+                1:00.6867
+              </td>
+              
+              <td x-ref="Table Division_Name 9"
+                id="QUALIFY~Division_Name~9~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Incidents 9"
+                id="QUALIFY~Incidents~9~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 9"
+                id="QUALIFY~Car_Name~9~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 10">
+              
+              <td x-ref="Table Cust_ID 10"
+                id="QUALIFY~Cust_ID~10~688024"
+                class="border-2">
+                688024
+              </td>
+              
+              <td x-ref="Table Display_Name 10"
+                id="QUALIFY~Display_Name~10~Paulo Tosta"
+                class="border-2">
+                Paulo Tosta
+              </td>
+              
+              <td x-ref="Table Finish_Position 10"
+                id="QUALIFY~Finish_Position~10~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Laps_Complete 10"
+                id="QUALIFY~Laps_Complete~10~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 10"
+                id="QUALIFY~Interval~10~0.639"
+                class="border-2">
+                0.639
+              </td>
+              
+              <td x-ref="Table Average_Lap 10"
+                id="QUALIFY~Average_Lap~10~1:00.7111"
+                class="border-2">
+                1:00.7111
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 10"
+                id="QUALIFY~Best_Lap_Num~10~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 10"
+                id="QUALIFY~Best_Lap_Time~10~1:00.7111"
+                class="border-2">
+                1:00.7111
+              </td>
+              
+              <td x-ref="Table Division_Name 10"
+                id="QUALIFY~Division_Name~10~Division 7"
+                class="border-2">
+                Division 7
+              </td>
+              
+              <td x-ref="Table Incidents 10"
+                id="QUALIFY~Incidents~10~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Car_Name 10"
+                id="QUALIFY~Car_Name~10~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 11">
+              
+              <td x-ref="Table Cust_ID 11"
+                id="QUALIFY~Cust_ID~11~761463"
+                class="border-2">
+                761463
+              </td>
+              
+              <td x-ref="Table Display_Name 11"
+                id="QUALIFY~Display_Name~11~Alberto Ravarino"
+                class="border-2">
+                Alberto Ravarino
+              </td>
+              
+              <td x-ref="Table Finish_Position 11"
+                id="QUALIFY~Finish_Position~11~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Laps_Complete 11"
+                id="QUALIFY~Laps_Complete~11~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 11"
+                id="QUALIFY~Interval~11~0.687"
+                class="border-2">
+                0.687
+              </td>
+              
+              <td x-ref="Table Average_Lap 11"
+                id="QUALIFY~Average_Lap~11~1:00.8572"
+                class="border-2">
+                1:00.8572
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 11"
+                id="QUALIFY~Best_Lap_Num~11~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 11"
+                id="QUALIFY~Best_Lap_Time~11~1:00.7589"
+                class="border-2">
+                1:00.7589
+              </td>
+              
+              <td x-ref="Table Division_Name 11"
+                id="QUALIFY~Division_Name~11~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Incidents 11"
+                id="QUALIFY~Incidents~11~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Car_Name 11"
+                id="QUALIFY~Car_Name~11~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 12">
+              
+              <td x-ref="Table Cust_ID 12"
+                id="QUALIFY~Cust_ID~12~46706"
+                class="border-2">
+                46706
+              </td>
+              
+              <td x-ref="Table Display_Name 12"
+                id="QUALIFY~Display_Name~12~Josh DeVoy"
+                class="border-2">
+                Josh DeVoy
+              </td>
+              
+              <td x-ref="Table Finish_Position 12"
+                id="QUALIFY~Finish_Position~12~13"
+                class="border-2">
+                13
+              </td>
+              
+              <td x-ref="Table Laps_Complete 12"
+                id="QUALIFY~Laps_Complete~12~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 12"
+                id="QUALIFY~Interval~12~0.943"
+                class="border-2">
+                0.943
+              </td>
+              
+              <td x-ref="Table Average_Lap 12"
+                id="QUALIFY~Average_Lap~12~1:01.0149"
+                class="border-2">
+                1:01.0149
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 12"
+                id="QUALIFY~Best_Lap_Num~12~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 12"
+                id="QUALIFY~Best_Lap_Time~12~1:01.0149"
+                class="border-2">
+                1:01.0149
+              </td>
+              
+              <td x-ref="Table Division_Name 12"
+                id="QUALIFY~Division_Name~12~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 12"
+                id="QUALIFY~Incidents~12~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Car_Name 12"
+                id="QUALIFY~Car_Name~12~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 13">
+              
+              <td x-ref="Table Cust_ID 13"
+                id="QUALIFY~Cust_ID~13~330790"
+                class="border-2">
+                330790
+              </td>
+              
+              <td x-ref="Table Display_Name 13"
+                id="QUALIFY~Display_Name~13~Jordan M Hill"
+                class="border-2">
+                Jordan M Hill
+              </td>
+              
+              <td x-ref="Table Finish_Position 13"
+                id="QUALIFY~Finish_Position~13~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Laps_Complete 13"
+                id="QUALIFY~Laps_Complete~13~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 13"
+                id="QUALIFY~Interval~13~1.069"
+                class="border-2">
+                1.069
+              </td>
+              
+              <td x-ref="Table Average_Lap 13"
+                id="QUALIFY~Average_Lap~13~1:01.1407"
+                class="border-2">
+                1:01.1407
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 13"
+                id="QUALIFY~Best_Lap_Num~13~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 13"
+                id="QUALIFY~Best_Lap_Time~13~1:01.1407"
+                class="border-2">
+                1:01.1407
+              </td>
+              
+              <td x-ref="Table Division_Name 13"
+                id="QUALIFY~Division_Name~13~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 13"
+                id="QUALIFY~Incidents~13~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 13"
+                id="QUALIFY~Car_Name~13~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 14">
+              
+              <td x-ref="Table Cust_ID 14"
+                id="QUALIFY~Cust_ID~14~744610"
+                class="border-2">
+                744610
+              </td>
+              
+              <td x-ref="Table Display_Name 14"
+                id="QUALIFY~Display_Name~14~Marcus Jeffries"
+                class="border-2">
+                Marcus Jeffries
+              </td>
+              
+              <td x-ref="Table Finish_Position 14"
+                id="QUALIFY~Finish_Position~14~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Laps_Complete 14"
+                id="QUALIFY~Laps_Complete~14~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 14"
+                id="QUALIFY~Interval~14~1.109"
+                class="border-2">
+                1.109
+              </td>
+              
+              <td x-ref="Table Average_Lap 14"
+                id="QUALIFY~Average_Lap~14~1:01.2802"
+                class="border-2">
+                1:01.2802
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 14"
+                id="QUALIFY~Best_Lap_Num~14~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 14"
+                id="QUALIFY~Best_Lap_Time~14~1:01.1804"
+                class="border-2">
+                1:01.1804
+              </td>
+              
+              <td x-ref="Table Division_Name 14"
+                id="QUALIFY~Division_Name~14~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 14"
+                id="QUALIFY~Incidents~14~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 14"
+                id="QUALIFY~Car_Name~14~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 15">
+              
+              <td x-ref="Table Cust_ID 15"
+                id="QUALIFY~Cust_ID~15~592274"
+                class="border-2">
+                592274
+              </td>
+              
+              <td x-ref="Table Display_Name 15"
+                id="QUALIFY~Display_Name~15~Steve Michaels"
+                class="border-2">
+                Steve Michaels
+              </td>
+              
+              <td x-ref="Table Finish_Position 15"
+                id="QUALIFY~Finish_Position~15~16"
+                class="border-2">
+                16
+              </td>
+              
+              <td x-ref="Table Laps_Complete 15"
+                id="QUALIFY~Laps_Complete~15~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 15"
+                id="QUALIFY~Interval~15~1.204"
+                class="border-2">
+                1.204
+              </td>
+              
+              <td x-ref="Table Average_Lap 15"
+                id="QUALIFY~Average_Lap~15~1:01.6325"
+                class="border-2">
+                1:01.6325
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 15"
+                id="QUALIFY~Best_Lap_Num~15~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 15"
+                id="QUALIFY~Best_Lap_Time~15~1:01.2760"
+                class="border-2">
+                1:01.2760
+              </td>
+              
+              <td x-ref="Table Division_Name 15"
+                id="QUALIFY~Division_Name~15~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 15"
+                id="QUALIFY~Incidents~15~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 15"
+                id="QUALIFY~Car_Name~15~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 16">
+              
+              <td x-ref="Table Cust_ID 16"
+                id="QUALIFY~Cust_ID~16~555675"
+                class="border-2">
+                555675
+              </td>
+              
+              <td x-ref="Table Display_Name 16"
+                id="QUALIFY~Display_Name~16~Daniel Spitzer"
+                class="border-2">
+                Daniel Spitzer
+              </td>
+              
+              <td x-ref="Table Finish_Position 16"
+                id="QUALIFY~Finish_Position~16~17"
+                class="border-2">
+                17
+              </td>
+              
+              <td x-ref="Table Laps_Complete 16"
+                id="QUALIFY~Laps_Complete~16~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 16"
+                id="QUALIFY~Interval~16~1.758"
+                class="border-2">
+                1.758
+              </td>
+              
+              <td x-ref="Table Average_Lap 16"
+                id="QUALIFY~Average_Lap~16~1:01.8302"
+                class="border-2">
+                1:01.8302
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 16"
+                id="QUALIFY~Best_Lap_Num~16~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 16"
+                id="QUALIFY~Best_Lap_Time~16~1:01.8302"
+                class="border-2">
+                1:01.8302
+              </td>
+              
+              <td x-ref="Table Division_Name 16"
+                id="QUALIFY~Division_Name~16~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 16"
+                id="QUALIFY~Incidents~16~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 16"
+                id="QUALIFY~Car_Name~16~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 17">
+              
+              <td x-ref="Table Cust_ID 17"
+                id="QUALIFY~Cust_ID~17~879886"
+                class="border-2">
+                879886
+              </td>
+              
+              <td x-ref="Table Display_Name 17"
+                id="QUALIFY~Display_Name~17~Thomas Sapozhnikov"
+                class="border-2">
+                Thomas Sapozhnikov
+              </td>
+              
+              <td x-ref="Table Finish_Position 17"
+                id="QUALIFY~Finish_Position~17~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Laps_Complete 17"
+                id="QUALIFY~Laps_Complete~17~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 17"
+                id="QUALIFY~Interval~17~1.771"
+                class="border-2">
+                1.771
+              </td>
+              
+              <td x-ref="Table Average_Lap 17"
+                id="QUALIFY~Average_Lap~17~1:01.8425"
+                class="border-2">
+                1:01.8425
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 17"
+                id="QUALIFY~Best_Lap_Num~17~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 17"
+                id="QUALIFY~Best_Lap_Time~17~1:01.8425"
+                class="border-2">
+                1:01.8425
+              </td>
+              
+              <td x-ref="Table Division_Name 17"
+                id="QUALIFY~Division_Name~17~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 17"
+                id="QUALIFY~Incidents~17~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Car_Name 17"
+                id="QUALIFY~Car_Name~17~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 18">
+              
+              <td x-ref="Table Cust_ID 18"
+                id="QUALIFY~Cust_ID~18~876307"
+                class="border-2">
+                876307
+              </td>
+              
+              <td x-ref="Table Display_Name 18"
+                id="QUALIFY~Display_Name~18~Christopher Digennaro"
+                class="border-2">
+                Christopher Digennaro
+              </td>
+              
+              <td x-ref="Table Finish_Position 18"
+                id="QUALIFY~Finish_Position~18~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Laps_Complete 18"
+                id="QUALIFY~Laps_Complete~18~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 18"
+                id="QUALIFY~Interval~18~1.937"
+                class="border-2">
+                1.937
+              </td>
+              
+              <td x-ref="Table Average_Lap 18"
+                id="QUALIFY~Average_Lap~18~1:02.0091"
+                class="border-2">
+                1:02.0091
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 18"
+                id="QUALIFY~Best_Lap_Num~18~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 18"
+                id="QUALIFY~Best_Lap_Time~18~1:02.0091"
+                class="border-2">
+                1:02.0091
+              </td>
+              
+              <td x-ref="Table Division_Name 18"
+                id="QUALIFY~Division_Name~18~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 18"
+                id="QUALIFY~Incidents~18~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Car_Name 18"
+                id="QUALIFY~Car_Name~18~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 19">
+              
+              <td x-ref="Table Cust_ID 19"
+                id="QUALIFY~Cust_ID~19~185695"
+                class="border-2">
+                185695
+              </td>
+              
+              <td x-ref="Table Display_Name 19"
+                id="QUALIFY~Display_Name~19~Rob Franklin"
+                class="border-2">
+                Rob Franklin
+              </td>
+              
+              <td x-ref="Table Finish_Position 19"
+                id="QUALIFY~Finish_Position~19~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Laps_Complete 19"
+                id="QUALIFY~Laps_Complete~19~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 19"
+                id="QUALIFY~Interval~19~2.791"
+                class="border-2">
+                2.791
+              </td>
+              
+              <td x-ref="Table Average_Lap 19"
+                id="QUALIFY~Average_Lap~19~1:02.8627"
+                class="border-2">
+                1:02.8627
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 19"
+                id="QUALIFY~Best_Lap_Num~19~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 19"
+                id="QUALIFY~Best_Lap_Time~19~1:02.8627"
+                class="border-2">
+                1:02.8627
+              </td>
+              
+              <td x-ref="Table Division_Name 19"
+                id="QUALIFY~Division_Name~19~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 19"
+                id="QUALIFY~Incidents~19~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Car_Name 19"
+                id="QUALIFY~Car_Name~19~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+            </tr>
+            
+          </table>
+        </div>
+      </div>
+      <div x-cloak x-show="HEAT" x-transition:enter.duration.500ms x-transition:leave.duration.0ms>
+        
+        <div class="grid grid-cols-1">
+          <table class="text-center col-span-1">
+            <tr class="bg-gray-500">
+              <th class="border-2">Session Type</th>
+            </tr>
+            <tr>
+              <td class="border-2"></td>
+            </tr>
+          </table>
+        </div>
+        
+        
+        <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+          <table x-load x-load-src="../alpine-components/heat-table.js" x-ref="Table" x-data="HEAT"
+            class="text-center col-span-1">
+            <tr x-ref="Headings">
+              
+            </tr>
+            
+          </table>
+        </div>
+      </div>
+      <div x-cloak x-show="RACE" x-transition:enter.duration.500ms x-transition:leave.duration.0ms>
+        
+        <div class="grid grid-cols-1">
+          <table class="text-center col-span-1">
+            <tr class="bg-gray-500">
+              <th class="border-2">Session Type</th>
+            </tr>
+            <tr>
+              <td class="border-2">Race</td>
+            </tr>
+          </table>
+        </div>
+        
+        
+        <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+          <table x-load x-load-src="../alpine-components/race-table.js" x-ref="Table" x-data="RACE"
+            class="text-center col-span-1">
+            <tr x-ref="Headings">
+              
+              
+              <th
+                id="Table Cust_ID 20"
+                class="border-2" x-on:click="sort">cust_id</th>
+              
+              <th
+                id="Table Display_Name 20"
+                class="border-2" x-on:click="sort">Name</th>
+              
+              <th
+                id="Table Finish_Position 20"
+                class="border-2" x-on:click="sort">Finish</th>
+              
+              <th
+                id="Table Laps_Lead 20"
+                class="border-2" x-on:click="sort">Laps Lead</th>
+              
+              <th
+                id="Table Laps_Complete 20"
+                class="border-2" x-on:click="sort">Laps Completed</th>
+              
+              <th
+                id="Table Interval 20"
+                class="border-2" x-on:click="sort">Interval to P1</th>
+              
+              <th
+                id="Table Average_Lap 20"
+                class="border-2" x-on:click="sort">AVG Laptime</th>
+              
+              <th
+                id="Table Best_Lap_Num 20"
+                class="border-2" x-on:click="sort">Fastest Lap</th>
+              
+              <th
+                id="Table Best_Lap_Time 20"
+                class="border-2" x-on:click="sort">Fastest Lap Time</th>
+              
+              <th
+                id="Table Reason_Out 20"
+                class="border-2" x-on:click="sort">Status</th>
+              
+              <th
+                id="Table Champ_Points 20"
+                class="border-2" x-on:click="sort">Points</th>
+              
+              <th
+                id="Table Drop_Race 20"
+                class="border-2" x-on:click="sort">Drop Race</th>
+              
+              <th
+                id="Table Starting_Position 20"
+                class="border-2" x-on:click="sort">Starting Position</th>
+              
+              <th
+                id="Table Division_Name 20"
+                class="border-2" x-on:click="sort">Division</th>
+              
+              <th
+                id="Table Old_License_Level 20"
+                class="border-2" x-on:click="sort">Old License Level</th>
+              
+              <th
+                id="Table Old_CPI 20"
+                class="border-2" x-on:click="sort">Old Corners Per Incident</th>
+              
+              <th
+                id="Table Oldi_Rating 20"
+                class="border-2" x-on:click="sort">Old iRating</th>
+              
+              <th
+                id="Table New_License_Level 20"
+                class="border-2" x-on:click="sort">New License Level</th>
+              
+              <th
+                id="Table New_CPI 20"
+                class="border-2" x-on:click="sort">New Corners Per Incident</th>
+              
+              <th
+                id="Table Newi_Rating 20"
+                class="border-2" x-on:click="sort">New iRating</th>
+              
+              <th
+                id="Table Incidents 20"
+                class="border-2" x-on:click="sort">Incidents</th>
+              
+              <th
+                id="Table Car_Name 20"
+                class="border-2" x-on:click="sort">Car</th>
+              
+              <th
+                id="Table Aggregate_Champ_Points 20"
+                class="border-2" x-on:click="sort">Best Points For Week</th>
+            </tr>
+            
+            <tr x-ref="Table 0">
+              
+              <td x-ref="Table Cust_ID 0"
+                id="RACE~Cust_ID~0~774043"
+                class="border-2">
+                774043
+              </td>
+              
+              <td x-ref="Table Display_Name 0"
+                id="RACE~Display_Name~0~Todd Sack"
+                class="border-2">
+                Todd Sack
+              </td>
+              
+              <td x-ref="Table Finish_Position 0"
+                id="RACE~Finish_Position~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Laps_Lead 0"
+                id="RACE~Laps_Lead~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Laps_Complete 0"
+                id="RACE~Laps_Complete~0~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 0"
+                id="RACE~Interval~0~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 0"
+                id="RACE~Average_Lap~0~1:00.5175"
+                class="border-2">
+                1:00.5175
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 0"
+                id="RACE~Best_Lap_Num~0~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 0"
+                id="RACE~Best_Lap_Time~0~1:00.0991"
+                class="border-2">
+                1:00.0991
+              </td>
+              
+              <td x-ref="Table Reason_Out 0"
+                id="RACE~Reason_Out~0~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 0"
+                id="RACE~Champ_Points~0~95"
+                class="border-2">
+                95
+              </td>
+              
+              <td x-ref="Table Drop_Race 0"
+                id="RACE~Drop_Race~0~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 0"
+                id="RACE~Starting_Position~0~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Division_Name 0"
+                id="RACE~Division_Name~0~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Old_License_Level 0"
+                id="RACE~Old_License_Level~0~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Old_CPI 0"
+                id="RACE~Old_CPI~0~22.978806"
+                class="border-2">
+                22.978806
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 0"
+                id="RACE~Oldi_Rating~0~1613"
+                class="border-2">
+                1613
+              </td>
+              
+              <td x-ref="Table New_License_Level 0"
+                id="RACE~New_License_Level~0~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table New_CPI 0"
+                id="RACE~New_CPI~0~24.320984"
+                class="border-2">
+                24.320984
+              </td>
+              
+              <td x-ref="Table Newi_Rating 0"
+                id="RACE~Newi_Rating~0~1704"
+                class="border-2">
+                1704
+              </td>
+              
+              <td x-ref="Table Incidents 0"
+                id="RACE~Incidents~0~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Car_Name 0"
+                id="RACE~Car_Name~0~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 0"
+                id="RACE~Aggregate_Champ_Points~0~95"
+                class="border-2">
+                95
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 1">
+              
+              <td x-ref="Table Cust_ID 1"
+                id="RACE~Cust_ID~1~46706"
+                class="border-2">
+                46706
+              </td>
+              
+              <td x-ref="Table Display_Name 1"
+                id="RACE~Display_Name~1~Josh DeVoy"
+                class="border-2">
+                Josh DeVoy
+              </td>
+              
+              <td x-ref="Table Finish_Position 1"
+                id="RACE~Finish_Position~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Laps_Lead 1"
+                id="RACE~Laps_Lead~1~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 1"
+                id="RACE~Laps_Complete~1~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 1"
+                id="RACE~Interval~1~1.888"
+                class="border-2">
+                1.888
+              </td>
+              
+              <td x-ref="Table Average_Lap 1"
+                id="RACE~Average_Lap~1~1:01.6475"
+                class="border-2">
+                1:01.6475
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 1"
+                id="RACE~Best_Lap_Num~1~13"
+                class="border-2">
+                13
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 1"
+                id="RACE~Best_Lap_Time~1~1:00.2821"
+                class="border-2">
+                1:00.2821
+              </td>
+              
+              <td x-ref="Table Reason_Out 1"
+                id="RACE~Reason_Out~1~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 1"
+                id="RACE~Champ_Points~1~90"
+                class="border-2">
+                90
+              </td>
+              
+              <td x-ref="Table Drop_Race 1"
+                id="RACE~Drop_Race~1~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 1"
+                id="RACE~Starting_Position~1~13"
+                class="border-2">
+                13
+              </td>
+              
+              <td x-ref="Table Division_Name 1"
+                id="RACE~Division_Name~1~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 1"
+                id="RACE~Old_License_Level~1~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Old_CPI 1"
+                id="RACE~Old_CPI~1~53.852863"
+                class="border-2">
+                53.852863
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 1"
+                id="RACE~Oldi_Rating~1~1616"
+                class="border-2">
+                1616
+              </td>
+              
+              <td x-ref="Table New_License_Level 1"
+                id="RACE~New_License_Level~1~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table New_CPI 1"
+                id="RACE~New_CPI~1~59.261986"
+                class="border-2">
+                59.261986
+              </td>
+              
+              <td x-ref="Table Newi_Rating 1"
+                id="RACE~Newi_Rating~1~1697"
+                class="border-2">
+                1697
+              </td>
+              
+              <td x-ref="Table Incidents 1"
+                id="RACE~Incidents~1~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 1"
+                id="RACE~Car_Name~1~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 1"
+                id="RACE~Aggregate_Champ_Points~1~90"
+                class="border-2">
+                90
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 2">
+              
+              <td x-ref="Table Cust_ID 2"
+                id="RACE~Cust_ID~2~499467"
+                class="border-2">
+                499467
+              </td>
+              
+              <td x-ref="Table Display_Name 2"
+                id="RACE~Display_Name~2~Eric Stumpf"
+                class="border-2">
+                Eric Stumpf
+              </td>
+              
+              <td x-ref="Table Finish_Position 2"
+                id="RACE~Finish_Position~2~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Laps_Lead 2"
+                id="RACE~Laps_Lead~2~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 2"
+                id="RACE~Laps_Complete~2~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 2"
+                id="RACE~Interval~2~6.392"
+                class="border-2">
+                6.392
+              </td>
+              
+              <td x-ref="Table Average_Lap 2"
+                id="RACE~Average_Lap~2~1:01.9481"
+                class="border-2">
+                1:01.9481
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 2"
+                id="RACE~Best_Lap_Num~2~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 2"
+                id="RACE~Best_Lap_Time~2~1:00.3300"
+                class="border-2">
+                1:00.3300
+              </td>
+              
+              <td x-ref="Table Reason_Out 2"
+                id="RACE~Reason_Out~2~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 2"
+                id="RACE~Champ_Points~2~85"
+                class="border-2">
+                85
+              </td>
+              
+              <td x-ref="Table Drop_Race 2"
+                id="RACE~Drop_Race~2~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 2"
+                id="RACE~Starting_Position~2~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Division_Name 2"
+                id="RACE~Division_Name~2~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 2"
+                id="RACE~Old_License_Level~2~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Old_CPI 2"
+                id="RACE~Old_CPI~2~63.192722"
+                class="border-2">
+                63.192722
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 2"
+                id="RACE~Oldi_Rating~2~1649"
+                class="border-2">
+                1649
+              </td>
+              
+              <td x-ref="Table New_License_Level 2"
+                id="RACE~New_License_Level~2~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table New_CPI 2"
+                id="RACE~New_CPI~2~67.996284"
+                class="border-2">
+                67.996284
+              </td>
+              
+              <td x-ref="Table Newi_Rating 2"
+                id="RACE~Newi_Rating~2~1719"
+                class="border-2">
+                1719
+              </td>
+              
+              <td x-ref="Table Incidents 2"
+                id="RACE~Incidents~2~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 2"
+                id="RACE~Car_Name~2~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 2"
+                id="RACE~Aggregate_Champ_Points~2~85"
+                class="border-2">
+                85
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 3">
+              
+              <td x-ref="Table Cust_ID 3"
+                id="RACE~Cust_ID~3~555675"
+                class="border-2">
+                555675
+              </td>
+              
+              <td x-ref="Table Display_Name 3"
+                id="RACE~Display_Name~3~Daniel Spitzer"
+                class="border-2">
+                Daniel Spitzer
+              </td>
+              
+              <td x-ref="Table Finish_Position 3"
+                id="RACE~Finish_Position~3~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Laps_Lead 3"
+                id="RACE~Laps_Lead~3~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 3"
+                id="RACE~Laps_Complete~3~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 3"
+                id="RACE~Interval~3~6.698"
+                class="border-2">
+                6.698
+              </td>
+              
+              <td x-ref="Table Average_Lap 3"
+                id="RACE~Average_Lap~3~1:01.9679"
+                class="border-2">
+                1:01.9679
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 3"
+                id="RACE~Best_Lap_Num~3~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 3"
+                id="RACE~Best_Lap_Time~3~59.932"
+                class="border-2">
+                59.932
+              </td>
+              
+              <td x-ref="Table Reason_Out 3"
+                id="RACE~Reason_Out~3~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 3"
+                id="RACE~Champ_Points~3~80"
+                class="border-2">
+                80
+              </td>
+              
+              <td x-ref="Table Drop_Race 3"
+                id="RACE~Drop_Race~3~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 3"
+                id="RACE~Starting_Position~3~17"
+                class="border-2">
+                17
+              </td>
+              
+              <td x-ref="Table Division_Name 3"
+                id="RACE~Division_Name~3~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 3"
+                id="RACE~Old_License_Level~3~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Old_CPI 3"
+                id="RACE~Old_CPI~3~29.314054"
+                class="border-2">
+                29.314054
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 3"
+                id="RACE~Oldi_Rating~3~1507"
+                class="border-2">
+                1507
+              </td>
+              
+              <td x-ref="Table New_License_Level 3"
+                id="RACE~New_License_Level~3~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table New_CPI 3"
+                id="RACE~New_CPI~3~30.748457"
+                class="border-2">
+                30.748457
+              </td>
+              
+              <td x-ref="Table Newi_Rating 3"
+                id="RACE~Newi_Rating~3~1573"
+                class="border-2">
+                1573
+              </td>
+              
+              <td x-ref="Table Incidents 3"
+                id="RACE~Incidents~3~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 3"
+                id="RACE~Car_Name~3~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 3"
+                id="RACE~Aggregate_Champ_Points~3~80"
+                class="border-2">
+                80
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 4">
+              
+              <td x-ref="Table Cust_ID 4"
+                id="RACE~Cust_ID~4~515384"
+                class="border-2">
+                515384
+              </td>
+              
+              <td x-ref="Table Display_Name 4"
+                id="RACE~Display_Name~4~Brandon Sherrer"
+                class="border-2">
+                Brandon Sherrer
+              </td>
+              
+              <td x-ref="Table Finish_Position 4"
+                id="RACE~Finish_Position~4~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Laps_Lead 4"
+                id="RACE~Laps_Lead~4~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 4"
+                id="RACE~Laps_Complete~4~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 4"
+                id="RACE~Interval~4~11.148"
+                class="border-2">
+                11.148
+              </td>
+              
+              <td x-ref="Table Average_Lap 4"
+                id="RACE~Average_Lap~4~1:02.2651"
+                class="border-2">
+                1:02.2651
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 4"
+                id="RACE~Best_Lap_Num~4~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 4"
+                id="RACE~Best_Lap_Time~4~1:00.1261"
+                class="border-2">
+                1:00.1261
+              </td>
+              
+              <td x-ref="Table Reason_Out 4"
+                id="RACE~Reason_Out~4~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 4"
+                id="RACE~Champ_Points~4~75"
+                class="border-2">
+                75
+              </td>
+              
+              <td x-ref="Table Drop_Race 4"
+                id="RACE~Drop_Race~4~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 4"
+                id="RACE~Starting_Position~4~9"
+                class="border-2">
+                9
+              </td>
+              
+              <td x-ref="Table Division_Name 4"
+                id="RACE~Division_Name~4~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Old_License_Level 4"
+                id="RACE~Old_License_Level~4~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Old_CPI 4"
+                id="RACE~Old_CPI~4~26.67964"
+                class="border-2">
+                26.67964
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 4"
+                id="RACE~Oldi_Rating~4~1481"
+                class="border-2">
+                1481
+              </td>
+              
+              <td x-ref="Table New_License_Level 4"
+                id="RACE~New_License_Level~4~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table New_CPI 4"
+                id="RACE~New_CPI~4~29.22471"
+                class="border-2">
+                29.22471
+              </td>
+              
+              <td x-ref="Table Newi_Rating 4"
+                id="RACE~Newi_Rating~4~1538"
+                class="border-2">
+                1538
+              </td>
+              
+              <td x-ref="Table Incidents 4"
+                id="RACE~Incidents~4~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Car_Name 4"
+                id="RACE~Car_Name~4~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 4"
+                id="RACE~Aggregate_Champ_Points~4~75"
+                class="border-2">
+                75
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 5">
+              
+              <td x-ref="Table Cust_ID 5"
+                id="RACE~Cust_ID~5~877926"
+                class="border-2">
+                877926
+              </td>
+              
+              <td x-ref="Table Display_Name 5"
+                id="RACE~Display_Name~5~John Duong2"
+                class="border-2">
+                John Duong2
+              </td>
+              
+              <td x-ref="Table Finish_Position 5"
+                id="RACE~Finish_Position~5~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Laps_Lead 5"
+                id="RACE~Laps_Lead~5~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Laps_Complete 5"
+                id="RACE~Laps_Complete~5~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 5"
+                id="RACE~Interval~5~16.951"
+                class="border-2">
+                16.951
+              </td>
+              
+              <td x-ref="Table Average_Lap 5"
+                id="RACE~Average_Lap~5~1:02.6523"
+                class="border-2">
+                1:02.6523
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 5"
+                id="RACE~Best_Lap_Num~5~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 5"
+                id="RACE~Best_Lap_Time~5~59.942"
+                class="border-2">
+                59.942
+              </td>
+              
+              <td x-ref="Table Reason_Out 5"
+                id="RACE~Reason_Out~5~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 5"
+                id="RACE~Champ_Points~5~70"
+                class="border-2">
+                70
+              </td>
+              
+              <td x-ref="Table Drop_Race 5"
+                id="RACE~Drop_Race~5~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 5"
+                id="RACE~Starting_Position~5~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Division_Name 5"
+                id="RACE~Division_Name~5~Rookie"
+                class="border-2">
+                Rookie
+              </td>
+              
+              <td x-ref="Table Old_License_Level 5"
+                id="RACE~Old_License_Level~5~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Old_CPI 5"
+                id="RACE~Old_CPI~5~15.276246"
+                class="border-2">
+                15.276246
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 5"
+                id="RACE~Oldi_Rating~5~1428"
+                class="border-2">
+                1428
+              </td>
+              
+              <td x-ref="Table New_License_Level 5"
+                id="RACE~New_License_Level~5~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table New_CPI 5"
+                id="RACE~New_CPI~5~16.598705"
+                class="border-2">
+                16.598705
+              </td>
+              
+              <td x-ref="Table Newi_Rating 5"
+                id="RACE~Newi_Rating~5~1478"
+                class="border-2">
+                1478
+              </td>
+              
+              <td x-ref="Table Incidents 5"
+                id="RACE~Incidents~5~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 5"
+                id="RACE~Car_Name~5~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 5"
+                id="RACE~Aggregate_Champ_Points~5~70"
+                class="border-2">
+                70
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 6">
+              
+              <td x-ref="Table Cust_ID 6"
+                id="RACE~Cust_ID~6~882231"
+                class="border-2">
+                882231
+              </td>
+              
+              <td x-ref="Table Display_Name 6"
+                id="RACE~Display_Name~6~Gabriel Genz"
+                class="border-2">
+                Gabriel Genz
+              </td>
+              
+              <td x-ref="Table Finish_Position 6"
+                id="RACE~Finish_Position~6~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Laps_Lead 6"
+                id="RACE~Laps_Lead~6~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 6"
+                id="RACE~Laps_Complete~6~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 6"
+                id="RACE~Interval~6~17.477"
+                class="border-2">
+                17.477
+              </td>
+              
+              <td x-ref="Table Average_Lap 6"
+                id="RACE~Average_Lap~6~1:02.6873"
+                class="border-2">
+                1:02.6873
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 6"
+                id="RACE~Best_Lap_Num~6~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 6"
+                id="RACE~Best_Lap_Time~6~1:00.2365"
+                class="border-2">
+                1:00.2365
+              </td>
+              
+              <td x-ref="Table Reason_Out 6"
+                id="RACE~Reason_Out~6~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 6"
+                id="RACE~Champ_Points~6~65"
+                class="border-2">
+                65
+              </td>
+              
+              <td x-ref="Table Drop_Race 6"
+                id="RACE~Drop_Race~6~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 6"
+                id="RACE~Starting_Position~6~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Division_Name 6"
+                id="RACE~Division_Name~6~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Old_License_Level 6"
+                id="RACE~Old_License_Level~6~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Old_CPI 6"
+                id="RACE~Old_CPI~6~18.097746"
+                class="border-2">
+                18.097746
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 6"
+                id="RACE~Oldi_Rating~6~1458"
+                class="border-2">
+                1458
+              </td>
+              
+              <td x-ref="Table New_License_Level 6"
+                id="RACE~New_License_Level~6~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table New_CPI 6"
+                id="RACE~New_CPI~6~19.694273"
+                class="border-2">
+                19.694273
+              </td>
+              
+              <td x-ref="Table Newi_Rating 6"
+                id="RACE~Newi_Rating~6~1496"
+                class="border-2">
+                1496
+              </td>
+              
+              <td x-ref="Table Incidents 6"
+                id="RACE~Incidents~6~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 6"
+                id="RACE~Car_Name~6~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 6"
+                id="RACE~Aggregate_Champ_Points~6~65"
+                class="border-2">
+                65
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 7">
+              
+              <td x-ref="Table Cust_ID 7"
+                id="RACE~Cust_ID~7~744610"
+                class="border-2">
+                744610
+              </td>
+              
+              <td x-ref="Table Display_Name 7"
+                id="RACE~Display_Name~7~Marcus Jeffries"
+                class="border-2">
+                Marcus Jeffries
+              </td>
+              
+              <td x-ref="Table Finish_Position 7"
+                id="RACE~Finish_Position~7~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Laps_Lead 7"
+                id="RACE~Laps_Lead~7~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 7"
+                id="RACE~Laps_Complete~7~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 7"
+                id="RACE~Interval~7~19.479"
+                class="border-2">
+                19.479
+              </td>
+              
+              <td x-ref="Table Average_Lap 7"
+                id="RACE~Average_Lap~7~1:02.8201"
+                class="border-2">
+                1:02.8201
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 7"
+                id="RACE~Best_Lap_Num~7~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 7"
+                id="RACE~Best_Lap_Time~7~1:01.0452"
+                class="border-2">
+                1:01.0452
+              </td>
+              
+              <td x-ref="Table Reason_Out 7"
+                id="RACE~Reason_Out~7~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 7"
+                id="RACE~Champ_Points~7~60"
+                class="border-2">
+                60
+              </td>
+              
+              <td x-ref="Table Drop_Race 7"
+                id="RACE~Drop_Race~7~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 7"
+                id="RACE~Starting_Position~7~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Division_Name 7"
+                id="RACE~Division_Name~7~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 7"
+                id="RACE~Old_License_Level~7~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Old_CPI 7"
+                id="RACE~Old_CPI~7~22.57306"
+                class="border-2">
+                22.57306
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 7"
+                id="RACE~Oldi_Rating~7~1633"
+                class="border-2">
+                1633
+              </td>
+              
+              <td x-ref="Table New_License_Level 7"
+                id="RACE~New_License_Level~7~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table New_CPI 7"
+                id="RACE~New_CPI~7~24.631891"
+                class="border-2">
+                24.631891
+              </td>
+              
+              <td x-ref="Table Newi_Rating 7"
+                id="RACE~Newi_Rating~7~1653"
+                class="border-2">
+                1653
+              </td>
+              
+              <td x-ref="Table Incidents 7"
+                id="RACE~Incidents~7~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Car_Name 7"
+                id="RACE~Car_Name~7~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 7"
+                id="RACE~Aggregate_Champ_Points~7~60"
+                class="border-2">
+                60
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 8">
+              
+              <td x-ref="Table Cust_ID 8"
+                id="RACE~Cust_ID~8~879886"
+                class="border-2">
+                879886
+              </td>
+              
+              <td x-ref="Table Display_Name 8"
+                id="RACE~Display_Name~8~Thomas Sapozhnikov"
+                class="border-2">
+                Thomas Sapozhnikov
+              </td>
+              
+              <td x-ref="Table Finish_Position 8"
+                id="RACE~Finish_Position~8~9"
+                class="border-2">
+                9
+              </td>
+              
+              <td x-ref="Table Laps_Lead 8"
+                id="RACE~Laps_Lead~8~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 8"
+                id="RACE~Laps_Complete~8~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 8"
+                id="RACE~Interval~8~20.103"
+                class="border-2">
+                20.103
+              </td>
+              
+              <td x-ref="Table Average_Lap 8"
+                id="RACE~Average_Lap~8~1:02.8615"
+                class="border-2">
+                1:02.8615
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 8"
+                id="RACE~Best_Lap_Num~8~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 8"
+                id="RACE~Best_Lap_Time~8~1:00.5698"
+                class="border-2">
+                1:00.5698
+              </td>
+              
+              <td x-ref="Table Reason_Out 8"
+                id="RACE~Reason_Out~8~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 8"
+                id="RACE~Champ_Points~8~55"
+                class="border-2">
+                55
+              </td>
+              
+              <td x-ref="Table Drop_Race 8"
+                id="RACE~Drop_Race~8~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 8"
+                id="RACE~Starting_Position~8~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Division_Name 8"
+                id="RACE~Division_Name~8~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 8"
+                id="RACE~Old_License_Level~8~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Old_CPI 8"
+                id="RACE~Old_CPI~8~26.817518"
+                class="border-2">
+                26.817518
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 8"
+                id="RACE~Oldi_Rating~8~1600"
+                class="border-2">
+                1600
+              </td>
+              
+              <td x-ref="Table New_License_Level 8"
+                id="RACE~New_License_Level~8~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table New_CPI 8"
+                id="RACE~New_CPI~8~26.721123"
+                class="border-2">
+                26.721123
+              </td>
+              
+              <td x-ref="Table Newi_Rating 8"
+                id="RACE~Newi_Rating~8~1612"
+                class="border-2">
+                1612
+              </td>
+              
+              <td x-ref="Table Incidents 8"
+                id="RACE~Incidents~8~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Car_Name 8"
+                id="RACE~Car_Name~8~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 8"
+                id="RACE~Aggregate_Champ_Points~8~55"
+                class="border-2">
+                55
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 9">
+              
+              <td x-ref="Table Cust_ID 9"
+                id="RACE~Cust_ID~9~185695"
+                class="border-2">
+                185695
+              </td>
+              
+              <td x-ref="Table Display_Name 9"
+                id="RACE~Display_Name~9~Rob Franklin"
+                class="border-2">
+                Rob Franklin
+              </td>
+              
+              <td x-ref="Table Finish_Position 9"
+                id="RACE~Finish_Position~9~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Laps_Lead 9"
+                id="RACE~Laps_Lead~9~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 9"
+                id="RACE~Laps_Complete~9~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 9"
+                id="RACE~Interval~9~32.423"
+                class="border-2">
+                32.423
+              </td>
+              
+              <td x-ref="Table Average_Lap 9"
+                id="RACE~Average_Lap~9~1:03.6827"
+                class="border-2">
+                1:03.6827
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 9"
+                id="RACE~Best_Lap_Num~9~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 9"
+                id="RACE~Best_Lap_Time~9~1:01.2252"
+                class="border-2">
+                1:01.2252
+              </td>
+              
+              <td x-ref="Table Reason_Out 9"
+                id="RACE~Reason_Out~9~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 9"
+                id="RACE~Champ_Points~9~50"
+                class="border-2">
+                50
+              </td>
+              
+              <td x-ref="Table Drop_Race 9"
+                id="RACE~Drop_Race~9~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 9"
+                id="RACE~Starting_Position~9~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Division_Name 9"
+                id="RACE~Division_Name~9~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 9"
+                id="RACE~Old_License_Level~9~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Old_CPI 9"
+                id="RACE~Old_CPI~9~19.926514"
+                class="border-2">
+                19.926514
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 9"
+                id="RACE~Oldi_Rating~9~1594"
+                class="border-2">
+                1594
+              </td>
+              
+              <td x-ref="Table New_License_Level 9"
+                id="RACE~New_License_Level~9~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table New_CPI 9"
+                id="RACE~New_CPI~9~20.341232"
+                class="border-2">
+                20.341232
+              </td>
+              
+              <td x-ref="Table Newi_Rating 9"
+                id="RACE~Newi_Rating~9~1596"
+                class="border-2">
+                1596
+              </td>
+              
+              <td x-ref="Table Incidents 9"
+                id="RACE~Incidents~9~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Car_Name 9"
+                id="RACE~Car_Name~9~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 9"
+                id="RACE~Aggregate_Champ_Points~9~50"
+                class="border-2">
+                50
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 10">
+              
+              <td x-ref="Table Cust_ID 10"
+                id="RACE~Cust_ID~10~330790"
+                class="border-2">
+                330790
+              </td>
+              
+              <td x-ref="Table Display_Name 10"
+                id="RACE~Display_Name~10~Jordan M Hill"
+                class="border-2">
+                Jordan M Hill
+              </td>
+              
+              <td x-ref="Table Finish_Position 10"
+                id="RACE~Finish_Position~10~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Laps_Lead 10"
+                id="RACE~Laps_Lead~10~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 10"
+                id="RACE~Laps_Complete~10~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 10"
+                id="RACE~Interval~10~36.768"
+                class="border-2">
+                36.768
+              </td>
+              
+              <td x-ref="Table Average_Lap 10"
+                id="RACE~Average_Lap~10~1:03.9728"
+                class="border-2">
+                1:03.9728
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 10"
+                id="RACE~Best_Lap_Num~10~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 10"
+                id="RACE~Best_Lap_Time~10~1:01.1209"
+                class="border-2">
+                1:01.1209
+              </td>
+              
+              <td x-ref="Table Reason_Out 10"
+                id="RACE~Reason_Out~10~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 10"
+                id="RACE~Champ_Points~10~45"
+                class="border-2">
+                45
+              </td>
+              
+              <td x-ref="Table Drop_Race 10"
+                id="RACE~Drop_Race~10~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 10"
+                id="RACE~Starting_Position~10~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Division_Name 10"
+                id="RACE~Division_Name~10~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 10"
+                id="RACE~Old_License_Level~10~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Old_CPI 10"
+                id="RACE~Old_CPI~10~24.122372"
+                class="border-2">
+                24.122372
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 10"
+                id="RACE~Oldi_Rating~10~1429"
+                class="border-2">
+                1429
+              </td>
+              
+              <td x-ref="Table New_License_Level 10"
+                id="RACE~New_License_Level~10~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table New_CPI 10"
+                id="RACE~New_CPI~10~25.100767"
+                class="border-2">
+                25.100767
+              </td>
+              
+              <td x-ref="Table Newi_Rating 10"
+                id="RACE~Newi_Rating~10~1428"
+                class="border-2">
+                1428
+              </td>
+              
+              <td x-ref="Table Incidents 10"
+                id="RACE~Incidents~10~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Car_Name 10"
+                id="RACE~Car_Name~10~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 10"
+                id="RACE~Aggregate_Champ_Points~10~45"
+                class="border-2">
+                45
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 11">
+              
+              <td x-ref="Table Cust_ID 11"
+                id="RACE~Cust_ID~11~864833"
+                class="border-2">
+                864833
+              </td>
+              
+              <td x-ref="Table Display_Name 11"
+                id="RACE~Display_Name~11~Guilherme Marra"
+                class="border-2">
+                Guilherme Marra
+              </td>
+              
+              <td x-ref="Table Finish_Position 11"
+                id="RACE~Finish_Position~11~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Laps_Lead 11"
+                id="RACE~Laps_Lead~11~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 11"
+                id="RACE~Laps_Complete~11~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Interval 11"
+                id="RACE~Interval~11~41.835"
+                class="border-2">
+                41.835
+              </td>
+              
+              <td x-ref="Table Average_Lap 11"
+                id="RACE~Average_Lap~11~1:02.3082"
+                class="border-2">
+                1:02.3082
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 11"
+                id="RACE~Best_Lap_Num~11~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 11"
+                id="RACE~Best_Lap_Time~11~1:00.2333"
+                class="border-2">
+                1:00.2333
+              </td>
+              
+              <td x-ref="Table Reason_Out 11"
+                id="RACE~Reason_Out~11~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 11"
+                id="RACE~Champ_Points~11~40"
+                class="border-2">
+                40
+              </td>
+              
+              <td x-ref="Table Drop_Race 11"
+                id="RACE~Drop_Race~11~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 11"
+                id="RACE~Starting_Position~11~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Division_Name 11"
+                id="RACE~Division_Name~11~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Old_License_Level 11"
+                id="RACE~Old_License_Level~11~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Old_CPI 11"
+                id="RACE~Old_CPI~11~19.765284"
+                class="border-2">
+                19.765284
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 11"
+                id="RACE~Oldi_Rating~11~1539"
+                class="border-2">
+                1539
+              </td>
+              
+              <td x-ref="Table New_License_Level 11"
+                id="RACE~New_License_Level~11~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table New_CPI 11"
+                id="RACE~New_CPI~11~20.431387"
+                class="border-2">
+                20.431387
+              </td>
+              
+              <td x-ref="Table Newi_Rating 11"
+                id="RACE~Newi_Rating~11~1524"
+                class="border-2">
+                1524
+              </td>
+              
+              <td x-ref="Table Incidents 11"
+                id="RACE~Incidents~11~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Car_Name 11"
+                id="RACE~Car_Name~11~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 11"
+                id="RACE~Aggregate_Champ_Points~11~40"
+                class="border-2">
+                40
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 12">
+              
+              <td x-ref="Table Cust_ID 12"
+                id="RACE~Cust_ID~12~300752"
+                class="border-2">
+                300752
+              </td>
+              
+              <td x-ref="Table Display_Name 12"
+                id="RACE~Display_Name~12~Jacob Collins"
+                class="border-2">
+                Jacob Collins
+              </td>
+              
+              <td x-ref="Table Finish_Position 12"
+                id="RACE~Finish_Position~12~13"
+                class="border-2">
+                13
+              </td>
+              
+              <td x-ref="Table Laps_Lead 12"
+                id="RACE~Laps_Lead~12~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 12"
+                id="RACE~Laps_Complete~12~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Interval 12"
+                id="RACE~Interval~12~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 12"
+                id="RACE~Average_Lap~12~1:03.5629"
+                class="border-2">
+                1:03.5629
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 12"
+                id="RACE~Best_Lap_Num~12~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 12"
+                id="RACE~Best_Lap_Time~12~1:00.7119"
+                class="border-2">
+                1:00.7119
+              </td>
+              
+              <td x-ref="Table Reason_Out 12"
+                id="RACE~Reason_Out~12~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 12"
+                id="RACE~Champ_Points~12~35"
+                class="border-2">
+                35
+              </td>
+              
+              <td x-ref="Table Drop_Race 12"
+                id="RACE~Drop_Race~12~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 12"
+                id="RACE~Starting_Position~12~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Division_Name 12"
+                id="RACE~Division_Name~12~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 12"
+                id="RACE~Old_License_Level~12~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Old_CPI 12"
+                id="RACE~Old_CPI~12~62.84063"
+                class="border-2">
+                62.84063
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 12"
+                id="RACE~Oldi_Rating~12~1590"
+                class="border-2">
+                1590
+              </td>
+              
+              <td x-ref="Table New_License_Level 12"
+                id="RACE~New_License_Level~12~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table New_CPI 12"
+                id="RACE~New_CPI~12~63.637287"
+                class="border-2">
+                63.637287
+              </td>
+              
+              <td x-ref="Table Newi_Rating 12"
+                id="RACE~Newi_Rating~12~1563"
+                class="border-2">
+                1563
+              </td>
+              
+              <td x-ref="Table Incidents 12"
+                id="RACE~Incidents~12~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 12"
+                id="RACE~Car_Name~12~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 12"
+                id="RACE~Aggregate_Champ_Points~12~35"
+                class="border-2">
+                35
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 13">
+              
+              <td x-ref="Table Cust_ID 13"
+                id="RACE~Cust_ID~13~688024"
+                class="border-2">
+                688024
+              </td>
+              
+              <td x-ref="Table Display_Name 13"
+                id="RACE~Display_Name~13~Paulo Tosta"
+                class="border-2">
+                Paulo Tosta
+              </td>
+              
+              <td x-ref="Table Finish_Position 13"
+                id="RACE~Finish_Position~13~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Laps_Lead 13"
+                id="RACE~Laps_Lead~13~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 13"
+                id="RACE~Laps_Complete~13~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Interval 13"
+                id="RACE~Interval~13~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 13"
+                id="RACE~Average_Lap~13~1:01.6967"
+                class="border-2">
+                1:01.6967
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 13"
+                id="RACE~Best_Lap_Num~13~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 13"
+                id="RACE~Best_Lap_Time~13~1:00.5700"
+                class="border-2">
+                1:00.5700
+              </td>
+              
+              <td x-ref="Table Reason_Out 13"
+                id="RACE~Reason_Out~13~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 13"
+                id="RACE~Champ_Points~13~30"
+                class="border-2">
+                30
+              </td>
+              
+              <td x-ref="Table Drop_Race 13"
+                id="RACE~Drop_Race~13~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 13"
+                id="RACE~Starting_Position~13~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Division_Name 13"
+                id="RACE~Division_Name~13~Division 7"
+                class="border-2">
+                Division 7
+              </td>
+              
+              <td x-ref="Table Old_License_Level 13"
+                id="RACE~Old_License_Level~13~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Old_CPI 13"
+                id="RACE~Old_CPI~13~22.854916"
+                class="border-2">
+                22.854916
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 13"
+                id="RACE~Oldi_Rating~13~1634"
+                class="border-2">
+                1634
+              </td>
+              
+              <td x-ref="Table New_License_Level 13"
+                id="RACE~New_License_Level~13~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table New_CPI 13"
+                id="RACE~New_CPI~13~22.470325"
+                class="border-2">
+                22.470325
+              </td>
+              
+              <td x-ref="Table Newi_Rating 13"
+                id="RACE~Newi_Rating~13~1595"
+                class="border-2">
+                1595
+              </td>
+              
+              <td x-ref="Table Incidents 13"
+                id="RACE~Incidents~13~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Car_Name 13"
+                id="RACE~Car_Name~13~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 13"
+                id="RACE~Aggregate_Champ_Points~13~30"
+                class="border-2">
+                30
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 14">
+              
+              <td x-ref="Table Cust_ID 14"
+                id="RACE~Cust_ID~14~761463"
+                class="border-2">
+                761463
+              </td>
+              
+              <td x-ref="Table Display_Name 14"
+                id="RACE~Display_Name~14~Alberto Ravarino"
+                class="border-2">
+                Alberto Ravarino
+              </td>
+              
+              <td x-ref="Table Finish_Position 14"
+                id="RACE~Finish_Position~14~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Laps_Lead 14"
+                id="RACE~Laps_Lead~14~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 14"
+                id="RACE~Laps_Complete~14~13"
+                class="border-2">
+                13
+              </td>
+              
+              <td x-ref="Table Interval 14"
+                id="RACE~Interval~14~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 14"
+                id="RACE~Average_Lap~14~1:04.0902"
+                class="border-2">
+                1:04.0902
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 14"
+                id="RACE~Best_Lap_Num~14~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 14"
+                id="RACE~Best_Lap_Time~14~1:00.8953"
+                class="border-2">
+                1:00.8953
+              </td>
+              
+              <td x-ref="Table Reason_Out 14"
+                id="RACE~Reason_Out~14~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 14"
+                id="RACE~Champ_Points~14~25"
+                class="border-2">
+                25
+              </td>
+              
+              <td x-ref="Table Drop_Race 14"
+                id="RACE~Drop_Race~14~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 14"
+                id="RACE~Starting_Position~14~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Division_Name 14"
+                id="RACE~Division_Name~14~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Old_License_Level 14"
+                id="RACE~Old_License_Level~14~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Old_CPI 14"
+                id="RACE~Old_CPI~14~27.174679"
+                class="border-2">
+                27.174679
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 14"
+                id="RACE~Oldi_Rating~14~1426"
+                class="border-2">
+                1426
+              </td>
+              
+              <td x-ref="Table New_License_Level 14"
+                id="RACE~New_License_Level~14~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table New_CPI 14"
+                id="RACE~New_CPI~14~24.011715"
+                class="border-2">
+                24.011715
+              </td>
+              
+              <td x-ref="Table Newi_Rating 14"
+                id="RACE~Newi_Rating~14~1387"
+                class="border-2">
+                1387
+              </td>
+              
+              <td x-ref="Table Incidents 14"
+                id="RACE~Incidents~14~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Car_Name 14"
+                id="RACE~Car_Name~14~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 14"
+                id="RACE~Aggregate_Champ_Points~14~25"
+                class="border-2">
+                25
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 15">
+              
+              <td x-ref="Table Cust_ID 15"
+                id="RACE~Cust_ID~15~884131"
+                class="border-2">
+                884131
+              </td>
+              
+              <td x-ref="Table Display_Name 15"
+                id="RACE~Display_Name~15~Fernando Muniz3"
+                class="border-2">
+                Fernando Muniz3
+              </td>
+              
+              <td x-ref="Table Finish_Position 15"
+                id="RACE~Finish_Position~15~16"
+                class="border-2">
+                16
+              </td>
+              
+              <td x-ref="Table Laps_Lead 15"
+                id="RACE~Laps_Lead~15~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 15"
+                id="RACE~Laps_Complete~15~9"
+                class="border-2">
+                9
+              </td>
+              
+              <td x-ref="Table Interval 15"
+                id="RACE~Interval~15~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 15"
+                id="RACE~Average_Lap~15~1:04.6313"
+                class="border-2">
+                1:04.6313
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 15"
+                id="RACE~Best_Lap_Num~15~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 15"
+                id="RACE~Best_Lap_Time~15~1:00.2021"
+                class="border-2">
+                1:00.2021
+              </td>
+              
+              <td x-ref="Table Reason_Out 15"
+                id="RACE~Reason_Out~15~Disconnected"
+                class="border-2">
+                Disconnected
+              </td>
+              
+              <td x-ref="Table Champ_Points 15"
+                id="RACE~Champ_Points~15~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Drop_Race 15"
+                id="RACE~Drop_Race~15~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 15"
+                id="RACE~Starting_Position~15~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Division_Name 15"
+                id="RACE~Division_Name~15~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Old_License_Level 15"
+                id="RACE~Old_License_Level~15~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Old_CPI 15"
+                id="RACE~Old_CPI~15~20.008955"
+                class="border-2">
+                20.008955
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 15"
+                id="RACE~Oldi_Rating~15~1444"
+                class="border-2">
+                1444
+              </td>
+              
+              <td x-ref="Table New_License_Level 15"
+                id="RACE~New_License_Level~15~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table New_CPI 15"
+                id="RACE~New_CPI~15~19.246225"
+                class="border-2">
+                19.246225
+              </td>
+              
+              <td x-ref="Table Newi_Rating 15"
+                id="RACE~Newi_Rating~15~1394"
+                class="border-2">
+                1394
+              </td>
+              
+              <td x-ref="Table Incidents 15"
+                id="RACE~Incidents~15~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Car_Name 15"
+                id="RACE~Car_Name~15~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 15"
+                id="RACE~Aggregate_Champ_Points~15~20"
+                class="border-2">
+                20
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 16">
+              
+              <td x-ref="Table Cust_ID 16"
+                id="RACE~Cust_ID~16~881566"
+                class="border-2">
+                881566
+              </td>
+              
+              <td x-ref="Table Display_Name 16"
+                id="RACE~Display_Name~16~Dieter Alleman2"
+                class="border-2">
+                Dieter Alleman2
+              </td>
+              
+              <td x-ref="Table Finish_Position 16"
+                id="RACE~Finish_Position~16~17"
+                class="border-2">
+                17
+              </td>
+              
+              <td x-ref="Table Laps_Lead 16"
+                id="RACE~Laps_Lead~16~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 16"
+                id="RACE~Laps_Complete~16~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Interval 16"
+                id="RACE~Interval~16~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 16"
+                id="RACE~Average_Lap~16~1:03.1282"
+                class="border-2">
+                1:03.1282
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 16"
+                id="RACE~Best_Lap_Num~16~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 16"
+                id="RACE~Best_Lap_Time~16~1:00.4780"
+                class="border-2">
+                1:00.4780
+              </td>
+              
+              <td x-ref="Table Reason_Out 16"
+                id="RACE~Reason_Out~16~Disconnected"
+                class="border-2">
+                Disconnected
+              </td>
+              
+              <td x-ref="Table Champ_Points 16"
+                id="RACE~Champ_Points~16~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Drop_Race 16"
+                id="RACE~Drop_Race~16~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 16"
+                id="RACE~Starting_Position~16~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Division_Name 16"
+                id="RACE~Division_Name~16~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Old_License_Level 16"
+                id="RACE~Old_License_Level~16~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Old_CPI 16"
+                id="RACE~Old_CPI~16~13.696352"
+                class="border-2">
+                13.696352
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 16"
+                id="RACE~Oldi_Rating~16~1584"
+                class="border-2">
+                1584
+              </td>
+              
+              <td x-ref="Table New_License_Level 16"
+                id="RACE~New_License_Level~16~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table New_CPI 16"
+                id="RACE~New_CPI~16~13.694854"
+                class="border-2">
+                13.694854
+              </td>
+              
+              <td x-ref="Table Newi_Rating 16"
+                id="RACE~Newi_Rating~16~1517"
+                class="border-2">
+                1517
+              </td>
+              
+              <td x-ref="Table Incidents 16"
+                id="RACE~Incidents~16~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Car_Name 16"
+                id="RACE~Car_Name~16~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 16"
+                id="RACE~Aggregate_Champ_Points~16~15"
+                class="border-2">
+                15
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 17">
+              
+              <td x-ref="Table Cust_ID 17"
+                id="RACE~Cust_ID~17~709105"
+                class="border-2">
+                709105
+              </td>
+              
+              <td x-ref="Table Display_Name 17"
+                id="RACE~Display_Name~17~Bryan Alvarez"
+                class="border-2">
+                Bryan Alvarez
+              </td>
+              
+              <td x-ref="Table Finish_Position 17"
+                id="RACE~Finish_Position~17~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Laps_Lead 17"
+                id="RACE~Laps_Lead~17~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 17"
+                id="RACE~Laps_Complete~17~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 17"
+                id="RACE~Interval~17~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 17"
+                id="RACE~Average_Lap~17~1:07.1064"
+                class="border-2">
+                1:07.1064
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 17"
+                id="RACE~Best_Lap_Num~17~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 17"
+                id="RACE~Best_Lap_Time~17~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Reason_Out 17"
+                id="RACE~Reason_Out~17~Disconnected"
+                class="border-2">
+                Disconnected
+              </td>
+              
+              <td x-ref="Table Champ_Points 17"
+                id="RACE~Champ_Points~17~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Drop_Race 17"
+                id="RACE~Drop_Race~17~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 17"
+                id="RACE~Starting_Position~17~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Division_Name 17"
+                id="RACE~Division_Name~17~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Old_License_Level 17"
+                id="RACE~Old_License_Level~17~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Old_CPI 17"
+                id="RACE~Old_CPI~17~21.811146"
+                class="border-2">
+                21.811146
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 17"
+                id="RACE~Oldi_Rating~17~1532"
+                class="border-2">
+                1532
+              </td>
+              
+              <td x-ref="Table New_License_Level 17"
+                id="RACE~New_License_Level~17~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table New_CPI 17"
+                id="RACE~New_CPI~17~21.28621"
+                class="border-2">
+                21.28621
+              </td>
+              
+              <td x-ref="Table Newi_Rating 17"
+                id="RACE~Newi_Rating~17~1458"
+                class="border-2">
+                1458
+              </td>
+              
+              <td x-ref="Table Incidents 17"
+                id="RACE~Incidents~17~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Car_Name 17"
+                id="RACE~Car_Name~17~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 17"
+                id="RACE~Aggregate_Champ_Points~17~10"
+                class="border-2">
+                10
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 18">
+              
+              <td x-ref="Table Cust_ID 18"
+                id="RACE~Cust_ID~18~876307"
+                class="border-2">
+                876307
+              </td>
+              
+              <td x-ref="Table Display_Name 18"
+                id="RACE~Display_Name~18~Christopher Digennaro"
+                class="border-2">
+                Christopher Digennaro
+              </td>
+              
+              <td x-ref="Table Finish_Position 18"
+                id="RACE~Finish_Position~18~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Laps_Lead 18"
+                id="RACE~Laps_Lead~18~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 18"
+                id="RACE~Laps_Complete~18~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 18"
+                id="RACE~Interval~18~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 18"
+                id="RACE~Average_Lap~18~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 18"
+                id="RACE~Best_Lap_Num~18~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 18"
+                id="RACE~Best_Lap_Time~18~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Reason_Out 18"
+                id="RACE~Reason_Out~18~Disconnected"
+                class="border-2">
+                Disconnected
+              </td>
+              
+              <td x-ref="Table Champ_Points 18"
+                id="RACE~Champ_Points~18~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Drop_Race 18"
+                id="RACE~Drop_Race~18~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 18"
+                id="RACE~Starting_Position~18~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Division_Name 18"
+                id="RACE~Division_Name~18~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 18"
+                id="RACE~Old_License_Level~18~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Old_CPI 18"
+                id="RACE~Old_CPI~18~16.030346"
+                class="border-2">
+                16.030346
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 18"
+                id="RACE~Oldi_Rating~18~1490"
+                class="border-2">
+                1490
+              </td>
+              
+              <td x-ref="Table New_License_Level 18"
+                id="RACE~New_License_Level~18~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table New_CPI 18"
+                id="RACE~New_CPI~18~14.646602"
+                class="border-2">
+                14.646602
+              </td>
+              
+              <td x-ref="Table Newi_Rating 18"
+                id="RACE~Newi_Rating~18~1409"
+                class="border-2">
+                1409
+              </td>
+              
+              <td x-ref="Table Incidents 18"
+                id="RACE~Incidents~18~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Car_Name 18"
+                id="RACE~Car_Name~18~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 18"
+                id="RACE~Aggregate_Champ_Points~18~5"
+                class="border-2">
+                5
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 19">
+              
+              <td x-ref="Table Cust_ID 19"
+                id="RACE~Cust_ID~19~592274"
+                class="border-2">
+                592274
+              </td>
+              
+              <td x-ref="Table Display_Name 19"
+                id="RACE~Display_Name~19~Steve Michaels"
+                class="border-2">
+                Steve Michaels
+              </td>
+              
+              <td x-ref="Table Finish_Position 19"
+                id="RACE~Finish_Position~19~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Laps_Lead 19"
+                id="RACE~Laps_Lead~19~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 19"
+                id="RACE~Laps_Complete~19~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 19"
+                id="RACE~Interval~19~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 19"
+                id="RACE~Average_Lap~19~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 19"
+                id="RACE~Best_Lap_Num~19~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 19"
+                id="RACE~Best_Lap_Time~19~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Reason_Out 19"
+                id="RACE~Reason_Out~19~Disconnected"
+                class="border-2">
+                Disconnected
+              </td>
+              
+              <td x-ref="Table Champ_Points 19"
+                id="RACE~Champ_Points~19~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Drop_Race 19"
+                id="RACE~Drop_Race~19~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 19"
+                id="RACE~Starting_Position~19~16"
+                class="border-2">
+                16
+              </td>
+              
+              <td x-ref="Table Division_Name 19"
+                id="RACE~Division_Name~19~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 19"
+                id="RACE~Old_License_Level~19~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Old_CPI 19"
+                id="RACE~Old_CPI~19~33.717934"
+                class="border-2">
+                33.717934
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 19"
+                id="RACE~Oldi_Rating~19~1541"
+                class="border-2">
+                1541
+              </td>
+              
+              <td x-ref="Table New_License_Level 19"
+                id="RACE~New_License_Level~19~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table New_CPI 19"
+                id="RACE~New_CPI~19~31.905489"
+                class="border-2">
+                31.905489
+              </td>
+              
+              <td x-ref="Table Newi_Rating 19"
+                id="RACE~Newi_Rating~19~1447"
+                class="border-2">
+                1447
+              </td>
+              
+              <td x-ref="Table Incidents 19"
+                id="RACE~Incidents~19~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Car_Name 19"
+                id="RACE~Car_Name~19~Toyota GR86"
+                class="border-2">
+                Toyota GR86
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 19"
+                id="RACE~Aggregate_Champ_Points~19~2"
+                class="border-2">
+                2
+              </td>
+              
+            </tr>
+            
+          </table>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>

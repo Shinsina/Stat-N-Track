@@ -1,0 +1,6025 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://shinsina.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://shinsina.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://shinsina.github.io/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="https://shinsina.github.io/favicon.ico" />
+  <link rel="stylesheet" href="../index.css" />
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/async-alpine@2.0.2/dist/async-alpine.script.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.9/dist/cdn.min.js"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content="Subsession information for subsession - 63985641" />
+  <title>Stat 'N' Track: Subsession - 63985641</title>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+  <div class="text-center border-white border-2">
+    <p class="block lg:text-5xl md:text-2xl sm:text-xl break-words text-center">
+      Stat 'N' Track
+    </p>
+    <div class="block lg:text-3xl md:text-lg sm:text-md break-words text-center py-2">
+      <a class="underline p-2" href="/Stat-N-Track/">Home</a>
+    </div>
+  </div>
+  <div class="grid grid-cols-12">
+    <div class="col-span-12 md:col-span-6 border-x-2 md:border-r-0 md:border-l-2 pt-4">
+      <div class="grid grid-cols-3">
+        <div class="col-span-3">
+          
+          <div class="flex justify-center">
+            <img src="https://images-static.iracing.com/img/logos/series/nascarlegends-logo.png" alt="Series Logo" width=300
+              height=175 format="avif" loading="eager" />
+          </div>
+          
+          <div class="text-center py-4">
+            <p><b>NASCAR 1987 Legends Cup  - 2023 Season 4 Fixed</b></p>
+            <p><b>Week 3 of 12</b></p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center pb-6">
+        <p>Race Summary:</p>
+        <p>Average Lap Time: 31.870</p>
+        <p>Laps Complete: 100</p>
+        <p>Number of Cautions: 11 for 51 laps</p>
+        <p>Lead Changes: 0</p>
+        <p>Strength of Field: 1915</p>
+        <p>Started: 9/28/2023 6:30pm</p>
+        <p>Ended: 9/28/2023 7:32pm</p>
+      </div>
+    </div>
+    <div class="col-span-12 md:col-span-6 border-x-2">
+      <div class="text-center border-b-2">
+        <p>Track Facts:</p>
+        <p>Name: Martinsville Speedway</p>
+        <p>Configuration: N/A</p>
+        <p>Category: Oval</p>
+        <p>Corners: 4</p>
+      </div>
+      <div class="text-center border-b-2">
+        <p>License Information:</p>
+        <p>License Category: Oval</p>
+        <div>
+          
+          Allowed Licenses:
+          <p>Class C 4.00</p>
+          <p>Class B and above</p>
+        </div>
+      </div>
+      <div class="text-center row-span-1">
+        <p>Relevant IDs:</p>
+        <p>license_category_id: 1</p>
+        <p>season_id: 4434</p>
+        <p>series_id: 413</p>
+        <p>session_id: 217083559</p>
+        <p>subsession_id: 63985641</p>
+        
+      </div>
+    </div>
+  </div>
+  <div x-load x-load-src="../alpine-components/tables.js" x-data="tables">
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+    <div class="grid grid-cols-3 text-center pb-6">
+      <button id="PRACTICE QUALIFY HEAT RACE" x-on:click="toggle" class="border-2 bg-gray-700">
+        Practice Table
+      </button>
+      <button id="QUALIFY PRACTICE HEAT RACE" x-on:click="toggle" class="border-2 bg-gray-700">
+        Qualifying Table
+      </button>
+      
+      
+      <button id="RACE PRACTICE QUALIFY HEAT" x-on:click="toggle" class="border-2 bg-gray-700">
+        Race Table
+      </button>
+    </div>
+    <div>
+      <div x-cloak x-show="PRACTICE" x-transition:enter.duration.500ms x-transition:leave.duration.0ms>
+        
+        <div class="grid grid-cols-1">
+          <table class="text-center col-span-1">
+            <tr class="bg-gray-500">
+              <th class="border-2">Session Type</th>
+            </tr>
+            <tr>
+              <td class="border-2">Open Practice</td>
+            </tr>
+          </table>
+        </div>
+        
+        
+        <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+          <table x-load x-load-src="../alpine-components/practice-table.js" x-ref="Table" x-data="PRACTICE"
+            class="text-center col-span-1">
+            <tr x-ref="Headings">
+              
+              
+              <th
+                id="Table Cust_ID 20"
+                class="border-2" x-on:click="sort">cust_id</th>
+              
+              <th
+                id="Table Display_Name 20"
+                class="border-2" x-on:click="sort">Name</th>
+              
+              <th
+                id="Table Finish_Position 20"
+                class="border-2" x-on:click="sort">Finish</th>
+              
+              <th
+                id="Table Laps_Complete 20"
+                class="border-2" x-on:click="sort">Laps Completed</th>
+              
+              <th
+                id="Table Interval 20"
+                class="border-2" x-on:click="sort">Interval to P1</th>
+              
+              <th
+                id="Table Average_Lap 20"
+                class="border-2" x-on:click="sort">AVG Laptime</th>
+              
+              <th
+                id="Table Best_Lap_Num 20"
+                class="border-2" x-on:click="sort">Fastest Lap</th>
+              
+              <th
+                id="Table Best_Lap_Time 20"
+                class="border-2" x-on:click="sort">Fastest Lap Time</th>
+              
+              <th
+                id="Table Division_Name 20"
+                class="border-2" x-on:click="sort">Division</th>
+              
+              <th
+                id="Table Incidents 20"
+                class="border-2" x-on:click="sort">Incidents</th>
+              
+              <th
+                id="Table Car_Name 20"
+                class="border-2" x-on:click="sort">Car</th>
+            </tr>
+            
+            <tr x-ref="Table 0">
+              
+              <td x-ref="Table Cust_ID 0"
+                id="PRACTICE~Cust_ID~0~942262"
+                class="border-2">
+                942262
+              </td>
+              
+              <td x-ref="Table Display_Name 0"
+                id="PRACTICE~Display_Name~0~Greg Wellen2"
+                class="border-2">
+                Greg Wellen2
+              </td>
+              
+              <td x-ref="Table Finish_Position 0"
+                id="PRACTICE~Finish_Position~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Laps_Complete 0"
+                id="PRACTICE~Laps_Complete~0~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Interval 0"
+                id="PRACTICE~Interval~0~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 0"
+                id="PRACTICE~Average_Lap~0~29.364"
+                class="border-2">
+                29.364
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 0"
+                id="PRACTICE~Best_Lap_Num~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 0"
+                id="PRACTICE~Best_Lap_Time~0~20.966"
+                class="border-2">
+                20.966
+              </td>
+              
+              <td x-ref="Table Division_Name 0"
+                id="PRACTICE~Division_Name~0~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 0"
+                id="PRACTICE~Incidents~0~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 0"
+                id="PRACTICE~Car_Name~0~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 1">
+              
+              <td x-ref="Table Cust_ID 1"
+                id="PRACTICE~Cust_ID~1~934644"
+                class="border-2">
+                934644
+              </td>
+              
+              <td x-ref="Table Display_Name 1"
+                id="PRACTICE~Display_Name~1~Kheagun Fleckenstein"
+                class="border-2">
+                Kheagun Fleckenstein
+              </td>
+              
+              <td x-ref="Table Finish_Position 1"
+                id="PRACTICE~Finish_Position~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Laps_Complete 1"
+                id="PRACTICE~Laps_Complete~1~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Interval 1"
+                id="PRACTICE~Interval~1~0.392"
+                class="border-2">
+                0.392
+              </td>
+              
+              <td x-ref="Table Average_Lap 1"
+                id="PRACTICE~Average_Lap~1~21.541"
+                class="border-2">
+                21.541
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 1"
+                id="PRACTICE~Best_Lap_Num~1~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 1"
+                id="PRACTICE~Best_Lap_Time~1~21.358"
+                class="border-2">
+                21.358
+              </td>
+              
+              <td x-ref="Table Division_Name 1"
+                id="PRACTICE~Division_Name~1~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Incidents 1"
+                id="PRACTICE~Incidents~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 1"
+                id="PRACTICE~Car_Name~1~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 2">
+              
+              <td x-ref="Table Cust_ID 2"
+                id="PRACTICE~Cust_ID~2~45400"
+                class="border-2">
+                45400
+              </td>
+              
+              <td x-ref="Table Display_Name 2"
+                id="PRACTICE~Display_Name~2~Calum Farley"
+                class="border-2">
+                Calum Farley
+              </td>
+              
+              <td x-ref="Table Finish_Position 2"
+                id="PRACTICE~Finish_Position~2~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Laps_Complete 2"
+                id="PRACTICE~Laps_Complete~2~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Interval 2"
+                id="PRACTICE~Interval~2~0.537"
+                class="border-2">
+                0.537
+              </td>
+              
+              <td x-ref="Table Average_Lap 2"
+                id="PRACTICE~Average_Lap~2~21.735"
+                class="border-2">
+                21.735
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 2"
+                id="PRACTICE~Best_Lap_Num~2~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 2"
+                id="PRACTICE~Best_Lap_Time~2~21.504"
+                class="border-2">
+                21.504
+              </td>
+              
+              <td x-ref="Table Division_Name 2"
+                id="PRACTICE~Division_Name~2~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Incidents 2"
+                id="PRACTICE~Incidents~2~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 2"
+                id="PRACTICE~Car_Name~2~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 3">
+              
+              <td x-ref="Table Cust_ID 3"
+                id="PRACTICE~Cust_ID~3~357467"
+                class="border-2">
+                357467
+              </td>
+              
+              <td x-ref="Table Display_Name 3"
+                id="PRACTICE~Display_Name~3~Kevin Hartley"
+                class="border-2">
+                Kevin Hartley
+              </td>
+              
+              <td x-ref="Table Finish_Position 3"
+                id="PRACTICE~Finish_Position~3~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Laps_Complete 3"
+                id="PRACTICE~Laps_Complete~3~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Interval 3"
+                id="PRACTICE~Interval~3~0.551"
+                class="border-2">
+                0.551
+              </td>
+              
+              <td x-ref="Table Average_Lap 3"
+                id="PRACTICE~Average_Lap~3~22.051"
+                class="border-2">
+                22.051
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 3"
+                id="PRACTICE~Best_Lap_Num~3~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 3"
+                id="PRACTICE~Best_Lap_Time~3~21.517"
+                class="border-2">
+                21.517
+              </td>
+              
+              <td x-ref="Table Division_Name 3"
+                id="PRACTICE~Division_Name~3~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 3"
+                id="PRACTICE~Incidents~3~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 3"
+                id="PRACTICE~Car_Name~3~NASCAR Legends Buick LeSabre - 1987"
+                class="border-2">
+                NASCAR Legends Buick LeSabre - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 4">
+              
+              <td x-ref="Table Cust_ID 4"
+                id="PRACTICE~Cust_ID~4~538024"
+                class="border-2">
+                538024
+              </td>
+              
+              <td x-ref="Table Display_Name 4"
+                id="PRACTICE~Display_Name~4~Corey Tross"
+                class="border-2">
+                Corey Tross
+              </td>
+              
+              <td x-ref="Table Finish_Position 4"
+                id="PRACTICE~Finish_Position~4~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Laps_Complete 4"
+                id="PRACTICE~Laps_Complete~4~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 4"
+                id="PRACTICE~Interval~4~0.728"
+                class="border-2">
+                0.728
+              </td>
+              
+              <td x-ref="Table Average_Lap 4"
+                id="PRACTICE~Average_Lap~4~21.764"
+                class="border-2">
+                21.764
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 4"
+                id="PRACTICE~Best_Lap_Num~4~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 4"
+                id="PRACTICE~Best_Lap_Time~4~21.694"
+                class="border-2">
+                21.694
+              </td>
+              
+              <td x-ref="Table Division_Name 4"
+                id="PRACTICE~Division_Name~4~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Incidents 4"
+                id="PRACTICE~Incidents~4~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 4"
+                id="PRACTICE~Car_Name~4~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 5">
+              
+              <td x-ref="Table Cust_ID 5"
+                id="PRACTICE~Cust_ID~5~53344"
+                class="border-2">
+                53344
+              </td>
+              
+              <td x-ref="Table Display_Name 5"
+                id="PRACTICE~Display_Name~5~Dan Shorter"
+                class="border-2">
+                Dan Shorter
+              </td>
+              
+              <td x-ref="Table Finish_Position 5"
+                id="PRACTICE~Finish_Position~5~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Laps_Complete 5"
+                id="PRACTICE~Laps_Complete~5~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Interval 5"
+                id="PRACTICE~Interval~5~0.857"
+                class="border-2">
+                0.857
+              </td>
+              
+              <td x-ref="Table Average_Lap 5"
+                id="PRACTICE~Average_Lap~5~24.341"
+                class="border-2">
+                24.341
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 5"
+                id="PRACTICE~Best_Lap_Num~5~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 5"
+                id="PRACTICE~Best_Lap_Time~5~21.823"
+                class="border-2">
+                21.823
+              </td>
+              
+              <td x-ref="Table Division_Name 5"
+                id="PRACTICE~Division_Name~5~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 5"
+                id="PRACTICE~Incidents~5~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 5"
+                id="PRACTICE~Car_Name~5~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 6">
+              
+              <td x-ref="Table Cust_ID 6"
+                id="PRACTICE~Cust_ID~6~897163"
+                class="border-2">
+                897163
+              </td>
+              
+              <td x-ref="Table Display_Name 6"
+                id="PRACTICE~Display_Name~6~Louis Labille"
+                class="border-2">
+                Louis Labille
+              </td>
+              
+              <td x-ref="Table Finish_Position 6"
+                id="PRACTICE~Finish_Position~6~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Laps_Complete 6"
+                id="PRACTICE~Laps_Complete~6~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 6"
+                id="PRACTICE~Interval~6~0.872"
+                class="border-2">
+                0.872
+              </td>
+              
+              <td x-ref="Table Average_Lap 6"
+                id="PRACTICE~Average_Lap~6~22.003"
+                class="border-2">
+                22.003
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 6"
+                id="PRACTICE~Best_Lap_Num~6~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 6"
+                id="PRACTICE~Best_Lap_Time~6~21.838"
+                class="border-2">
+                21.838
+              </td>
+              
+              <td x-ref="Table Division_Name 6"
+                id="PRACTICE~Division_Name~6~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 6"
+                id="PRACTICE~Incidents~6~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 6"
+                id="PRACTICE~Car_Name~6~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 7">
+              
+              <td x-ref="Table Cust_ID 7"
+                id="PRACTICE~Cust_ID~7~903997"
+                class="border-2">
+                903997
+              </td>
+              
+              <td x-ref="Table Display_Name 7"
+                id="PRACTICE~Display_Name~7~Jerry Hendrixson"
+                class="border-2">
+                Jerry Hendrixson
+              </td>
+              
+              <td x-ref="Table Finish_Position 7"
+                id="PRACTICE~Finish_Position~7~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Laps_Complete 7"
+                id="PRACTICE~Laps_Complete~7~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 7"
+                id="PRACTICE~Interval~7~1.125"
+                class="border-2">
+                1.125
+              </td>
+              
+              <td x-ref="Table Average_Lap 7"
+                id="PRACTICE~Average_Lap~7~22.125"
+                class="border-2">
+                22.125
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 7"
+                id="PRACTICE~Best_Lap_Num~7~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 7"
+                id="PRACTICE~Best_Lap_Time~7~22.091"
+                class="border-2">
+                22.091
+              </td>
+              
+              <td x-ref="Table Division_Name 7"
+                id="PRACTICE~Division_Name~7~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 7"
+                id="PRACTICE~Incidents~7~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 7"
+                id="PRACTICE~Car_Name~7~NASCAR Legends Buick LeSabre - 1987"
+                class="border-2">
+                NASCAR Legends Buick LeSabre - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 8">
+              
+              <td x-ref="Table Cust_ID 8"
+                id="PRACTICE~Cust_ID~8~257846"
+                class="border-2">
+                257846
+              </td>
+              
+              <td x-ref="Table Display_Name 8"
+                id="PRACTICE~Display_Name~8~Garett Estes"
+                class="border-2">
+                Garett Estes
+              </td>
+              
+              <td x-ref="Table Finish_Position 8"
+                id="PRACTICE~Finish_Position~8~9"
+                class="border-2">
+                9
+              </td>
+              
+              <td x-ref="Table Laps_Complete 8"
+                id="PRACTICE~Laps_Complete~8~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 8"
+                id="PRACTICE~Interval~8~2.076"
+                class="border-2">
+                2.076
+              </td>
+              
+              <td x-ref="Table Average_Lap 8"
+                id="PRACTICE~Average_Lap~8~23.043"
+                class="border-2">
+                23.043
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 8"
+                id="PRACTICE~Best_Lap_Num~8~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 8"
+                id="PRACTICE~Best_Lap_Time~8~23.043"
+                class="border-2">
+                23.043
+              </td>
+              
+              <td x-ref="Table Division_Name 8"
+                id="PRACTICE~Division_Name~8~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Incidents 8"
+                id="PRACTICE~Incidents~8~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 8"
+                id="PRACTICE~Car_Name~8~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 9">
+              
+              <td x-ref="Table Cust_ID 9"
+                id="PRACTICE~Cust_ID~9~21925"
+                class="border-2">
+                21925
+              </td>
+              
+              <td x-ref="Table Display_Name 9"
+                id="PRACTICE~Display_Name~9~Andre Rouleau"
+                class="border-2">
+                Andre Rouleau
+              </td>
+              
+              <td x-ref="Table Finish_Position 9"
+                id="PRACTICE~Finish_Position~9~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Laps_Complete 9"
+                id="PRACTICE~Laps_Complete~9~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 9"
+                id="PRACTICE~Interval~9~2.979"
+                class="border-2">
+                2.979
+              </td>
+              
+              <td x-ref="Table Average_Lap 9"
+                id="PRACTICE~Average_Lap~9~23.945"
+                class="border-2">
+                23.945
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 9"
+                id="PRACTICE~Best_Lap_Num~9~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 9"
+                id="PRACTICE~Best_Lap_Time~9~23.945"
+                class="border-2">
+                23.945
+              </td>
+              
+              <td x-ref="Table Division_Name 9"
+                id="PRACTICE~Division_Name~9~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 9"
+                id="PRACTICE~Incidents~9~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 9"
+                id="PRACTICE~Car_Name~9~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 10">
+              
+              <td x-ref="Table Cust_ID 10"
+                id="PRACTICE~Cust_ID~10~539575"
+                class="border-2">
+                539575
+              </td>
+              
+              <td x-ref="Table Display_Name 10"
+                id="PRACTICE~Display_Name~10~Joshua Robinson6"
+                class="border-2">
+                Joshua Robinson6
+              </td>
+              
+              <td x-ref="Table Finish_Position 10"
+                id="PRACTICE~Finish_Position~10~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Laps_Complete 10"
+                id="PRACTICE~Laps_Complete~10~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 10"
+                id="PRACTICE~Interval~10~3.376"
+                class="border-2">
+                3.376
+              </td>
+              
+              <td x-ref="Table Average_Lap 10"
+                id="PRACTICE~Average_Lap~10~24.342"
+                class="border-2">
+                24.342
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 10"
+                id="PRACTICE~Best_Lap_Num~10~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 10"
+                id="PRACTICE~Best_Lap_Time~10~24.342"
+                class="border-2">
+                24.342
+              </td>
+              
+              <td x-ref="Table Division_Name 10"
+                id="PRACTICE~Division_Name~10~Division 8"
+                class="border-2">
+                Division 8
+              </td>
+              
+              <td x-ref="Table Incidents 10"
+                id="PRACTICE~Incidents~10~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Car_Name 10"
+                id="PRACTICE~Car_Name~10~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 11">
+              
+              <td x-ref="Table Cust_ID 11"
+                id="PRACTICE~Cust_ID~11~95131"
+                class="border-2">
+                95131
+              </td>
+              
+              <td x-ref="Table Display_Name 11"
+                id="PRACTICE~Display_Name~11~Aaron Bennett"
+                class="border-2">
+                Aaron Bennett
+              </td>
+              
+              <td x-ref="Table Finish_Position 11"
+                id="PRACTICE~Finish_Position~11~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Laps_Complete 11"
+                id="PRACTICE~Laps_Complete~11~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 11"
+                id="PRACTICE~Interval~11~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 11"
+                id="PRACTICE~Average_Lap~11~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 11"
+                id="PRACTICE~Best_Lap_Num~11~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 11"
+                id="PRACTICE~Best_Lap_Time~11~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 11"
+                id="PRACTICE~Division_Name~11~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Incidents 11"
+                id="PRACTICE~Incidents~11~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 11"
+                id="PRACTICE~Car_Name~11~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 12">
+              
+              <td x-ref="Table Cust_ID 12"
+                id="PRACTICE~Cust_ID~12~488407"
+                class="border-2">
+                488407
+              </td>
+              
+              <td x-ref="Table Display_Name 12"
+                id="PRACTICE~Display_Name~12~Kenny Thompson"
+                class="border-2">
+                Kenny Thompson
+              </td>
+              
+              <td x-ref="Table Finish_Position 12"
+                id="PRACTICE~Finish_Position~12~13"
+                class="border-2">
+                13
+              </td>
+              
+              <td x-ref="Table Laps_Complete 12"
+                id="PRACTICE~Laps_Complete~12~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 12"
+                id="PRACTICE~Interval~12~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 12"
+                id="PRACTICE~Average_Lap~12~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 12"
+                id="PRACTICE~Best_Lap_Num~12~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 12"
+                id="PRACTICE~Best_Lap_Time~12~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 12"
+                id="PRACTICE~Division_Name~12~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Incidents 12"
+                id="PRACTICE~Incidents~12~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 12"
+                id="PRACTICE~Car_Name~12~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 13">
+              
+              <td x-ref="Table Cust_ID 13"
+                id="PRACTICE~Cust_ID~13~343930"
+                class="border-2">
+                343930
+              </td>
+              
+              <td x-ref="Table Display_Name 13"
+                id="PRACTICE~Display_Name~13~Zach T Morris"
+                class="border-2">
+                Zach T Morris
+              </td>
+              
+              <td x-ref="Table Finish_Position 13"
+                id="PRACTICE~Finish_Position~13~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Laps_Complete 13"
+                id="PRACTICE~Laps_Complete~13~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 13"
+                id="PRACTICE~Interval~13~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 13"
+                id="PRACTICE~Average_Lap~13~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 13"
+                id="PRACTICE~Best_Lap_Num~13~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 13"
+                id="PRACTICE~Best_Lap_Time~13~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 13"
+                id="PRACTICE~Division_Name~13~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Incidents 13"
+                id="PRACTICE~Incidents~13~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 13"
+                id="PRACTICE~Car_Name~13~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 14">
+              
+              <td x-ref="Table Cust_ID 14"
+                id="PRACTICE~Cust_ID~14~815162"
+                class="border-2">
+                815162
+              </td>
+              
+              <td x-ref="Table Display_Name 14"
+                id="PRACTICE~Display_Name~14~Jack Glenzinski"
+                class="border-2">
+                Jack Glenzinski
+              </td>
+              
+              <td x-ref="Table Finish_Position 14"
+                id="PRACTICE~Finish_Position~14~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Laps_Complete 14"
+                id="PRACTICE~Laps_Complete~14~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 14"
+                id="PRACTICE~Interval~14~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 14"
+                id="PRACTICE~Average_Lap~14~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 14"
+                id="PRACTICE~Best_Lap_Num~14~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 14"
+                id="PRACTICE~Best_Lap_Time~14~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 14"
+                id="PRACTICE~Division_Name~14~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 14"
+                id="PRACTICE~Incidents~14~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 14"
+                id="PRACTICE~Car_Name~14~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 15">
+              
+              <td x-ref="Table Cust_ID 15"
+                id="PRACTICE~Cust_ID~15~405055"
+                class="border-2">
+                405055
+              </td>
+              
+              <td x-ref="Table Display_Name 15"
+                id="PRACTICE~Display_Name~15~Bill Lance"
+                class="border-2">
+                Bill Lance
+              </td>
+              
+              <td x-ref="Table Finish_Position 15"
+                id="PRACTICE~Finish_Position~15~16"
+                class="border-2">
+                16
+              </td>
+              
+              <td x-ref="Table Laps_Complete 15"
+                id="PRACTICE~Laps_Complete~15~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 15"
+                id="PRACTICE~Interval~15~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 15"
+                id="PRACTICE~Average_Lap~15~42.096"
+                class="border-2">
+                42.096
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 15"
+                id="PRACTICE~Best_Lap_Num~15~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 15"
+                id="PRACTICE~Best_Lap_Time~15~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 15"
+                id="PRACTICE~Division_Name~15~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 15"
+                id="PRACTICE~Incidents~15~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 15"
+                id="PRACTICE~Car_Name~15~NASCAR Legends Ford Thunderbird - 1987"
+                class="border-2">
+                NASCAR Legends Ford Thunderbird - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 16">
+              
+              <td x-ref="Table Cust_ID 16"
+                id="PRACTICE~Cust_ID~16~185272"
+                class="border-2">
+                185272
+              </td>
+              
+              <td x-ref="Table Display_Name 16"
+                id="PRACTICE~Display_Name~16~Scott Hilsman"
+                class="border-2">
+                Scott Hilsman
+              </td>
+              
+              <td x-ref="Table Finish_Position 16"
+                id="PRACTICE~Finish_Position~16~17"
+                class="border-2">
+                17
+              </td>
+              
+              <td x-ref="Table Laps_Complete 16"
+                id="PRACTICE~Laps_Complete~16~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 16"
+                id="PRACTICE~Interval~16~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 16"
+                id="PRACTICE~Average_Lap~16~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 16"
+                id="PRACTICE~Best_Lap_Num~16~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 16"
+                id="PRACTICE~Best_Lap_Time~16~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 16"
+                id="PRACTICE~Division_Name~16~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 16"
+                id="PRACTICE~Incidents~16~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 16"
+                id="PRACTICE~Car_Name~16~NASCAR Legends Ford Thunderbird - 1987"
+                class="border-2">
+                NASCAR Legends Ford Thunderbird - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 17">
+              
+              <td x-ref="Table Cust_ID 17"
+                id="PRACTICE~Cust_ID~17~599366"
+                class="border-2">
+                599366
+              </td>
+              
+              <td x-ref="Table Display_Name 17"
+                id="PRACTICE~Display_Name~17~CS Brown"
+                class="border-2">
+                CS Brown
+              </td>
+              
+              <td x-ref="Table Finish_Position 17"
+                id="PRACTICE~Finish_Position~17~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Laps_Complete 17"
+                id="PRACTICE~Laps_Complete~17~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 17"
+                id="PRACTICE~Interval~17~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 17"
+                id="PRACTICE~Average_Lap~17~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 17"
+                id="PRACTICE~Best_Lap_Num~17~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 17"
+                id="PRACTICE~Best_Lap_Time~17~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 17"
+                id="PRACTICE~Division_Name~17~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 17"
+                id="PRACTICE~Incidents~17~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 17"
+                id="PRACTICE~Car_Name~17~NASCAR Legends Ford Thunderbird - 1987"
+                class="border-2">
+                NASCAR Legends Ford Thunderbird - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 18">
+              
+              <td x-ref="Table Cust_ID 18"
+                id="PRACTICE~Cust_ID~18~531746"
+                class="border-2">
+                531746
+              </td>
+              
+              <td x-ref="Table Display_Name 18"
+                id="PRACTICE~Display_Name~18~Cade Galey"
+                class="border-2">
+                Cade Galey
+              </td>
+              
+              <td x-ref="Table Finish_Position 18"
+                id="PRACTICE~Finish_Position~18~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Laps_Complete 18"
+                id="PRACTICE~Laps_Complete~18~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 18"
+                id="PRACTICE~Interval~18~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 18"
+                id="PRACTICE~Average_Lap~18~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 18"
+                id="PRACTICE~Best_Lap_Num~18~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 18"
+                id="PRACTICE~Best_Lap_Time~18~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 18"
+                id="PRACTICE~Division_Name~18~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 18"
+                id="PRACTICE~Incidents~18~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 18"
+                id="PRACTICE~Car_Name~18~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 19">
+              
+              <td x-ref="Table Cust_ID 19"
+                id="PRACTICE~Cust_ID~19~653491"
+                class="border-2">
+                653491
+              </td>
+              
+              <td x-ref="Table Display_Name 19"
+                id="PRACTICE~Display_Name~19~Curt D Lewis"
+                class="border-2">
+                Curt D Lewis
+              </td>
+              
+              <td x-ref="Table Finish_Position 19"
+                id="PRACTICE~Finish_Position~19~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Laps_Complete 19"
+                id="PRACTICE~Laps_Complete~19~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 19"
+                id="PRACTICE~Interval~19~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 19"
+                id="PRACTICE~Average_Lap~19~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 19"
+                id="PRACTICE~Best_Lap_Num~19~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 19"
+                id="PRACTICE~Best_Lap_Time~19~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 19"
+                id="PRACTICE~Division_Name~19~Division 7"
+                class="border-2">
+                Division 7
+              </td>
+              
+              <td x-ref="Table Incidents 19"
+                id="PRACTICE~Incidents~19~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 19"
+                id="PRACTICE~Car_Name~19~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+          </table>
+        </div>
+      </div>
+      <div x-cloak x-show="QUALIFY" x-transition:enter.duration.500ms x-transition:leave.duration.0ms>
+        
+        <div class="grid grid-cols-1">
+          <table class="text-center col-span-1">
+            <tr class="bg-gray-500">
+              <th class="border-2">Session Type</th>
+            </tr>
+            <tr>
+              <td class="border-2">Lone Qualifying</td>
+            </tr>
+          </table>
+        </div>
+        
+        
+        <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+          <table x-load x-load-src="../alpine-components/qualifying-table.js" x-ref="Table" x-data="QUALIFY"
+            class="text-center col-span-1">
+            <tr x-ref="Headings">
+              
+              
+              <th
+                id="Table Cust_ID 20"
+                class="border-2" x-on:click="sort">cust_id</th>
+              
+              <th
+                id="Table Display_Name 20"
+                class="border-2" x-on:click="sort">Name</th>
+              
+              <th
+                id="Table Finish_Position 20"
+                class="border-2" x-on:click="sort">Finish</th>
+              
+              <th
+                id="Table Laps_Complete 20"
+                class="border-2" x-on:click="sort">Laps Completed</th>
+              
+              <th
+                id="Table Interval 20"
+                class="border-2" x-on:click="sort">Interval to P1</th>
+              
+              <th
+                id="Table Average_Lap 20"
+                class="border-2" x-on:click="sort">AVG Laptime</th>
+              
+              <th
+                id="Table Best_Lap_Num 20"
+                class="border-2" x-on:click="sort">Fastest Lap</th>
+              
+              <th
+                id="Table Best_Lap_Time 20"
+                class="border-2" x-on:click="sort">Fastest Lap Time</th>
+              
+              <th
+                id="Table Division_Name 20"
+                class="border-2" x-on:click="sort">Division</th>
+              
+              <th
+                id="Table Incidents 20"
+                class="border-2" x-on:click="sort">Incidents</th>
+              
+              <th
+                id="Table Car_Name 20"
+                class="border-2" x-on:click="sort">Car</th>
+            </tr>
+            
+            <tr x-ref="Table 0">
+              
+              <td x-ref="Table Cust_ID 0"
+                id="QUALIFY~Cust_ID~0~942262"
+                class="border-2">
+                942262
+              </td>
+              
+              <td x-ref="Table Display_Name 0"
+                id="QUALIFY~Display_Name~0~Greg Wellen2"
+                class="border-2">
+                Greg Wellen2
+              </td>
+              
+              <td x-ref="Table Finish_Position 0"
+                id="QUALIFY~Finish_Position~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Laps_Complete 0"
+                id="QUALIFY~Laps_Complete~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Interval 0"
+                id="QUALIFY~Interval~0~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 0"
+                id="QUALIFY~Average_Lap~0~21.099"
+                class="border-2">
+                21.099
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 0"
+                id="QUALIFY~Best_Lap_Num~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 0"
+                id="QUALIFY~Best_Lap_Time~0~21.099"
+                class="border-2">
+                21.099
+              </td>
+              
+              <td x-ref="Table Division_Name 0"
+                id="QUALIFY~Division_Name~0~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 0"
+                id="QUALIFY~Incidents~0~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 0"
+                id="QUALIFY~Car_Name~0~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 1">
+              
+              <td x-ref="Table Cust_ID 1"
+                id="QUALIFY~Cust_ID~1~405055"
+                class="border-2">
+                405055
+              </td>
+              
+              <td x-ref="Table Display_Name 1"
+                id="QUALIFY~Display_Name~1~Bill Lance"
+                class="border-2">
+                Bill Lance
+              </td>
+              
+              <td x-ref="Table Finish_Position 1"
+                id="QUALIFY~Finish_Position~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Laps_Complete 1"
+                id="QUALIFY~Laps_Complete~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 1"
+                id="QUALIFY~Interval~1~0.176"
+                class="border-2">
+                0.176
+              </td>
+              
+              <td x-ref="Table Average_Lap 1"
+                id="QUALIFY~Average_Lap~1~21.407"
+                class="border-2">
+                21.407
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 1"
+                id="QUALIFY~Best_Lap_Num~1~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 1"
+                id="QUALIFY~Best_Lap_Time~1~21.275"
+                class="border-2">
+                21.275
+              </td>
+              
+              <td x-ref="Table Division_Name 1"
+                id="QUALIFY~Division_Name~1~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 1"
+                id="QUALIFY~Incidents~1~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 1"
+                id="QUALIFY~Car_Name~1~NASCAR Legends Ford Thunderbird - 1987"
+                class="border-2">
+                NASCAR Legends Ford Thunderbird - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 2">
+              
+              <td x-ref="Table Cust_ID 2"
+                id="QUALIFY~Cust_ID~2~45400"
+                class="border-2">
+                45400
+              </td>
+              
+              <td x-ref="Table Display_Name 2"
+                id="QUALIFY~Display_Name~2~Calum Farley"
+                class="border-2">
+                Calum Farley
+              </td>
+              
+              <td x-ref="Table Finish_Position 2"
+                id="QUALIFY~Finish_Position~2~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Laps_Complete 2"
+                id="QUALIFY~Laps_Complete~2~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 2"
+                id="QUALIFY~Interval~2~0.203"
+                class="border-2">
+                0.203
+              </td>
+              
+              <td x-ref="Table Average_Lap 2"
+                id="QUALIFY~Average_Lap~2~21.415"
+                class="border-2">
+                21.415
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 2"
+                id="QUALIFY~Best_Lap_Num~2~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 2"
+                id="QUALIFY~Best_Lap_Time~2~21.303"
+                class="border-2">
+                21.303
+              </td>
+              
+              <td x-ref="Table Division_Name 2"
+                id="QUALIFY~Division_Name~2~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Incidents 2"
+                id="QUALIFY~Incidents~2~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 2"
+                id="QUALIFY~Car_Name~2~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 3">
+              
+              <td x-ref="Table Cust_ID 3"
+                id="QUALIFY~Cust_ID~3~538024"
+                class="border-2">
+                538024
+              </td>
+              
+              <td x-ref="Table Display_Name 3"
+                id="QUALIFY~Display_Name~3~Corey Tross"
+                class="border-2">
+                Corey Tross
+              </td>
+              
+              <td x-ref="Table Finish_Position 3"
+                id="QUALIFY~Finish_Position~3~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Laps_Complete 3"
+                id="QUALIFY~Laps_Complete~3~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 3"
+                id="QUALIFY~Interval~3~0.232"
+                class="border-2">
+                0.232
+              </td>
+              
+              <td x-ref="Table Average_Lap 3"
+                id="QUALIFY~Average_Lap~3~21.441"
+                class="border-2">
+                21.441
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 3"
+                id="QUALIFY~Best_Lap_Num~3~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 3"
+                id="QUALIFY~Best_Lap_Time~3~21.332"
+                class="border-2">
+                21.332
+              </td>
+              
+              <td x-ref="Table Division_Name 3"
+                id="QUALIFY~Division_Name~3~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Incidents 3"
+                id="QUALIFY~Incidents~3~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 3"
+                id="QUALIFY~Car_Name~3~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 4">
+              
+              <td x-ref="Table Cust_ID 4"
+                id="QUALIFY~Cust_ID~4~903997"
+                class="border-2">
+                903997
+              </td>
+              
+              <td x-ref="Table Display_Name 4"
+                id="QUALIFY~Display_Name~4~Jerry Hendrixson"
+                class="border-2">
+                Jerry Hendrixson
+              </td>
+              
+              <td x-ref="Table Finish_Position 4"
+                id="QUALIFY~Finish_Position~4~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Laps_Complete 4"
+                id="QUALIFY~Laps_Complete~4~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 4"
+                id="QUALIFY~Interval~4~0.283"
+                class="border-2">
+                0.283
+              </td>
+              
+              <td x-ref="Table Average_Lap 4"
+                id="QUALIFY~Average_Lap~4~21.461"
+                class="border-2">
+                21.461
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 4"
+                id="QUALIFY~Best_Lap_Num~4~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 4"
+                id="QUALIFY~Best_Lap_Time~4~21.382"
+                class="border-2">
+                21.382
+              </td>
+              
+              <td x-ref="Table Division_Name 4"
+                id="QUALIFY~Division_Name~4~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 4"
+                id="QUALIFY~Incidents~4~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 4"
+                id="QUALIFY~Car_Name~4~NASCAR Legends Buick LeSabre - 1987"
+                class="border-2">
+                NASCAR Legends Buick LeSabre - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 5">
+              
+              <td x-ref="Table Cust_ID 5"
+                id="QUALIFY~Cust_ID~5~934644"
+                class="border-2">
+                934644
+              </td>
+              
+              <td x-ref="Table Display_Name 5"
+                id="QUALIFY~Display_Name~5~Kheagun Fleckenstein"
+                class="border-2">
+                Kheagun Fleckenstein
+              </td>
+              
+              <td x-ref="Table Finish_Position 5"
+                id="QUALIFY~Finish_Position~5~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Laps_Complete 5"
+                id="QUALIFY~Laps_Complete~5~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 5"
+                id="QUALIFY~Interval~5~0.297"
+                class="border-2">
+                0.297
+              </td>
+              
+              <td x-ref="Table Average_Lap 5"
+                id="QUALIFY~Average_Lap~5~21.406"
+                class="border-2">
+                21.406
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 5"
+                id="QUALIFY~Best_Lap_Num~5~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 5"
+                id="QUALIFY~Best_Lap_Time~5~21.396"
+                class="border-2">
+                21.396
+              </td>
+              
+              <td x-ref="Table Division_Name 5"
+                id="QUALIFY~Division_Name~5~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Incidents 5"
+                id="QUALIFY~Incidents~5~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 5"
+                id="QUALIFY~Car_Name~5~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 6">
+              
+              <td x-ref="Table Cust_ID 6"
+                id="QUALIFY~Cust_ID~6~53344"
+                class="border-2">
+                53344
+              </td>
+              
+              <td x-ref="Table Display_Name 6"
+                id="QUALIFY~Display_Name~6~Dan Shorter"
+                class="border-2">
+                Dan Shorter
+              </td>
+              
+              <td x-ref="Table Finish_Position 6"
+                id="QUALIFY~Finish_Position~6~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Laps_Complete 6"
+                id="QUALIFY~Laps_Complete~6~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 6"
+                id="QUALIFY~Interval~6~0.483"
+                class="border-2">
+                0.483
+              </td>
+              
+              <td x-ref="Table Average_Lap 6"
+                id="QUALIFY~Average_Lap~6~21.631"
+                class="border-2">
+                21.631
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 6"
+                id="QUALIFY~Best_Lap_Num~6~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 6"
+                id="QUALIFY~Best_Lap_Time~6~21.583"
+                class="border-2">
+                21.583
+              </td>
+              
+              <td x-ref="Table Division_Name 6"
+                id="QUALIFY~Division_Name~6~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 6"
+                id="QUALIFY~Incidents~6~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 6"
+                id="QUALIFY~Car_Name~6~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 7">
+              
+              <td x-ref="Table Cust_ID 7"
+                id="QUALIFY~Cust_ID~7~357467"
+                class="border-2">
+                357467
+              </td>
+              
+              <td x-ref="Table Display_Name 7"
+                id="QUALIFY~Display_Name~7~Kevin Hartley"
+                class="border-2">
+                Kevin Hartley
+              </td>
+              
+              <td x-ref="Table Finish_Position 7"
+                id="QUALIFY~Finish_Position~7~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Laps_Complete 7"
+                id="QUALIFY~Laps_Complete~7~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 7"
+                id="QUALIFY~Interval~7~0.495"
+                class="border-2">
+                0.495
+              </td>
+              
+              <td x-ref="Table Average_Lap 7"
+                id="QUALIFY~Average_Lap~7~21.602"
+                class="border-2">
+                21.602
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 7"
+                id="QUALIFY~Best_Lap_Num~7~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 7"
+                id="QUALIFY~Best_Lap_Time~7~21.594"
+                class="border-2">
+                21.594
+              </td>
+              
+              <td x-ref="Table Division_Name 7"
+                id="QUALIFY~Division_Name~7~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 7"
+                id="QUALIFY~Incidents~7~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 7"
+                id="QUALIFY~Car_Name~7~NASCAR Legends Buick LeSabre - 1987"
+                class="border-2">
+                NASCAR Legends Buick LeSabre - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 8">
+              
+              <td x-ref="Table Cust_ID 8"
+                id="QUALIFY~Cust_ID~8~343930"
+                class="border-2">
+                343930
+              </td>
+              
+              <td x-ref="Table Display_Name 8"
+                id="QUALIFY~Display_Name~8~Zach T Morris"
+                class="border-2">
+                Zach T Morris
+              </td>
+              
+              <td x-ref="Table Finish_Position 8"
+                id="QUALIFY~Finish_Position~8~9"
+                class="border-2">
+                9
+              </td>
+              
+              <td x-ref="Table Laps_Complete 8"
+                id="QUALIFY~Laps_Complete~8~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 8"
+                id="QUALIFY~Interval~8~0.584"
+                class="border-2">
+                0.584
+              </td>
+              
+              <td x-ref="Table Average_Lap 8"
+                id="QUALIFY~Average_Lap~8~21.841"
+                class="border-2">
+                21.841
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 8"
+                id="QUALIFY~Best_Lap_Num~8~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 8"
+                id="QUALIFY~Best_Lap_Time~8~21.683"
+                class="border-2">
+                21.683
+              </td>
+              
+              <td x-ref="Table Division_Name 8"
+                id="QUALIFY~Division_Name~8~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Incidents 8"
+                id="QUALIFY~Incidents~8~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 8"
+                id="QUALIFY~Car_Name~8~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 9">
+              
+              <td x-ref="Table Cust_ID 9"
+                id="QUALIFY~Cust_ID~9~897163"
+                class="border-2">
+                897163
+              </td>
+              
+              <td x-ref="Table Display_Name 9"
+                id="QUALIFY~Display_Name~9~Louis Labille"
+                class="border-2">
+                Louis Labille
+              </td>
+              
+              <td x-ref="Table Finish_Position 9"
+                id="QUALIFY~Finish_Position~9~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Laps_Complete 9"
+                id="QUALIFY~Laps_Complete~9~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 9"
+                id="QUALIFY~Interval~9~0.642"
+                class="border-2">
+                0.642
+              </td>
+              
+              <td x-ref="Table Average_Lap 9"
+                id="QUALIFY~Average_Lap~9~22.030"
+                class="border-2">
+                22.030
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 9"
+                id="QUALIFY~Best_Lap_Num~9~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 9"
+                id="QUALIFY~Best_Lap_Time~9~21.741"
+                class="border-2">
+                21.741
+              </td>
+              
+              <td x-ref="Table Division_Name 9"
+                id="QUALIFY~Division_Name~9~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 9"
+                id="QUALIFY~Incidents~9~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 9"
+                id="QUALIFY~Car_Name~9~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 10">
+              
+              <td x-ref="Table Cust_ID 10"
+                id="QUALIFY~Cust_ID~10~185272"
+                class="border-2">
+                185272
+              </td>
+              
+              <td x-ref="Table Display_Name 10"
+                id="QUALIFY~Display_Name~10~Scott Hilsman"
+                class="border-2">
+                Scott Hilsman
+              </td>
+              
+              <td x-ref="Table Finish_Position 10"
+                id="QUALIFY~Finish_Position~10~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Laps_Complete 10"
+                id="QUALIFY~Laps_Complete~10~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 10"
+                id="QUALIFY~Interval~10~0.771"
+                class="border-2">
+                0.771
+              </td>
+              
+              <td x-ref="Table Average_Lap 10"
+                id="QUALIFY~Average_Lap~10~21.959"
+                class="border-2">
+                21.959
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 10"
+                id="QUALIFY~Best_Lap_Num~10~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 10"
+                id="QUALIFY~Best_Lap_Time~10~21.871"
+                class="border-2">
+                21.871
+              </td>
+              
+              <td x-ref="Table Division_Name 10"
+                id="QUALIFY~Division_Name~10~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 10"
+                id="QUALIFY~Incidents~10~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 10"
+                id="QUALIFY~Car_Name~10~NASCAR Legends Ford Thunderbird - 1987"
+                class="border-2">
+                NASCAR Legends Ford Thunderbird - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 11">
+              
+              <td x-ref="Table Cust_ID 11"
+                id="QUALIFY~Cust_ID~11~21925"
+                class="border-2">
+                21925
+              </td>
+              
+              <td x-ref="Table Display_Name 11"
+                id="QUALIFY~Display_Name~11~Andre Rouleau"
+                class="border-2">
+                Andre Rouleau
+              </td>
+              
+              <td x-ref="Table Finish_Position 11"
+                id="QUALIFY~Finish_Position~11~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Laps_Complete 11"
+                id="QUALIFY~Laps_Complete~11~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 11"
+                id="QUALIFY~Interval~11~1.302"
+                class="border-2">
+                1.302
+              </td>
+              
+              <td x-ref="Table Average_Lap 11"
+                id="QUALIFY~Average_Lap~11~22.633"
+                class="border-2">
+                22.633
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 11"
+                id="QUALIFY~Best_Lap_Num~11~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 11"
+                id="QUALIFY~Best_Lap_Time~11~22.401"
+                class="border-2">
+                22.401
+              </td>
+              
+              <td x-ref="Table Division_Name 11"
+                id="QUALIFY~Division_Name~11~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 11"
+                id="QUALIFY~Incidents~11~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 11"
+                id="QUALIFY~Car_Name~11~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 12">
+              
+              <td x-ref="Table Cust_ID 12"
+                id="QUALIFY~Cust_ID~12~488407"
+                class="border-2">
+                488407
+              </td>
+              
+              <td x-ref="Table Display_Name 12"
+                id="QUALIFY~Display_Name~12~Kenny Thompson"
+                class="border-2">
+                Kenny Thompson
+              </td>
+              
+              <td x-ref="Table Finish_Position 12"
+                id="QUALIFY~Finish_Position~12~13"
+                class="border-2">
+                13
+              </td>
+              
+              <td x-ref="Table Laps_Complete 12"
+                id="QUALIFY~Laps_Complete~12~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 12"
+                id="QUALIFY~Interval~12~2.089"
+                class="border-2">
+                2.089
+              </td>
+              
+              <td x-ref="Table Average_Lap 12"
+                id="QUALIFY~Average_Lap~12~38.234"
+                class="border-2">
+                38.234
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 12"
+                id="QUALIFY~Best_Lap_Num~12~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 12"
+                id="QUALIFY~Best_Lap_Time~12~23.188"
+                class="border-2">
+                23.188
+              </td>
+              
+              <td x-ref="Table Division_Name 12"
+                id="QUALIFY~Division_Name~12~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Incidents 12"
+                id="QUALIFY~Incidents~12~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 12"
+                id="QUALIFY~Car_Name~12~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 13">
+              
+              <td x-ref="Table Cust_ID 13"
+                id="QUALIFY~Cust_ID~13~95131"
+                class="border-2">
+                95131
+              </td>
+              
+              <td x-ref="Table Display_Name 13"
+                id="QUALIFY~Display_Name~13~Aaron Bennett"
+                class="border-2">
+                Aaron Bennett
+              </td>
+              
+              <td x-ref="Table Finish_Position 13"
+                id="QUALIFY~Finish_Position~13~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Laps_Complete 13"
+                id="QUALIFY~Laps_Complete~13~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 13"
+                id="QUALIFY~Interval~13~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 13"
+                id="QUALIFY~Average_Lap~13~22.201"
+                class="border-2">
+                22.201
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 13"
+                id="QUALIFY~Best_Lap_Num~13~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 13"
+                id="QUALIFY~Best_Lap_Time~13~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 13"
+                id="QUALIFY~Division_Name~13~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Incidents 13"
+                id="QUALIFY~Incidents~13~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 13"
+                id="QUALIFY~Car_Name~13~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 14">
+              
+              <td x-ref="Table Cust_ID 14"
+                id="QUALIFY~Cust_ID~14~815162"
+                class="border-2">
+                815162
+              </td>
+              
+              <td x-ref="Table Display_Name 14"
+                id="QUALIFY~Display_Name~14~Jack Glenzinski"
+                class="border-2">
+                Jack Glenzinski
+              </td>
+              
+              <td x-ref="Table Finish_Position 14"
+                id="QUALIFY~Finish_Position~14~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Laps_Complete 14"
+                id="QUALIFY~Laps_Complete~14~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 14"
+                id="QUALIFY~Interval~14~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 14"
+                id="QUALIFY~Average_Lap~14~22.316"
+                class="border-2">
+                22.316
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 14"
+                id="QUALIFY~Best_Lap_Num~14~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 14"
+                id="QUALIFY~Best_Lap_Time~14~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 14"
+                id="QUALIFY~Division_Name~14~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 14"
+                id="QUALIFY~Incidents~14~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 14"
+                id="QUALIFY~Car_Name~14~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 15">
+              
+              <td x-ref="Table Cust_ID 15"
+                id="QUALIFY~Cust_ID~15~599366"
+                class="border-2">
+                599366
+              </td>
+              
+              <td x-ref="Table Display_Name 15"
+                id="QUALIFY~Display_Name~15~CS Brown"
+                class="border-2">
+                CS Brown
+              </td>
+              
+              <td x-ref="Table Finish_Position 15"
+                id="QUALIFY~Finish_Position~15~16"
+                class="border-2">
+                16
+              </td>
+              
+              <td x-ref="Table Laps_Complete 15"
+                id="QUALIFY~Laps_Complete~15~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 15"
+                id="QUALIFY~Interval~15~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 15"
+                id="QUALIFY~Average_Lap~15~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 15"
+                id="QUALIFY~Best_Lap_Num~15~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 15"
+                id="QUALIFY~Best_Lap_Time~15~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 15"
+                id="QUALIFY~Division_Name~15~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Incidents 15"
+                id="QUALIFY~Incidents~15~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 15"
+                id="QUALIFY~Car_Name~15~NASCAR Legends Ford Thunderbird - 1987"
+                class="border-2">
+                NASCAR Legends Ford Thunderbird - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 16">
+              
+              <td x-ref="Table Cust_ID 16"
+                id="QUALIFY~Cust_ID~16~531746"
+                class="border-2">
+                531746
+              </td>
+              
+              <td x-ref="Table Display_Name 16"
+                id="QUALIFY~Display_Name~16~Cade Galey"
+                class="border-2">
+                Cade Galey
+              </td>
+              
+              <td x-ref="Table Finish_Position 16"
+                id="QUALIFY~Finish_Position~16~17"
+                class="border-2">
+                17
+              </td>
+              
+              <td x-ref="Table Laps_Complete 16"
+                id="QUALIFY~Laps_Complete~16~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 16"
+                id="QUALIFY~Interval~16~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 16"
+                id="QUALIFY~Average_Lap~16~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 16"
+                id="QUALIFY~Best_Lap_Num~16~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 16"
+                id="QUALIFY~Best_Lap_Time~16~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 16"
+                id="QUALIFY~Division_Name~16~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Incidents 16"
+                id="QUALIFY~Incidents~16~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 16"
+                id="QUALIFY~Car_Name~16~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 17">
+              
+              <td x-ref="Table Cust_ID 17"
+                id="QUALIFY~Cust_ID~17~653491"
+                class="border-2">
+                653491
+              </td>
+              
+              <td x-ref="Table Display_Name 17"
+                id="QUALIFY~Display_Name~17~Curt D Lewis"
+                class="border-2">
+                Curt D Lewis
+              </td>
+              
+              <td x-ref="Table Finish_Position 17"
+                id="QUALIFY~Finish_Position~17~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Laps_Complete 17"
+                id="QUALIFY~Laps_Complete~17~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 17"
+                id="QUALIFY~Interval~17~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 17"
+                id="QUALIFY~Average_Lap~17~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 17"
+                id="QUALIFY~Best_Lap_Num~17~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 17"
+                id="QUALIFY~Best_Lap_Time~17~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 17"
+                id="QUALIFY~Division_Name~17~Division 7"
+                class="border-2">
+                Division 7
+              </td>
+              
+              <td x-ref="Table Incidents 17"
+                id="QUALIFY~Incidents~17~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 17"
+                id="QUALIFY~Car_Name~17~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 18">
+              
+              <td x-ref="Table Cust_ID 18"
+                id="QUALIFY~Cust_ID~18~257846"
+                class="border-2">
+                257846
+              </td>
+              
+              <td x-ref="Table Display_Name 18"
+                id="QUALIFY~Display_Name~18~Garett Estes"
+                class="border-2">
+                Garett Estes
+              </td>
+              
+              <td x-ref="Table Finish_Position 18"
+                id="QUALIFY~Finish_Position~18~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Laps_Complete 18"
+                id="QUALIFY~Laps_Complete~18~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Interval 18"
+                id="QUALIFY~Interval~18~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 18"
+                id="QUALIFY~Average_Lap~18~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 18"
+                id="QUALIFY~Best_Lap_Num~18~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 18"
+                id="QUALIFY~Best_Lap_Time~18~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 18"
+                id="QUALIFY~Division_Name~18~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Incidents 18"
+                id="QUALIFY~Incidents~18~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 18"
+                id="QUALIFY~Car_Name~18~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 19">
+              
+              <td x-ref="Table Cust_ID 19"
+                id="QUALIFY~Cust_ID~19~539575"
+                class="border-2">
+                539575
+              </td>
+              
+              <td x-ref="Table Display_Name 19"
+                id="QUALIFY~Display_Name~19~Joshua Robinson6"
+                class="border-2">
+                Joshua Robinson6
+              </td>
+              
+              <td x-ref="Table Finish_Position 19"
+                id="QUALIFY~Finish_Position~19~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Laps_Complete 19"
+                id="QUALIFY~Laps_Complete~19~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Interval 19"
+                id="QUALIFY~Interval~19~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 19"
+                id="QUALIFY~Average_Lap~19~27.294"
+                class="border-2">
+                27.294
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 19"
+                id="QUALIFY~Best_Lap_Num~19~-1"
+                class="border-2">
+                -1
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 19"
+                id="QUALIFY~Best_Lap_Time~19~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Division_Name 19"
+                id="QUALIFY~Division_Name~19~Division 8"
+                class="border-2">
+                Division 8
+              </td>
+              
+              <td x-ref="Table Incidents 19"
+                id="QUALIFY~Incidents~19~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 19"
+                id="QUALIFY~Car_Name~19~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+            </tr>
+            
+          </table>
+        </div>
+      </div>
+      <div x-cloak x-show="HEAT" x-transition:enter.duration.500ms x-transition:leave.duration.0ms>
+        
+        <div class="grid grid-cols-1">
+          <table class="text-center col-span-1">
+            <tr class="bg-gray-500">
+              <th class="border-2">Session Type</th>
+            </tr>
+            <tr>
+              <td class="border-2"></td>
+            </tr>
+          </table>
+        </div>
+        
+        
+        <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+          <table x-load x-load-src="../alpine-components/heat-table.js" x-ref="Table" x-data="HEAT"
+            class="text-center col-span-1">
+            <tr x-ref="Headings">
+              
+            </tr>
+            
+          </table>
+        </div>
+      </div>
+      <div x-cloak x-show="RACE" x-transition:enter.duration.500ms x-transition:leave.duration.0ms>
+        
+        <div class="grid grid-cols-1">
+          <table class="text-center col-span-1">
+            <tr class="bg-gray-500">
+              <th class="border-2">Session Type</th>
+            </tr>
+            <tr>
+              <td class="border-2">Race</td>
+            </tr>
+          </table>
+        </div>
+        
+        
+        <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+          <table x-load x-load-src="../alpine-components/race-table.js" x-ref="Table" x-data="RACE"
+            class="text-center col-span-1">
+            <tr x-ref="Headings">
+              
+              
+              <th
+                id="Table Cust_ID 20"
+                class="border-2" x-on:click="sort">cust_id</th>
+              
+              <th
+                id="Table Display_Name 20"
+                class="border-2" x-on:click="sort">Name</th>
+              
+              <th
+                id="Table Finish_Position 20"
+                class="border-2" x-on:click="sort">Finish</th>
+              
+              <th
+                id="Table Laps_Lead 20"
+                class="border-2" x-on:click="sort">Laps Lead</th>
+              
+              <th
+                id="Table Laps_Complete 20"
+                class="border-2" x-on:click="sort">Laps Completed</th>
+              
+              <th
+                id="Table Interval 20"
+                class="border-2" x-on:click="sort">Interval to P1</th>
+              
+              <th
+                id="Table Average_Lap 20"
+                class="border-2" x-on:click="sort">AVG Laptime</th>
+              
+              <th
+                id="Table Best_Lap_Num 20"
+                class="border-2" x-on:click="sort">Fastest Lap</th>
+              
+              <th
+                id="Table Best_Lap_Time 20"
+                class="border-2" x-on:click="sort">Fastest Lap Time</th>
+              
+              <th
+                id="Table Reason_Out 20"
+                class="border-2" x-on:click="sort">Status</th>
+              
+              <th
+                id="Table Champ_Points 20"
+                class="border-2" x-on:click="sort">Points</th>
+              
+              <th
+                id="Table Drop_Race 20"
+                class="border-2" x-on:click="sort">Drop Race</th>
+              
+              <th
+                id="Table Starting_Position 20"
+                class="border-2" x-on:click="sort">Starting Position</th>
+              
+              <th
+                id="Table Division_Name 20"
+                class="border-2" x-on:click="sort">Division</th>
+              
+              <th
+                id="Table Old_License_Level 20"
+                class="border-2" x-on:click="sort">Old License Level</th>
+              
+              <th
+                id="Table Old_CPI 20"
+                class="border-2" x-on:click="sort">Old Corners Per Incident</th>
+              
+              <th
+                id="Table Oldi_Rating 20"
+                class="border-2" x-on:click="sort">Old iRating</th>
+              
+              <th
+                id="Table New_License_Level 20"
+                class="border-2" x-on:click="sort">New License Level</th>
+              
+              <th
+                id="Table New_CPI 20"
+                class="border-2" x-on:click="sort">New Corners Per Incident</th>
+              
+              <th
+                id="Table Newi_Rating 20"
+                class="border-2" x-on:click="sort">New iRating</th>
+              
+              <th
+                id="Table Incidents 20"
+                class="border-2" x-on:click="sort">Incidents</th>
+              
+              <th
+                id="Table Car_Name 20"
+                class="border-2" x-on:click="sort">Car</th>
+              
+              <th
+                id="Table Aggregate_Champ_Points 20"
+                class="border-2" x-on:click="sort">Best Points For Week</th>
+            </tr>
+            
+            <tr x-ref="Table 0">
+              
+              <td x-ref="Table Cust_ID 0"
+                id="RACE~Cust_ID~0~942262"
+                class="border-2">
+                942262
+              </td>
+              
+              <td x-ref="Table Display_Name 0"
+                id="RACE~Display_Name~0~Greg Wellen2"
+                class="border-2">
+                Greg Wellen2
+              </td>
+              
+              <td x-ref="Table Finish_Position 0"
+                id="RACE~Finish_Position~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Laps_Lead 0"
+                id="RACE~Laps_Lead~0~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Laps_Complete 0"
+                id="RACE~Laps_Complete~0~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 0"
+                id="RACE~Interval~0~0.000"
+                class="border-2">
+                0.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 0"
+                id="RACE~Average_Lap~0~31.870"
+                class="border-2">
+                31.870
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 0"
+                id="RACE~Best_Lap_Num~0~34"
+                class="border-2">
+                34
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 0"
+                id="RACE~Best_Lap_Time~0~21.301"
+                class="border-2">
+                21.301
+              </td>
+              
+              <td x-ref="Table Reason_Out 0"
+                id="RACE~Reason_Out~0~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 0"
+                id="RACE~Champ_Points~0~118"
+                class="border-2">
+                118
+              </td>
+              
+              <td x-ref="Table Drop_Race 0"
+                id="RACE~Drop_Race~0~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 0"
+                id="RACE~Starting_Position~0~1"
+                class="border-2">
+                1
+              </td>
+              
+              <td x-ref="Table Division_Name 0"
+                id="RACE~Division_Name~0~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Old_License_Level 0"
+                id="RACE~Old_License_Level~0~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Old_CPI 0"
+                id="RACE~Old_CPI~0~134.3889"
+                class="border-2">
+                134.3889
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 0"
+                id="RACE~Oldi_Rating~0~3721"
+                class="border-2">
+                3721
+              </td>
+              
+              <td x-ref="Table New_License_Level 0"
+                id="RACE~New_License_Level~0~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table New_CPI 0"
+                id="RACE~New_CPI~0~154.79486"
+                class="border-2">
+                154.79486
+              </td>
+              
+              <td x-ref="Table Newi_Rating 0"
+                id="RACE~Newi_Rating~0~3767"
+                class="border-2">
+                3767
+              </td>
+              
+              <td x-ref="Table Incidents 0"
+                id="RACE~Incidents~0~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 0"
+                id="RACE~Car_Name~0~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 0"
+                id="RACE~Aggregate_Champ_Points~0~118"
+                class="border-2">
+                118
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 1">
+              
+              <td x-ref="Table Cust_ID 1"
+                id="RACE~Cust_ID~1~95131"
+                class="border-2">
+                95131
+              </td>
+              
+              <td x-ref="Table Display_Name 1"
+                id="RACE~Display_Name~1~Aaron Bennett"
+                class="border-2">
+                Aaron Bennett
+              </td>
+              
+              <td x-ref="Table Finish_Position 1"
+                id="RACE~Finish_Position~1~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Laps_Lead 1"
+                id="RACE~Laps_Lead~1~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 1"
+                id="RACE~Laps_Complete~1~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 1"
+                id="RACE~Interval~1~0.241"
+                class="border-2">
+                0.241
+              </td>
+              
+              <td x-ref="Table Average_Lap 1"
+                id="RACE~Average_Lap~1~31.872"
+                class="border-2">
+                31.872
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 1"
+                id="RACE~Best_Lap_Num~1~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 1"
+                id="RACE~Best_Lap_Time~1~21.363"
+                class="border-2">
+                21.363
+              </td>
+              
+              <td x-ref="Table Reason_Out 1"
+                id="RACE~Reason_Out~1~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 1"
+                id="RACE~Champ_Points~1~111"
+                class="border-2">
+                111
+              </td>
+              
+              <td x-ref="Table Drop_Race 1"
+                id="RACE~Drop_Race~1~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 1"
+                id="RACE~Starting_Position~1~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Division_Name 1"
+                id="RACE~Division_Name~1~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Old_License_Level 1"
+                id="RACE~Old_License_Level~1~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Old_CPI 1"
+                id="RACE~Old_CPI~1~98.735275"
+                class="border-2">
+                98.735275
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 1"
+                id="RACE~Oldi_Rating~1~2462"
+                class="border-2">
+                2462
+              </td>
+              
+              <td x-ref="Table New_License_Level 1"
+                id="RACE~New_License_Level~1~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table New_CPI 1"
+                id="RACE~New_CPI~1~97.40265"
+                class="border-2">
+                97.40265
+              </td>
+              
+              <td x-ref="Table Newi_Rating 1"
+                id="RACE~Newi_Rating~1~2529"
+                class="border-2">
+                2529
+              </td>
+              
+              <td x-ref="Table Incidents 1"
+                id="RACE~Incidents~1~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Car_Name 1"
+                id="RACE~Car_Name~1~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 1"
+                id="RACE~Aggregate_Champ_Points~1~111"
+                class="border-2">
+                111
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 2">
+              
+              <td x-ref="Table Cust_ID 2"
+                id="RACE~Cust_ID~2~343930"
+                class="border-2">
+                343930
+              </td>
+              
+              <td x-ref="Table Display_Name 2"
+                id="RACE~Display_Name~2~Zach T Morris"
+                class="border-2">
+                Zach T Morris
+              </td>
+              
+              <td x-ref="Table Finish_Position 2"
+                id="RACE~Finish_Position~2~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Laps_Lead 2"
+                id="RACE~Laps_Lead~2~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 2"
+                id="RACE~Laps_Complete~2~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 2"
+                id="RACE~Interval~2~2.659"
+                class="border-2">
+                2.659
+              </td>
+              
+              <td x-ref="Table Average_Lap 2"
+                id="RACE~Average_Lap~2~31.897"
+                class="border-2">
+                31.897
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 2"
+                id="RACE~Best_Lap_Num~2~85"
+                class="border-2">
+                85
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 2"
+                id="RACE~Best_Lap_Time~2~21.444"
+                class="border-2">
+                21.444
+              </td>
+              
+              <td x-ref="Table Reason_Out 2"
+                id="RACE~Reason_Out~2~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 2"
+                id="RACE~Champ_Points~2~105"
+                class="border-2">
+                105
+              </td>
+              
+              <td x-ref="Table Drop_Race 2"
+                id="RACE~Drop_Race~2~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 2"
+                id="RACE~Starting_Position~2~9"
+                class="border-2">
+                9
+              </td>
+              
+              <td x-ref="Table Division_Name 2"
+                id="RACE~Division_Name~2~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Old_License_Level 2"
+                id="RACE~Old_License_Level~2~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Old_CPI 2"
+                id="RACE~Old_CPI~2~33.0312"
+                class="border-2">
+                33.0312
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 2"
+                id="RACE~Oldi_Rating~2~2431"
+                class="border-2">
+                2431
+              </td>
+              
+              <td x-ref="Table New_License_Level 2"
+                id="RACE~New_License_Level~2~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table New_CPI 2"
+                id="RACE~New_CPI~2~36.420742"
+                class="border-2">
+                36.420742
+              </td>
+              
+              <td x-ref="Table Newi_Rating 2"
+                id="RACE~Newi_Rating~2~2489"
+                class="border-2">
+                2489
+              </td>
+              
+              <td x-ref="Table Incidents 2"
+                id="RACE~Incidents~2~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Car_Name 2"
+                id="RACE~Car_Name~2~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 2"
+                id="RACE~Aggregate_Champ_Points~2~105"
+                class="border-2">
+                105
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 3">
+              
+              <td x-ref="Table Cust_ID 3"
+                id="RACE~Cust_ID~3~934644"
+                class="border-2">
+                934644
+              </td>
+              
+              <td x-ref="Table Display_Name 3"
+                id="RACE~Display_Name~3~Kheagun Fleckenstein"
+                class="border-2">
+                Kheagun Fleckenstein
+              </td>
+              
+              <td x-ref="Table Finish_Position 3"
+                id="RACE~Finish_Position~3~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Laps_Lead 3"
+                id="RACE~Laps_Lead~3~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 3"
+                id="RACE~Laps_Complete~3~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 3"
+                id="RACE~Interval~3~3.008"
+                class="border-2">
+                3.008
+              </td>
+              
+              <td x-ref="Table Average_Lap 3"
+                id="RACE~Average_Lap~3~31.900"
+                class="border-2">
+                31.900
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 3"
+                id="RACE~Best_Lap_Num~3~54"
+                class="border-2">
+                54
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 3"
+                id="RACE~Best_Lap_Time~3~21.440"
+                class="border-2">
+                21.440
+              </td>
+              
+              <td x-ref="Table Reason_Out 3"
+                id="RACE~Reason_Out~3~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 3"
+                id="RACE~Champ_Points~3~99"
+                class="border-2">
+                99
+              </td>
+              
+              <td x-ref="Table Drop_Race 3"
+                id="RACE~Drop_Race~3~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 3"
+                id="RACE~Starting_Position~3~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Division_Name 3"
+                id="RACE~Division_Name~3~Division 5"
+                class="border-2">
+                Division 5
+              </td>
+              
+              <td x-ref="Table Old_License_Level 3"
+                id="RACE~Old_License_Level~3~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Old_CPI 3"
+                id="RACE~Old_CPI~3~42.45427"
+                class="border-2">
+                42.45427
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 3"
+                id="RACE~Oldi_Rating~3~2343"
+                class="border-2">
+                2343
+              </td>
+              
+              <td x-ref="Table New_License_Level 3"
+                id="RACE~New_License_Level~3~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table New_CPI 3"
+                id="RACE~New_CPI~3~45.986526"
+                class="border-2">
+                45.986526
+              </td>
+              
+              <td x-ref="Table Newi_Rating 3"
+                id="RACE~Newi_Rating~3~2394"
+                class="border-2">
+                2394
+              </td>
+              
+              <td x-ref="Table Incidents 3"
+                id="RACE~Incidents~3~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Car_Name 3"
+                id="RACE~Car_Name~3~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 3"
+                id="RACE~Aggregate_Champ_Points~3~99"
+                class="border-2">
+                99
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 4">
+              
+              <td x-ref="Table Cust_ID 4"
+                id="RACE~Cust_ID~4~903997"
+                class="border-2">
+                903997
+              </td>
+              
+              <td x-ref="Table Display_Name 4"
+                id="RACE~Display_Name~4~Jerry Hendrixson"
+                class="border-2">
+                Jerry Hendrixson
+              </td>
+              
+              <td x-ref="Table Finish_Position 4"
+                id="RACE~Finish_Position~4~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Laps_Lead 4"
+                id="RACE~Laps_Lead~4~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 4"
+                id="RACE~Laps_Complete~4~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 4"
+                id="RACE~Interval~4~3.768"
+                class="border-2">
+                3.768
+              </td>
+              
+              <td x-ref="Table Average_Lap 4"
+                id="RACE~Average_Lap~4~31.908"
+                class="border-2">
+                31.908
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 4"
+                id="RACE~Best_Lap_Num~4~85"
+                class="border-2">
+                85
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 4"
+                id="RACE~Best_Lap_Time~4~21.474"
+                class="border-2">
+                21.474
+              </td>
+              
+              <td x-ref="Table Reason_Out 4"
+                id="RACE~Reason_Out~4~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 4"
+                id="RACE~Champ_Points~4~93"
+                class="border-2">
+                93
+              </td>
+              
+              <td x-ref="Table Drop_Race 4"
+                id="RACE~Drop_Race~4~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 4"
+                id="RACE~Starting_Position~4~5"
+                class="border-2">
+                5
+              </td>
+              
+              <td x-ref="Table Division_Name 4"
+                id="RACE~Division_Name~4~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Old_License_Level 4"
+                id="RACE~Old_License_Level~4~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Old_CPI 4"
+                id="RACE~Old_CPI~4~67.090706"
+                class="border-2">
+                67.090706
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 4"
+                id="RACE~Oldi_Rating~4~2169"
+                class="border-2">
+                2169
+              </td>
+              
+              <td x-ref="Table New_License_Level 4"
+                id="RACE~New_License_Level~4~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table New_CPI 4"
+                id="RACE~New_CPI~4~63.93097"
+                class="border-2">
+                63.93097
+              </td>
+              
+              <td x-ref="Table Newi_Rating 4"
+                id="RACE~Newi_Rating~4~2216"
+                class="border-2">
+                2216
+              </td>
+              
+              <td x-ref="Table Incidents 4"
+                id="RACE~Incidents~4~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Car_Name 4"
+                id="RACE~Car_Name~4~NASCAR Legends Buick LeSabre - 1987"
+                class="border-2">
+                NASCAR Legends Buick LeSabre - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 4"
+                id="RACE~Aggregate_Champ_Points~4~93"
+                class="border-2">
+                93
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 5">
+              
+              <td x-ref="Table Cust_ID 5"
+                id="RACE~Cust_ID~5~488407"
+                class="border-2">
+                488407
+              </td>
+              
+              <td x-ref="Table Display_Name 5"
+                id="RACE~Display_Name~5~Kenny Thompson"
+                class="border-2">
+                Kenny Thompson
+              </td>
+              
+              <td x-ref="Table Finish_Position 5"
+                id="RACE~Finish_Position~5~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Laps_Lead 5"
+                id="RACE~Laps_Lead~5~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 5"
+                id="RACE~Laps_Complete~5~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 5"
+                id="RACE~Interval~5~4.913"
+                class="border-2">
+                4.913
+              </td>
+              
+              <td x-ref="Table Average_Lap 5"
+                id="RACE~Average_Lap~5~31.919"
+                class="border-2">
+                31.919
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 5"
+                id="RACE~Best_Lap_Num~5~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 5"
+                id="RACE~Best_Lap_Time~5~21.563"
+                class="border-2">
+                21.563
+              </td>
+              
+              <td x-ref="Table Reason_Out 5"
+                id="RACE~Reason_Out~5~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 5"
+                id="RACE~Champ_Points~5~86"
+                class="border-2">
+                86
+              </td>
+              
+              <td x-ref="Table Drop_Race 5"
+                id="RACE~Drop_Race~5~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 5"
+                id="RACE~Starting_Position~5~13"
+                class="border-2">
+                13
+              </td>
+              
+              <td x-ref="Table Division_Name 5"
+                id="RACE~Division_Name~5~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Old_License_Level 5"
+                id="RACE~Old_License_Level~5~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Old_CPI 5"
+                id="RACE~Old_CPI~5~63.0248"
+                class="border-2">
+                63.0248
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 5"
+                id="RACE~Oldi_Rating~5~2431"
+                class="border-2">
+                2431
+              </td>
+              
+              <td x-ref="Table New_License_Level 5"
+                id="RACE~New_License_Level~5~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table New_CPI 5"
+                id="RACE~New_CPI~5~52.49176"
+                class="border-2">
+                52.49176
+              </td>
+              
+              <td x-ref="Table Newi_Rating 5"
+                id="RACE~Newi_Rating~5~2459"
+                class="border-2">
+                2459
+              </td>
+              
+              <td x-ref="Table Incidents 5"
+                id="RACE~Incidents~5~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Car_Name 5"
+                id="RACE~Car_Name~5~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 5"
+                id="RACE~Aggregate_Champ_Points~5~86"
+                class="border-2">
+                86
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 6">
+              
+              <td x-ref="Table Cust_ID 6"
+                id="RACE~Cust_ID~6~185272"
+                class="border-2">
+                185272
+              </td>
+              
+              <td x-ref="Table Display_Name 6"
+                id="RACE~Display_Name~6~Scott Hilsman"
+                class="border-2">
+                Scott Hilsman
+              </td>
+              
+              <td x-ref="Table Finish_Position 6"
+                id="RACE~Finish_Position~6~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Laps_Lead 6"
+                id="RACE~Laps_Lead~6~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 6"
+                id="RACE~Laps_Complete~6~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 6"
+                id="RACE~Interval~6~6.082"
+                class="border-2">
+                6.082
+              </td>
+              
+              <td x-ref="Table Average_Lap 6"
+                id="RACE~Average_Lap~6~31.931"
+                class="border-2">
+                31.931
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 6"
+                id="RACE~Best_Lap_Num~6~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 6"
+                id="RACE~Best_Lap_Time~6~21.611"
+                class="border-2">
+                21.611
+              </td>
+              
+              <td x-ref="Table Reason_Out 6"
+                id="RACE~Reason_Out~6~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 6"
+                id="RACE~Champ_Points~6~80"
+                class="border-2">
+                80
+              </td>
+              
+              <td x-ref="Table Drop_Race 6"
+                id="RACE~Drop_Race~6~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 6"
+                id="RACE~Starting_Position~6~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Division_Name 6"
+                id="RACE~Division_Name~6~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Old_License_Level 6"
+                id="RACE~Old_License_Level~6~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Old_CPI 6"
+                id="RACE~Old_CPI~6~58.665318"
+                class="border-2">
+                58.665318
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 6"
+                id="RACE~Oldi_Rating~6~1818"
+                class="border-2">
+                1818
+              </td>
+              
+              <td x-ref="Table New_License_Level 6"
+                id="RACE~New_License_Level~6~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table New_CPI 6"
+                id="RACE~New_CPI~6~54.603416"
+                class="border-2">
+                54.603416
+              </td>
+              
+              <td x-ref="Table Newi_Rating 6"
+                id="RACE~Newi_Rating~6~1857"
+                class="border-2">
+                1857
+              </td>
+              
+              <td x-ref="Table Incidents 6"
+                id="RACE~Incidents~6~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Car_Name 6"
+                id="RACE~Car_Name~6~NASCAR Legends Ford Thunderbird - 1987"
+                class="border-2">
+                NASCAR Legends Ford Thunderbird - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 6"
+                id="RACE~Aggregate_Champ_Points~6~80"
+                class="border-2">
+                80
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 7">
+              
+              <td x-ref="Table Cust_ID 7"
+                id="RACE~Cust_ID~7~531746"
+                class="border-2">
+                531746
+              </td>
+              
+              <td x-ref="Table Display_Name 7"
+                id="RACE~Display_Name~7~Cade Galey"
+                class="border-2">
+                Cade Galey
+              </td>
+              
+              <td x-ref="Table Finish_Position 7"
+                id="RACE~Finish_Position~7~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Laps_Lead 7"
+                id="RACE~Laps_Lead~7~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 7"
+                id="RACE~Laps_Complete~7~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 7"
+                id="RACE~Interval~7~6.716"
+                class="border-2">
+                6.716
+              </td>
+              
+              <td x-ref="Table Average_Lap 7"
+                id="RACE~Average_Lap~7~31.937"
+                class="border-2">
+                31.937
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 7"
+                id="RACE~Best_Lap_Num~7~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 7"
+                id="RACE~Best_Lap_Time~7~21.820"
+                class="border-2">
+                21.820
+              </td>
+              
+              <td x-ref="Table Reason_Out 7"
+                id="RACE~Reason_Out~7~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 7"
+                id="RACE~Champ_Points~7~74"
+                class="border-2">
+                74
+              </td>
+              
+              <td x-ref="Table Drop_Race 7"
+                id="RACE~Drop_Race~7~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 7"
+                id="RACE~Starting_Position~7~17"
+                class="border-2">
+                17
+              </td>
+              
+              <td x-ref="Table Division_Name 7"
+                id="RACE~Division_Name~7~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 7"
+                id="RACE~Old_License_Level~7~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Old_CPI 7"
+                id="RACE~Old_CPI~7~26.523865"
+                class="border-2">
+                26.523865
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 7"
+                id="RACE~Oldi_Rating~7~1483"
+                class="border-2">
+                1483
+              </td>
+              
+              <td x-ref="Table New_License_Level 7"
+                id="RACE~New_License_Level~7~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table New_CPI 7"
+                id="RACE~New_CPI~7~34.802998"
+                class="border-2">
+                34.802998
+              </td>
+              
+              <td x-ref="Table Newi_Rating 7"
+                id="RACE~Newi_Rating~7~1525"
+                class="border-2">
+                1525
+              </td>
+              
+              <td x-ref="Table Incidents 7"
+                id="RACE~Incidents~7~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 7"
+                id="RACE~Car_Name~7~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 7"
+                id="RACE~Aggregate_Champ_Points~7~74"
+                class="border-2">
+                74
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 8">
+              
+              <td x-ref="Table Cust_ID 8"
+                id="RACE~Cust_ID~8~599366"
+                class="border-2">
+                599366
+              </td>
+              
+              <td x-ref="Table Display_Name 8"
+                id="RACE~Display_Name~8~CS Brown"
+                class="border-2">
+                CS Brown
+              </td>
+              
+              <td x-ref="Table Finish_Position 8"
+                id="RACE~Finish_Position~8~9"
+                class="border-2">
+                9
+              </td>
+              
+              <td x-ref="Table Laps_Lead 8"
+                id="RACE~Laps_Lead~8~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 8"
+                id="RACE~Laps_Complete~8~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 8"
+                id="RACE~Interval~8~7.691"
+                class="border-2">
+                7.691
+              </td>
+              
+              <td x-ref="Table Average_Lap 8"
+                id="RACE~Average_Lap~8~31.947"
+                class="border-2">
+                31.947
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 8"
+                id="RACE~Best_Lap_Num~8~76"
+                class="border-2">
+                76
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 8"
+                id="RACE~Best_Lap_Time~8~21.666"
+                class="border-2">
+                21.666
+              </td>
+              
+              <td x-ref="Table Reason_Out 8"
+                id="RACE~Reason_Out~8~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 8"
+                id="RACE~Champ_Points~8~68"
+                class="border-2">
+                68
+              </td>
+              
+              <td x-ref="Table Drop_Race 8"
+                id="RACE~Drop_Race~8~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 8"
+                id="RACE~Starting_Position~8~16"
+                class="border-2">
+                16
+              </td>
+              
+              <td x-ref="Table Division_Name 8"
+                id="RACE~Division_Name~8~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Old_License_Level 8"
+                id="RACE~Old_License_Level~8~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Old_CPI 8"
+                id="RACE~Old_CPI~8~114.76643"
+                class="border-2">
+                114.76643
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 8"
+                id="RACE~Oldi_Rating~8~1808"
+                class="border-2">
+                1808
+              </td>
+              
+              <td x-ref="Table New_License_Level 8"
+                id="RACE~New_License_Level~8~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table New_CPI 8"
+                id="RACE~New_CPI~8~131.78084"
+                class="border-2">
+                131.78084
+              </td>
+              
+              <td x-ref="Table Newi_Rating 8"
+                id="RACE~Newi_Rating~8~1827"
+                class="border-2">
+                1827
+              </td>
+              
+              <td x-ref="Table Incidents 8"
+                id="RACE~Incidents~8~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 8"
+                id="RACE~Car_Name~8~NASCAR Legends Ford Thunderbird - 1987"
+                class="border-2">
+                NASCAR Legends Ford Thunderbird - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 8"
+                id="RACE~Aggregate_Champ_Points~8~68"
+                class="border-2">
+                68
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 9">
+              
+              <td x-ref="Table Cust_ID 9"
+                id="RACE~Cust_ID~9~357467"
+                class="border-2">
+                357467
+              </td>
+              
+              <td x-ref="Table Display_Name 9"
+                id="RACE~Display_Name~9~Kevin Hartley"
+                class="border-2">
+                Kevin Hartley
+              </td>
+              
+              <td x-ref="Table Finish_Position 9"
+                id="RACE~Finish_Position~9~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Laps_Lead 9"
+                id="RACE~Laps_Lead~9~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 9"
+                id="RACE~Laps_Complete~9~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 9"
+                id="RACE~Interval~9~8.133"
+                class="border-2">
+                8.133
+              </td>
+              
+              <td x-ref="Table Average_Lap 9"
+                id="RACE~Average_Lap~9~31.951"
+                class="border-2">
+                31.951
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 9"
+                id="RACE~Best_Lap_Num~9~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 9"
+                id="RACE~Best_Lap_Time~9~21.562"
+                class="border-2">
+                21.562
+              </td>
+              
+              <td x-ref="Table Reason_Out 9"
+                id="RACE~Reason_Out~9~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 9"
+                id="RACE~Champ_Points~9~62"
+                class="border-2">
+                62
+              </td>
+              
+              <td x-ref="Table Drop_Race 9"
+                id="RACE~Drop_Race~9~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 9"
+                id="RACE~Starting_Position~9~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Division_Name 9"
+                id="RACE~Division_Name~9~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 9"
+                id="RACE~Old_License_Level~9~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Old_CPI 9"
+                id="RACE~Old_CPI~9~82.825615"
+                class="border-2">
+                82.825615
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 9"
+                id="RACE~Oldi_Rating~9~1479"
+                class="border-2">
+                1479
+              </td>
+              
+              <td x-ref="Table New_License_Level 9"
+                id="RACE~New_License_Level~9~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table New_CPI 9"
+                id="RACE~New_CPI~9~67.20131"
+                class="border-2">
+                67.20131
+              </td>
+              
+              <td x-ref="Table Newi_Rating 9"
+                id="RACE~Newi_Rating~9~1501"
+                class="border-2">
+                1501
+              </td>
+              
+              <td x-ref="Table Incidents 9"
+                id="RACE~Incidents~9~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Car_Name 9"
+                id="RACE~Car_Name~9~NASCAR Legends Buick LeSabre - 1987"
+                class="border-2">
+                NASCAR Legends Buick LeSabre - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 9"
+                id="RACE~Aggregate_Champ_Points~9~62"
+                class="border-2">
+                62
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 10">
+              
+              <td x-ref="Table Cust_ID 10"
+                id="RACE~Cust_ID~10~53344"
+                class="border-2">
+                53344
+              </td>
+              
+              <td x-ref="Table Display_Name 10"
+                id="RACE~Display_Name~10~Dan Shorter"
+                class="border-2">
+                Dan Shorter
+              </td>
+              
+              <td x-ref="Table Finish_Position 10"
+                id="RACE~Finish_Position~10~11"
+                class="border-2">
+                11
+              </td>
+              
+              <td x-ref="Table Laps_Lead 10"
+                id="RACE~Laps_Lead~10~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 10"
+                id="RACE~Laps_Complete~10~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 10"
+                id="RACE~Interval~10~8.953"
+                class="border-2">
+                8.953
+              </td>
+              
+              <td x-ref="Table Average_Lap 10"
+                id="RACE~Average_Lap~10~31.960"
+                class="border-2">
+                31.960
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 10"
+                id="RACE~Best_Lap_Num~10~76"
+                class="border-2">
+                76
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 10"
+                id="RACE~Best_Lap_Time~10~21.620"
+                class="border-2">
+                21.620
+              </td>
+              
+              <td x-ref="Table Reason_Out 10"
+                id="RACE~Reason_Out~10~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 10"
+                id="RACE~Champ_Points~10~55"
+                class="border-2">
+                55
+              </td>
+              
+              <td x-ref="Table Drop_Race 10"
+                id="RACE~Drop_Race~10~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 10"
+                id="RACE~Starting_Position~10~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Division_Name 10"
+                id="RACE~Division_Name~10~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Old_License_Level 10"
+                id="RACE~Old_License_Level~10~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Old_CPI 10"
+                id="RACE~Old_CPI~10~136.69743"
+                class="border-2">
+                136.69743
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 10"
+                id="RACE~Oldi_Rating~10~2169"
+                class="border-2">
+                2169
+              </td>
+              
+              <td x-ref="Table New_License_Level 10"
+                id="RACE~New_License_Level~10~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table New_CPI 10"
+                id="RACE~New_CPI~10~121.41772"
+                class="border-2">
+                121.41772
+              </td>
+              
+              <td x-ref="Table Newi_Rating 10"
+                id="RACE~Newi_Rating~10~2157"
+                class="border-2">
+                2157
+              </td>
+              
+              <td x-ref="Table Incidents 10"
+                id="RACE~Incidents~10~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Car_Name 10"
+                id="RACE~Car_Name~10~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 10"
+                id="RACE~Aggregate_Champ_Points~10~55"
+                class="border-2">
+                55
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 11">
+              
+              <td x-ref="Table Cust_ID 11"
+                id="RACE~Cust_ID~11~897163"
+                class="border-2">
+                897163
+              </td>
+              
+              <td x-ref="Table Display_Name 11"
+                id="RACE~Display_Name~11~Louis Labille"
+                class="border-2">
+                Louis Labille
+              </td>
+              
+              <td x-ref="Table Finish_Position 11"
+                id="RACE~Finish_Position~11~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Laps_Lead 11"
+                id="RACE~Laps_Lead~11~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 11"
+                id="RACE~Laps_Complete~11~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 11"
+                id="RACE~Interval~11~9.707"
+                class="border-2">
+                9.707
+              </td>
+              
+              <td x-ref="Table Average_Lap 11"
+                id="RACE~Average_Lap~11~31.967"
+                class="border-2">
+                31.967
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 11"
+                id="RACE~Best_Lap_Num~11~76"
+                class="border-2">
+                76
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 11"
+                id="RACE~Best_Lap_Time~11~21.655"
+                class="border-2">
+                21.655
+              </td>
+              
+              <td x-ref="Table Reason_Out 11"
+                id="RACE~Reason_Out~11~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 11"
+                id="RACE~Champ_Points~11~49"
+                class="border-2">
+                49
+              </td>
+              
+              <td x-ref="Table Drop_Race 11"
+                id="RACE~Drop_Race~11~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 11"
+                id="RACE~Starting_Position~11~10"
+                class="border-2">
+                10
+              </td>
+              
+              <td x-ref="Table Division_Name 11"
+                id="RACE~Division_Name~11~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Old_License_Level 11"
+                id="RACE~Old_License_Level~11~17"
+                class="border-2">
+                17
+              </td>
+              
+              <td x-ref="Table Old_CPI 11"
+                id="RACE~Old_CPI~11~27.711159"
+                class="border-2">
+                27.711159
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 11"
+                id="RACE~Oldi_Rating~11~1533"
+                class="border-2">
+                1533
+              </td>
+              
+              <td x-ref="Table New_License_Level 11"
+                id="RACE~New_License_Level~11~17"
+                class="border-2">
+                17
+              </td>
+              
+              <td x-ref="Table New_CPI 11"
+                id="RACE~New_CPI~11~36.31396"
+                class="border-2">
+                36.31396
+              </td>
+              
+              <td x-ref="Table Newi_Rating 11"
+                id="RACE~Newi_Rating~11~1534"
+                class="border-2">
+                1534
+              </td>
+              
+              <td x-ref="Table Incidents 11"
+                id="RACE~Incidents~11~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Car_Name 11"
+                id="RACE~Car_Name~11~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 11"
+                id="RACE~Aggregate_Champ_Points~11~49"
+                class="border-2">
+                49
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 12">
+              
+              <td x-ref="Table Cust_ID 12"
+                id="RACE~Cust_ID~12~405055"
+                class="border-2">
+                405055
+              </td>
+              
+              <td x-ref="Table Display_Name 12"
+                id="RACE~Display_Name~12~Bill Lance"
+                class="border-2">
+                Bill Lance
+              </td>
+              
+              <td x-ref="Table Finish_Position 12"
+                id="RACE~Finish_Position~12~13"
+                class="border-2">
+                13
+              </td>
+              
+              <td x-ref="Table Laps_Lead 12"
+                id="RACE~Laps_Lead~12~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 12"
+                id="RACE~Laps_Complete~12~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 12"
+                id="RACE~Interval~12~10.699"
+                class="border-2">
+                10.699
+              </td>
+              
+              <td x-ref="Table Average_Lap 12"
+                id="RACE~Average_Lap~12~31.977"
+                class="border-2">
+                31.977
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 12"
+                id="RACE~Best_Lap_Num~12~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 12"
+                id="RACE~Best_Lap_Time~12~21.616"
+                class="border-2">
+                21.616
+              </td>
+              
+              <td x-ref="Table Reason_Out 12"
+                id="RACE~Reason_Out~12~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 12"
+                id="RACE~Champ_Points~12~43"
+                class="border-2">
+                43
+              </td>
+              
+              <td x-ref="Table Drop_Race 12"
+                id="RACE~Drop_Race~12~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 12"
+                id="RACE~Starting_Position~12~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Division_Name 12"
+                id="RACE~Division_Name~12~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Old_License_Level 12"
+                id="RACE~Old_License_Level~12~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Old_CPI 12"
+                id="RACE~Old_CPI~12~162.1554"
+                class="border-2">
+                162.1554
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 12"
+                id="RACE~Oldi_Rating~12~1863"
+                class="border-2">
+                1863
+              </td>
+              
+              <td x-ref="Table New_License_Level 12"
+                id="RACE~New_License_Level~12~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table New_CPI 12"
+                id="RACE~New_CPI~12~167.09792"
+                class="border-2">
+                167.09792
+              </td>
+              
+              <td x-ref="Table Newi_Rating 12"
+                id="RACE~Newi_Rating~12~1841"
+                class="border-2">
+                1841
+              </td>
+              
+              <td x-ref="Table Incidents 12"
+                id="RACE~Incidents~12~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 12"
+                id="RACE~Car_Name~12~NASCAR Legends Ford Thunderbird - 1987"
+                class="border-2">
+                NASCAR Legends Ford Thunderbird - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 12"
+                id="RACE~Aggregate_Champ_Points~12~43"
+                class="border-2">
+                43
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 13">
+              
+              <td x-ref="Table Cust_ID 13"
+                id="RACE~Cust_ID~13~538024"
+                class="border-2">
+                538024
+              </td>
+              
+              <td x-ref="Table Display_Name 13"
+                id="RACE~Display_Name~13~Corey Tross"
+                class="border-2">
+                Corey Tross
+              </td>
+              
+              <td x-ref="Table Finish_Position 13"
+                id="RACE~Finish_Position~13~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Laps_Lead 13"
+                id="RACE~Laps_Lead~13~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 13"
+                id="RACE~Laps_Complete~13~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 13"
+                id="RACE~Interval~13~11.457"
+                class="border-2">
+                11.457
+              </td>
+              
+              <td x-ref="Table Average_Lap 13"
+                id="RACE~Average_Lap~13~31.985"
+                class="border-2">
+                31.985
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 13"
+                id="RACE~Best_Lap_Num~13~68"
+                class="border-2">
+                68
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 13"
+                id="RACE~Best_Lap_Time~13~21.442"
+                class="border-2">
+                21.442
+              </td>
+              
+              <td x-ref="Table Reason_Out 13"
+                id="RACE~Reason_Out~13~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 13"
+                id="RACE~Champ_Points~13~37"
+                class="border-2">
+                37
+              </td>
+              
+              <td x-ref="Table Drop_Race 13"
+                id="RACE~Drop_Race~13~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 13"
+                id="RACE~Starting_Position~13~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Division_Name 13"
+                id="RACE~Division_Name~13~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Old_License_Level 13"
+                id="RACE~Old_License_Level~13~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Old_CPI 13"
+                id="RACE~Old_CPI~13~128.63818"
+                class="border-2">
+                128.63818
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 13"
+                id="RACE~Oldi_Rating~13~2969"
+                class="border-2">
+                2969
+              </td>
+              
+              <td x-ref="Table New_License_Level 13"
+                id="RACE~New_License_Level~13~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table New_CPI 13"
+                id="RACE~New_CPI~13~115.91796"
+                class="border-2">
+                115.91796
+              </td>
+              
+              <td x-ref="Table Newi_Rating 13"
+                id="RACE~Newi_Rating~13~2903"
+                class="border-2">
+                2903
+              </td>
+              
+              <td x-ref="Table Incidents 13"
+                id="RACE~Incidents~13~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Car_Name 13"
+                id="RACE~Car_Name~13~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 13"
+                id="RACE~Aggregate_Champ_Points~13~37"
+                class="border-2">
+                37
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 14">
+              
+              <td x-ref="Table Cust_ID 14"
+                id="RACE~Cust_ID~14~45400"
+                class="border-2">
+                45400
+              </td>
+              
+              <td x-ref="Table Display_Name 14"
+                id="RACE~Display_Name~14~Calum Farley"
+                class="border-2">
+                Calum Farley
+              </td>
+              
+              <td x-ref="Table Finish_Position 14"
+                id="RACE~Finish_Position~14~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Laps_Lead 14"
+                id="RACE~Laps_Lead~14~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 14"
+                id="RACE~Laps_Complete~14~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 14"
+                id="RACE~Interval~14~11.808"
+                class="border-2">
+                11.808
+              </td>
+              
+              <td x-ref="Table Average_Lap 14"
+                id="RACE~Average_Lap~14~31.988"
+                class="border-2">
+                31.988
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 14"
+                id="RACE~Best_Lap_Num~14~34"
+                class="border-2">
+                34
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 14"
+                id="RACE~Best_Lap_Time~14~21.566"
+                class="border-2">
+                21.566
+              </td>
+              
+              <td x-ref="Table Reason_Out 14"
+                id="RACE~Reason_Out~14~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 14"
+                id="RACE~Champ_Points~14~31"
+                class="border-2">
+                31
+              </td>
+              
+              <td x-ref="Table Drop_Race 14"
+                id="RACE~Drop_Race~14~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 14"
+                id="RACE~Starting_Position~14~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Division_Name 14"
+                id="RACE~Division_Name~14~Division 2"
+                class="border-2">
+                Division 2
+              </td>
+              
+              <td x-ref="Table Old_License_Level 14"
+                id="RACE~Old_License_Level~14~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Old_CPI 14"
+                id="RACE~Old_CPI~14~170.25607"
+                class="border-2">
+                170.25607
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 14"
+                id="RACE~Oldi_Rating~14~2522"
+                class="border-2">
+                2522
+              </td>
+              
+              <td x-ref="Table New_License_Level 14"
+                id="RACE~New_License_Level~14~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table New_CPI 14"
+                id="RACE~New_CPI~14~174.61256"
+                class="border-2">
+                174.61256
+              </td>
+              
+              <td x-ref="Table Newi_Rating 14"
+                id="RACE~Newi_Rating~14~2458"
+                class="border-2">
+                2458
+              </td>
+              
+              <td x-ref="Table Incidents 14"
+                id="RACE~Incidents~14~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 14"
+                id="RACE~Car_Name~14~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 14"
+                id="RACE~Aggregate_Champ_Points~14~31"
+                class="border-2">
+                31
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 15">
+              
+              <td x-ref="Table Cust_ID 15"
+                id="RACE~Cust_ID~15~21925"
+                class="border-2">
+                21925
+              </td>
+              
+              <td x-ref="Table Display_Name 15"
+                id="RACE~Display_Name~15~Andre Rouleau"
+                class="border-2">
+                Andre Rouleau
+              </td>
+              
+              <td x-ref="Table Finish_Position 15"
+                id="RACE~Finish_Position~15~16"
+                class="border-2">
+                16
+              </td>
+              
+              <td x-ref="Table Laps_Lead 15"
+                id="RACE~Laps_Lead~15~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 15"
+                id="RACE~Laps_Complete~15~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 15"
+                id="RACE~Interval~15~12.348"
+                class="border-2">
+                12.348
+              </td>
+              
+              <td x-ref="Table Average_Lap 15"
+                id="RACE~Average_Lap~15~31.994"
+                class="border-2">
+                31.994
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 15"
+                id="RACE~Best_Lap_Num~15~8"
+                class="border-2">
+                8
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 15"
+                id="RACE~Best_Lap_Time~15~21.895"
+                class="border-2">
+                21.895
+              </td>
+              
+              <td x-ref="Table Reason_Out 15"
+                id="RACE~Reason_Out~15~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 15"
+                id="RACE~Champ_Points~15~24"
+                class="border-2">
+                24
+              </td>
+              
+              <td x-ref="Table Drop_Race 15"
+                id="RACE~Drop_Race~15~true"
+                class="border-2">
+                true
+              </td>
+              
+              <td x-ref="Table Starting_Position 15"
+                id="RACE~Starting_Position~15~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Division_Name 15"
+                id="RACE~Division_Name~15~Division 4"
+                class="border-2">
+                Division 4
+              </td>
+              
+              <td x-ref="Table Old_License_Level 15"
+                id="RACE~Old_License_Level~15~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Old_CPI 15"
+                id="RACE~Old_CPI~15~36.579346"
+                class="border-2">
+                36.579346
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 15"
+                id="RACE~Oldi_Rating~15~1197"
+                class="border-2">
+                1197
+              </td>
+              
+              <td x-ref="Table New_License_Level 15"
+                id="RACE~New_License_Level~15~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table New_CPI 15"
+                id="RACE~New_CPI~15~48.32113"
+                class="border-2">
+                48.32113
+              </td>
+              
+              <td x-ref="Table Newi_Rating 15"
+                id="RACE~Newi_Rating~15~1173"
+                class="border-2">
+                1173
+              </td>
+              
+              <td x-ref="Table Incidents 15"
+                id="RACE~Incidents~15~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 15"
+                id="RACE~Car_Name~15~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 15"
+                id="RACE~Aggregate_Champ_Points~15~24"
+                class="border-2">
+                24
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 16">
+              
+              <td x-ref="Table Cust_ID 16"
+                id="RACE~Cust_ID~16~815162"
+                class="border-2">
+                815162
+              </td>
+              
+              <td x-ref="Table Display_Name 16"
+                id="RACE~Display_Name~16~Jack Glenzinski"
+                class="border-2">
+                Jack Glenzinski
+              </td>
+              
+              <td x-ref="Table Finish_Position 16"
+                id="RACE~Finish_Position~16~17"
+                class="border-2">
+                17
+              </td>
+              
+              <td x-ref="Table Laps_Lead 16"
+                id="RACE~Laps_Lead~16~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 16"
+                id="RACE~Laps_Complete~16~100"
+                class="border-2">
+                100
+              </td>
+              
+              <td x-ref="Table Interval 16"
+                id="RACE~Interval~16~16.416"
+                class="border-2">
+                16.416
+              </td>
+              
+              <td x-ref="Table Average_Lap 16"
+                id="RACE~Average_Lap~16~32.034"
+                class="border-2">
+                32.034
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 16"
+                id="RACE~Best_Lap_Num~16~76"
+                class="border-2">
+                76
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 16"
+                id="RACE~Best_Lap_Time~16~21.768"
+                class="border-2">
+                21.768
+              </td>
+              
+              <td x-ref="Table Reason_Out 16"
+                id="RACE~Reason_Out~16~Running"
+                class="border-2">
+                Running
+              </td>
+              
+              <td x-ref="Table Champ_Points 16"
+                id="RACE~Champ_Points~16~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Drop_Race 16"
+                id="RACE~Drop_Race~16~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 16"
+                id="RACE~Starting_Position~16~15"
+                class="border-2">
+                15
+              </td>
+              
+              <td x-ref="Table Division_Name 16"
+                id="RACE~Division_Name~16~Division 3"
+                class="border-2">
+                Division 3
+              </td>
+              
+              <td x-ref="Table Old_License_Level 16"
+                id="RACE~Old_License_Level~16~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Old_CPI 16"
+                id="RACE~Old_CPI~16~58.888054"
+                class="border-2">
+                58.888054
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 16"
+                id="RACE~Oldi_Rating~16~2241"
+                class="border-2">
+                2241
+              </td>
+              
+              <td x-ref="Table New_License_Level 16"
+                id="RACE~New_License_Level~16~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table New_CPI 16"
+                id="RACE~New_CPI~16~63.739014"
+                class="border-2">
+                63.739014
+              </td>
+              
+              <td x-ref="Table Newi_Rating 16"
+                id="RACE~Newi_Rating~16~2166"
+                class="border-2">
+                2166
+              </td>
+              
+              <td x-ref="Table Incidents 16"
+                id="RACE~Incidents~16~4"
+                class="border-2">
+                4
+              </td>
+              
+              <td x-ref="Table Car_Name 16"
+                id="RACE~Car_Name~16~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 16"
+                id="RACE~Aggregate_Champ_Points~16~18"
+                class="border-2">
+                18
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 17">
+              
+              <td x-ref="Table Cust_ID 17"
+                id="RACE~Cust_ID~17~257846"
+                class="border-2">
+                257846
+              </td>
+              
+              <td x-ref="Table Display_Name 17"
+                id="RACE~Display_Name~17~Garett Estes"
+                class="border-2">
+                Garett Estes
+              </td>
+              
+              <td x-ref="Table Finish_Position 17"
+                id="RACE~Finish_Position~17~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Laps_Lead 17"
+                id="RACE~Laps_Lead~17~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 17"
+                id="RACE~Laps_Complete~17~80"
+                class="border-2">
+                80
+              </td>
+              
+              <td x-ref="Table Interval 17"
+                id="RACE~Interval~17~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 17"
+                id="RACE~Average_Lap~17~34.188"
+                class="border-2">
+                34.188
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 17"
+                id="RACE~Best_Lap_Num~17~69"
+                class="border-2">
+                69
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 17"
+                id="RACE~Best_Lap_Time~17~21.848"
+                class="border-2">
+                21.848
+              </td>
+              
+              <td x-ref="Table Reason_Out 17"
+                id="RACE~Reason_Out~17~Disconnected"
+                class="border-2">
+                Disconnected
+              </td>
+              
+              <td x-ref="Table Champ_Points 17"
+                id="RACE~Champ_Points~17~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Drop_Race 17"
+                id="RACE~Drop_Race~17~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 17"
+                id="RACE~Starting_Position~17~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Division_Name 17"
+                id="RACE~Division_Name~17~Division 6"
+                class="border-2">
+                Division 6
+              </td>
+              
+              <td x-ref="Table Old_License_Level 17"
+                id="RACE~Old_License_Level~17~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Old_CPI 17"
+                id="RACE~Old_CPI~17~33.331577"
+                class="border-2">
+                33.331577
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 17"
+                id="RACE~Oldi_Rating~17~1294"
+                class="border-2">
+                1294
+              </td>
+              
+              <td x-ref="Table New_License_Level 17"
+                id="RACE~New_License_Level~17~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table New_CPI 17"
+                id="RACE~New_CPI~17~39.672466"
+                class="border-2">
+                39.672466
+              </td>
+              
+              <td x-ref="Table Newi_Rating 17"
+                id="RACE~Newi_Rating~17~1245"
+                class="border-2">
+                1245
+              </td>
+              
+              <td x-ref="Table Incidents 17"
+                id="RACE~Incidents~17~2"
+                class="border-2">
+                2
+              </td>
+              
+              <td x-ref="Table Car_Name 17"
+                id="RACE~Car_Name~17~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 17"
+                id="RACE~Aggregate_Champ_Points~17~12"
+                class="border-2">
+                12
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 18">
+              
+              <td x-ref="Table Cust_ID 18"
+                id="RACE~Cust_ID~18~539575"
+                class="border-2">
+                539575
+              </td>
+              
+              <td x-ref="Table Display_Name 18"
+                id="RACE~Display_Name~18~Joshua Robinson6"
+                class="border-2">
+                Joshua Robinson6
+              </td>
+              
+              <td x-ref="Table Finish_Position 18"
+                id="RACE~Finish_Position~18~19"
+                class="border-2">
+                19
+              </td>
+              
+              <td x-ref="Table Laps_Lead 18"
+                id="RACE~Laps_Lead~18~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 18"
+                id="RACE~Laps_Complete~18~47"
+                class="border-2">
+                47
+              </td>
+              
+              <td x-ref="Table Interval 18"
+                id="RACE~Interval~18~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 18"
+                id="RACE~Average_Lap~18~32.393"
+                class="border-2">
+                32.393
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 18"
+                id="RACE~Best_Lap_Num~18~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 18"
+                id="RACE~Best_Lap_Time~18~21.986"
+                class="border-2">
+                21.986
+              </td>
+              
+              <td x-ref="Table Reason_Out 18"
+                id="RACE~Reason_Out~18~Disconnected"
+                class="border-2">
+                Disconnected
+              </td>
+              
+              <td x-ref="Table Champ_Points 18"
+                id="RACE~Champ_Points~18~6"
+                class="border-2">
+                6
+              </td>
+              
+              <td x-ref="Table Drop_Race 18"
+                id="RACE~Drop_Race~18~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 18"
+                id="RACE~Starting_Position~18~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Division_Name 18"
+                id="RACE~Division_Name~18~Division 8"
+                class="border-2">
+                Division 8
+              </td>
+              
+              <td x-ref="Table Old_License_Level 18"
+                id="RACE~Old_License_Level~18~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table Old_CPI 18"
+                id="RACE~Old_CPI~18~28.772192"
+                class="border-2">
+                28.772192
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 18"
+                id="RACE~Oldi_Rating~18~776"
+                class="border-2">
+                776
+              </td>
+              
+              <td x-ref="Table New_License_Level 18"
+                id="RACE~New_License_Level~18~14"
+                class="border-2">
+                14
+              </td>
+              
+              <td x-ref="Table New_CPI 18"
+                id="RACE~New_CPI~18~25.507875"
+                class="border-2">
+                25.507875
+              </td>
+              
+              <td x-ref="Table Newi_Rating 18"
+                id="RACE~Newi_Rating~18~743"
+                class="border-2">
+                743
+              </td>
+              
+              <td x-ref="Table Incidents 18"
+                id="RACE~Incidents~18~12"
+                class="border-2">
+                12
+              </td>
+              
+              <td x-ref="Table Car_Name 18"
+                id="RACE~Car_Name~18~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 18"
+                id="RACE~Aggregate_Champ_Points~18~6"
+                class="border-2">
+                6
+              </td>
+              
+            </tr>
+            
+            <tr x-ref="Table 19">
+              
+              <td x-ref="Table Cust_ID 19"
+                id="RACE~Cust_ID~19~653491"
+                class="border-2">
+                653491
+              </td>
+              
+              <td x-ref="Table Display_Name 19"
+                id="RACE~Display_Name~19~Curt D Lewis"
+                class="border-2">
+                Curt D Lewis
+              </td>
+              
+              <td x-ref="Table Finish_Position 19"
+                id="RACE~Finish_Position~19~20"
+                class="border-2">
+                20
+              </td>
+              
+              <td x-ref="Table Laps_Lead 19"
+                id="RACE~Laps_Lead~19~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Laps_Complete 19"
+                id="RACE~Laps_Complete~19~9"
+                class="border-2">
+                9
+              </td>
+              
+              <td x-ref="Table Interval 19"
+                id="RACE~Interval~19~-1.000"
+                class="border-2">
+                -1.000
+              </td>
+              
+              <td x-ref="Table Average_Lap 19"
+                id="RACE~Average_Lap~19~35.794"
+                class="border-2">
+                35.794
+              </td>
+              
+              <td x-ref="Table Best_Lap_Num 19"
+                id="RACE~Best_Lap_Num~19~7"
+                class="border-2">
+                7
+              </td>
+              
+              <td x-ref="Table Best_Lap_Time 19"
+                id="RACE~Best_Lap_Time~19~22.508"
+                class="border-2">
+                22.508
+              </td>
+              
+              <td x-ref="Table Reason_Out 19"
+                id="RACE~Reason_Out~19~Disconnected"
+                class="border-2">
+                Disconnected
+              </td>
+              
+              <td x-ref="Table Champ_Points 19"
+                id="RACE~Champ_Points~19~3"
+                class="border-2">
+                3
+              </td>
+              
+              <td x-ref="Table Drop_Race 19"
+                id="RACE~Drop_Race~19~false"
+                class="border-2">
+                false
+              </td>
+              
+              <td x-ref="Table Starting_Position 19"
+                id="RACE~Starting_Position~19~18"
+                class="border-2">
+                18
+              </td>
+              
+              <td x-ref="Table Division_Name 19"
+                id="RACE~Division_Name~19~Division 7"
+                class="border-2">
+                Division 7
+              </td>
+              
+              <td x-ref="Table Old_License_Level 19"
+                id="RACE~Old_License_Level~19~16"
+                class="border-2">
+                16
+              </td>
+              
+              <td x-ref="Table Old_CPI 19"
+                id="RACE~Old_CPI~19~54.19781"
+                class="border-2">
+                54.19781
+              </td>
+              
+              <td x-ref="Table Oldi_Rating 19"
+                id="RACE~Oldi_Rating~19~1454"
+                class="border-2">
+                1454
+              </td>
+              
+              <td x-ref="Table New_License_Level 19"
+                id="RACE~New_License_Level~19~16"
+                class="border-2">
+                16
+              </td>
+              
+              <td x-ref="Table New_CPI 19"
+                id="RACE~New_CPI~19~55.042118"
+                class="border-2">
+                55.042118
+              </td>
+              
+              <td x-ref="Table Newi_Rating 19"
+                id="RACE~Newi_Rating~19~1379"
+                class="border-2">
+                1379
+              </td>
+              
+              <td x-ref="Table Incidents 19"
+                id="RACE~Incidents~19~0"
+                class="border-2">
+                0
+              </td>
+              
+              <td x-ref="Table Car_Name 19"
+                id="RACE~Car_Name~19~NASCAR Legends Chevrolet Monte Carlo - 1987"
+                class="border-2">
+                NASCAR Legends Chevrolet Monte Carlo - 1987
+              </td>
+              
+              <td x-ref="Table Aggregate_Champ_Points 19"
+                id="RACE~Aggregate_Champ_Points~19~3"
+                class="border-2">
+                3
+              </td>
+              
+            </tr>
+            
+          </table>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>
