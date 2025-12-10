@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://shinsina.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://shinsina.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://shinsina.github.io/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="https://shinsina.github.io/favicon.ico" />
+  <link rel="stylesheet" href="../../../season.css" />
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/async-alpine@2.0.2/dist/async-alpine.script.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.9/dist/cdn.min.js"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content="Head to Head Matchup for user IDs 300752 and 815162" />
+  <title>Stat 'N' Track: Head to Head Matchup for user IDs 300752 and 815162</title>
+</head>
+
+<body class="bg-gray-900 text-white font-sans">
+  <div class="text-center border-white border-2">
+    <p class="block lg:text-5xl md:text-2xl sm:text-xl break-words text-center">
+      Stat 'N' Track
+    </p>
+    <div class="block lg:text-3xl md:text-lg sm:text-md break-words text-center py-2">
+      <a class="underline p-2" href="/Stat-N-Track/">Home</a>
+    </div>
+  </div>
+  <div
+    class="text-center lg:text-xl md:text-lg sm:text-md grid grid-cols-1 md:grid-cols-3 lg:grid-cols-9 py-2 border-white border-x-2 border-b-2"
+  >
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/">All Sessions</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/by-year/">Sessions By Year</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/by-car-class/">Sessions By Car Class</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/subsessions/by-track/">Sessions By Track</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/">All Season Standings</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/full-participation/">Fully Participated Season Standings</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/by-year/">Season Standings By Year</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/standings/by-car-class/">Season Standings By Car Class</a></div>
+    <div><a class="underline" href="/Stat-N-Track/user/300752/head-to-head/">Head to Head Matchups</a></div>
+  </div>
+  <style>
+    [x-cloak] {
+      display: none !important;
+    }
+  </style>
+  <div class="flex flex-col">
+    <div class="self-center text-center lg:text-2xl md:text-md sm:text-sm py-4">
+      <div class="font-bold border-b-2 border-white">Head to Head Wins</div>
+      
+    </div>
+  </div>
+  <div id="top" x-data="{&#34;previouslyToggled&#34;: &#39;&#39;,}">
+    <div
+    x-data="{ toggle() { if(this.previouslyToggled){ this[this.previouslyToggled] = !this[this.previouslyToggled];}; this.previouslyToggled = this.$el.id; this[this.$el.id] = !this[this.$el.id]; window.location.href = '#top' } }">
+    
+    <div class="grid grid-cols-1 pt-6 overflow-x-scroll">
+      <table x-load x-load-src="../../../alpine-components/table.js" x-ref="Table" x-data="table"
+        class="text-center col-span-1">
+        <tr x-ref="Headings">
+          
+          
+          
+          
+          
+          <th id="Table subsession_id 0" class="border-2" x-on:click="sort">
+            Subsession ID
+          </th>
+          <th id="Table track 0" class="border-2" x-on:click="sort">
+            Track
+          </th>
+          <th id="Table license 0" class="border-2" x-on:click="sort">
+            License
+          </th>
+          <th id="Table license_category 0" class="border-2" x-on:click="sort">
+            License Category
+          </th>
+          <th id="Table event_average_lap 0" class="border-2" x-on:click="sort">
+            Average Laptime
+          </th>
+          <th id="Table event_laps_complete 0" class="border-2" x-on:click="sort">
+            Total Laps
+          </th>
+          <th id="Table event_strength_of_field 0" class="border-2" x-on:click="sort">
+            Strength of Field
+          </th>
+          <th id="Table num_caution_laps 0" class="border-2" x-on:click="sort">
+            Number of Caution Laps
+          </th>
+          <th id="Table num_cautions 0" class="border-2" x-on:click="sort">
+            Number of Cautions
+          </th>
+          <th id="Table num_lead_changes 0" class="border-2" x-on:click="sort">
+            Number of Lead Changes
+          </th>
+          <th id="Table race_week_num 0" class="border-2" x-on:click="sort">
+            Race Week Number
+          </th>
+          <th id="Table season_name 0" class="border-2" x-on:click="sort">
+            Season Name
+          </th>
+        </tr>
+        
+      </table>
+    </div>
+    </div>
+  </div>
+</body>
+
+</html>
