@@ -1180,6 +1180,7 @@ func generate_subsession_list_pages() {
 						track_slug = strings.ReplaceAll(track_slug, " ", "-")
 						track_slug = strings.ReplaceAll(track_slug, "---", "-")
 						track_slug = strings.ReplaceAll(track_slug, "-n/a", "")
+						track_slug = strings.ReplaceAll(track_slug, "/", "-")
 						if len(subsessions_for_user_by_track[track_slug]) > 0 {
 							subsessions_for_user_by_track[track_slug] = append(subsessions_for_user_by_track[track_slug], subsession)
 						} else {
